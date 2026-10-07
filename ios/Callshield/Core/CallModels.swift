@@ -1,6 +1,6 @@
 import Foundation
 
-enum Voice: String, CaseIterable, Equatable {
+enum Voice: String, CaseIterable, Equatable, Codable {
     case ai, human, unknown, analyzing
 
     var label: String {
@@ -22,9 +22,9 @@ enum Voice: String, CaseIterable, Equatable {
     }
 }
 
-enum AvatarColor: String { case rose, slate, blue, mint }
+enum AvatarColor: String, Codable { case rose, slate, blue, mint }
 
-struct Person: Equatable, Identifiable {
+struct Person: Equatable, Identifiable, Codable {
     let name: String
     let number: String
     let initials: String

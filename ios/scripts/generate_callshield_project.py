@@ -51,9 +51,9 @@ for name, folder, product_type, extension in [
         files.append(file_id)
         sources.append(build_file(file_id, relative))
     resources = []
-    resource_paths = (["Callshield/Assets.xcassets"] if name == "Callshield" else [])
+    resource_paths = (["Callshield/Assets.xcassets", "Callshield/PrivacyInfo.xcprivacy"] if name == "Callshield" else [])
     for path in resource_paths:
-        file_id = ref(path, "folder.assetcatalog")
+        file_id = ref(path, "folder.assetcatalog" if path.endswith("xcassets") else "text.xml")
         files.append(file_id)
         resources.append(build_file(file_id, path))
     phases = [add(name + "sources", "PBXSourcesBuildPhase", buildActionMask=2147483647, files=sources, runOnlyForDeploymentPostprocessing=0),
@@ -69,7 +69,10 @@ for name, folder, product_type, extension in [
     if name == "Callshield":
         settings.update(INFOPLIST_FILE="Callshield/App/Info.plist", GENERATE_INFOPLIST_FILE="NO",
                         ASSETCATALOG_COMPILER_APPICON_NAME="AppIcon",
-                        LD_RUNPATH_SEARCH_PATHS="$(inherited) @executable_path/Frameworks")
+                        LD_RUNPATH_SEARCH_PATHS="$(inherited) @executable_path/Frameworks",
+                        CALLSHIELD_DEMO="true", CALLSHIELD_DEFAULT_DIALER="false",
+                        CALLSHIELD_ENTITLEMENTS_FILE="", CODE_SIGN_ENTITLEMENTS="$(CALLSHIELD_ENTITLEMENTS_FILE)",
+                        APS_ENVIRONMENT="development")
     else:
         proxy = add(name + "proxy", "PBXContainerItemProxy", containerPortal=ident("project"), proxyType=1,
                     remoteGlobalIDString=app_id, remoteInfo="Callshield")
@@ -81,6 +84,9 @@ for name, folder, product_type, extension in [
     targets.append(add("target:" + name, "PBXNativeTarget", name=name, productName=name,
                        buildConfigurationList=config_list(name, settings), buildPhases=phases,
                        buildRules=[], dependencies=dependencies, productReference=product, productType=product_type))
+
+for path in ["Configuration/VoIP.entitlements", "Configuration/DefaultCalling.entitlements", "Configuration/DefaultDialer.entitlements"]:
+    files.append(ref(path, "text.plist.entitlements"))
 
 products_group = add("products", "PBXGroup", children=products, name="Products", sourceTree="<group>")
 group = add("main", "PBXGroup", children=files + [products_group], sourceTree="<group>")
