@@ -1,3 +1,19 @@
 /work/
 .DS_Store
 node_modules/
+.delta
+/frontend/.claude
+.idea
+.venv
+/backend/jev-posttrain/data/raw/
+/backend/jev-posttrain/data/prepared/
+/backend/jev-posttrain/runs/
+/verdict-151m/model.safetensors
+
+# Local caches and downloaded model artifacts
+.DS_Store
+__pycache__/
+*.pyc
+*.egg-info/
+:memory:.ses
+/verdict-151m/model.onnx
