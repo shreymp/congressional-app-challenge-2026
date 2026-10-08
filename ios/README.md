@@ -176,3 +176,5 @@ transcripts each, including a long transcript trimmed to 300 tokens. The UI test
 selected v1 and scored a supplied example through the typed-transcript controls.
 Device builds used disabled signing; running on your iPhone requires your Xcode
 team. No physical-device runtime measurement was performed.
+
+The model release belongs to this private repository. Downloading requires repository access through Git HTTPS credentials or the `GITHUB_TOKEN` (or `GH_TOKEN`) environment variable. SSH-only clones need a token for the release download. Tokens are never stored in the repository.

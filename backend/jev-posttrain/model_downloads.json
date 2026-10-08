@@ -5,15 +5,18 @@
     "files": {
       "model.onnx": {
         "sha256": "c0ea817140c391afba796cff9bed9ac7025e86ff1c35708d8492706539aaddef",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-model.onnx"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-model.onnx",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622731399"
       },
       "tokenizer.json": {
         "sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-tokenizer.json"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-tokenizer.json",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622732719"
       },
       "calibration.json": {
         "sha256": "e1e33b7a1ab95a54a839c5b372aa75c43bdf3b565eb1f4de31586d5ff49e0cc4",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-calibration.json"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v1-calibration.json",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622732741"
       }
     }
   },
@@ -23,15 +26,18 @@
     "files": {
       "model.onnx": {
         "sha256": "8f7bbb21ce135765d4de33d7fc3f5947d31826424249018a6671d0b611541c8a",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-model.onnx"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-model.onnx",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622732766"
       },
       "tokenizer.json": {
         "sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-tokenizer.json"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-tokenizer.json",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622734126"
       },
       "calibration.json": {
         "sha256": "1b13be92f629997502aea80185f8c3ec556098c7d78596309ddf050fbcbc4e4f",
-        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-calibration.json"
+        "url": "https://github.com/shreymp/congressional-app-challenge-2026/releases/download/jev-call-models-v1-v2/jev-call-v2-calibration.json",
+        "api_url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/622734159"
       }
     }
   }

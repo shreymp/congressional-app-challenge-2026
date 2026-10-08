@@ -77,3 +77,5 @@ From the repository root, after installing the listed dependencies in `.venv` an
 .venv/bin/python backend/jev-posttrain/score.py 'Caller: Read me the code your bank just texted you.'
 .venv/bin/python backend/jev-posttrain/score.py --checkpoint backend/jev-posttrain/runs/call-v2-caller 'Caller: Read me the code your bank just texted you.'
 ```
+
+The model release belongs to this private repository. Downloading requires repository access through Git HTTPS credentials or the `GITHUB_TOKEN` (or `GH_TOKEN`) environment variable. SSH-only clones need a token for the release download. Tokens are never stored in the repository.
