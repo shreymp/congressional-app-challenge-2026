@@ -42,6 +42,16 @@ The model's prompts ask for a whole-call scam verdict, while the iOS app asks te
 
 No accounts were created and no paid services were used. The local checkpoint includes data from a source with no stated license, so its reuse or distribution should be reviewed before publication.
 
+## Download the post-trained models after cloning
+
+```sh
+python3 ios/scripts/setup_posttrained_jev.py
+```
+
+This downloads the exact V1 and caller-only V2 ONNX exports, tokenizers, and calibration files from the repository's `jev-call-models-v1-v2` GitHub release into `ios/ScamTranscript/Resources/JevCallV1` and `JevCallV2`. All six files are SHA-256 verified using `model_downloads.json`. Existing verified files are reused. Allow about 1.22 GB of downloads and disk space. Python 3.9 or newer is sufficient; no extra packages are needed.
+
+`scripts/download_jev_model.py` downloads the upstream starting model, separately from these locally post-trained checkpoints.
+
 ## Artifacts and reproduction
 
 - Trainable checkpoint: `runs/call-v1/model.safetensors`

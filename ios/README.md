@@ -30,6 +30,8 @@ python3 ios/scripts/setup_posttrained_jev.py
 open ios/ScamTranscript.xcodeproj
 ```
 
+The post-trained setup script downloads V1 and V2, their tokenizers, and calibration from GitHub release assets and verifies every checksum. The upstream Jev setup is separate.
+
 The setup script downloads and checks SHA-256 hashes for the native library and
 the English model. Both large assets are ignored by Git. They have already been
 downloaded in this working copy. The Xcode project is checked in; regenerate it

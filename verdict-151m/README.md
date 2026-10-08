@@ -36,7 +36,15 @@ The 606 MB ONNX model is downloaded separately rather than stored in Git. From t
 python3 scripts/download_jev_model.py
 ```
 
-This saves `verdict-151m/model.onnx`, using a pinned Hugging Face revision and SHA-256 verification against the exact local model used here. Re-running skips an already verified file. Failed or mismatched downloads never replace the existing model. Internet access and about 606 MB of free space are required.
+For the locally post-trained scam-call **V1 and V2** models, also run:
+
+```bash
+python3 ios/scripts/setup_posttrained_jev.py
+```
+
+That command fetches the post-trained ONNX weights, tokenizer, and calibration for each version from GitHub release assets. See `backend/jev-posttrain/README.md` for details.
+
+The upstream download command saves `verdict-151m/model.onnx`, using a pinned Hugging Face revision and SHA-256 verification against the exact local model used here. Re-running skips an already verified file. Failed or mismatched downloads never replace the existing model. Internet access and about 606 MB of free space are required.
 
 For the iOS app, then run `python3 ios/scripts/setup_jev.py` to copy the model into the app resources and install ONNX Runtime. The model remains ignored by Git. The upstream model card below describes the original model; it does not report validation of this app's scam detection.
 
