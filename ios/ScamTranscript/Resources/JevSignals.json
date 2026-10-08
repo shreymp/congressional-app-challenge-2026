@@ -1,0 +1,52 @@
+[
+  {
+    "id": "money_request",
+    "label": "Money request",
+    "proposition": "The caller is asking the other person to pay, send, transfer, withdraw, or provide money or something of monetary value."
+  },
+  {
+    "id": "credentials_request",
+    "label": "Credentials request",
+    "proposition": "The caller is asking the other person for a password, PIN, login credential, account password, or security answer."
+  },
+  {
+    "id": "verification_code_request",
+    "label": "Verification-code request",
+    "proposition": "The caller is asking the other person to share a one-time passcode, verification code, authentication code, or code sent by text or email."
+  },
+  {
+    "id": "personal_info_request",
+    "label": "Personal-information request",
+    "proposition": "The caller is asking the other person for sensitive personal information such as a Social Security number, date of birth, address, bank account number, or card number."
+  },
+  {
+    "id": "urgency",
+    "label": "Urgency",
+    "proposition": "The caller says that the other person must act immediately, today, right now, or before an urgent deadline."
+  },
+  {
+    "id": "pressure",
+    "label": "Pressure to decide",
+    "proposition": "The caller is pressuring the other person to make a quick decision or complete an action without time to think or verify."
+  },
+  {
+    "id": "fear_or_threat",
+    "label": "Fear or threat",
+    "proposition": "The caller is using a threat, frightening consequence, punishment, account loss, arrest, or other fear to influence the other person."
+  },
+  {
+    "id": "secrecy_request",
+    "label": "Secrecy request",
+    "proposition": "The caller is telling the other person to keep the situation secret or not contact family, a bank, police, or another trusted person."
+  },
+  {
+    "id": "unusual_payment_method",
+    "label": "Unusual payment method",
+    "proposition": "The caller is requesting payment by gift card, cryptocurrency, wire transfer, cash deposit, payment app, or another unusual hard-to-reverse method."
+  },
+  {
+    "id": "impersonation_claim",
+    "label": "Impersonation claim",
+    "proposition": "The caller claims to be a bank, government agency, police officer, company, technical support provider, relative, or other authority or known person."
+  }
+]

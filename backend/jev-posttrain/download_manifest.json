@@ -1,0 +1,628 @@
+{
+  "base_model_url": "https://huggingface.co/heman10x/rlcd-modernbert-151m",
+  "sources": {
+    "menaattia": {
+      "url": "https://huggingface.co/datasets/menaattia/phone-scam-dataset",
+      "file_count": 2,
+      "total_bytes": 775082,
+      "files": [
+        {
+          "path": "menaattia/test_dataset.csv",
+          "bytes": 154070,
+          "sha256": "c2b189a53378c4ca2ba7a4271b4d171e7c30974e10af7cda713a9204e68e5e88"
+        },
+        {
+          "path": "menaattia/train_dataset.csv",
+          "bytes": 621012,
+          "sha256": "84e8a8ff6a9405971a8721710f56c409c4224ef54a1925100eea08abfa99e782"
+        }
+      ]
+    },
+    "bothbosu_scam": {
+      "url": "https://huggingface.co/datasets/BothBosu/scam-dialogue",
+      "file_count": 4,
+      "total_bytes": 4536082,
+      "files": [
+        {
+          "path": "bothbosu_scam/README.md",
+          "bytes": 2966,
+          "sha256": "8ae23714639cc825509bb6ec5558336cc3cf23fc663ffc3930a7aa481be6ec3c"
+        },
+        {
+          "path": "bothbosu_scam/scam-dialogue_all.csv",
+          "bytes": 2267350,
+          "sha256": "fe8a8fa0aa2b8afb0b0a672fb7f9739b323cb6dd12064f786a68c2a1f49a4e0b"
+        },
+        {
+          "path": "bothbosu_scam/scam-dialogue_test.csv",
+          "bytes": 452664,
+          "sha256": "17a9e52e90d893541d76dbb4588cb75b1a66ef2474ef2619d56feff5b8d5aec0"
+        },
+        {
+          "path": "bothbosu_scam/scam-dialogue_train.csv",
+          "bytes": 1813102,
+          "sha256": "cda5d42d15fd341208a25466d9ea279de905a640bd153f67b5c29743520f96f8"
+        }
+      ]
+    },
+    "shake": {
+      "url": "https://huggingface.co/datasets/shakeleoatmeal/phone-scam-detection-synthetic",
+      "file_count": 4,
+      "total_bytes": 1010708,
+      "files": [
+        {
+          "path": "shake/README.md",
+          "bytes": 1061,
+          "sha256": "38171953e18bba0a66f5aa7f3bf11039ebbb4e033afbde95d38b46dd2a04d7ac"
+        },
+        {
+          "path": "shake/data/test-00000-of-00001.parquet",
+          "bytes": 101114,
+          "sha256": "91687ddc04bb59b9865ed001782a8a542d9704491d11efe3bacbb7e15da124fb"
+        },
+        {
+          "path": "shake/data/train-00000-of-00001.parquet",
+          "bytes": 704685,
+          "sha256": "628452503397e07261192fa361e1f9a0e02c6ac7eca61a2ea82406f54feb51e2"
+        },
+        {
+          "path": "shake/data/validation-00000-of-00001.parquet",
+          "bytes": 203848,
+          "sha256": "034237e6f3a907c599d2b784c668f673e60fb9b943ed4d93561dadfaa886292c"
+        }
+      ]
+    },
+    "ysangam": {
+      "url": "https://huggingface.co/datasets/ysangam/Indian_Cyber_Scam_PhoneCall_Hinglish_Dataset",
+      "file_count": 2,
+      "total_bytes": 1346498,
+      "files": [
+        {
+          "path": "ysangam/India_Cyber_Scam_Hinglish_Dataset.csv",
+          "bytes": 1343946,
+          "sha256": "4140227408ac907c2b9d4c3ae40a211a7ef482f5c857a6f376b3a8ec55c59547"
+        },
+        {
+          "path": "ysangam/README.md",
+          "bytes": 2552,
+          "sha256": "ed8e95398e873a10b67f406a5c2bbdc3b4bc3a7ae5a7563152b8297bba43b9a3"
+        }
+      ]
+    },
+    "icfd31k": {
+      "url": "https://huggingface.co/datasets/rishia2220/icfd-31k",
+      "file_count": 87,
+      "total_bytes": 64651596,
+      "files": [
+        {
+          "path": "icfd31k/README.md",
+          "bytes": 1968,
+          "sha256": "f0ae48f8f0f5cfc932dccd632ce4634044844180d1292d34f3fcc6453ed320fd"
+        },
+        {
+          "path": "icfd31k/checksums.sha256",
+          "bytes": 9447,
+          "sha256": "1dbb347dc89cc7335fb71c40e2870d30756eae2abd175c5e9f0e7093fcbb8664"
+        },
+        {
+          "path": "icfd31k/dataset_manifest.jsonl",
+          "bytes": 21090,
+          "sha256": "ba9a00508b9df6f4b5a89c92880992386ccffbfb8ad3579ca5ef6411d86403a5"
+        },
+        {
+          "path": "icfd31k/release_summary.json",
+          "bytes": 1376,
+          "sha256": "0fb2a19ba03b406374815c214cbaa5709832da0946f42918d84546df6b82058c"
+        },
+        {
+          "path": "icfd31k/source_conversations/cross_domain-00000-of-00001.jsonl.zst",
+          "bytes": 629852,
+          "sha256": "ddd4e54292a9de79e11a82836fd0052e7dcf9fa6c789efc4409b694b96a51349"
+        },
+        {
+          "path": "icfd31k/source_conversations/test-00000-of-00002.jsonl.zst",
+          "bytes": 1072627,
+          "sha256": "77945316aa3d50089e929535d4fc8ab1410d2d6e27e4b1fe06917154a8482086"
+        },
+        {
+          "path": "icfd31k/source_conversations/test-00001-of-00002.jsonl.zst",
+          "bytes": 1007424,
+          "sha256": "6322e467193e1c0f90d22d316de47f2283dc2ec21988b674ed811c7d37f7c157"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00000-of-00010.jsonl.zst",
+          "bytes": 863144,
+          "sha256": "e958d6e25d346e7ec5ff0305bf58a300add1ad1439a7c23bb2f69872334d250e"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00001-of-00010.jsonl.zst",
+          "bytes": 900943,
+          "sha256": "dc74894579c24f3141d2aff92bf0a6f0f697f05d856f67038a7aab4e6a9d6e0c"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00002-of-00010.jsonl.zst",
+          "bytes": 746821,
+          "sha256": "f62a3659fd3cd24e5d5a03648425212104c91e91b65751b6d69cc05e2e7265b7"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00003-of-00010.jsonl.zst",
+          "bytes": 798739,
+          "sha256": "2cc0cef2c7d949f835d0dc65b866460062367155ae57d3315f119502e73aefa0"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00004-of-00010.jsonl.zst",
+          "bytes": 809467,
+          "sha256": "286100b49f501171aad133372fc4138398958e69438c56d1b320c56672296fe5"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00005-of-00010.jsonl.zst",
+          "bytes": 799352,
+          "sha256": "cb9c6a6a016ec4926ef89dcf897df442be238fe284919def481fb4b354f4aa5f"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00006-of-00010.jsonl.zst",
+          "bytes": 799922,
+          "sha256": "83eed2e11ab2294a8f128245801122a973e3657b1367e6cfa839aceb913c02f9"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00007-of-00010.jsonl.zst",
+          "bytes": 848259,
+          "sha256": "b93f2989e7b0525320ae5d7917f298ca71d39c305424837f066e7785acff9ae4"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00008-of-00010.jsonl.zst",
+          "bytes": 809780,
+          "sha256": "943df3e698012b5495ee65caf6cd2cae20d8e57be15af1628227ad9bf7bb4e00"
+        },
+        {
+          "path": "icfd31k/source_conversations/train-00009-of-00010.jsonl.zst",
+          "bytes": 758355,
+          "sha256": "00d120f9e0709f79de30aa0c8c172116b6222e724a22c664b6853473caa02a1d"
+        },
+        {
+          "path": "icfd31k/source_conversations/validation-00000-of-00002.jsonl.zst",
+          "bytes": 1015670,
+          "sha256": "87e6b3582196066ff3f6f3aef98883aa7d9099ff117c415f8a36a3d74c196cd4"
+        },
+        {
+          "path": "icfd31k/source_conversations/validation-00001-of-00002.jsonl.zst",
+          "bytes": 1018183,
+          "sha256": "da3c26733bd3a8d0d4c41c9992115a0ee964e1d95b47472d339ef2ba6ce72bb4"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/cross_domain-00000-of-00002.parquet",
+          "bytes": 1168595,
+          "sha256": "12b0315758b9a4334688db8c6d33236c9c0fca8b7b18f23508b0cf827bab8381"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/cross_domain-00001-of-00002.parquet",
+          "bytes": 1139939,
+          "sha256": "fb0910bd1f1cef5db8aeec0b2dcc3fb7bdeed5604acc81e68c2f8469a487ea1b"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00000-of-00008.parquet",
+          "bytes": 1093684,
+          "sha256": "eef439f2bfd1cc5a66bd6eca09ed0ac4de59ef919b4b8d4a09a2b08785161f6f"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00001-of-00008.parquet",
+          "bytes": 1194230,
+          "sha256": "e51dddf306d6783975f7d607e2a12486ec22f466124a27bdeb95e9f42ec1d03b"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00002-of-00008.parquet",
+          "bytes": 1046794,
+          "sha256": "0faf1b3762f9df262321967e86eea1c966d43a8a79bf3f61a1dfe0e7da843f04"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00003-of-00008.parquet",
+          "bytes": 1092478,
+          "sha256": "de98ff3259b4a31b78bbd04f632ac9043c9dfea84c227b5feedd255b2caac766"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00004-of-00008.parquet",
+          "bytes": 1038494,
+          "sha256": "0cdd3796c88beca651fca98c57c0be499da30cc5eecf36dd5aec5c6c76f6b9f5"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00005-of-00008.parquet",
+          "bytes": 1053612,
+          "sha256": "c8b23f236e9b8719da8beaca45418a44139693aff6de6111c8b0a31ae95f4dd6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00006-of-00008.parquet",
+          "bytes": 1018777,
+          "sha256": "40540f9e784f8a400ef914306707cc4138e562fd5eb9288cb7959d1340d792cc"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/test-00007-of-00008.parquet",
+          "bytes": 1037050,
+          "sha256": "ebdf8888d565ea5eaacdf5d07c70243ff65f18c9ed6e8202546c8c90c8257238"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00000-of-00050.parquet",
+          "bytes": 594064,
+          "sha256": "8497f95563a0f23a8ac2fbfa33790af315be5acbc591cfdc3181266c0386540a"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00001-of-00050.parquet",
+          "bytes": 601919,
+          "sha256": "e347bb0ac7e6b4c2cf38898f5efcbb12b389229e0a6d6689018ad2d83b3d3737"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00002-of-00050.parquet",
+          "bytes": 601639,
+          "sha256": "251b184e5a1dc60af4424cb6b38a6ddd7daaeeba0a20bbe931b1506a1fbb2519"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00003-of-00050.parquet",
+          "bytes": 629649,
+          "sha256": "1e94083d62d5a8dfdfd639a852723696e638bcbf3164ffd87fd44444ad220dca"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00004-of-00050.parquet",
+          "bytes": 659745,
+          "sha256": "1f8b570daaa2b481670f504f0a9d7ff159f971b9847e4db0d377fa87cc85f6e2"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00005-of-00050.parquet",
+          "bytes": 609438,
+          "sha256": "9c061dfa31a19f5c4d994c5d5647639b9cef90bb32a4be491b6c165cae171097"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00006-of-00050.parquet",
+          "bytes": 704072,
+          "sha256": "34d8de166fd09c1cd8d78f8046266508301c0dda295a1938de6eba73ce932bf7"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00007-of-00050.parquet",
+          "bytes": 687700,
+          "sha256": "2f770dd96e596f6f482e324135eb45b4eb692b847fc6e10b95499419224e55e8"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00008-of-00050.parquet",
+          "bytes": 713178,
+          "sha256": "71541d2affd7eb8cb80aa10b25a7d5d5383238853dd44ca291d931eb174a4e58"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00009-of-00050.parquet",
+          "bytes": 662837,
+          "sha256": "bbed604ca14cc2701926cc44860739f8238b9ab68dca9d2e597b9df0a3f1b535"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00010-of-00050.parquet",
+          "bytes": 748450,
+          "sha256": "76d4da79824fd047fe9fc4eff5c98300be24194f60d5d008da3253e6d00182d6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00011-of-00050.parquet",
+          "bytes": 763344,
+          "sha256": "11a93d7a01eb95c59952911e94a9a07852a72ea5f55dae9f8162c7f039b0c4cd"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00012-of-00050.parquet",
+          "bytes": 646005,
+          "sha256": "fd3d56974952cd0aa1c5b816ca6b5e9907604c91e70feb2e468896fe522139c4"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00013-of-00050.parquet",
+          "bytes": 646562,
+          "sha256": "53b5ec9c6b61cb4fa33025d80cd89f43742ec5d022a4651d0efec4d34c8ae74d"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00014-of-00050.parquet",
+          "bytes": 651041,
+          "sha256": "3aa0433e2a4bf7c4befb1b35ae7a3d9e36b7356d91095528dacdc025d5b43ddf"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00015-of-00050.parquet",
+          "bytes": 627001,
+          "sha256": "4ea2422211413706c58123eb20b3a208c6a86338cf95d38b1a205b3a042d2cc6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00016-of-00050.parquet",
+          "bytes": 651247,
+          "sha256": "311e4c8ea15a63bd8f48d9b0a03449d3b0a97fdb0d38d6238c1c3e68719fb8fd"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00017-of-00050.parquet",
+          "bytes": 642962,
+          "sha256": "ecb044643eeb83f80b12788f58c339ae2dc79ca5d2cdd313b16a77a5d951ecf5"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00018-of-00050.parquet",
+          "bytes": 677202,
+          "sha256": "be16f7a4fcaac4f313b3c0b2886aaaea30e616e4f4bcb7a20dad89cc45c50e35"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00019-of-00050.parquet",
+          "bytes": 660261,
+          "sha256": "b1c885ad14721ddf102ae67c8d77cc803027db3586b15b018893c0663c454714"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00020-of-00050.parquet",
+          "bytes": 675460,
+          "sha256": "469f09fa61e768422d2292e93207d712dd3160b92b412443a89119e63b92f1e3"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00021-of-00050.parquet",
+          "bytes": 646369,
+          "sha256": "49818ca730be073f56718d59de6026cedc83231c980b6964dd52b4b740150803"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00022-of-00050.parquet",
+          "bytes": 638454,
+          "sha256": "53902cb0cc34d5a2cee676c6a87149d48653e2946898967fd2dd99a89e1f9be1"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00023-of-00050.parquet",
+          "bytes": 625263,
+          "sha256": "dbd934603a9295e577db32ee1b58700349d3a31ab32585a16684ff05c4d72b87"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00024-of-00050.parquet",
+          "bytes": 635297,
+          "sha256": "0db13f7afae4d25ee3c90c7c3dde781e2c3bfc738a9a1aea7f594198cb21f6ac"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00025-of-00050.parquet",
+          "bytes": 689203,
+          "sha256": "0138cadffdae569e4ae03d56b9f8f5ea9c57c31e938d2bfddb0a37369d9f3ac3"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00026-of-00050.parquet",
+          "bytes": 620022,
+          "sha256": "4c11a86dccddc1e430f5814189d2f5d6afd2f01febab8e2eba4d46435ece2d47"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00027-of-00050.parquet",
+          "bytes": 614870,
+          "sha256": "e1704820d61e1057d697dadaf4aca2d48913e68920db68d11252b562d3245bde"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00028-of-00050.parquet",
+          "bytes": 642581,
+          "sha256": "90558029b6b1fcc312393cd065829720de69d7722b6b0c1782119737f8ed3331"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00029-of-00050.parquet",
+          "bytes": 634919,
+          "sha256": "7a4aeb2007ba836fec1cbd5e23fef6658602053ed9cccae3e3f22569d76f4137"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00030-of-00050.parquet",
+          "bytes": 650619,
+          "sha256": "fff277748d4a19db0439c0e0cf2fc916794b7da02e6eea70268998b4988743c3"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00031-of-00050.parquet",
+          "bytes": 628522,
+          "sha256": "b63e09fb2ef44f761b3bca09697ded93b29856d5d2887124dd4f998d06922af6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00032-of-00050.parquet",
+          "bytes": 596476,
+          "sha256": "9acd6296043bab1e8dbdde80b4ad418e07d68b15321b05c41001dfa6df345378"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00033-of-00050.parquet",
+          "bytes": 620902,
+          "sha256": "9d6927ae3a432bbd516d40b621a8181ef260b08c4cbdf75f2bd3233955d5b58f"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00034-of-00050.parquet",
+          "bytes": 585398,
+          "sha256": "3f41b285dafec23339381722ad7af226e8dc5f1778c2b3d667dea59c38d0ddb8"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00035-of-00050.parquet",
+          "bytes": 652251,
+          "sha256": "2c5445870e3898c7da5a609a68c29a2715dad7d616e7283a3afdb791a2326d54"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00036-of-00050.parquet",
+          "bytes": 653000,
+          "sha256": "ac3d799f261d82900cc0dfee2640966326844f9d67c935aa13c46ee1175885a6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00037-of-00050.parquet",
+          "bytes": 697409,
+          "sha256": "429ac1cbd80c504cd5ca76d1f4bec98c88b98860f64523468c285099136de253"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00038-of-00050.parquet",
+          "bytes": 686275,
+          "sha256": "51e439343839608ec0f96113f057b607bf072e680b9261b8bde8331833a9d98b"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00039-of-00050.parquet",
+          "bytes": 661882,
+          "sha256": "7528f686184429a7e882b6fb349c1aea5764c8deb9ec2023e01f6cb1973639d1"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00040-of-00050.parquet",
+          "bytes": 691311,
+          "sha256": "96841694099e040ebd2fd4667d5a90b3721874fe4a3aa00aba0701803032f8e6"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00041-of-00050.parquet",
+          "bytes": 647659,
+          "sha256": "48f80554e3b34cfd769d0f87415d773e4c243c64f3e23627ce44124db44c2088"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00042-of-00050.parquet",
+          "bytes": 670057,
+          "sha256": "38d2b27ed39ddb5a95b43895c1a9eb92322823b2e2e3df9f07bbbbb6b9401c46"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00043-of-00050.parquet",
+          "bytes": 682441,
+          "sha256": "e45f6d9d3a3741d5bc46c736f8e4f3caf6b9d34e64716f6782e0405f0f6d1c98"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00044-of-00050.parquet",
+          "bytes": 612765,
+          "sha256": "25e8702df3abf178e1f9c376aee3808983d6e3d1504c674c7478baccb28b26d3"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00045-of-00050.parquet",
+          "bytes": 603441,
+          "sha256": "1202c75fed3903ce2695ce9bedec1e481da9e4ec3e6c3f7f61bda369280df963"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00046-of-00050.parquet",
+          "bytes": 624719,
+          "sha256": "57ed910458b51125bf2c8dca3158610b162e7c147d9e39e8dc62e5eeff0579a2"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00047-of-00050.parquet",
+          "bytes": 621085,
+          "sha256": "d2ac0fadda5fd6d9e70f8bb57cc1b005eb1bd74701cfb59969c87fb5165bb16f"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00048-of-00050.parquet",
+          "bytes": 639122,
+          "sha256": "3811dbaf6ccda45fe4f53609e02b2ce271cbfdec0ceebbc02739a72b1d9c5432"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/train-00049-of-00050.parquet",
+          "bytes": 674807,
+          "sha256": "8122576b4d97d2f85f5e0c4db5be26d5ff31f0f6844737cc8555914da7b50663"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00000-of-00008.parquet",
+          "bytes": 1007781,
+          "sha256": "6b4f7a29450429bcc403de3f9a4fcd6367922db92551e7f190a592937f21206b"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00001-of-00008.parquet",
+          "bytes": 1157006,
+          "sha256": "ea323ca65df2c4c4db40f95fc10dd231e851e79c2b418f3fb7066d84b1348183"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00002-of-00008.parquet",
+          "bytes": 1059198,
+          "sha256": "f2ebb659b5eca80e445693023f4996087ba42cb874411348ac71da2b56f34702"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00003-of-00008.parquet",
+          "bytes": 1038621,
+          "sha256": "ef4ff86c7b85926a9b0e7e7508dec1a9940270b9693d5ee0893406b85b90a16f"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00004-of-00008.parquet",
+          "bytes": 1023508,
+          "sha256": "02853f05329af97e9376bee7438568755115eb11f5db9f8d345b5e2a8d28d379"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00005-of-00008.parquet",
+          "bytes": 1019943,
+          "sha256": "b967225b5f8597086e4e8f9e1888181cc15ebed881398c384f00a7b9ea43650c"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00006-of-00008.parquet",
+          "bytes": 1031889,
+          "sha256": "d196fbac711434af2570628d4259e072f077931de02bdb8c0b794b3100f459a8"
+        },
+        {
+          "path": "icfd31k/streaming_chunks/validation-00007-of-00008.parquet",
+          "bytes": 1016683,
+          "sha256": "ec47e3fd6a00a6aa0367ac8e58c30e25712d69f748403c1aee9dc1a263c35fcd"
+        }
+      ]
+    },
+    "upstream_jev": {
+      "url": "https://github.com/Heman10x-NGU/Verdict-open-jev",
+      "file_count": 1,
+      "total_bytes": 449986,
+      "files": [
+        {
+          "path": "upstream_jev/val.jsonl",
+          "bytes": 449986,
+          "sha256": "eb7d0819d4f6ae32bc859caf135bf1f1001b0540ded554723451434644884d0e"
+        }
+      ]
+    },
+    "bothbosu_multi": {
+      "url": "https://huggingface.co/datasets/BothBosu/multi-agent-scam-conversation",
+      "file_count": 4,
+      "total_bytes": 9660265,
+      "files": [
+        {
+          "path": "bothbosu_multi/README.md",
+          "bytes": 4042,
+          "sha256": "bc21d47e5593ee298f4c457adee4aa281ff6913063e67cb5f2289c7b097526af"
+        },
+        {
+          "path": "bothbosu_multi/agent_conversation_all.csv",
+          "bytes": 4828897,
+          "sha256": "e6db0f4a31efc56ffd20951039578e578c92d732d0ca1a50ad925fcc681bd7cf"
+        },
+        {
+          "path": "bothbosu_multi/agent_conversation_test.csv",
+          "bytes": 986115,
+          "sha256": "93d380c704e47d81028aa55c03a3f28cd6e23498c03cb70aad136a3762c0cc74"
+        },
+        {
+          "path": "bothbosu_multi/agent_conversation_train.csv",
+          "bytes": 3841211,
+          "sha256": "e1c89f4e252162f5a37c01d2ebe9e0cdcad3b22b7bcf01ef730877cef04612db"
+        }
+      ]
+    },
+    "bothbosu_single": {
+      "url": "https://huggingface.co/datasets/BothBosu/single-agent-scam-conversations",
+      "file_count": 4,
+      "total_bytes": 4778772,
+      "files": [
+        {
+          "path": "bothbosu_single/README.md",
+          "bytes": 2897,
+          "sha256": "233b86b1a3724542698f379c74b6d706e0941426d546e09fdfe4b5af127b3f70"
+        },
+        {
+          "path": "bothbosu_single/single-agent-scam-dialogue_all.csv",
+          "bytes": 2388729,
+          "sha256": "c070ab3674e49e3a80a6c62c5df00f751bb98c47995ffe96e53a3c42d7d45bda"
+        },
+        {
+          "path": "bothbosu_single/single-agent-scam-dialogue_test.csv",
+          "bytes": 475657,
+          "sha256": "26626863dec88a3289703d7791eefec11be30c98bd225edc49c435e580c53305"
+        },
+        {
+          "path": "bothbosu_single/single-agent-scam-dialogue_train.csv",
+          "bytes": 1911489,
+          "sha256": "4cf61dd3f7e7f29349feb62cf9b48f4281df8a18e01581eb8b18c47d5550d2d9"
+        }
+      ]
+    },
+    "kaggle_teeconnie": {
+      "url": "https://www.kaggle.com/datasets/teeconnie/scam-and-non-scam-call-conversation-dataset",
+      "file_count": 3,
+      "total_bytes": 241370,
+      "files": [
+        {
+          "path": "kaggle_teeconnie/.complete/datasets/teeconnie/scam-and-non-scam-call-conversation-dataset/1/bundle.complete",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "kaggle_teeconnie/English_NonScam.txt",
+          "bytes": 79832,
+          "sha256": "34c21dbbe912e3b375ffbd9e1bdbb7444dcac6fea180b1a05f19d46b0c53da0a"
+        },
+        {
+          "path": "kaggle_teeconnie/English_Scam.txt",
+          "bytes": 161538,
+          "sha256": "2d432968afdf41f0245380aa1c4ad0c9827d1e0338d956035d386cc3d42d78a0"
+        }
+      ]
+    }
+  },
+  "base_model": {
+    "path": "verdict-151m/model.safetensors",
+    "bytes": 605529340,
+    "sha256": "d252823994d47a7933217fc86449493299643af6a0c0d83d6bd5a7666d3253ef"
+  }
+}
