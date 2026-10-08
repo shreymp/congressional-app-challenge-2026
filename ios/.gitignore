@@ -11,3 +11,6 @@ TestResults/
 __pycache__/
 ScamTranscript/Resources/JevCallV1/
 ScamTranscript/Resources/JevCallV2/
+*.xcresult/
+xcuserdata/
+.DS_Store
