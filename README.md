@@ -1,0 +1,3 @@
+﻿# Congressional App Challenge 2026
+
+JEV transcript connector. See [architecture and setup](backend/Transcript-Based%20Detector/ARCHITECTURE.md).
