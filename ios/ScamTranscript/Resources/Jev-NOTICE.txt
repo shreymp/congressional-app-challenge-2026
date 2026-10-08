@@ -1,0 +1,14 @@
+Jev model: heman10x/rlcd-modernbert-151m (OpenJev / Verdict, 151M)
+https://huggingface.co/heman10x/rlcd-modernbert-151m
+https://github.com/Heman10x-NGU/Verdict-open-jev
+The model card declares Apache-2.0 licensing. The Apache-2.0 license text
+is included in the app bundle as VOSK-LICENSE.
+
+Inference runtime: ONNX Runtime 1.24.3, Microsoft
+https://github.com/microsoft/onnxruntime
+Its MIT license is included in the app bundle as LICENSE.
+
+This app ports the repository's experimental Kev/Jev transcript adapter.
+The bundled checkpoint and its temperature scaling have not been trained
+or validated for these scam-specific behaviors. Signal estimates do not
+constitute calibrated scam probabilities.
