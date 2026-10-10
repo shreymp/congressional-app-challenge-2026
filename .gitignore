@@ -1,3 +1,6 @@
+node_modules/
+.idea/
+*.pt
 /work/
 .DS_Store
 node_modules/
