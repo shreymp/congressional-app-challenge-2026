@@ -1,0 +1,17 @@
+[
+  {
+    "id": "otp-and-urgency",
+    "transcript": "Caller: I am calling from your bank. We detected fraud, so read me the six-digit code we just sent you right now.",
+    "expected_present": ["verification_code_request", "urgency", "impersonation_claim"]
+  },
+  {
+    "id": "gift-card-secrecy",
+    "transcript": "Caller: Your grandson is in trouble. Go buy $500 in Apple gift cards immediately and do not tell your family.",
+    "expected_present": ["money_request", "urgency", "secrecy_request", "unusual_payment_method"]
+  },
+  {
+    "id": "hard-negative-dentist",
+    "transcript": "Caller: Hi, this is Maple Dental. We need to reschedule your cleaning from Tuesday to Thursday. Does 3 p.m. work for you?",
+    "expected_present": []
+  }
+]

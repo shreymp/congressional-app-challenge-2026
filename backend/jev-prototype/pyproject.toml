@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev-scam-signals"
+version = "0.1.0"
+description = "Kev transcript-signal prototype using Verdict 151M"
+requires-python = ">=3.10"
+dependencies = [
+  "huggingface_hub>=0.24",
+  "numpy>=1.24",
+  "onnxruntime>=1.18",
+  "transformers>=4.40,<6",
+]
+
+[project.scripts]
+jev-scam-signals = "jev_scam_signals:main"
+kev-scam-signals = "jev_scam_signals:main"
