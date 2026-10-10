@@ -1,0 +1,574 @@
+// !$*UTF8*$!
+{
+	"archiveVersion" = 1;
+	"classes" = {
+	};
+	"objectVersion" = 56;
+	"objects" = {
+		"73EBF6644258C120893E685D" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+				"SDKROOT" = "iphoneos";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"SWIFT_STRICT_CONCURRENCY" = "minimal";
+				"ENABLE_TESTABILITY" = "YES";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu17";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++17";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+			};
+		};
+		"0B0C687DF8B6B8DC790B519C" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"IPHONEOS_DEPLOYMENT_TARGET" = "16.0";
+				"SDKROOT" = "iphoneos";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"SWIFT_STRICT_CONCURRENCY" = "minimal";
+				"ENABLE_TESTABILITY" = "YES";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu17";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++17";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+			};
+		};
+		"76F8DEC3DFE0BDB465198890" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("73EBF6644258C120893E685D", "0B0C687DF8B6B8DC790B519C");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Debug";
+		};
+		"E29412F25F9D8D613643230A" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "wrapper.xcframework";
+			"path" = "Vendor/libvosk.xcframework";
+			"sourceTree" = "<group>";
+		};
+		"317E9B6A0F952F3348B8B615" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "wrapper.xcframework";
+			"path" = "Vendor/ONNXRuntime/onnxruntime.xcframework";
+			"sourceTree" = "<group>";
+		};
+		"5F329EB4DB7FB94328FBFF65" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/App/ScamTranscriptApp.swift";
+			"sourceTree" = "<group>";
+		};
+		"1F5D9BBE593BFF2E9B789F7F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "5F329EB4DB7FB94328FBFF65";
+		};
+		"60EBBFFF7E977191653D5139" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/Audio/RecordingController.swift";
+			"sourceTree" = "<group>";
+		};
+		"3FFDF0033AC51941285E13BA" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "60EBBFFF7E977191653D5139";
+		};
+		"0559E3D9068C99C04620B5D2" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/Audio/VoskRecognizer.swift";
+			"sourceTree" = "<group>";
+		};
+		"450CD647B43C7D4356CC0BF5" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0559E3D9068C99C04620B5D2";
+		};
+		"1552124BD6302AA662DA625A" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.cpp.objcpp";
+			"path" = "ScamTranscript/Bridge/JevRuntime.mm";
+			"sourceTree" = "<group>";
+		};
+		"DAA20CF0DD8002054CFE25E6" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "1552124BD6302AA662DA625A";
+		};
+		"38090EB85DACDE97864D42FC" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/Core/JevDecisionMaker.swift";
+			"sourceTree" = "<group>";
+		};
+		"C710EDCDE15172E0319C7C82" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "38090EB85DACDE97864D42FC";
+		};
+		"9FD5C11A991AA9B779781A70" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/Core/JevTokenizer.swift";
+			"sourceTree" = "<group>";
+		};
+		"4280C7A41A3CF0EB30E1ADAC" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "9FD5C11A991AA9B779781A70";
+		};
+		"D86D6C036374AE48F5E4056E" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscript/Core/ScamClassifier.swift";
+			"sourceTree" = "<group>";
+		};
+		"06ECF0960F04365FD294728F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "D86D6C036374AE48F5E4056E";
+		};
+		"0F5F2E27B01B6A4DD8EAABC5" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "ScamTranscript/Resources/vosk-model-small-en-us-0.15";
+			"sourceTree" = "<group>";
+		};
+		"78E442E8F6AB5E9EBA3DDDF4" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0F5F2E27B01B6A4DD8EAABC5";
+		};
+		"4F066269BB1A9DDA98D377F9" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder";
+			"path" = "ScamTranscript/Resources/Jev";
+			"sourceTree" = "<group>";
+		};
+		"95FDE06BCD66BAD46AEEC7BD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "4F066269BB1A9DDA98D377F9";
+		};
+		"84C10A57A697570EBE4C6A4F" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder";
+			"path" = "ScamTranscript/Resources/JevCallV1";
+			"sourceTree" = "<group>";
+		};
+		"343FD1B0D73915CBDC2DD939" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "84C10A57A697570EBE4C6A4F";
+		};
+		"CBACF45F0DE8ED7E760B6B02" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder";
+			"path" = "ScamTranscript/Resources/JevCallV2";
+			"sourceTree" = "<group>";
+		};
+		"D1A446FB8D5956E2C0AEC8A2" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "CBACF45F0DE8ED7E760B6B02";
+		};
+		"122FB2D5E1E6AE04A5EF9E4D" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "ScamTranscript/Resources/JevSignals.json";
+			"sourceTree" = "<group>";
+		};
+		"84FC5CA45F18D7A382D09482" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "122FB2D5E1E6AE04A5EF9E4D";
+		};
+		"BC41E40F82FF6789FF40AAC1" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "ScamTranscript/Resources/Jev-NOTICE.txt";
+			"sourceTree" = "<group>";
+		};
+		"5A0A8B4D594FC6FB77A58F05" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "BC41E40F82FF6789FF40AAC1";
+		};
+		"2EAB66427CFD1C8A13A63C21" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "Vendor/VOSK-LICENSE";
+			"sourceTree" = "<group>";
+		};
+		"C6F533069F29CE0180F9818B" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "2EAB66427CFD1C8A13A63C21";
+		};
+		"EFED3A948532BE8A8E7BF8E2" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"path" = "Vendor/ONNXRuntime/LICENSE";
+			"sourceTree" = "<group>";
+		};
+		"13C83A85BAB2E1C5EEF6DFF8" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "EFED3A948532BE8A8E7BF8E2";
+		};
+		"603A9A73C0DB03E356CA481B" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("1F5D9BBE593BFF2E9B789F7F", "3FFDF0033AC51941285E13BA", "450CD647B43C7D4356CC0BF5", "DAA20CF0DD8002054CFE25E6", "C710EDCDE15172E0319C7C82", "4280C7A41A3CF0EB30E1ADAC", "06ECF0960F04365FD294728F");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"2EE526A0EF5B549EC9163D8A" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "E29412F25F9D8D613643230A";
+		};
+		"29773D7E5C5631ED4DFDDFF1" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "317E9B6A0F952F3348B8B615";
+		};
+		"C66F1B7DFCC2E663A32B44DD" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("2EE526A0EF5B549EC9163D8A", "29773D7E5C5631ED4DFDDFF1");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"3CB9073A42485F3933B8A602" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("78E442E8F6AB5E9EBA3DDDF4", "95FDE06BCD66BAD46AEEC7BD", "343FD1B0D73915CBDC2DD939", "D1A446FB8D5956E2C0AEC8A2", "84FC5CA45F18D7A382D09482", "5A0A8B4D594FC6FB77A58F05", "C6F533069F29CE0180F9818B", "13C83A85BAB2E1C5EEF6DFF8");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"99E82EDB506444E1808E2182" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.application";
+			"path" = "ScamTranscript.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+			"includeInIndex" = 0;
+		};
+		"197FEDB5F0FB2F6A9F1F64D5" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscript";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "ScamTranscript/App/Info.plist";
+				"SWIFT_OBJC_BRIDGING_HEADER" = "ScamTranscript/Bridge/ScamTranscript-Bridging-Header.h";
+				"HEADER_SEARCH_PATHS" = ("$(SRCROOT)/ScamTranscript/Bridge", "$(SRCROOT)/Vendor/ONNXRuntime/Headers");
+				"OTHER_LDFLAGS" = ("$(inherited)", "-lc++", "-framework", "Accelerate", "-framework", "CoreML");
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+			};
+		};
+		"D3AD2D68E423C8B6CFE2A081" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscript";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "ScamTranscript/App/Info.plist";
+				"SWIFT_OBJC_BRIDGING_HEADER" = "ScamTranscript/Bridge/ScamTranscript-Bridging-Header.h";
+				"HEADER_SEARCH_PATHS" = ("$(SRCROOT)/ScamTranscript/Bridge", "$(SRCROOT)/Vendor/ONNXRuntime/Headers");
+				"OTHER_LDFLAGS" = ("$(inherited)", "-lc++", "-framework", "Accelerate", "-framework", "CoreML");
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+			};
+		};
+		"DFA4850DB053E1E32D585BCB" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("197FEDB5F0FB2F6A9F1F64D5", "D3AD2D68E423C8B6CFE2A081");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Debug";
+		};
+		"DAECFC21D8624EC75BA02975" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "ScamTranscript";
+			"productName" = "ScamTranscript";
+			"buildConfigurationList" = "DFA4850DB053E1E32D585BCB";
+			"buildPhases" = ("603A9A73C0DB03E356CA481B", "C66F1B7DFCC2E663A32B44DD", "3CB9073A42485F3933B8A602");
+			"buildRules" = ();
+			"dependencies" = ();
+			"productReference" = "99E82EDB506444E1808E2182";
+			"productType" = "com.apple.product-type.application";
+		};
+		"1404BD3B31F95C1F30062141" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscriptTests/JevCallDecisionMakerTests.swift";
+			"sourceTree" = "<group>";
+		};
+		"0CCE858D21612483E0F5C212" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "1404BD3B31F95C1F30062141";
+		};
+		"A3AF5A8E3B8F376C6CC5BA79" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscriptTests/JevDecisionMakerTests.swift";
+			"sourceTree" = "<group>";
+		};
+		"5DFA12A419AFD253C916D664" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A3AF5A8E3B8F376C6CC5BA79";
+		};
+		"767BF4D66B83877BEC05D8B3" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscriptTests/ScamClassifierTests.swift";
+			"sourceTree" = "<group>";
+		};
+		"82397AD5C41B9F0D94E40D20" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "767BF4D66B83877BEC05D8B3";
+		};
+		"87311F588E02830FC0B40A60" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscriptTests/VoskIntegrationTests.swift";
+			"sourceTree" = "<group>";
+		};
+		"908A56FA3277F5C2A54722FF" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "87311F588E02830FC0B40A60";
+		};
+		"EAA99AF6977AD8F2935FE222" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "folder";
+			"path" = "ScamTranscriptTests/Fixtures";
+			"sourceTree" = "<group>";
+		};
+		"9C3FB1806D04C57EBAF42995" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "EAA99AF6977AD8F2935FE222";
+		};
+		"1ED476F3CBBC612FBBCB4683" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("0CCE858D21612483E0F5C212", "5DFA12A419AFD253C916D664", "82397AD5C41B9F0D94E40D20", "908A56FA3277F5C2A54722FF");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"79836B2F757599A81B049A53" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"A00B7D256101D4E2E7A67615" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("9C3FB1806D04C57EBAF42995");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"00309AF36C238A642992C75C" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"path" = "ScamTranscriptTests.xctest";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+			"includeInIndex" = 0;
+		};
+		"4CB659A76B050741869077C1" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "244210E48437B6556980A702";
+			"proxyType" = 1;
+			"remoteGlobalIDString" = "DAECFC21D8624EC75BA02975";
+			"remoteInfo" = "ScamTranscript";
+		};
+		"B612B2CA6BAEA8916E8B0B16" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "DAECFC21D8624EC75BA02975";
+			"targetProxy" = "4CB659A76B050741869077C1";
+		};
+		"D44D1E5A3DD33DE3FBCE22F7" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscriptTests";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "ScamTranscript";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/ScamTranscript.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScamTranscript";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+			};
+		};
+		"5769218729E592409EA1F06A" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscriptTests";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "ScamTranscript";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/ScamTranscript.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScamTranscript";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+			};
+		};
+		"7E350E4F843877B7440C0CA4" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("D44D1E5A3DD33DE3FBCE22F7", "5769218729E592409EA1F06A");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Debug";
+		};
+		"8ABC864BF82FC21ED2CCBF1B" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "ScamTranscriptTests";
+			"productName" = "ScamTranscriptTests";
+			"buildConfigurationList" = "7E350E4F843877B7440C0CA4";
+			"buildPhases" = ("1ED476F3CBBC612FBBCB4683", "79836B2F757599A81B049A53", "A00B7D256101D4E2E7A67615");
+			"buildRules" = ();
+			"dependencies" = ("B612B2CA6BAEA8916E8B0B16");
+			"productReference" = "00309AF36C238A642992C75C";
+			"productType" = "com.apple.product-type.bundle.unit-test";
+		};
+		"90F8B6FBEFD1C15AD64C0A76" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "ScamTranscriptUITests/RecordingUITests.swift";
+			"sourceTree" = "<group>";
+		};
+		"DF83B2D0305B24F94FEE2D17" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "90F8B6FBEFD1C15AD64C0A76";
+		};
+		"9F8CFEBEB784B4EC4771D6D2" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ("DF83B2D0305B24F94FEE2D17");
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"DB8BD052D3DFA1E02270F7EB" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"462568CBC57805A1D73FB2D0" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"DBB425414F5D2F594626B16E" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"path" = "ScamTranscriptUITests.xctest";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+			"includeInIndex" = 0;
+		};
+		"905384D4383493B5D13F754A" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "244210E48437B6556980A702";
+			"proxyType" = 1;
+			"remoteGlobalIDString" = "DAECFC21D8624EC75BA02975";
+			"remoteInfo" = "ScamTranscript";
+		};
+		"981B3EE9B3703D47A0559691" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "DAECFC21D8624EC75BA02975";
+			"targetProxy" = "905384D4383493B5D13F754A";
+		};
+		"0704AA22E3586C9B2E98D0E4" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscriptUITests";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "ScamTranscript";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+			};
+		};
+		"D4BF28719957D7EAD011373B" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "org.scamguardian.ScamTranscriptUITests";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "ScamTranscript";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+			};
+		};
+		"FFD811DC2880CBD8D06653B9" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("0704AA22E3586C9B2E98D0E4", "D4BF28719957D7EAD011373B");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Debug";
+		};
+		"AF888E7C851D4C45CC8159C8" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "ScamTranscriptUITests";
+			"productName" = "ScamTranscriptUITests";
+			"buildConfigurationList" = "FFD811DC2880CBD8D06653B9";
+			"buildPhases" = ("9F8CFEBEB784B4EC4771D6D2", "DB8BD052D3DFA1E02270F7EB", "462568CBC57805A1D73FB2D0");
+			"buildRules" = ();
+			"dependencies" = ("981B3EE9B3703D47A0559691");
+			"productReference" = "DBB425414F5D2F594626B16E";
+			"productType" = "com.apple.product-type.bundle.ui-testing";
+		};
+		"0A3E27B8CA818264D75C8D81" = {
+			"isa" = "PBXGroup";
+			"children" = ("99E82EDB506444E1808E2182", "00309AF36C238A642992C75C", "DBB425414F5D2F594626B16E");
+			"name" = "Products";
+			"sourceTree" = "<group>";
+		};
+		"0D6E4079E36703EBD37C0072" = {
+			"isa" = "PBXGroup";
+			"children" = ("E29412F25F9D8D613643230A", "317E9B6A0F952F3348B8B615", "5F329EB4DB7FB94328FBFF65", "60EBBFFF7E977191653D5139", "0559E3D9068C99C04620B5D2", "1552124BD6302AA662DA625A", "38090EB85DACDE97864D42FC", "9FD5C11A991AA9B779781A70", "D86D6C036374AE48F5E4056E", "0F5F2E27B01B6A4DD8EAABC5", "4F066269BB1A9DDA98D377F9", "84C10A57A697570EBE4C6A4F", "CBACF45F0DE8ED7E760B6B02", "122FB2D5E1E6AE04A5EF9E4D", "BC41E40F82FF6789FF40AAC1", "2EAB66427CFD1C8A13A63C21", "EFED3A948532BE8A8E7BF8E2", "1404BD3B31F95C1F30062141", "A3AF5A8E3B8F376C6CC5BA79", "767BF4D66B83877BEC05D8B3", "87311F588E02830FC0B40A60", "EAA99AF6977AD8F2935FE222", "90F8B6FBEFD1C15AD64C0A76", "0A3E27B8CA818264D75C8D81");
+			"sourceTree" = "<group>";
+		};
+		"244210E48437B6556980A702" = {
+			"isa" = "PBXProject";
+			"attributes" = {
+				"LastUpgradeCheck" = "2660";
+				"TargetAttributes" = {
+					"DAECFC21D8624EC75BA02975" = {
+						"CreatedOnToolsVersion" = "26.6";
+					};
+					"8ABC864BF82FC21ED2CCBF1B" = {
+						"CreatedOnToolsVersion" = "26.6";
+						"TestTargetID" = "DAECFC21D8624EC75BA02975";
+					};
+					"AF888E7C851D4C45CC8159C8" = {
+						"CreatedOnToolsVersion" = "26.6";
+						"TestTargetID" = "DAECFC21D8624EC75BA02975";
+					};
+				};
+			};
+			"buildConfigurationList" = "76F8DEC3DFE0BDB465198890";
+			"compatibilityVersion" = "Xcode 14.0";
+			"developmentRegion" = "en";
+			"hasScannedForEncodings" = 0;
+			"knownRegions" = ("en", "Base");
+			"mainGroup" = "0D6E4079E36703EBD37C0072";
+			"productRefGroup" = "0A3E27B8CA818264D75C8D81";
+			"projectDirPath" = "";
+			"projectRoot" = "";
+			"targets" = ("DAECFC21D8624EC75BA02975", "8ABC864BF82FC21ED2CCBF1B", "AF888E7C851D4C45CC8159C8");
+		};
+	};
+	"rootObject" = "244210E48437B6556980A702";
+}

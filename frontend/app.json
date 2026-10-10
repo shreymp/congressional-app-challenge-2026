@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Scam Guardian",
+    "slug": "scam-guardian",
+    "scheme": "scamguardian",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
