@@ -1,5 +1,5 @@
 # Standalone inference for the CAC deepfake detector.  pip install torch transformers numpy scipy
-import json, numpy as np, torch, torch.nn as nn
+import json, os, numpy as np, torch, torch.nn as nn
 from scipy.signal import resample_poly
 from transformers import Wav2Vec2Config, Wav2Vec2Model
 
@@ -26,7 +26,12 @@ class Detector:
     def __init__(self, folder, device="cpu"):
         self.meta = json.load(open(f"{folder}/detector_config.json")); self.device = device
         self.model = DeepfakeDetector(self.meta["base_model"], self.meta["keep_layers"])
-        self.model.load_state_dict(torch.load(f"{folder}/detector_state.pt", map_location="cpu")); self.model.to(device).eval()
+        paths = [f"{folder}/detector_state.pt", f"{folder}/best.pt"]
+        path = next((q for q in paths if os.path.exists(q)), None)
+        if path is None: raise FileNotFoundError(f"No weights found; expected one of {paths}")
+        state = torch.load(path, map_location="cpu")
+        if isinstance(state, dict) and "model" in state: state = state["model"]   # best.pt wraps the state dict under 'model'
+        self.model.load_state_dict(state); self.model.to(device).eval()
         self.sr, self.win = self.meta["sample_rate"], int(self.meta["window_sec"] * self.meta["sample_rate"])
 
     @staticmethod
