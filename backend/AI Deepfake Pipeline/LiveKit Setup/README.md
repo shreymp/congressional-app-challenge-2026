@@ -1,4 +1,8 @@
-# LiveKit Setup: `scam-guard` call agent (Phase 1–2)
+# LiveKit Setup: `scam-guard` incoming-call agent
+
+For dashboard configuration and running both detection branches, start with
+[INCOMING_CALL_SETUP.md](INCOMING_CALL_SETUP.md). The dashboard settings have to be
+verified in the CAC project; a checked-in JSON file does not apply them.
 
 Real-time path for incoming calls:
 
@@ -12,6 +16,8 @@ Scammer dials grandma's normal cell number
      room from the app, so the call never leaves LiveKit (see "Ringing the senior's app")
   -> scam-guard (this folder, running on the MacBook) subscribes to the caller's audio only
   -> every ~1 s: last ~4 s of caller speech -> ../best.pt deepfake detector (MPS) -> risk engine
+  -> same caller PCM, including silence -> local Vosk -> rolling transcript -> JEV HTTP connector
+  -> deepfake level + fresh transcript probability -> existing fusion rule
   -> JSON update published to the room on topic "scam-guard.risk"
   -> the iPhone app displays the voice assessment; tools/watch_risk.py can inspect updates
 ```
@@ -26,6 +32,8 @@ The agent never publishes audio. The phone caller can't hear or detect it.
 | `scoring.py` | Shared live/file scoring session, fresh-speech checks, inference state and silence reset. |
 | `risk_protocol.py` | Versioned caller/room/stream envelope for the iPhone app. |
 | `risk.py` | Smoothing (in log-odds), levels `listening / elevated / high`, hysteresis. Transcript fusion stub. |
+| `transcript_pipeline.py` | Per-call local Vosk recognition and bounded, coalesced HTTP transcript scoring. |
+| `dispatch-rule.json` | Dashboard JSON for `cac-inbound` → per-caller `call-` rooms → `scam-guard`. |
 | `test_offline.py` | Runs the exact scoring path on a WAV file with no call. Use it to time the model. |
 | `tools/watch_risk.py` | Joins a live call room invisibly and prints the agent's updates. |
 | `senior_ring.py` | Rings grandma's app for an incoming call and supervises it: answer, no answer, hang-up. No audio code. |
@@ -36,7 +44,7 @@ The agent never publishes audio. The phone caller can't hear or detect it.
 ## One-time setup on the M5 Pro MacBook
 
 1. **Copy `best.pt` over manually.** `.gitignore` excludes `*.pt`, so cloning the repo does NOT bring the 650 MB weights. It must sit at `backend/AI Deepfake Pipeline/best.pt`.
-2. Python 3.10+:
+2. Python 3.11+:
    ```bash
    cd "backend/AI Deepfake Pipeline/LiveKit Setup"
    python3 -m venv .venv && source .venv/bin/activate
@@ -153,7 +161,7 @@ new lobby token for the app.
 - **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard never publishes audio, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
 - **A second ring is possible after an agent crash.** If LiveKit re-dispatches the agent into a call that is still ringing, the new job sends a new `callUUID`. Harmless if the app already joined the call room (no invite is sent then); if grandma had declined, her phone rings again. The same happens if the app is quit and reopened inside the ring window for a call it never joined: the app remembers handled `callUUID`s in memory only, so the repeated invite rings again. That second case is arguably right, since the phone caller is still ringing.
 - **An early decline is reported as a timeout.** The agent only learns of a decline once the app has been in the call room. Declining while the app is still joining, Do Not Disturb refusing the CallKit call, or a failed join all show up as `no_answer_fallback(reason="timeout")` at the end of the ring window, not as `"declined"` after 5 s. The app ignores the repeated invites for that call meanwhile. The obvious shortcut (treat "back in the lobby" as a decline) is wrong: the app also leaves and rejoins the lobby when it is backgrounded or loses its network.
-- **Transcript branch is not connected.** `risk.combine()` takes a transcript probability; nothing produces one yet. Next: speech-to-text on the same stream → `POST http://localhost:3000/v1/jev/probability` (the Transcript-Based Detector).
+- **Transcript branch needs its local models and services running.** Set `VOSK_MODEL_PATH`, start the JEV model service and connector, then run the agent. Missing STT/model services produce a null transcript probability and an explicit state; deepfake scoring continues. The fusion rule is still experimental and has not been calibrated on real-call prefixes. See [INCOMING_CALL_SETUP.md](INCOMING_CALL_SETUP.md).
 - **Energy gate, not a real VAD.** Fine for testing. Swap for Silero VAD if quiet speech is skipped or noise is scored.
 - `sip.callStatus` exists as a SIP attribute; we log it, and the ring skips participants whose status is `dialing` (outbound calls). The `ringing` to `active` change is not used.
 

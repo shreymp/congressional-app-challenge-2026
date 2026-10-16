@@ -36,13 +36,15 @@ from dotenv import load_dotenv
 from livekit import rtc
 from livekit.agents import AgentServer, AutoSubscribe, JobContext, JobProcess, cli
 
-import detector_adapter
-from scoring import AudioScoringSession
-from risk_protocol import RISK_TOPIC, RiskPublisher
-import senior_ring  # last: it loads .env.local at import, which must not change what the modules above read
-
 HERE = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(HERE, ".env.local"))
+
+import detector_adapter
+import transcript_pipeline
+from risk import combine
+from scoring import AudioScoringSession
+from risk_protocol import RISK_TOPIC, RiskPublisher
+import senior_ring
 
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 SAMPLE_RATE = 16000
@@ -62,6 +64,16 @@ def prewarm(proc: JobProcess) -> None:
         # Ringing and media remain usable even when the model cannot initialize.
         proc.userdata["detector"] = None
         log.exception("detector unavailable; calls will continue without voice labels")
+
+    proc.userdata["stt_model"] = None
+    proc.userdata["transcript_state"] = "disabled"
+    try:
+        proc.userdata["stt_model"] = transcript_pipeline.load_model()
+        if proc.userdata["stt_model"] is not None:
+            proc.userdata["transcript_state"] = "listening"
+    except Exception:
+        proc.userdata["transcript_state"] = "stt_unavailable"
+        log.exception("Vosk unavailable; calls continue without transcript scores")
 
 
 server = AgentServer(
@@ -103,7 +115,21 @@ async def _score_call(ctx: JobContext) -> None:
     publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
     t_start = time.monotonic()
 
+    transcript = None
+    transcript_state = ctx.proc.userdata.get("transcript_state", "disabled")
+    if ctx.proc.userdata.get("stt_model") is not None:
+        try:
+            transcript = await asyncio.to_thread(transcript_pipeline.for_call, ctx.proc.userdata["stt_model"])
+            transcript.start()
+        except Exception:
+            transcript_state = "stt_unavailable"
+            log.exception("caller transcription could not start")
+
     async def publish(payload: dict) -> None:
+        text_state = transcript.snapshot() if transcript else {"state": transcript_state, "probability": None}
+        payload = {**payload, "transcript": text_state}
+        if payload.get("type") == "risk":
+            payload["level"] = combine(payload["deepfake"]["level"], text_state["probability"])
         msg = publisher.message({**payload, "t": round(time.monotonic() - t_start, 2)})
         try:
             await room.local_participant.publish_data(
@@ -136,8 +162,19 @@ async def _score_call(ctx: JobContext) -> None:
             await publish(session.payload(time.monotonic()))
             log.exception("voice scoring failed; call continues")
 
+    async def stop_scoring() -> None:
+        heartbeat_task.cancel()
+        if score_task is not None:
+            score_task.cancel()
+        await asyncio.gather(heartbeat_task, *([score_task] if score_task is not None else []),
+                             return_exceptions=True)
+        if transcript is not None:
+            await transcript.aclose()
+
+    ctx.add_shutdown_callback(stop_scoring)
+
     try:
-        if session is None:
+        if session is None and transcript is None:
             # Keep notifying late joiners while allowing the ring supervisor to run.
             await heartbeat_task
             return
@@ -147,22 +184,20 @@ async def _score_call(ctx: JobContext) -> None:
         next_score = time.monotonic() + SCORE_EVERY_SEC
         async for event in stream:
             now = time.monotonic()
-            session.push(event.frame.data, now)
+            if transcript is not None:
+                transcript.push(event.frame.data)
+            if session is not None:
+                session.push(event.frame.data, now)
             if RECORD:
                 recorded.append(np.frombuffer(event.frame.data, dtype=np.int16).copy())
-            if now >= next_score and (score_task is None or score_task.done()):
+            if session is not None and now >= next_score and (score_task is None or score_task.done()):
                 next_score = now + SCORE_EVERY_SEC
                 snapshot = session.snapshot(now)
                 if snapshot is not None:
                     # Capture a copy on the audio loop. Never read its rolling buffer in a worker.
                     score_task = asyncio.create_task(score_once(*snapshot))
     finally:
-        # No detached score may publish into a finished call or survive its room teardown.
-        heartbeat_task.cancel()
-        if score_task is not None:
-            score_task.cancel()
-        await asyncio.gather(heartbeat_task, *([score_task] if score_task is not None else []),
-                             return_exceptions=True)
+        await stop_scoring()
         if stream is not None:
             await stream.aclose()
         if RECORD and recorded:
@@ -180,3 +215,4 @@ def _save_wav(pcm: np.ndarray, caller_number: str) -> None:
 
 if __name__ == "__main__":
     cli.run_app(server)
+
