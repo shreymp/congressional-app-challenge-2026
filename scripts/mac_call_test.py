@@ -194,8 +194,16 @@ def doctor(args):
         values = dict(line.split("=", 1) for line in CONFIG.read_text().splitlines() if "=" in line and not line.lstrip().startswith("//"))
         values = {k.strip(): v.strip() for k, v in values.items()}
         project_host(values["CALLSHIELD_LIVEKIT_HOST"])
+        if values.get("CALLSHIELD_DEMO", "false").lower() != "false":
+            raise ValueError("CALLSHIELD_DEMO must be false for live testing")
         import base64
         claims = json.loads(base64.urlsafe_b64decode(values["CALLSHIELD_LOBBY_TOKEN"].split(".")[1] + "==="))
+        video = claims.get("video", {})
+        load_environment()
+        if (claims.get("sub") != (os.environ.get("SENIOR_IDENTITY") or "senior")
+                or video.get("room") != (os.environ.get("SENIOR_LOBBY_ROOM") or "senior-lobby")
+                or video.get("roomJoin") is not True or video.get("canPublish") is not False):
+            raise ValueError("Use a matching senior lobby token, not a call-room token")
         if claims.get("exp", 0) <= time.time():
             raise ValueError("Expired lobby token")
         print("Lobby token expires", time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime(claims["exp"])))
@@ -275,6 +283,16 @@ def services(args):
                 child.wait()
 
 
+def cloud_probe(args):
+    require_credentials()
+    fixture = args.wav or ROOT / "ios/ScamTranscriptTests/Fixtures/bank.wav"
+    command = [PYTHON, ROOT / "deploy/livekit/probe.py", fixture,
+               "--timeout", str(args.timeout), "--attempts", "1"]
+    if args.command == "full-call":
+        command.append("--ring")
+    run(command)
+
+
 def simulator(args):
     if not CONFIG.is_file():
         raise RuntimeError("Run configure first")
@@ -297,6 +315,11 @@ def main():
     p = sub.add_parser("doctor"); p.add_argument("--backend", action="store_true"); p.add_argument("--local", action="store_true"); p.set_defaults(func=doctor)
     p = sub.add_parser("services"); p.add_argument("--agent", action="store_true", help="Only after the cloud worker is stopped; never run duplicate scam-guard workers"); p.set_defaults(func=services)
     p = sub.add_parser("simulator"); p.add_argument("--device", required=True, help="Simulator UDID from xcrun simctl list devices available"); p.set_defaults(func=simulator)
+    for command in ("cloud-probe", "full-call"):
+        p = sub.add_parser(command, help="test both hosted models" + (" and the simulator call" if command == "full-call" else " without an app"))
+        p.add_argument("--wav", type=Path, help="consented speech WAV; defaults to the included synthetic bank fixture")
+        p.add_argument("--timeout", type=float, default=180)
+        p.set_defaults(func=cloud_probe)
     for command, tool in (("ring", "test_ring.py"), ("watch", "watch_risk.py")):
         p = sub.add_parser(command)
         p.set_defaults(func=lambda a, tool=tool: (require_credentials(), run([PYTHON, LIVE / "tools" / tool, *a.args])))
@@ -320,3 +343,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
