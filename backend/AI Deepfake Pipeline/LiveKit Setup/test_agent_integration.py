@@ -60,7 +60,7 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(kwargs["kind"], agent.rtc.ParticipantKind.PARTICIPANT_KIND_SIP)
             return types.SimpleNamespace(identity="sip-test", attributes={})
         return types.SimpleNamespace(room=room, proc=types.SimpleNamespace(userdata={"detector": detector}),
-                                     wait_for_participant=caller)
+                                     wait_for_participant=caller, add_shutdown_callback=lambda callback: None)
 
     async def test_scores_and_publishes_versioned_caller_evidence_then_closes(self):
         ctx, stream = self.context(FakeDetector()), FakeStream()
@@ -78,6 +78,42 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         count = len(ctx.room.messages)
         await asyncio.sleep(.05)
         self.assertEqual(len(ctx.room.messages), count)
+
+    async def test_transcript_is_fused_into_versioned_risk_updates(self):
+        class TextPipeline:
+            def __init__(self): self.frames = 0; self.closed = False
+            def start(self): pass
+            def push(self, data): self.frames += 1
+            def snapshot(self): return {"state": "monitoring", "probability": .95, "revision": self.frames}
+            async def aclose(self): self.closed = True
+        text = TextPipeline()
+        ctx, stream = self.context(FakeDetector()), FakeStream()
+        ctx.proc.userdata["stt_model"] = object()
+        with patch.object(agent.transcript_pipeline, "for_call", return_value=text), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream), patch.object(agent, "SCORE_EVERY_SEC", 0):
+            await asyncio.wait_for(agent._score_call(ctx), 3)
+        self.assertEqual(text.frames, 170)
+        self.assertTrue(text.closed)
+        risks = [m for m, _ in ctx.room.messages if m["type"] == "risk"]
+        self.assertTrue(risks)
+        self.assertTrue(all(m["transcript"]["probability"] == .95 for m in risks))
+        self.assertTrue(all(m["level"] == agent.combine(m["deepfake"]["level"], .95) for m in risks))
+
+    async def test_transcription_continues_when_voice_model_is_missing(self):
+        class TextPipeline:
+            frames = 0
+            def start(self): pass
+            def push(self, data): self.frames += 1
+            def snapshot(self): return {"state": "monitoring", "probability": .5}
+            async def aclose(self): pass
+        text = TextPipeline()
+        ctx, stream = self.context(None), FakeStream()
+        ctx.proc.userdata["stt_model"] = object()
+        with patch.object(agent.transcript_pipeline, "for_call", return_value=text), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream):
+            await asyncio.wait_for(agent._score_call(ctx), 3)
+        self.assertEqual(text.frames, 170)
+        self.assertTrue(stream.closed)
+        self.assertEqual(ctx.room.messages[0][0]["state"], "unavailable")
+        self.assertEqual(ctx.room.messages[0][0]["transcript"]["probability"], .5)
 
     async def test_failed_model_load_reports_unavailable_and_can_be_cancelled(self):
         ctx = self.context(None)
@@ -130,3 +166,4 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

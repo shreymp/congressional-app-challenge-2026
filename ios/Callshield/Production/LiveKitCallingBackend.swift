@@ -364,9 +364,12 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         guard let callID = call?.invite.callID else { return }
         liveKitAudioQueue.async {
             do {
-                // CallKit has already activated the session, so never call setActive here.
+                // Only Simulator owns activation here; on iPhone CallKit owns it.
                 // Same options as PhoneCallCoordinator.
                 try session.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP])
+                #if targetEnvironment(simulator)
+                try session.setActive(true)
+                #endif
                 try AudioManager.shared.setEngineAvailability(.default)
                 Task { @MainActor in self.audioActivated(for: callID) }
             } catch {
@@ -378,7 +381,12 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
 
     func deactivateAudio(_ session: AVAudioSession) {
         call?.audioActive = false
-        liveKitAudioQueue.async { try? AudioManager.shared.setEngineAvailability(.none) }
+        liveKitAudioQueue.async {
+            try? AudioManager.shared.setEngineAvailability(.none)
+            #if targetEnvironment(simulator)
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            #endif
+        }
     }
 
     func reset() {
@@ -422,7 +430,12 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         assessmentWatchdog?.cancel(); assessmentWatchdog = nil
         closed.prepare.cancel()
         // CallKit sends didDeactivate only for a call whose audio it activated, so force the engine off.
-        liveKitAudioQueue.async { try? AudioManager.shared.setEngineAvailability(.none) }
+        liveKitAudioQueue.async {
+            try? AudioManager.shared.setEngineAvailability(.none)
+            #if targetEnvironment(simulator)
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            #endif
+        }
         callTeardown = Task { @MainActor [weak self] in
             _ = await closed.prepare.result // join() has finished and cannot create a Room now.
             if let room = closed.room { await room.disconnect() }
@@ -557,3 +570,4 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         Task { @MainActor in self.roomReconnected(room) }
     }
 }
+

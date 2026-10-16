@@ -25,7 +25,8 @@ def config_list(name, settings, base=None):
     configs = []
     for mode in ["Debug", "Release"]:
         config = dict(settings)
-        config.update(SWIFT_OPTIMIZATION_LEVEL="-Onone" if mode == "Debug" else "-O",
+        config.update(ONLY_ACTIVE_ARCH="YES" if mode == "Debug" else "NO",
+                      SWIFT_OPTIMIZATION_LEVEL="-Onone" if mode == "Debug" else "-O",
                       SWIFT_ACTIVE_COMPILATION_CONDITIONS="DEBUG" if mode == "Debug" else "",
                       DEBUG_INFORMATION_FORMAT="dwarf" if mode == "Debug" else "dwarf-with-dsym")
         fields = dict(name=mode, buildSettings=config)
@@ -154,3 +155,4 @@ write(scheme / "Callshield.xcscheme", f'''<?xml version="1.0" encoding="UTF-8"?>
 </Scheme>
 ''')
 print(directory)
+
