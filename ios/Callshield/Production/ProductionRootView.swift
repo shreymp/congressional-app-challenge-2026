@@ -85,8 +85,10 @@ struct ProductionRootView: View {
         .onReceive(NotificationCenter.default.publisher(for: .CNContactStoreDidChange)) { _ in Task { await store.refreshContacts() } }
         .onOpenURL { store.receive($0) }
         .onContinueUserActivity("INStartCallIntent") { activity in
+            // A call from a withheld number sits in system Recents under a label, not a number; tapping it has nothing to dial.
             if let intent = activity.interaction?.intent as? INStartCallIntent,
-               let number = intent.contacts?.first?.personHandle?.value { store.receiveNumber(number) }
+               let number = intent.contacts?.first?.personHandle?.value,
+               (try? PhoneNumber.normalized(number)) != nil { store.receiveNumber(number) }
         }
     }
 }

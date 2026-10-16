@@ -7,6 +7,8 @@ struct ProductionCallView: View {
     @State private var busy = false
     private let clock = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var now = Date()
+    /// A service that cannot hold a call or send keypad tones (LiveKit) does not get buttons that can only fail.
+    @MainActor private var offersHoldAndKeypad: Bool { store.coordinator.backend.supportsHoldAndKeypad }
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -42,13 +44,17 @@ struct ProductionCallView: View {
                                 action("speaker", "speaker.wave.2", selected: call.speaker) {
                                     try store.coordinator.setSpeaker(!call.speaker)
                                 }
-                                action(call.stage == .held ? "resume" : "hold", "pause", selected: call.stage == .held) {
-                                    try await store.coordinator.setHeld(call.stage != .held)
+                                if offersHoldAndKeypad {
+                                    action(call.stage == .held ? "resume" : "hold", "pause", selected: call.stage == .held) {
+                                        try await store.coordinator.setHeld(call.stage != .held)
+                                    }
                                 }
                             }.disabled(call.connectedAt == nil)
                         }
-                        Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
-                            .disabled(call.connectedAt == nil).padding(8)
+                        if offersHoldAndKeypad {
+                            Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
+                                .disabled(call.connectedAt == nil).padding(8)
+                        }
                         action("End call", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
                     }
                 }
