@@ -34,6 +34,10 @@ service terminates the worker so LiveKit can restart it. Audio recording is off.
    readiness checks, and require **BACKEND PROBE PASSED** from the deployed probe.
    The probe sends the checked-in speech fixture through the actual cloud job and
    requires both a real voice risk update and fresh transcript probability.
+   Right after a deploy the previous version can still take jobs for a short time and
+   never answers the probe, so the workflow retries with a fresh room (up to 6 x 90 s).
+   To re-test production without rebuilding or redeploying, run the workflow with
+   **probe_only=true**.
 
 The cloud validation job also runs on this PR without deployment credentials.
 It uses the existing repository-scoped GitHub Actions token to read release assets.
