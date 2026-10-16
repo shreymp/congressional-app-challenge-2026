@@ -6,6 +6,7 @@ enum CallingEvent {
     case ended(UUID, PhoneCallOutcome, Date)
     case assessmentStarted(UUID)
     case assessed(UUID, Voice)
+    case deepfakeAssessment(UUID, DeepfakeAssessment)
     case failed(UUID, String)
     /// A call is waiting for this phone: its call UUID, the caller's number as the service
     /// saw it (may be empty) and an optional caller name. Only backends that ring without

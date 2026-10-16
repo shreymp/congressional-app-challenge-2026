@@ -114,6 +114,8 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         case .assessed(let id, let voice):
             guard voice != .analyzing else { return }
             session.assess(id: id, voice: voice); changed()
+        case .deepfakeAssessment(let id, let assessment):
+            session.assessDeepfake(id: id, assessment: assessment); changed()
         case .failed(let id, let message):
             guard active?.id == id else { return }
             backend.reset()
