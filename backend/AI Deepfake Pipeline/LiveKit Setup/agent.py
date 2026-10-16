@@ -89,14 +89,16 @@ async def scam_guard(ctx: JobContext) -> None:
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
     # 0. Ring grandma's app for the phone caller. Starts its own task and returns at once; it
     #    must not wait for step 1, because nothing answers the call until she has been rung.
-    senior_ring.start_for_job(ctx)
+    probe = ctx.room.name.startswith("backend-probe-") and ctx.job.metadata == "cac-backend-probe-v1"
+    if not probe:
+        senior_ring.start_for_job(ctx)
     # Steps 1-4 (scoring) must never take the ring down with them. An exception that escapes this
     # function makes the framework disconnect the agent and run the shutdown callbacks, which
     # cancels the ring: an unanswered call would stop ringing, and when grandma hangs up the room
     # would not be deleted, leaving the phone caller connected to nobody. Returning normally keeps
     # the job alive until the room disconnects, so the ring keeps supervising the call.
     try:
-        await _score_call(ctx)
+        await _score_call(ctx, probe=probe)
     except Exception as e:
         if isinstance(e, RuntimeError) and not ctx.room.isconnected():
             # wait_for_participant raises this when the room closes first, e.g. the caller gave up
@@ -106,11 +108,12 @@ async def scam_guard(ctx: JobContext) -> None:
             log.exception("scoring stopped; the senior ring keeps running")
 
 
-async def _score_call(ctx: JobContext) -> None:
+async def _score_call(ctx: JobContext, probe: bool = False) -> None:
     room = ctx.room
     det = ctx.proc.userdata.get("detector")
     session = AudioScoringSession(det, detector_adapter.thresholds(det)) if det is not None else None
-    caller = await ctx.wait_for_participant(kind=rtc.ParticipantKind.PARTICIPANT_KIND_SIP)
+    caller = (await ctx.wait_for_participant(identity="backend-probe-caller") if probe else
+              await ctx.wait_for_participant(kind=rtc.ParticipantKind.PARTICIPANT_KIND_SIP))
     caller_number = caller.attributes.get("sip.phoneNumber", "unknown")
     publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
     t_start = time.monotonic()
