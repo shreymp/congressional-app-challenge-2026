@@ -48,6 +48,9 @@ def prepare(output):
     shutil.copytree(ROOT / "deploy/livekit", output / "deploy/livekit", ignore=shutil.ignore_patterns("__pycache__", "test*"))
     shutil.copy2(ROOT / "deploy/livekit/Dockerfile", output / "Dockerfile")
     shutil.copy2(ROOT / "deploy/livekit/livekit.toml", output / "livekit.toml")
+    # `lk agent deploy` detects the project type from a requirements.txt at the context root.
+    # The Dockerfile still installs from deploy/livekit/requirements.txt; this copy is for detection.
+    shutil.copy2(ROOT / "deploy/livekit/requirements.txt", output / "requirements.txt")
     sources = [{"path": "deepfake/best.pt", "sha256": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0",
                 "url": asset_url("https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/628783673", token)}]
     bundle = next(b for b in json.loads((ROOT / manifest_path).read_text()) if b["version"] == "V2")
