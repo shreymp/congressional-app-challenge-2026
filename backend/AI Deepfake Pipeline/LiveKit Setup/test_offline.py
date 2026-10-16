@@ -13,14 +13,17 @@ p prints as 1.000000 for both real and fake; the logit still shows the differenc
 """
 import argparse
 import statistics
+import json
+from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 from scipy.signal import resample_poly
 
 import detector_adapter
-from audio_window import VoicedWindow
-from risk import RiskEngine, logit
+from scoring import AudioScoringSession
+from risk import logit
+from risk_protocol import RiskPublisher
 
 SR = 16000
 
@@ -30,6 +33,7 @@ def main():
     ap.add_argument("wav", nargs="?")
     ap.add_argument("--mic", type=float, metavar="SECONDS", help="record from the default microphone instead of a file")
     ap.add_argument("--phone", action="store_true", help="band-limit to 8 kHz first (crude phone simulation)")
+    ap.add_argument("--json-out", help="write the exact versioned app messages for contract replay")
     a = ap.parse_args()
 
     if a.mic:
@@ -54,18 +58,28 @@ def main():
     det = detector_adapter.load()
     elevated, high = detector_adapter.thresholds(det)
     print(f"device={det.device}  thresholds elevated={elevated} high={high}")
-    risk = RiskEngine(elevated_threshold=elevated, high_threshold=high)
-    win = VoicedWindow(sample_rate=SR, window_sec=det.meta["window_sec"])
+    session = AudioScoringSession(det, (elevated, high))
+    publisher = RiskPublisher("call-offline", "sip-offline", det.mode)
+    messages = [publisher.message(session.payload(0))]
 
     frame, per_sec, times = SR // 50, SR, []
     for i in range(0, len(pcm), frame):
-        win.push_int16(pcm[i:i + frame].tobytes())
-        if (i + frame) % per_sec < frame and win.ready():
-            r = det.score_window(win.snapshot())
-            s = risk.update(r["p_fake"], r.get("logit"))
-            times.append(r["infer_ms"])
-            print(f"t={(i + frame) / SR:5.1f}s  p_last={r['p_fake']:.6f}  logit={s['logit_last']:6.2f}  smoothed_logit={s['logit_smoothed']:6.2f}"
-                  f"  level={s['level']:9}  infer={r['infer_ms']:.0f}ms")
+        now = (i + frame) / SR
+        session.push(pcm[i:i + frame].tobytes(), now)
+        if (i + frame) % per_sec < frame:
+            snapshot = session.snapshot(now)
+            if snapshot is not None:
+                audio, generation = snapshot
+                r = det.score_window(audio)
+                session.complete(r, generation)
+                times.append(r["infer_ms"])
+                s = session.latest["deepfake"]
+                print(f"t={now:5.1f}s  p_last={r['p_fake']:.6f}  logit={s['logit_last']:6.2f}  smoothed_logit={s['logit_smoothed']:6.2f}"
+                      f"  level={s['level']:9}  infer={r['infer_ms']:.0f}ms")
+            messages.append(publisher.message({**session.payload(now), "t": round(now, 2)}))
+    if a.json_out:
+        Path(a.json_out).write_text(json.dumps(messages, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        print(f"App wire messages saved to {a.json_out}")
     print(f"(for reference: elevated threshold logit = {logit(elevated):.2f}, high threshold logit = {logit(high):.2f})")
     if times:
         print(f"\ninference ms: median {statistics.median(times):.0f}, max {max(times):.0f}"

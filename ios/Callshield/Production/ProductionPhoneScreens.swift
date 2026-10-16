@@ -226,6 +226,11 @@ struct ProductionPersonDetail: View {
                     }
                     if let record {
                         VoiceBadge(voice: record.voice, size: 12)
+                        if let assessment = record.deepfake {
+                            Text(assessment.historyMessage).font(.caption).foregroundStyle(Palette.secondary)
+                            Text("Last voice update \(assessment.updatedAt.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.caption2).foregroundStyle(Palette.secondary)
+                        }
                         VStack(spacing: 12) {
                             detailRow("Call type", record.direction.rawValue.capitalized)
                             detailRow("Status", record.outcome.rawValue.capitalized)
@@ -264,7 +269,7 @@ struct ProductionSettingsView: View {
                     Divider()
                     row("Calling", callshieldPlacesCalls ? "Callshield" : "Mobile service")
                     Divider()
-                    row("Voice labels", callshieldPlacesCalls ? "During connected calls" : "Unavailable")
+                    row("Voice labels", store.coordinator.backend.isConfigured ? "On incoming Callshield calls" : "Unavailable")
                 }.padding(.horizontal, 16).background(Color(hex: 0xF6F7F6), in: RoundedRectangle(cornerRadius: 12))
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Default calling app").font(.headline)

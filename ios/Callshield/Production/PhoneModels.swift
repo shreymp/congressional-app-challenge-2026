@@ -24,6 +24,7 @@ struct PhoneCallRecord: Identifiable, Codable, Equatable {
     let direction: CallDirection
     let outcome: PhoneCallOutcome
     let voice: Voice
+    var deepfake: DeepfakeAssessment? = nil
 }
 
 struct PhoneCall: Identifiable, Equatable {
@@ -37,6 +38,8 @@ struct PhoneCall: Identifiable, Equatable {
     var voice: Voice = .unknown
     var muted = false
     var speaker = false
+    var deepfake: DeepfakeAssessment? = nil
+    var lastDeepfakeResult: DeepfakeAssessment? = nil
 }
 
 struct PhoneSnapshot: Codable {
