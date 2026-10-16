@@ -72,6 +72,10 @@ class Services:
 
 
 if __name__ == "__main__":
+    # This image always serves the deepfake model from model_server.py. Pin it here so a
+    # mistyped deployment secret can never send job processes looking for local weights.
+    os.environ["DETECTOR"] = "remote"
+    os.environ["DETECTOR_SERVICE_URL"] = "http://127.0.0.1:8000"
     services = Services()
     try:
         services.start()
