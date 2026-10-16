@@ -6,6 +6,7 @@ import PushKit
 @MainActor
 final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDelegate {
     let backend: CallingBackend
+    private let microphonePermission: @MainActor () async -> Bool
     private let provider: CXProvider
     private let controller = CXCallController()
     private var registry: PKPushRegistry?
@@ -15,8 +16,13 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     var onError: ((String) -> Void)?
     var active: PhoneCall? { session.current }
 
-    init(backend: CallingBackend) {
+    init(backend: CallingBackend, microphonePermission: @escaping @MainActor () async -> Bool = {
+        await withCheckedContinuation { continuation in
+            AVAudioSession.sharedInstance().requestRecordPermission { continuation.resume(returning: $0) }
+        }
+    }) {
         self.backend = backend
+        self.microphonePermission = microphonePermission
         let configuration = CXProviderConfiguration()
         configuration.supportedHandleTypes = [.phoneNumber, .generic]
         configuration.supportsVideo = false
@@ -43,9 +49,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     func start(_ person: Person) async throws {
         guard backend.isConfigured else { throw PhoneError.serviceUnavailable }
         guard active == nil else { throw PhoneError.actionUnavailable }
-        let permitted = await withCheckedContinuation { continuation in
-            AVAudioSession.sharedInstance().requestRecordPermission { continuation.resume(returning: $0) }
-        }
+        let permitted = await microphonePermission()
         guard permitted else { throw PhoneError.microphoneDenied }
         let number = try PhoneNumber.normalized(person.number)
         let call = PhoneCall(id: UUID(), person: person, direction: .outgoing, createdAt: Date(), stage: .connecting)
@@ -85,18 +89,59 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     }
 
     private func request(_ action: CXAction) async throws {
+        #if targetEnvironment(simulator)
+        // Simulator has no system call UI/audio activation. Use the same real backend
+        // through the app controls; only physical devices submit CallKit transactions.
+        guard let action = action as? CXCallAction, let call = active, call.id == action.callUUID else {
+            throw PhoneError.actionUnavailable
+        }
+        switch action {
+        case is CXAnswerCallAction:
+            let allowed = await microphonePermission()
+            guard active?.id == call.id else { throw PhoneError.actionUnavailable }
+            do {
+                guard allowed else { throw PhoneError.microphoneDenied }
+                session.connecting(id: call.id)
+                changed()
+                try await backend.answer(callID: call.id)
+                guard active?.id == call.id else { return }
+                backend.activateAudio(AVAudioSession.sharedInstance())
+            } catch {
+                guard active?.id == call.id else { throw error }
+                backend.reset()
+                finish(call.id, outcome: .failed, reason: .failed)
+                throw error
+            }
+        case is CXEndCallAction:
+            do { try await backend.end(callID: call.id) }
+            catch { backend.reset(); finish(call.id, outcome: .failed, reason: .failed); throw error }
+            finish(call.id, outcome: call.connectedAt == nil ? (call.direction == .incoming ? .missed : .cancelled) : .completed,
+                   reason: .remoteEnded)
+        case let mute as CXSetMutedCallAction:
+            try await backend.setMuted(mute.isMuted, callID: call.id)
+            guard active?.id == call.id else { return }
+            session.setMuted(mute.isMuted, id: call.id)
+            changed()
+        default: throw PhoneError.actionUnavailable
+        }
+        #else
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             controller.request(CXTransaction(action: action)) { error in
                 if let error { continuation.resume(throwing: error) }
                 else { continuation.resume() }
             }
         }
+        #endif
     }
 
     private func changed() { onCallChanged?(active) }
     private func finish(_ id: UUID, outcome: PhoneCallOutcome, reason: CXCallEndedReason, at date: Date = Date()) {
         guard let record = session.finish(id: id, outcome: outcome, at: date) else { return }
+        #if targetEnvironment(simulator)
+        backend.deactivateAudio(AVAudioSession.sharedInstance())
+        #else
         provider.reportCall(with: id, endedAt: date, reason: reason)
+        #endif
         changed()
         onRecord?(record)
     }
@@ -106,7 +151,9 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         case .connected(let id, let date):
             guard active?.id == id else { return }
             session.connected(id: id, at: date)
+            #if !targetEnvironment(simulator)
             if active?.direction == .outgoing { provider.reportOutgoingCall(with: id, connectedAt: date) }
+            #endif
             changed()
         case .ended(let id, let outcome, let date):
             finish(id, outcome: outcome, reason: outcome == .missed ? .unanswered : .remoteEnded, at: date)
@@ -143,6 +190,21 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         update.supportsUngrouping = false
         let person = number.map { PhoneNumber.person($0, name: name) }
             ?? Person(name: name ?? "Unknown caller", number: "", initials: "?", color: .slate, voice: .unknown)
+        #if targetEnvironment(simulator)
+        guard session.begin(PhoneCall(id: id, person: person, direction: .incoming,
+                                     createdAt: Date(), stage: .incoming)) else { return }
+        print("[Callshield] Simulator incoming call; use Accept in the app")
+        changed()
+        Task { @MainActor in
+            do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
+            catch {
+                guard self.active?.id == id else { return }
+                self.backend.reset()
+                self.finish(id, outcome: .failed, reason: .failed)
+                self.onError?(error.localizedDescription)
+            }
+        }
+        #else
         provider.reportNewIncomingCall(with: id, update: update) { error in
             Task { @MainActor in
                 // CallKit can refuse (Do Not Disturb, a blocked caller). Then nothing rang and there is no session.
@@ -170,6 +232,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
                 }
             }
         }
+        #endif
     }
 
     nonisolated func providerDidReset(_ provider: CXProvider) {
@@ -209,9 +272,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     nonisolated func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         Task { @MainActor in
             guard self.active?.id == action.callUUID else { action.fail(); return }
-            let allowed = await withCheckedContinuation { continuation in
-                AVAudioSession.sharedInstance().requestRecordPermission { continuation.resume(returning: $0) }
-            }
+            let allowed = await self.microphonePermission()
             guard allowed else {
                 action.fail()
                 self.backend.reset() // The backend may already have joined the call silently.
@@ -345,3 +406,4 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         }
     }
 }
+

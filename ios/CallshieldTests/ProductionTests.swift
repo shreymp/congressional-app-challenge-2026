@@ -12,6 +12,60 @@ final class ProductionTests: XCTestCase {
                         direction: .incoming, outcome: missed ? .missed : .completed, voice: voice)
     }
 
+    #if targetEnvironment(simulator)
+    func testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit() async throws {
+        let backend = TestInboundBackend()
+        let coordinator = PhoneCallCoordinator(backend: backend, microphonePermission: { true })
+        let id = UUID()
+        var records: [PhoneCallRecord] = []
+        coordinator.onRecord = { records.append($0) }
+        backend.onEvent?(.incoming(id, "+13125550123", "Simulator caller"))
+        XCTAssertEqual(coordinator.active?.stage, .incoming)
+        XCTAssertNil(coordinator.active?.connectedAt)
+        try await coordinator.answer()
+        XCTAssertEqual(backend.answered, [id])
+        XCTAssertEqual(backend.activations, 1)
+        // A completed answer request alone is not a connected event.
+        XCTAssertNil(coordinator.active?.connectedAt)
+        backend.onEvent?(.connected(id, Date()))
+        XCTAssertEqual(coordinator.active?.stage, .connected)
+        try await coordinator.setMuted(true)
+        XCTAssertEqual(backend.mutes, [true])
+        XCTAssertEqual(coordinator.active?.muted, true)
+        try await coordinator.end()
+        XCTAssertNil(coordinator.active)
+        XCTAssertEqual(backend.ended, [id])
+        XCTAssertEqual(records.count, 1)
+        XCTAssertEqual(records.first?.outcome, .completed)
+        backend.onEvent?(.connected(id, Date()))
+        XCTAssertNil(coordinator.active)
+    }
+
+    func testSimulatorMicrophoneDenialEndsCallWithoutPublishing() async {
+        let backend = TestInboundBackend()
+        let coordinator = PhoneCallCoordinator(backend: backend, microphonePermission: { false })
+        backend.onEvent?(.incoming(UUID(), "+13125550123", nil))
+        do { try await coordinator.answer(); XCTFail("Expected microphone denial") }
+        catch { XCTAssertTrue(backend.answered.isEmpty) }
+        XCTAssertNil(coordinator.active)
+        XCTAssertEqual(backend.activations, 0)
+    }
+
+    func testSimulatorDeclineDoesNotActivateAudio() async throws {
+        let backend = TestInboundBackend()
+        let coordinator = PhoneCallCoordinator(backend: backend)
+        var records: [PhoneCallRecord] = []
+        coordinator.onRecord = { records.append($0) }
+        let id = UUID()
+        backend.onEvent?(.incoming(id, "", nil))
+        try await coordinator.end()
+        XCTAssertEqual(backend.ended, [id])
+        XCTAssertTrue(backend.answered.isEmpty)
+        XCTAssertEqual(backend.activations, 0)
+        XCTAssertEqual(records.first?.outcome, .missed)
+    }
+    #endif
+
     func testProductionStartsWithoutSamplesOrCallingService() {
         let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: TestContacts())
         XCTAssertTrue(store.history.isEmpty)
@@ -315,16 +369,20 @@ private final class FailingRepository: PhoneRepository {
     var supportsHoldAndKeypad: Bool { false }
     var onEvent: ((CallingEvent) -> Void)?
     var listens = 0
+    var answered: [UUID] = []
+    var ended: [UUID] = []
+    var mutes: [Bool] = []
+    var activations = 0
     func listenForIncomingCalls() { listens += 1 }
     func start(callID: UUID, number: String) async throws { throw PhoneError.serviceUnavailable }
     func prepareIncoming(callID: UUID, number: String) async throws {}
-    func answer(callID: UUID) async throws {}
-    func end(callID: UUID) async throws {}
-    func setMuted(_ muted: Bool, callID: UUID) async throws {}
+    func answer(callID: UUID) async throws { answered.append(callID) }
+    func end(callID: UUID) async throws { ended.append(callID) }
+    func setMuted(_ muted: Bool, callID: UUID) async throws { mutes.append(muted) }
     func setHeld(_ held: Bool, callID: UUID) async throws {}
     func sendDTMF(_ digits: String, callID: UUID) async throws {}
     func registerVoIPToken(_ token: Data?) async throws {}
-    func activateAudio(_ session: AVAudioSession) {}
+    func activateAudio(_ session: AVAudioSession) { activations += 1 }
     func deactivateAudio(_ session: AVAudioSession) {}
     func reset() {}
 }
@@ -334,3 +392,4 @@ private final class FailingRepository: PhoneRepository {
     func markRead(id: String) async throws { if let failure { throw failure }; readIDs.append(id) }
     func delete(id: String) async throws { if let failure { throw failure }; items.removeAll { $0.id == id } }
 }
+

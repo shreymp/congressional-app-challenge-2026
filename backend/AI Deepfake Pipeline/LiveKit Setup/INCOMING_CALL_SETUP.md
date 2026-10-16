@@ -4,6 +4,8 @@ This wires the existing iOS foreground calling flow and both detection branches.
 It does not add a new calling website. LiveKit dashboard configuration and a running
 worker are both required; uploading a dispatch rule alone does not run Python.
 
+For a reproducible MacBook simulator setup, start with [MACBOOK_TESTING.md](../../../MACBOOK_TESTING.md).
+
 ## Dashboard verification — 2026-10-16
 
 Browser inspection of CAC confirmed the existing inbound configuration:
@@ -173,3 +175,4 @@ node --test
 The HTTP integration test starts the real Node connector and Python model service
 with a fake model scorer. It verifies transport and failure handling, not model
 accuracy, LiveKit credentials, telephony routing, or a real phone call.
+
