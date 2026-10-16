@@ -4,6 +4,32 @@ This wires the existing iOS foreground calling flow and both detection branches.
 It does not add a new calling website. LiveKit dashboard configuration and a running
 worker are both required; uploading a dispatch rule alone does not run Python.
 
+## Dashboard verification — 2026-10-16
+
+Browser inspection of CAC confirmed the existing inbound configuration:
+
+- Number `+12675091164` is active and assigned to `SDR_W3CDWuY9RKkD`.
+- Rule `cac-inbound` uses Individual rooms with prefix `call-`.
+- Its phone-number selector includes `+12675091164`.
+- Agent dispatch targets `scam-guard`, deployment `production`, with Restart on failure.
+- Production version `8Fc2VCW3LSui` reports source commit `d8baca2` on `main`.
+  This predates the transcript integration on `codex/livekit-transcript-pipeline`.
+- The agent status was `sleeping`; that alone does not prove a runtime failure.
+  No calls appeared in the past-24-hours call view, so no real-call verification
+  was possible during this inspection.
+- The Secrets page lists `DETECTOR` and `RECORD_CALLER_AUDIO`. Existing values
+  are write-only in the update form and were not verified or changed.
+
+The phone routing already matches the intended setup, so no duplicate rule,
+new number, or dashboard settings changes were needed. The remaining work is
+runtime deployment: provision the real `best.pt`, Vosk and JEV artifacts, run
+the integrated worker and model services, and perform the call checks below.
+The current repository tree contains no Dockerfile or `livekit.toml` for
+reproducing the existing hosted deployment. Do not treat the old hosted version
+as evidence that the new pipeline is deployed. If using the documented local
+worker route, avoid leaving the old hosted worker eligible for the same agent
+dispatch; verify that calls reach the intended version.
+
 ## Dashboard
 
 Open [the CAC project](https://cloud.livekit.io/projects/p_5xz2jnm4y7j/overview).
