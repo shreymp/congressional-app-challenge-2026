@@ -45,6 +45,8 @@ class Detector:
     def score(self, audio, sr):
         # Returns P(fake) for each window plus the mean. audio: float32 mono array at sample rate sr.
         x = np.asarray(audio, dtype=np.float32)
+        if x.ndim != 1 or len(x) == 0 or not np.isfinite(x).all() or not isinstance(sr, (int, np.integer)) or sr <= 0:
+            raise ValueError("Expected nonempty finite mono audio and a positive sample rate")
         if sr != self.sr: x = resample_poly(x, self.sr, sr).astype(np.float32)
         if len(x) < self.win: x = np.tile(x, int(np.ceil(self.win / max(len(x), 1))))[: self.win]
         hop = self.win // 2
