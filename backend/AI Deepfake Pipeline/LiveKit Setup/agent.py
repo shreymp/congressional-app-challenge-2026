@@ -60,7 +60,8 @@ def prewarm(proc: JobProcess) -> None:
     try:
         proc.userdata["detector"] = detector_adapter.load()
         log.info("detector loaded on %s", proc.userdata["detector"].device)
-    except Exception:
+    except Exception as e:
+        proc.userdata["detector_error"] = f"{type(e).__name__}: {e}"[:300]
         # Ringing and media remain usable even when the model cannot initialize.
         proc.userdata["detector"] = None
         log.exception("detector unavailable; calls will continue without voice labels")
@@ -71,7 +72,8 @@ def prewarm(proc: JobProcess) -> None:
         proc.userdata["stt_model"] = transcript_pipeline.load_model()
         if proc.userdata["stt_model"] is not None:
             proc.userdata["transcript_state"] = "listening"
-    except Exception:
+    except Exception as e:
+        proc.userdata["stt_error"] = f"{type(e).__name__}: {e}"[:300]
         proc.userdata["transcript_state"] = "stt_unavailable"
         log.exception("Vosk unavailable; calls continue without transcript scores")
 
@@ -128,7 +130,12 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
             transcript_state = "stt_unavailable"
             log.exception("caller transcription could not start")
 
+    frames = [0]
+
     async def publish(payload: dict) -> None:
+        if probe:
+            # CI probe rooms only: report why scoring is or is not running.
+            payload = {**payload, "diag": await asyncio.to_thread(_probe_diag, ctx.proc.userdata, frames[0])}
         text_state = transcript.snapshot() if transcript else {"state": transcript_state, "probability": None}
         payload = {**payload, "transcript": text_state}
         if payload.get("type") == "risk":
@@ -187,6 +194,7 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
         next_score = time.monotonic() + SCORE_EVERY_SEC
         async for event in stream:
             now = time.monotonic()
+            frames[0] += 1
             if transcript is not None:
                 transcript.push(event.frame.data)
             if session is not None:
@@ -214,6 +222,27 @@ def _save_wav(pcm: np.ndarray, caller_number: str) -> None:
     path = os.path.join(RECORD_DIR, f"{datetime.now():%Y%m%d-%H%M%S}_{safe}.wav")
     sf.write(path, pcm, SAMPLE_RATE, subtype="PCM_16")
     log.info("saved caller audio to %s", path)
+
+
+def _probe_diag(userdata: dict, frames: int) -> dict:
+    """Transcript-free health facts for the CI backend probe (probe rooms only)."""
+    import urllib.request
+    out = {"detector_error": userdata.get("detector_error"), "stt_error": userdata.get("stt_error"),
+           "frames": frames, "cpus": os.cpu_count(), "pid": os.getpid()}
+    for port in (8000, 3000):
+        try:
+            with urllib.request.urlopen(f"http://127.0.0.1:{port}/health", timeout=2) as response:
+                out[f"svc{port}"] = response.status
+        except Exception as e:
+            out[f"svc{port}"] = f"{type(e).__name__}: {e}"[:160]
+    for name in ("memory.max", "memory.current", "memory.peak", "memory.events", "cpu.max"):
+        try:
+            with open("/sys/fs/cgroup/" + name) as f:
+                out[name] = " ".join(f.read().split())[:200]
+        except OSError:
+            pass
+    out["proxy_env"] = sorted(k for k in os.environ if k.lower() in ("http_proxy", "https_proxy", "no_proxy", "all_proxy"))
+    return out
 
 
 if __name__ == "__main__":

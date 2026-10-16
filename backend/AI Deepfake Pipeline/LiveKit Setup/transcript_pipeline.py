@@ -85,6 +85,7 @@ class TranscriptPipeline:
         self._final = ""
         self._partial = ""
         self._revision = 0
+        self._withdrawals = 0  # bumped whenever the recognizer withdraws all context
         self._scored_revision = 0
         self._probability: float | None = None
         self._scored_at: float | None = None
@@ -125,6 +126,7 @@ class TranscriptPipeline:
             self._revision += 1
             # Never retain a score after the recognizer withdraws all available context.
             if not self.text:
+                self._withdrawals += 1
                 self._probability, self._scored_at = None, None
                 self._state = "listening"
             self._changed.set()
@@ -161,11 +163,15 @@ class TranscriptPipeline:
             self._changed.clear()
             if self._audio_failed or not self.text:
                 continue
-            text, revision = self.text, self._revision
+            text, revision, withdrawals = self.text, self._revision, self._withdrawals
             try:
                 probability = await asyncio.to_thread(self._score, "Caller: " + text)
                 # A withdrawn hypothesis / failed audio stream must not revive an old score.
-                if not self._audio_failed and self.text and revision == self._revision:
+                # Newer words arriving during the request are normal in continuous speech: keep
+                # this score (it covers `revision`) and let the next request cover the rest.
+                # Requiring an unchanged revision discarded every score while the caller talked,
+                # so the transcript branch went "stale" after the first utterance.
+                if not self._audio_failed and self.text and withdrawals == self._withdrawals:
                     self._probability = probability
                     self._scored_at = self.clock()
                     self._scored_revision = revision

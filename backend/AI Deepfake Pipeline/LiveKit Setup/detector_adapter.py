@@ -107,11 +107,15 @@ class RemoteDetector:
 
 
 def load():
-    if os.environ.get("DETECTOR", "real").lower() == "stub":
+    mode = os.environ.get("DETECTOR", "real").strip().lower()
+    if mode == "stub":
         return StubDetector()
-    if os.environ.get("DETECTOR", "real").lower() == "remote":
+    if mode == "remote":
         return RemoteDetector()
-    return RealDetector()
+    if mode == "real":
+        return RealDetector()
+    # Fail loudly: silently falling back to local weights hid a mangled cloud secret.
+    raise ValueError(f"Unknown DETECTOR value {mode[:40]!r}; use real, remote or stub")
 
 
 def thresholds(det) -> tuple[float, float]:
