@@ -25,7 +25,7 @@ def describe(message):
         "deepfake_p_last": voice.get("p_last"), "deepfake_level": voice.get("level"),
         "text_state": text.get("state"), "text_p": text.get("probability"),
         "text_rev": text.get("revision"), "text_scored_rev": text.get("scored_revision"),
-        "text_chars": text.get("chars")})
+        "text_chars": text.get("chars"), "diag": message.get("diag")})
 
 
 async def attempt(wav, timeout):
@@ -59,10 +59,12 @@ async def attempt(wav, timeout):
             # Print only when the update changes shape, so a 90 s attempt stays readable.
             key = json.loads(line)
             for volatile in ("seq", "t", "infer_ms", "voiced_sec", "deepfake_p_last", "text_p",
-                             "text_rev", "text_scored_rev", "text_chars"):
+                             "text_rev", "text_scored_rev", "text_chars", "diag"):
                 key.pop(volatile)
             if key != seen["last"]:
                 seen["last"] = key
+                print("probe: update", line, flush=True)
+            elif seen["count"] % 10 == 0:
                 print("probe: update", line, flush=True)
             if message.get("schema") != 1 or message.get("model") != "real" or message.get("callerIdentity") != identity or message.get("room") != name:
                 return
