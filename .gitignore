@@ -33,3 +33,7 @@ __pycache__/
 # Mac simulator handoff
 .venv-calltest/
 /ios/build-calltest/
+
+# Cloud build descriptors contain expiring private model URLs
+.cloud-context/
+model-sources.json
