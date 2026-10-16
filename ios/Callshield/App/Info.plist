@@ -37,6 +37,10 @@
 	<string>$(CALLSHIELD_DEMO)</string>
 	<key>CallshieldDefaultDialerEnabled</key>
 	<string>$(CALLSHIELD_DEFAULT_DIALER)</string>
+	<key>CallshieldLiveKitHost</key>
+	<string>$(CALLSHIELD_LIVEKIT_HOST)</string>
+	<key>CallshieldLobbyToken</key>
+	<string>$(CALLSHIELD_LOBBY_TOKEN)</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Show your selected contacts in Callshield so you can call them and add favorites.</string>
 	<key>NSMicrophoneUsageDescription</key>

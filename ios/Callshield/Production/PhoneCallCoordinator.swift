@@ -18,7 +18,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     init(backend: CallingBackend) {
         self.backend = backend
         let configuration = CXProviderConfiguration()
-        configuration.supportedHandleTypes = [.phoneNumber]
+        configuration.supportedHandleTypes = [.phoneNumber, .generic]
         configuration.supportsVideo = false
         configuration.maximumCallGroups = 1
         configuration.maximumCallsPerCallGroup = 1
@@ -30,7 +30,10 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     }
 
     func registerIncomingCallsIfConfigured() {
-        guard backend.isConfigured, registry == nil else { return }
+        guard backend.isConfigured else { return }
+        backend.listenForIncomingCalls()
+        // PushKit needs the push entitlement. A backend that rings through `incoming` events gets no registry.
+        guard backend.usesVoIPPush, registry == nil else { return }
         let registry = PKPushRegistry(queue: .main)
         registry.delegate = self
         registry.desiredPushTypes = [.voIP]
@@ -116,6 +119,54 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             backend.reset()
             finish(id, outcome: .failed, reason: .failed)
             onError?(message)
+        case .incoming(let id, let handle, let name): reportIncoming(id, handle: handle, name: name)
+        case .incomingCallsUnavailable(let message): onError?(message)
+        }
+    }
+
+    /// A backend that rings without PushKit announced a call while the app is open.
+    private func reportIncoming(_ id: UUID, handle: String, name: String?) {
+        // `end` for a call that never rang only makes the backend forget it.
+        guard active == nil else { Task { @MainActor in try? await self.backend.end(callID: id) }; return }
+        let number = try? PhoneNumber.normalized(handle)
+        let name = name.map { String($0.prefix(128)) }
+        let update = CXCallUpdate()
+        // A withheld or non-numeric caller ID still rings, under a neutral label.
+        update.remoteHandle = number.map { CXHandle(type: .phoneNumber, value: $0) } ?? CXHandle(type: .generic, value: "Unknown caller")
+        update.localizedCallerName = name
+        update.supportsHolding = false
+        // The call-room token cannot publish data, and the server drops keypad tones without that grant.
+        update.supportsDTMF = false
+        update.supportsGrouping = false
+        update.supportsUngrouping = false
+        let person = number.map { PhoneNumber.person($0, name: name) }
+            ?? Person(name: name ?? "Unknown caller", number: "", initials: "?", color: .slate, voice: .unknown)
+        provider.reportNewIncomingCall(with: id, update: update) { error in
+            Task { @MainActor in
+                // CallKit can refuse (Do Not Disturb, a blocked caller). Then nothing rang and there is no session.
+                if let error {
+                    print("[Callshield] CallKit refused the incoming call: \(error.localizedDescription)")
+                    try? await self.backend.end(callID: id)
+                    return
+                }
+                guard self.session.begin(PhoneCall(id: id, person: person, direction: .incoming,
+                                                   createdAt: Date(), stage: .incoming)) else {
+                    self.provider.reportCall(with: id, endedAt: Date(), reason: .failed)
+                    try? await self.backend.end(callID: id)
+                    return
+                }
+                print("[Callshield] CallKit reported the incoming call")
+                self.changed()
+                Task { @MainActor in
+                    do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
+                    catch {
+                        guard self.active?.id == id else { return }
+                        self.backend.reset()
+                        self.finish(id, outcome: .failed, reason: .failed)
+                        self.onError?(error.localizedDescription)
+                    }
+                }
+            }
         }
     }
 
@@ -161,6 +212,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             }
             guard allowed else {
                 action.fail()
+                self.backend.reset() // The backend may already have joined the call silently.
                 self.finish(action.callUUID, outcome: .failed, reason: .failed)
                 self.onError?(PhoneError.microphoneDenied.localizedDescription)
                 return

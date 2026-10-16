@@ -1,3 +1,4 @@
+import AVFAudio
 import XCTest
 import SwiftUI
 @testable import Callshield
@@ -19,6 +20,56 @@ final class ProductionTests: XCTestCase {
         XCTAssertNil(store.active)
         XCTAssertFalse(store.coordinator.backend.isConfigured)
         XCTAssertFalse(store.voicemailBackend.isConfigured)
+    }
+    func testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone() async {
+        let phone = TestSystemPhone(); let backend = TestInboundBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: TestContacts(), systemPhone: phone, backend: backend)
+        XCTAssertEqual(backend.listens, 0)
+        await store.refresh()
+        XCTAssertEqual(backend.listens, 1)
+        await store.call(person)
+        XCTAssertEqual(phone.dialed, [person.number])
+        XCTAssertNil(store.active)
+        XCTAssertNil(store.errorMessage)
+    }
+    func testBackendThatCannotListenAnymoreIsShownToThePerson() {
+        let backend = TestInboundBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: TestContacts(), backend: backend)
+        XCTAssertNil(store.errorMessage)
+        backend.onEvent?(.incomingCallsUnavailable("Incoming calls are off."))
+        XCTAssertEqual(store.errorMessage, "Incoming calls are off.")
+        XCTAssertNil(store.active)
+    }
+    func testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads() throws {
+        let id = UUID()
+        let complete: [String: Any] = ["type": "incoming_call", "callUUID": id.uuidString.lowercased(), "room": "call-test",
+                                       "token": "test-token", "handle": "+13125550123", "callerIdentity": "sip_+13125550123",
+                                       "callerName": " Test Caller "]
+        func decode(_ object: Any) throws -> IncomingCallInvite? {
+            let data = try JSONSerialization.data(withJSONObject: object)
+            return IncomingCallInvite.decode(data)
+        }
+        let invite = try XCTUnwrap(try decode(complete))
+        XCTAssertEqual(invite, IncomingCallInvite(callID: id, room: "call-test", token: "test-token", handle: "+13125550123",
+                                                  callerIdentity: "sip_+13125550123", callerName: "Test Caller"))
+        for key in ["handle", "callerName"] {
+            var payload = complete; payload[key] = nil
+            let partial = try XCTUnwrap(try decode(payload), key)
+            XCTAssertEqual(partial.callID, id)
+            XCTAssertEqual(key == "handle" ? partial.handle : partial.callerName ?? "", "")
+        }
+        for key in ["type", "callUUID", "room", "token", "callerIdentity"] {
+            var missing = complete; missing[key] = nil
+            XCTAssertNil(try decode(missing), key)
+            var empty = complete; empty[key] = ""
+            XCTAssertNil(try decode(empty), key)
+        }
+        var notUUID = complete; notUUID["callUUID"] = "not-a-uuid"
+        XCTAssertNil(try decode(notUUID))
+        var otherType = complete; otherType["type"] = "something_else"
+        XCTAssertNil(try decode(otherType))
+        XCTAssertNil(try decode([complete]))
+        XCTAssertNil(IncomingCallInvite.decode(Data("not json".utf8)))
     }
     func testNumberNormalizationAndRejection() throws {
         XCTAssertEqual(try PhoneNumber.normalized("+1 (312) 555-0123"), "+13125550123")
@@ -255,6 +306,27 @@ private final class FailingRepository: PhoneRepository {
     var failLoad = false; var writes = 0
     func load() throws -> PhoneSnapshot { if failLoad { throw PhoneError.actionUnavailable }; return PhoneSnapshot() }
     func save(_ snapshot: PhoneSnapshot) throws { writes += 1; throw PhoneError.actionUnavailable }
+}
+/// Configured, but inbound-only and without PushKit, like the LiveKit backend. Opens no connection.
+@MainActor private final class TestInboundBackend: CallingBackend {
+    var isConfigured: Bool { true }
+    var usesVoIPPush: Bool { false }
+    var canPlaceOutgoingCalls: Bool { false }
+    var supportsHoldAndKeypad: Bool { false }
+    var onEvent: ((CallingEvent) -> Void)?
+    var listens = 0
+    func listenForIncomingCalls() { listens += 1 }
+    func start(callID: UUID, number: String) async throws { throw PhoneError.serviceUnavailable }
+    func prepareIncoming(callID: UUID, number: String) async throws {}
+    func answer(callID: UUID) async throws {}
+    func end(callID: UUID) async throws {}
+    func setMuted(_ muted: Bool, callID: UUID) async throws {}
+    func setHeld(_ held: Bool, callID: UUID) async throws {}
+    func sendDTMF(_ digits: String, callID: UUID) async throws {}
+    func registerVoIPToken(_ token: Data?) async throws {}
+    func activateAudio(_ session: AVAudioSession) {}
+    func deactivateAudio(_ session: AVAudioSession) {}
+    func reset() {}
 }
 @MainActor private final class TestVoicemail: VoicemailBackend {
     var isConfigured = true; var items: [VoicemailMessage] = []; var readIDs: [String] = []; var failure: Error?

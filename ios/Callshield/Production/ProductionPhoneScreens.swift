@@ -213,13 +213,17 @@ struct ProductionPersonDetail: View {
                 VStack(spacing: 18) {
                     Avatar(person: person, size: 80)
                     Text(person.name).font(.title2.weight(.semibold))
-                    Text(person.number).font(.body).foregroundStyle(Palette.secondary)
-                    Button { Task { await store.call(person) } } label: {
-                        Label("Call", systemImage: "phone.fill").frame(maxWidth: .infinity, minHeight: 36)
-                    }.buttonStyle(.borderedProminent).tint(Palette.green).disabled(store.placingCall)
-                    Button { store.toggleFavorite(person) } label: {
-                        Label(store.isFavorite(person) ? "Remove from Favorites" : "Add to Favorites", systemImage: store.isFavorite(person) ? "star.fill" : "star")
-                    }.tint(Palette.green)
+                    // A caller who withheld their number has none: there is nothing to call back or to favourite
+                    // (a person's id is their number, so every such caller would share one favourite).
+                    if !person.number.isEmpty {
+                        Text(person.number).font(.body).foregroundStyle(Palette.secondary)
+                        Button { Task { await store.call(person) } } label: {
+                            Label("Call", systemImage: "phone.fill").frame(maxWidth: .infinity, minHeight: 36)
+                        }.buttonStyle(.borderedProminent).tint(Palette.green).disabled(store.placingCall)
+                        Button { store.toggleFavorite(person) } label: {
+                            Label(store.isFavorite(person) ? "Remove from Favorites" : "Add to Favorites", systemImage: store.isFavorite(person) ? "star.fill" : "star")
+                        }.tint(Palette.green)
+                    }
                     if let record {
                         VoiceBadge(voice: record.voice, size: 12)
                         VStack(spacing: 12) {
@@ -242,6 +246,11 @@ struct ProductionPersonDetail: View {
 
 struct ProductionSettingsView: View {
     @EnvironmentObject private var store: ProductionStore
+    /// An inbound-only backend (LiveKit) leaves outgoing calls to the mobile service, and no
+    /// voice assessment reaches this phone for it, so only a full calling backend claims either.
+    @MainActor private var callshieldPlacesCalls: Bool {
+        store.coordinator.backend.isConfigured && store.coordinator.backend.canPlaceOutgoingCalls
+    }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -253,9 +262,9 @@ struct ProductionSettingsView: View {
                 VStack(spacing: 0) {
                     Toggle("Larger text", isOn: $store.largeText).tint(Palette.green).padding(.vertical, 12)
                     Divider()
-                    row("Calling", store.coordinator.backend.isConfigured ? "Callshield" : "Mobile service")
+                    row("Calling", callshieldPlacesCalls ? "Callshield" : "Mobile service")
                     Divider()
-                    row("Voice labels", store.coordinator.backend.isConfigured ? "During connected calls" : "Unavailable")
+                    row("Voice labels", callshieldPlacesCalls ? "During connected calls" : "Unavailable")
                 }.padding(.horizontal, 16).background(Color(hex: 0xF6F7F6), in: RoundedRectangle(cornerRadius: 12))
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Default calling app").font(.headline)
