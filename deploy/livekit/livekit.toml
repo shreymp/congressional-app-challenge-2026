@@ -1,5 +1,5 @@
 [project]
-  subdomain = "wss://cac-ypytoxcd.livekit.cloud"
+  subdomain = "cac-ypytoxcd"
 
 [agent]
   id = "CA_KKXaPczWhqpE"
