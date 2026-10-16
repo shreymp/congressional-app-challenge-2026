@@ -298,9 +298,12 @@ def main():
     p = sub.add_parser("services"); p.add_argument("--agent", action="store_true", help="Only after the cloud worker is stopped; never run duplicate scam-guard workers"); p.set_defaults(func=services)
     p = sub.add_parser("simulator"); p.add_argument("--device", required=True, help="Simulator UDID from xcrun simctl list devices available"); p.set_defaults(func=simulator)
     for command, tool in (("ring", "test_ring.py"), ("watch", "watch_risk.py")):
-        p = sub.add_parser(command); p.add_argument("args", nargs=argparse.REMAINDER)
+        p = sub.add_parser(command)
         p.set_defaults(func=lambda a, tool=tool: (require_credentials(), run([PYTHON, LIVE / "tools" / tool, *a.args])))
-    args = parser.parse_args()
+    args, passthrough = parser.parse_known_args()
+    if args.command not in ("ring", "watch") and passthrough:
+        parser.error("unrecognized arguments: " + " ".join(passthrough))
+    args.args = passthrough
     if sys.version_info < (3, 11):
         parser.error("Python 3.11+ required")
     if args.command != "setup" and not PYTHON.exists():

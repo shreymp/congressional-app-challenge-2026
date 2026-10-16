@@ -1,3 +1,5 @@
-﻿# Congressional App Challenge 2026
+# Congressional App Challenge 2026
 
-JEV transcript connector. See [architecture and setup](backend/Transcript-Based%20Detector/ARCHITECTURE.md).
+Start here: [MacBook simulator and incoming-call test guide](MACBOOK_TESTING.md).
+
+JEV transcript connector: [architecture and setup](backend/Transcript-Based%20Detector/ARCHITECTURE.md).

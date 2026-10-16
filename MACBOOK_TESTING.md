@@ -188,7 +188,7 @@ of the local setup commands uploads weights or redeploys the cloud agent.
   and worker version. Transcript unavailable: check Vosk path, JEV health and an
   actual POST through the connector. `modelConfigured` alone is insufficient.
 - Import/SDK build error: resolve Swift packages in Xcode and verify Xcode 26.
-  The app uses LiveKit Swift 2.17.0. Do not regenerate the project to fix signing;
+  The app uses LiveKit Swift 2.17.0; Debug builds select only the active simulator architecture to match its package build. Do not regenerate the project to fix signing;
   put personal settings in `Local.xcconfig`.
 - No answer: voicemail/family notification is still a stub. Background ringing
   and outgoing phone detection are not implemented by this test setup.
