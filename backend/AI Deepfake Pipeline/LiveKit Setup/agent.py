@@ -1,12 +1,16 @@
 """scam-guard: silent LiveKit agent that scores the phone caller's voice in real time.
 
 How it gets the audio
-  Grandma's cell forwards all calls to the LiveKit number. LiveKit puts each call in a room
-  named call-<caller-number> (dispatch rule "cac-inbound") and dispatches the agent named
-  "scam-guard" into it. The agent never publishes audio; it only subscribes to the phone
+  Grandma's cell forwards all calls to the LiveKit number. LiveKit puts each call in its own
+  room whose name starts with "call-" (dispatch rule "cac-inbound") and dispatches the agent
+  named "scam-guard" into it. The agent never publishes audio; it only subscribes to the phone
   caller's track, so nobody on the call can hear it.
 
 What it does per call
+  0. Rings grandma's app (senior_ring.py): as soon as the phone caller is in the room it sends
+     the open app an "incoming call" invite through the app's lobby room. The app joins this
+     room and publishes its microphone when she answers; that is what answers the phone call.
+     Also handles no answer (a stub for now) and hangs up the caller after she hangs up.
   1. Finds the SIP participant (the phone caller) and logs its attributes, including the
      caller number LiveKit saw. That answers "does forwarding keep the real caller ID?".
   2. Streams the caller's audio at 16 kHz, keeps the last ~4 s of speech.
@@ -35,6 +39,7 @@ from livekit.agents import AgentServer, AutoSubscribe, JobContext, JobProcess, c
 import detector_adapter
 from audio_window import VoicedWindow
 from risk import RiskEngine, combine
+import senior_ring  # last: it loads .env.local at import, which must not change what the modules above read
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(HERE, ".env.local"))
@@ -66,6 +71,26 @@ server = AgentServer(
 @server.rtc_session(agent_name=AGENT_NAME)
 async def scam_guard(ctx: JobContext) -> None:
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
+    # 0. Ring grandma's app for the phone caller. Starts its own task and returns at once; it
+    #    must not wait for step 1, because nothing answers the call until she has been rung.
+    senior_ring.start_for_job(ctx)
+    # Steps 1-4 (scoring) must never take the ring down with them. An exception that escapes this
+    # function makes the framework disconnect the agent and run the shutdown callbacks, which
+    # cancels the ring: an unanswered call would stop ringing, and when grandma hangs up the room
+    # would not be deleted, leaving the phone caller connected to nobody. Returning normally keeps
+    # the job alive until the room disconnects, so the ring keeps supervising the call.
+    try:
+        await _score_call(ctx)
+    except Exception as e:
+        if isinstance(e, RuntimeError) and not ctx.room.isconnected():
+            # wait_for_participant raises this when the room closes first, e.g. the caller gave up
+            # while it was still ringing. Normal, not an error.
+            log.info("room closed before scoring finished: %s", e)
+        else:
+            log.exception("scoring stopped; the senior ring keeps running")
+
+
+async def _score_call(ctx: JobContext) -> None:
     room = ctx.room
     det = ctx.proc.userdata.get("detector") or detector_adapter.load()
     elevated_thr, high_thr = detector_adapter.thresholds(det)

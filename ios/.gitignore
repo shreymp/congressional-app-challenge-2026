@@ -14,3 +14,4 @@ ScamTranscript/Resources/JevCallV2/
 *.xcresult/
 xcuserdata/
 .DS_Store
+Configuration/Local.xcconfig
