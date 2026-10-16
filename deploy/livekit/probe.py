@@ -14,7 +14,7 @@ from scipy.signal import resample_poly
 from livekit import api, rtc
 
 
-async def probe(wav, timeout):
+async def attempt(wav, timeout):
     audio, sr = sf.read(wav, dtype="float32", always_2d=True)
     audio = audio.mean(axis=1)
     if not len(audio) or not np.isfinite(audio).all():
@@ -76,9 +76,25 @@ async def probe(wav, timeout):
             await lk.room.delete_room(api.DeleteRoomRequest(room=name))
 
 
+async def probe(wav, timeout, attempts=1):
+    """Retry with a fresh room: right after `lk agent deploy` the previous version can still be
+    serving jobs for a short while, and it ignores the probe and never answers."""
+    for number in range(1, attempts + 1):
+        try:
+            await attempt(wav, timeout)
+            return
+        except asyncio.TimeoutError:
+            print(f"Probe attempt {number}/{attempts} timed out after {timeout:g}s with no passing risk message", flush=True)
+            if number == attempts:
+                raise
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("wav", type=Path)
-    parser.add_argument("--timeout", type=float, default=240)
+    parser.add_argument("--timeout", type=float, default=240, help="seconds to wait per attempt")
+    parser.add_argument("--attempts", type=int, default=1)
     args = parser.parse_args()
-    asyncio.run(probe(args.wav, args.timeout))
+    if args.attempts < 1:
+        parser.error("--attempts must be at least 1")
+    asyncio.run(probe(args.wav, args.timeout, args.attempts))
