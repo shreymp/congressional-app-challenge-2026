@@ -20,3 +20,11 @@ __pycache__/
 *.egg-info/
 :memory:.ses
 /verdict-151m/model.onnx
+
+# Call credentials and local speech models / recordings
+.env.local
+.env
+!/backend/AI Deepfake Pipeline/LiveKit Setup/.env.example
+/backend/AI Deepfake Pipeline/LiveKit Setup/models/
+/backend/AI Deepfake Pipeline/LiveKit Setup/recordings/
+

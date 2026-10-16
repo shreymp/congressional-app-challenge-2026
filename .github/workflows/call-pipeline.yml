@@ -1,0 +1,35 @@
+name: Call pipeline
+on:
+  push:
+    paths:
+      - 'backend/AI Deepfake Pipeline/LiveKit Setup/**'
+      - 'backend/Transcript-Based Detector/**'
+      - '.github/workflows/call-pipeline.yml'
+  pull_request:
+    paths:
+      - 'backend/AI Deepfake Pipeline/LiveKit Setup/**'
+      - 'backend/Transcript-Based Detector/**'
+      - '.github/workflows/call-pipeline.yml'
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Caller transcription and risk tests
+        working-directory: backend/AI Deepfake Pipeline/LiveKit Setup
+        run: python -m unittest -v test_transcript_pipeline
+      - name: Real connector HTTP integration with fake model inference
+        working-directory: backend/Transcript-Based Detector
+        run: |
+          python -m unittest -v test_model_service
+          node --test
+      - name: Python syntax
+        run: python -m compileall -q backend
