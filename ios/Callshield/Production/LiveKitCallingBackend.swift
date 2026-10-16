@@ -61,6 +61,8 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         var answered = false     // microphone published
         var audioActive = false  // engine running inside CallKit's activation window
         var connected = false    // `connected` already emitted
+        var connectedAt: Date?
+        var detector = DeepfakeMonitor()
     }
 
     let isConfigured: Bool
@@ -82,6 +84,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     private var handledCallIDs: [UUID] = []
     private var call: LiveCall?
     private var callTeardown: Task<Void, Never>?
+    private var assessmentWatchdog: Task<Void, Never>?
     private var observers: [NSObjectProtocol] = []
     private var idleTimerWasDisabled: Bool?
     private var askedForMicrophone = false
@@ -403,7 +406,11 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         guard let current = call, current.answered, current.audioActive, !current.connected else { return }
         call?.connected = true
         callshieldLog("connected")
-        onEvent?(.connected(current.invite.callID, Date()))
+        let now = Date()
+        call?.connectedAt = now
+        onEvent?(.connected(current.invite.callID, now))
+        onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .waiting, updatedAt: now)))
+        startAssessmentWatchdog(callID: current.invite.callID)
     }
 
     /// The one place a call stops. Reaching it twice is harmless: a server teardown reports
@@ -412,6 +419,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     private func closeCall() -> LiveCall? {
         guard let closed = call else { return nil }
         call = nil
+        assessmentWatchdog?.cancel(); assessmentWatchdog = nil
         closed.prepare.cancel()
         // CallKit sends didDeactivate only for a call whose audio it activated, so force the engine off.
         liveKitAudioQueue.async { try? AudioManager.shared.setEngineAvailability(.none) }
@@ -471,21 +479,63 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         }
     }
 
+    // MARK: - Voice detector
+
+    private func receiveAssessment(_ data: Data, in room: Room, isAgent: Bool) {
+        guard var current = call, current.room === room, current.connected,
+              room.connectionState == .connected,
+              let update = DeepfakeUpdate.decode(data),
+              let assessment = current.detector.receive(update, room: current.invite.room,
+                  callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: Date()) else { return }
+        call = current
+        onEvent?(.deepfakeAssessment(current.invite.callID, assessment))
+    }
+
+    private func startAssessmentWatchdog(callID: UUID) {
+        assessmentWatchdog?.cancel()
+        assessmentWatchdog = Task { @MainActor [weak self] in
+            while !Task.isCancelled {
+                do { try await Task.sleep(nanoseconds: 2_000_000_000) } catch { return }
+                guard let self, var current = self.call, current.invite.callID == callID,
+                      let connectedAt = current.connectedAt else { return }
+                if let expired = current.detector.expire(at: Date(), connectedAt: connectedAt) {
+                    self.call = current
+                    self.onEvent?(.deepfakeAssessment(callID, expired))
+                }
+            }
+        }
+    }
+
+    private func assessmentInterrupted(in room: Room) {
+        guard let current = call, current.room === room, current.connected else { return }
+        onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .unavailable, updatedAt: Date())))
+    }
+
     // MARK: - RoomDelegate
     // Every requirement is `@objc optional`: a label that differs from the protocol compiles and
     // then never fires. The SDK calls these on its own queue, not the main one.
 
     nonisolated func room(_ room: Room, participant: RemoteParticipant?, didReceiveData data: Data,
                           forTopic topic: String, encryptionType: EncryptionType) { // RoomDelegate.swift:185
-        guard topic == IncomingCallInvite.topic else { return }
-        Task { @MainActor in self.receiveInvite(data, in: room) }
+        if topic == IncomingCallInvite.topic {
+            Task { @MainActor in self.receiveInvite(data, in: room) }
+        } else if topic == DeepfakeUpdate.topic {
+            // Participant kind is server-authenticated. SIP callers and ordinary clients
+            // must never be able to supply their own voice verdicts.
+            let isAgent = participant?.kind == .agent
+            Task { @MainActor in self.receiveAssessment(data, in: room, isAgent: isAgent) }
+        }
     }
 
     nonisolated func room(_ room: Room, participantDidDisconnect participant: RemoteParticipant) { // RoomDelegate.swift:102
         // Read now: the SDK wipes the participant as soon as this returns. It also sends this for
         // everyone while this phone disconnects or fully reconnects, which is not a hang-up.
         guard let identity = participant.identity?.stringValue, room.connectionState == .connected else { return }
-        Task { @MainActor in self.participantLeft(identity, in: room) }
+        let isAgent = participant.kind == .agent
+        Task { @MainActor in
+            if isAgent { self.assessmentInterrupted(in: room) }
+            self.participantLeft(identity, in: room)
+        }
     }
 
     nonisolated func room(_ room: Room, didDisconnectWithError error: LiveKitError?) { // RoomDelegate.swift:78
@@ -493,6 +543,10 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         let type = error.type
         let detail = callshieldDetail(error)
         Task { @MainActor in self.roomDropped(room, type: type, detail: detail) }
+    }
+
+    nonisolated func room(_ room: Room, didStartReconnectWithMode reconnectMode: ReconnectMode) {
+        Task { @MainActor in self.assessmentInterrupted(in: room) }
     }
 
     // Unlike roomDidReconnect, this also fires for a quick reconnect, which never leaves `.connected`.

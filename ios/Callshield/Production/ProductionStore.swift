@@ -182,7 +182,8 @@ final class ProductionStore: ObservableObject {
             let person = contacts.first(where: { $0.number == entry.person.number }) ?? entry.person
             merged[entry.id] = PhoneCallRecord(id: entry.id, person: person, date: entry.date,
                 duration: entry.duration, direction: entry.direction, outcome: entry.outcome,
-                voice: entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice)
+                voice: entry.deepfake != nil ? entry.voice : (entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice),
+                deepfake: entry.deepfake ?? prior?.deepfake)
         }
         history = Array(merged.values.sorted { $0.date > $1.date }.prefix(1000))
         persist()
