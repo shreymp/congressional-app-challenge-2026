@@ -47,8 +47,13 @@ async def main() -> None:
         m = json.loads(pkt.data)
         if m.get("type") == "risk":
             d = m["deepfake"]
+            transcript = m.get("transcript") or {}
+            probability = transcript.get("probability")
+            text_score = "-" if probability is None else f"{probability:.3f}"
             print(f"t={m['t']:6.1f}s  level={m['level']:10} logit={d['logit_last']:6.2f} "
-                  f"smoothed_logit={d['logit_smoothed']:6.2f}  infer={m['infer_ms']}ms  voiced={m['voiced_sec']}s")
+                  f"smoothed_logit={d['logit_smoothed']:6.2f}  infer={m['infer_ms']}ms  voiced={m['voiced_sec']}s "
+                  f"transcript={transcript.get('state', 'disabled')} p={text_score} "
+                  f"revision={transcript.get('scored_revision', '-')}/{transcript.get('revision', '-')}")
         else:
             print(m)
 
@@ -66,3 +71,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
+
