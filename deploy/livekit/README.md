@@ -48,7 +48,7 @@ Manual equivalent from a configured checkout:
 ```sh
 python3 deploy/livekit/prepare.py --output .cloud-context
 lk --project CAC agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production \
-  --secrets 'DETECTOR=remote,TRANSCRIPT_ENABLED=1,RECORD_CALLER_AUDIO=0'
+  --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=0
 python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav
 ```
 
@@ -71,3 +71,4 @@ CPU latency, concurrency and memory must be checked against the deployment plan
 using the real model test and deployed probe. A finite score proves that inference
 ran, not model accuracy or threshold calibration. A real incoming PSTN call is
 still needed to validate telephone routing/audio with the eventual app.
+

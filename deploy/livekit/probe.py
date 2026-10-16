@@ -1,4 +1,4 @@
-"""Send consented fixture speech through a deployed worker without ringing the app."""
+"""Send fixture speech through the cloud models; optionally ring the simulator too."""
 import argparse
 import asyncio
 from datetime import timedelta
@@ -7,6 +7,10 @@ import math
 import os
 from pathlib import Path
 import uuid
+import sys
+import time
+
+from probe_checks import ProbeEvidence
 
 import numpy as np
 import soundfile as sf
@@ -28,7 +32,7 @@ def describe(message):
         "text_chars": text.get("chars"), "diag": message.get("diag")})
 
 
-async def attempt(wav, timeout):
+async def attempt(wav, timeout, min_seconds=35, ring_app=False):
     audio, sr = sf.read(wav, dtype="float32", always_2d=True)
     audio = audio.mean(axis=1)
     if not len(audio) or not np.isfinite(audio).all():
@@ -41,7 +45,10 @@ async def attempt(wav, timeout):
              .with_grants(api.VideoGrants(room_join=True, room=name)).to_jwt())
     room = rtc.Room()
     passed = asyncio.Event()
-    summary = {}
+    evidence = ProbeEvidence(name, identity, min_seconds)
+    ring = None
+    microphone = {"heard": False}
+    tasks = []
     seen = {"count": 0, "last": None}
 
     @room.on("participant_connected")
@@ -54,6 +61,8 @@ async def attempt(wav, timeout):
             return
         try:
             message = json.loads(packet.data)
+            if not isinstance(message, dict):
+                return
             seen["count"] += 1
             line = describe(message)
             # Print only when the update changes shape, so a 90 s attempt stays readable.
@@ -66,19 +75,33 @@ async def attempt(wav, timeout):
                 print("probe: update", line, flush=True)
             elif seen["count"] % 10 == 0:
                 print("probe: update", line, flush=True)
-            if message.get("schema") != 1 or message.get("model") != "real" or message.get("callerIdentity") != identity or message.get("room") != name:
-                return
-            text = message.get("transcript") or {}
-            voice = message.get("deepfake") or {}
-            probability = text.get("probability")
-            if (message.get("type") == "risk" and isinstance(voice.get("p_last"), (int, float))
-                    and text.get("state") == "monitoring" and type(probability) in (int, float)
-                    and math.isfinite(probability) and 0 <= probability <= 1):
-                summary.update(model="real", schema=1, deepfake=True, transcript=True,
-                               transcript_revision=text.get("scored_revision"), infer_ms=message.get("infer_ms"))
-                passed.set()
+            is_agent = packet.participant is not None and packet.participant.kind == rtc.ParticipantKind.PARTICIPANT_KIND_AGENT
+            if evidence.observe(message, is_agent=is_agent, now=time.monotonic()):
+                if not ring_app or (ring is not None and ring.answered and microphone["heard"]):
+                    passed.set()
         except (ValueError, TypeError, AttributeError):
             return
+
+    async def listen(track):
+        stream = rtc.AudioStream(track, sample_rate=16000, num_channels=1)
+        try:
+            async for event in stream:
+                pcm = np.frombuffer(event.frame.data, dtype=np.int16).astype(np.float32) / 32768
+                if len(pcm) and float(np.sqrt(np.mean(pcm * pcm))) > 0.0032:
+                    if not microphone["heard"]:
+                        print("probe: simulator microphone speech received", flush=True)
+                    microphone["heard"] = True
+        finally:
+            await stream.aclose()
+
+    if ring_app:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "backend/AI Deepfake Pipeline/LiveKit Setup"))
+        import senior_ring
+
+        @room.on("track_subscribed")
+        def subscribed(track, publication, participant):
+            if participant.identity == senior_ring.SENIOR_IDENTITY and track.kind == rtc.TrackKind.KIND_AUDIO:
+                tasks.append(asyncio.create_task(listen(track)))
 
     async def play(source):
         while not passed.is_set():
@@ -97,27 +120,41 @@ async def attempt(wav, timeout):
             track = rtc.LocalAudioTrack.create_audio_track("consented-fixture", source)
             await room.local_participant.publish_track(track, rtc.TrackPublishOptions(source=rtc.TrackSource.SOURCE_MICROPHONE))
             playback = asyncio.create_task(play(source))
+            if ring_app:
+                ring = senior_ring.SeniorRing(
+                    lk=lk, room=room, caller_identity=identity, caller_is_local=True,
+                    handle="+15555550100", caller_name="Cloud pipeline test",
+                    delete_room=lambda: lk.room.delete_room(api.DeleteRoomRequest(room=name)))
+                tasks.append(asyncio.create_task(ring.run()))
+                print("probe: Accept in the simulator, listen for fixture speech, then speak into the Mac microphone.", flush=True)
             try:
                 await asyncio.wait_for(passed.wait(), timeout)
             except asyncio.TimeoutError:
                 print(f"probe: {seen['count']} agent updates received in room {name}; "
                       f"remote participants: {[p.identity for p in room.remote_participants.values()]}", flush=True)
                 raise
-            print("BACKEND PROBE PASSED", json.dumps(summary))
+            summary = dict(evidence.summary)
+            if ring_app:
+                summary.update(simulator_answered=ring.answered, simulator_microphone=microphone["heard"])
+            print("FULL CALL PROBE PASSED" if ring_app else "BACKEND PROBE PASSED", json.dumps(summary))
         finally:
-            if playback:
-                playback.cancel()
-                await asyncio.gather(playback, return_exceptions=True)
+            for task in tasks + ([playback] if playback else []):
+                task.cancel()
+            await asyncio.gather(*tasks, *([playback] if playback else []), return_exceptions=True)
             await room.disconnect()
-            await lk.room.delete_room(api.DeleteRoomRequest(room=name))
+            try:
+                await lk.room.delete_room(api.DeleteRoomRequest(room=name))
+            except api.TwirpError as error:
+                if error.code != api.TwirpErrorCode.NOT_FOUND:
+                    raise
 
 
-async def probe(wav, timeout, attempts=1):
+async def probe(wav, timeout, attempts=1, min_seconds=35, ring_app=False):
     """Retry with a fresh room: right after `lk agent deploy` the previous version can still be
     serving jobs for a short while, and it ignores the probe and never answers."""
     for number in range(1, attempts + 1):
         try:
-            await attempt(wav, timeout)
+            await attempt(wav, timeout, min_seconds, ring_app)
             return
         except asyncio.TimeoutError:
             print(f"Probe attempt {number}/{attempts} timed out after {timeout:g}s with no passing risk message", flush=True)
@@ -130,7 +167,12 @@ if __name__ == "__main__":
     parser.add_argument("wav", type=Path)
     parser.add_argument("--timeout", type=float, default=240, help="seconds to wait per attempt")
     parser.add_argument("--attempts", type=int, default=1)
+    parser.add_argument("--min-seconds", type=float, default=35, help="healthy scoring duration; transcript and voice must both advance")
+    parser.add_argument("--ring", action="store_true", help="also invite the simulator and require its microphone speech")
     args = parser.parse_args()
+    if not math.isfinite(args.min_seconds) or args.min_seconds < 0 or not math.isfinite(args.timeout) or args.timeout <= args.min_seconds:
+        parser.error("timeout must exceed finite nonnegative min-seconds")
     if args.attempts < 1:
         parser.error("--attempts must be at least 1")
-    asyncio.run(probe(args.wav, args.timeout, args.attempts))
+    asyncio.run(probe(args.wav, args.timeout, args.attempts, args.min_seconds, args.ring))
+
