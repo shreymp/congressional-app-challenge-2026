@@ -157,7 +157,8 @@ final class ProductionStore: ObservableObject {
         do {
             let number = try PhoneNumber.normalized(person?.number ?? dialedNumber)
             let resolved = person ?? contacts.first(where: { $0.number == number }) ?? PhoneNumber.person(number)
-            if coordinator.backend.isConfigured { try await coordinator.start(resolved) }
+            // An inbound-only calling service leaves outgoing calls to the mobile service.
+            if coordinator.backend.isConfigured && coordinator.backend.canPlaceOutgoingCalls { try await coordinator.start(resolved) }
             else { try await systemPhone.dial(number) }
             // A system handoff is not evidence that a call connected. Its history comes
             // from the entitled system history API, not an invented local duration.
