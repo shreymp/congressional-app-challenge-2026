@@ -1,0 +1,4 @@
+# Python 3.11+; the HTTP adapter itself uses only the standard library.
+numpy
+onnxruntime>=1.20,<2
+tokenizers>=0.21,<1

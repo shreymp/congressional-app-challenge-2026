@@ -36,13 +36,14 @@ from dotenv import load_dotenv
 from livekit import rtc
 from livekit.agents import AgentServer, AutoSubscribe, JobContext, JobProcess, cli
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(HERE, ".env.local"))
+
 import detector_adapter
 from audio_window import VoicedWindow
 from risk import RiskEngine, combine
-import senior_ring  # last: it loads .env.local at import, which must not change what the modules above read
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(HERE, ".env.local"))
+import senior_ring
+import transcript_pipeline
 
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 RISK_TOPIC = "scam-guard.risk"
@@ -58,6 +59,15 @@ def prewarm(proc: JobProcess) -> None:
     """Runs once per worker process, before any call, so the 650 MB model is already loaded."""
     proc.userdata["detector"] = detector_adapter.load()
     log.info("detector loaded on %s", proc.userdata["detector"].device)
+    proc.userdata["transcript_state"] = "disabled"
+    try:
+        proc.userdata["stt_model"] = transcript_pipeline.load_model()
+        if proc.userdata["stt_model"] is not None:
+            proc.userdata["transcript_state"] = "listening"
+            log.info("local caller transcription model loaded")
+    except Exception:
+        proc.userdata["transcript_state"] = "stt_unavailable"
+        log.warning("Vosk model unavailable; check VOSK_MODEL_PATH. Deepfake scoring remains active.")
 
 
 server = AgentServer(
@@ -104,6 +114,19 @@ async def _score_call(ctx: JobContext) -> None:
     log.info("SIP attributes: %s", json.dumps(attrs, indent=2))
     caller_number = attrs.get("sip.phoneNumber", "unknown")
 
+    transcript = None
+    transcript_state = ctx.proc.userdata.get("transcript_state", "disabled")
+    if ctx.proc.userdata.get("stt_model") is not None:
+        try:
+            transcript = await asyncio.to_thread(transcript_pipeline.for_call, ctx.proc.userdata["stt_model"])
+            transcript.start()
+        except Exception:
+            transcript_state = "stt_unavailable"
+            log.warning("could not start caller transcription; deepfake scoring continues")
+
+    def transcript_snapshot() -> dict:
+        return transcript.snapshot() if transcript else {"state": transcript_state, "probability": None}
+
     async def publish(msg: dict) -> None:
         msg.update({"room": room.name, "t": round(time.monotonic() - t_start, 2)})
         try:
@@ -113,7 +136,7 @@ async def _score_call(ctx: JobContext) -> None:
 
     t_start = time.monotonic()
     await publish({"type": "status", "state": "monitoring", "caller": caller_number,
-                   "detector_device": det.device})
+                   "detector_device": det.device, "transcript": transcript_snapshot()})
 
     # 2. Stream the caller's microphone track, resampled by LiveKit to 16 kHz mono int16.
     stream = rtc.AudioStream.from_participant(
@@ -123,7 +146,17 @@ async def _score_call(ctx: JobContext) -> None:
 
     recorded: list[np.ndarray] = []
     busy = False
+    score_task: asyncio.Task | None = None
     stats = {"scored": 0, "skipped_busy": 0}
+
+    async def stop_scoring() -> None:
+        if score_task is not None:
+            score_task.cancel()
+            await asyncio.gather(score_task, return_exceptions=True)
+        if transcript is not None:
+            await transcript.aclose()
+
+    ctx.add_shutdown_callback(stop_scoring)
 
     async def score_once() -> None:
         nonlocal busy
@@ -133,9 +166,10 @@ async def _score_call(ctx: JobContext) -> None:
             r = await asyncio.to_thread(det.score_window, audio)   # 3. off the event loop
             state = risk.update(r["p_fake"], r.get("logit"))
             stats["scored"] += 1
-            level = combine(state["level"], transcript_probability=None)  # TODO: transcript branch
+            text_state = transcript_snapshot()
+            level = combine(state["level"], transcript_probability=text_state["probability"])
             await publish({"type": "risk", "level": level, "deepfake": state,
-                           "transcript": None, "infer_ms": round(r["infer_ms"], 1),
+                           "transcript": text_state, "infer_ms": round(r["infer_ms"], 1),
                            "voiced_sec": round(window.total_voiced / SAMPLE_RATE, 1)})
             log.info("logit=%.2f smoothed_logit=%.2f level=%s infer=%.0fms",
                      state["logit_last"], state["logit_smoothed"], level, r["infer_ms"])
@@ -148,6 +182,10 @@ async def _score_call(ctx: JobContext) -> None:
     try:
         async for event in stream:
             frame = event.frame
+            # STT needs contiguous speech AND silence for word/utterance boundaries.
+            # Only the deepfake window uses the energy gate; never feed that spliced audio to STT.
+            if transcript is not None:
+                transcript.push(frame.data)
             window.push_int16(frame.data)
             if RECORD:
                 recorded.append(np.frombuffer(frame.data, dtype=np.int16).copy())
@@ -157,8 +195,12 @@ async def _score_call(ctx: JobContext) -> None:
                 if busy:
                     stats["skipped_busy"] += 1    # model slower than SCORE_EVERY_SEC; don't queue up
                 else:
-                    asyncio.create_task(score_once())
+                    # Reserve the slot before scheduling; a burst of frames cannot queue
+                    # several inference tasks before the first one starts.
+                    busy = True
+                    score_task = asyncio.create_task(score_once())
     finally:
+        await stop_scoring()
         await stream.aclose()
         log.info("call ended: %s, voiced %.1fs of %.1fs", stats,
                  window.total_voiced / SAMPLE_RATE, window.total_seen / SAMPLE_RATE)
@@ -177,3 +219,4 @@ def _save_wav(pcm: np.ndarray, caller_number: str) -> None:
 
 if __name__ == "__main__":
     cli.run_app(server)
+
