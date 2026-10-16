@@ -28,3 +28,8 @@ __pycache__/
 /backend/AI Deepfake Pipeline/LiveKit Setup/models/
 /backend/AI Deepfake Pipeline/LiveKit Setup/recordings/
 
+
+
+# Mac simulator handoff
+.venv-calltest/
+/ios/build-calltest/

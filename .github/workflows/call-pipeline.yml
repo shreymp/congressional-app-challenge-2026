@@ -5,11 +5,15 @@ on:
       - 'backend/AI Deepfake Pipeline/LiveKit Setup/**'
       - 'backend/Transcript-Based Detector/**'
       - '.github/workflows/call-pipeline.yml'
+      - 'scripts/mac_call_test.py'
+      - 'scripts/test_mac_call_test.py'
   pull_request:
     paths:
       - 'backend/AI Deepfake Pipeline/LiveKit Setup/**'
       - 'backend/Transcript-Based Detector/**'
       - '.github/workflows/call-pipeline.yml'
+      - 'scripts/mac_call_test.py'
+      - 'scripts/test_mac_call_test.py'
 permissions:
   contents: read
 jobs:
@@ -26,10 +30,17 @@ jobs:
       - name: Caller transcription and risk tests
         working-directory: backend/AI Deepfake Pipeline/LiveKit Setup
         run: python -m unittest -v test_transcript_pipeline
+      - name: Install worker orchestration test dependencies
+        run: python -m pip install numpy python-dotenv 'livekit-agents>=1.8,<2' 'livekit-api>=1.2' 'livekit>=1.1'
+      - name: Worker integration and Mac handoff checks
+        run: |
+          python -m unittest discover -s 'backend/AI Deepfake Pipeline/LiveKit Setup' -p 'test*integration.py' -v
+          python -m unittest discover -s scripts -p 'test_*.py' -v
       - name: Real connector HTTP integration with fake model inference
         working-directory: backend/Transcript-Based Detector
         run: |
           python -m unittest -v test_model_service
           node --test
       - name: Python syntax
-        run: python -m compileall -q backend
+        run: python -m compileall -q backend scripts
+

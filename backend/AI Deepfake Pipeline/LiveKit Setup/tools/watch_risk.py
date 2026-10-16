@@ -50,7 +50,8 @@ async def main() -> None:
             transcript = m.get("transcript") or {}
             probability = transcript.get("probability")
             text_score = "-" if probability is None else f"{probability:.3f}"
-            print(f"t={m['t']:6.1f}s  level={m['level']:10} logit={d['logit_last']:6.2f} "
+            print(f"model={m.get('model', 'unversioned')} seq={m.get('sequence', '-')} "
+                  f"t={m['t']:6.1f}s  level={m['level']:10} logit={d['logit_last']:6.2f} "
                   f"smoothed_logit={d['logit_smoothed']:6.2f}  infer={m['infer_ms']}ms  voiced={m['voiced_sec']}s "
                   f"transcript={transcript.get('state', 'disabled')} p={text_score} "
                   f"revision={transcript.get('scored_revision', '-')}/{transcript.get('revision', '-')}")
@@ -71,4 +72,5 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
+
 

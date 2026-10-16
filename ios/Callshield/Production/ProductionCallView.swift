@@ -14,6 +14,9 @@ struct ProductionCallView: View {
             ScrollView {
                 VStack(spacing: 18) {
                     Label("Callshield", systemImage: "checkmark.shield").font(.subheadline).foregroundStyle(Color(hex: 0xD3DFD7))
+                    #if targetEnvironment(simulator)
+                    Text("Simulator call test").font(.caption).foregroundStyle(Color(hex: 0xD3DFD7))
+                    #endif
                     Avatar(person: call.person, size: 80).padding(.top, 12)
                     Text(call.person.name).font(.title.weight(.medium))
                     Text(call.person.number).font(.subheadline).foregroundStyle(Color(hex: 0xBDCCC3))
@@ -107,3 +110,4 @@ struct ProductionCallView: View {
         }
     }
 }
+

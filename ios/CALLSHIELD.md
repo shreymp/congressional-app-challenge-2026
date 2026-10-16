@@ -1,3 +1,5 @@
+For the MacBook simulator handoff, start with [MACBOOK_TESTING.md](../MACBOOK_TESTING.md).
+
 # Callshield for iPhone
 
 Native SwiftUI implementation of the `azim` branch’s Callshield frontend, with separate demo and production interfaces. Build with **Xcode 26 or later** (LiveCommunicationKit requires the iOS 26 SDK); deployment supports **iOS 16 or later**. The only package dependency is the LiveKit Swift SDK (exactly 2.17.0), which Xcode downloads when the project is first opened. The iPhone does not download voice-model weights; the LiveKit agent runs the detector.
@@ -117,7 +119,7 @@ The senior’s carrier forwards calls to a LiveKit phone number, where the silen
 - **CallKit can refuse the call**, for example under Do Not Disturb or for a blocked number. Then no call screen appears, and the app only logs the refusal.
 - The microphone permission prompt appears when the app first opens with LiveKit configured, not during a call.
 - If the service refuses the lobby token (a LiveKit `validation` error, which the app reads as an expired or wrong token), the app stops retrying and shows an alert once: “Callshield can’t take incoming calls right now: its access to the calling service was refused or has expired. It needs to be set up again.” It tries once more each time it comes to the foreground, and does not repeat the alert until a lobby connection has succeeded. Other failures (wrong host, no network) are retried every 3 seconds and only logged to the Xcode console. Two phones that use the same lobby token share the identity `senior`: the newer connection disconnects the older one, and the disconnected app does not reconnect until it next comes to the foreground.
-- Build with Xcode 26 and test on a **physical iPhone**. CallKit and call audio cannot be validated in the simulator.
+- Build with Xcode 26. Simulator builds use the app controls and explicitly activate LiveKit audio for foreground integration tests; see the MacBook guide. Native CallKit, lock-screen behavior and physical audio routes still require a **physical iPhone**.
 - A build signed with a free Personal Team expires after 7 days. Run it from Xcode again to renew it.
 - **First check on the Mac: Product → Test.** `CallshieldTests` does `@testable import Callshield`, and the app now imports LiveKit with its C modules, so the generator gives that test target the LiveKit package product as well as the app: its own product dependency (which makes the module visible) and a link in its Frameworks phase. LiveKit’s own `Tests/LKTestHost` project has the same shape for its test targets, but its host app links nothing, so it does not show an app and its hosted tests linking the same package. It has not been built here. The package declares its library without a type, so Xcode will probably link it statically, and the app and the test bundle loaded into it may each carry a copy. If the test build reports “linked as a static library by ‘Callshield’ and ‘CallshieldTests’” or duplicate-class problems, try this first (untested): keep the test target’s package product dependency, drop only its link (leave `CallshieldTests` with an empty Frameworks phase on the `frameworks =` line in `scripts/generate_callshield_project.py`), and regenerate. If instead the tests fail with “Missing required module”, the link has to stay. Unit tests, and UI tests run in the Debug configuration the scheme uses, never open a network connection, even when `Local.xcconfig` is filled in.
 
@@ -182,3 +184,4 @@ Production now consumes the real detector on incoming LiveKit calls. The model s
 - The checked-in build defaults to production. LiveKit host and lobby token still belong in `Configuration/Local.xcconfig`; run the updated Python agent alongside the app. Old unversioned agents produce no labels and eventually show unavailable.
 
 Offline validation and remaining device checks are recorded in [DEEPFAKE_VALIDATION.md](DEEPFAKE_VALIDATION.md).
+
