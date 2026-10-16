@@ -81,9 +81,36 @@ class RealDetector:
         return {"p_fake": _sigmoid(z), "logit": z, "infer_ms": (time.perf_counter() - t0) * 1000}
 
 
+class RemoteDetector:
+    """Cloud jobs share the real model service instead of duplicating large weights."""
+    mode = "real"
+
+    def __init__(self):
+        import urllib.request
+        self.url = os.environ["DETECTOR_SERVICE_URL"].rstrip("/")
+        if self.url != "http://127.0.0.1:8000":
+            raise ValueError("Cloud detector service must be loopback")
+        with urllib.request.urlopen(self.url + "/health", timeout=30) as response:
+            health = json.load(response)
+        if not health.get("deepfakeLoaded") or health.get("mode") != "real":
+            raise RuntimeError("Real detector service is not ready")
+        self.meta = health["meta"]
+        self.device = health["device"]
+
+    def score_window(self, audio):
+        import urllib.request
+        request = urllib.request.Request(self.url + "/deepfake",
+            data=np.asarray(audio, dtype="<f4").tobytes(),
+            headers={"Content-Type": "application/octet-stream"})
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return json.load(response)
+
+
 def load():
     if os.environ.get("DETECTOR", "real").lower() == "stub":
         return StubDetector()
+    if os.environ.get("DETECTOR", "real").lower() == "remote":
+        return RemoteDetector()
     return RealDetector()
 
 
@@ -97,3 +124,4 @@ def thresholds(det) -> tuple[float, float]:
 if __name__ == "__main__":
     d = load()
     print(json.dumps({"device": d.device, "thresholds": thresholds(d)}))
+
