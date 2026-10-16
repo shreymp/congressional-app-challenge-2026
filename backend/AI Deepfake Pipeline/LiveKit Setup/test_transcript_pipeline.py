@@ -143,6 +143,56 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
             await pipe.aclose()
 
 
+    async def test_continuous_speech_keeps_score_fresh(self):
+        # Words keep arriving while each request is in flight, as on a real call.
+        entered, release = threading.Event(), threading.Event()
+        calls = []
+
+        def score(text):
+            calls.append(text)
+            entered.set()
+            release.wait(2)
+            return 0.7
+
+        pipe = TranscriptPipeline(Recognizer(), score=score, every=0.01)
+        pipe.start()
+        try:
+            pipe.update("send", False)
+            await eventually(entered.is_set)
+            pipe.update("send money", False)
+            entered.clear()
+            release.set()
+            await eventually(lambda: pipe.snapshot()["state"] == "monitoring")
+            self.assertEqual(pipe.snapshot()["probability"], 0.7)
+            await eventually(lambda: pipe.snapshot()["scored_revision"] == 2)
+        finally:
+            release.set()
+            await pipe.aclose()
+
+    async def test_withdrawn_context_cannot_revive_inflight_score(self):
+        entered, release = threading.Event(), threading.Event()
+
+        def score(_):
+            entered.set()
+            release.wait(2)
+            return 0.9
+
+        pipe = TranscriptPipeline(Recognizer(), score=score)
+        pipe.start()
+        try:
+            pipe.update("send money", False)
+            await eventually(entered.is_set)
+            pipe.update("", False)          # recognizer withdraws everything
+            pipe.update("hello", False)     # new context before the old reply lands
+            release.set()
+            await asyncio.sleep(0.05)
+            self.assertIsNone(pipe.snapshot()["probability"])
+            self.assertEqual(pipe.snapshot()["state"], "listening")
+        finally:
+            release.set()
+            await pipe.aclose()
+
+
 class HttpTests(unittest.TestCase):
     def test_contract_rejects_invalid_probabilities_and_limits_response(self):
         reply = {"probability": 0.82}
