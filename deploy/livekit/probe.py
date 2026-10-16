@@ -14,6 +14,20 @@ from scipy.signal import resample_poly
 from livekit import api, rtc
 
 
+def describe(message):
+    """One-line, transcript-free summary of an agent update for CI diagnostics."""
+    text = message.get("transcript") or {}
+    voice = message.get("deepfake") or {}
+    return json.dumps({
+        "type": message.get("type"), "state": message.get("state"), "model": message.get("model"),
+        "schema": message.get("schema"), "seq": message.get("sequence"), "t": message.get("t"),
+        "infer_ms": message.get("infer_ms"), "voiced_sec": message.get("voiced_sec"),
+        "deepfake_p_last": voice.get("p_last"), "deepfake_level": voice.get("level"),
+        "text_state": text.get("state"), "text_p": text.get("probability"),
+        "text_rev": text.get("revision"), "text_scored_rev": text.get("scored_revision"),
+        "text_chars": text.get("chars")})
+
+
 async def attempt(wav, timeout):
     audio, sr = sf.read(wav, dtype="float32", always_2d=True)
     audio = audio.mean(axis=1)
@@ -28,6 +42,11 @@ async def attempt(wav, timeout):
     room = rtc.Room()
     passed = asyncio.Event()
     summary = {}
+    seen = {"count": 0, "last": None}
+
+    @room.on("participant_connected")
+    def joined(participant):
+        print("probe: participant joined", participant.identity, "kind", participant.kind, flush=True)
 
     @room.on("data_received")
     def receive(packet):
@@ -35,6 +54,16 @@ async def attempt(wav, timeout):
             return
         try:
             message = json.loads(packet.data)
+            seen["count"] += 1
+            line = describe(message)
+            # Print only when the update changes shape, so a 90 s attempt stays readable.
+            key = json.loads(line)
+            for volatile in ("seq", "t", "infer_ms", "voiced_sec", "deepfake_p_last", "text_p",
+                             "text_rev", "text_scored_rev", "text_chars"):
+                key.pop(volatile)
+            if key != seen["last"]:
+                seen["last"] = key
+                print("probe: update", line, flush=True)
             if message.get("schema") != 1 or message.get("model") != "real" or message.get("callerIdentity") != identity or message.get("room") != name:
                 return
             text = message.get("transcript") or {}
@@ -46,7 +75,7 @@ async def attempt(wav, timeout):
                 summary.update(model="real", schema=1, deepfake=True, transcript=True,
                                transcript_revision=text.get("scored_revision"), infer_ms=message.get("infer_ms"))
                 passed.set()
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, AttributeError):
             return
 
     async def play(source):
@@ -66,7 +95,12 @@ async def attempt(wav, timeout):
             track = rtc.LocalAudioTrack.create_audio_track("consented-fixture", source)
             await room.local_participant.publish_track(track, rtc.TrackPublishOptions(source=rtc.TrackSource.SOURCE_MICROPHONE))
             playback = asyncio.create_task(play(source))
-            await asyncio.wait_for(passed.wait(), timeout)
+            try:
+                await asyncio.wait_for(passed.wait(), timeout)
+            except asyncio.TimeoutError:
+                print(f"probe: {seen['count']} agent updates received in room {name}; "
+                      f"remote participants: {[p.identity for p in room.remote_participants.values()]}", flush=True)
+                raise
             print("BACKEND PROBE PASSED", json.dumps(summary))
         finally:
             if playback:
