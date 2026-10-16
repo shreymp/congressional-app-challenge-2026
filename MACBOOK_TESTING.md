@@ -1,6 +1,6 @@
 # Callshield: MacBook simulator test handoff
 
-Use this branch's complete code, including the simulator call changes. The app
+Use an up-to-date `main` checkout, including the cloud fix merged in PR #16. The app
 is `ios/Callshield.xcodeproj`, scheme **Callshield**, not ScamTranscript.
 Xcode 26 and Python 3.11+ are required. Xcode must include an iOS Simulator
 runtime (Xcode Settings → Components). No Apple Developer team or paid account
@@ -11,13 +11,13 @@ is needed for the simulator build. Commands below run from the repository root.
 ```sh
 git clone https://github.com/shreymp/congressional-app-challenge-2026.git
 cd congressional-app-challenge-2026
-git switch codex/livekit-transcript-pipeline
+git switch main
 git pull --ff-only
 python3 scripts/mac_call_test.py setup
 ```
 
 For an existing checkout, commit/stash your own work before switching branches.
-If the branch has since been merged, use updated `main` instead. The setup script
+The setup script
 creates `.venv-calltest`; subsequent commands automatically use that environment.
 If `python3 --version` is below 3.11, install a newer Python and use that executable.
 If Xcode tools point at Command Line Tools, select the installed full Xcode in
@@ -25,7 +25,10 @@ Xcode Settings → Locations → Command Line Tools.
 
 ## 2. Configure access locally
 
-The project owner supplies the **actual LiveKit WebSocket URL/host** and either:
+The models and transcript services run in LiveKit Cloud; the tester does not need
+PyTorch, ONNX, Node, private model weights, or local model services. The owner must
+provide access privately: credentials cannot be included in a clone. Use the
+**actual LiveKit WebSocket URL/host** and either:
 
 - A short-lived lobby token for identity `senior`, room `senior-lobby`, from
   `tools/mint_lobby_token.py --days 1`. Then run:
@@ -81,30 +84,63 @@ and detector updates are real; this does not simulate risk scores. Physical iPho
 continue to use CallKit. Cellular outgoing calls, native lock-screen calling,
 PushKit, Bluetooth routing and physical-device audio need a separate iPhone test.
 
-## 4. Test ringing/audio first (no phone number required)
+## 4. Verify both cloud models, then a complete simulator call (no phone needed)
 
-This requires backend credentials on the Mac. In a second Terminal:
+These commands require backend credentials (`configure --backend`). Keep the
+hosted `scam-guard` worker running; do not start a local worker.
 
 ```sh
-python3 scripts/mac_call_test.py doctor --backend
+python3 scripts/mac_call_test.py cloud-probe
+```
+
+This sends the checked-in, synthetic `bank.wav` through an isolated cloud job.
+It requires **35 seconds of fresh scoring**, at least three different deepfake
+window counts and three advancing scored transcript revisions. Only the
+server-authenticated agent's `model=real` messages count. Expect
+`BACKEND PROBE PASSED`; a single early score or stale transcript cannot pass.
+This can be run before opening the app.
+
+With the configured simulator app open, run in a second Terminal:
+
+```sh
+python3 scripts/mac_call_test.py full-call
+```
+
+Accept **Cloud pipeline test** within 30 seconds, hear the spoken bank fixture,
+then speak into the Mac microphone while wearing headphones. Keep the call open
+until Terminal prints `FULL CALL PROBE PASSED` (usually at least 40 seconds).
+The command requires both sustained cloud model branches, simulator acceptance,
+and non-silent microphone audio received back from the simulator. Scores are real;
+fixture speech is synthesized, so do not expect a human voice label. The iOS UI
+shows voice/deepfake evidence; Terminal reports transcript/JEV evidence separately.
+Listen to verify downlink audio yourself. A level check confirms microphone audio,
+not speech recognition of the tester: the worker scores **caller-only** speech.
+
+The tool uses the same lobby invite and `SeniorRing` supervisor as phone calls,
+plus the deployed worker's existing isolated probe entrypoint. It deletes its
+own random test room on completion; the simulator should return to idle and rejoin
+the lobby. Repeat to verify the next call works. This exercises the app and cloud
+without a telephone, but does not establish SIP/carrier routing. Only the real
+phone test below covers that path.
+
+For decline, caller hang-up (Ctrl+C), app hang-up, mute and no-answer tests, use:
+
+```sh
 python3 scripts/mac_call_test.py ring
 ```
 
-The tool creates a temporary `ringtest-...` room and sends the same invite used by
-incoming phone calls. Accept in the simulator: hear quiet beeps and speak into the
-Mac microphone. The Terminal should report `senior answered` and moving microphone
-levels. End in the app; the room should close. Run it again, then press Ctrl+C in
-Terminal: the app should end the call. Also try Decline and leaving it unanswered.
-
-**This ring test does not dispatch the detector and does not test transcription.**
-Beep audio is not suitable speech for either model. A lobby-token-only tester can
-have the project owner run the ring command from their configured backend instead.
+That smaller harness plays beeps and reports two-way audio levels. It intentionally
+does not dispatch models. A lobby-token-only tester can have the owner run any of
+these commands from a separately configured checkout instead. If `full-call`
+times out, its summary shows participants and model state; check Accept, microphone
+permissions, headphones, `senior` identity and the Xcode console. Scores alone do
+not satisfy its app acceptance/microphone conditions.
 
 ## 5. Test the deployed worker and both detection branches
 
 With the app still open, call **+1 267-509-1164** from a separate real phone.
 Carrier forwarding is unnecessary for this direct test. Accept in the simulator
-and speak naturally from the calling phone for at least 15–20 seconds. Test only
+and speak naturally from the calling phone for at least 45–60 seconds. Test only
 with people who know they are participating. Audio recording defaults to off.
 
 With backend credentials, run:
@@ -113,7 +149,7 @@ With backend credentials, run:
 python3 scripts/mac_call_test.py watch
 ```
 
-The watcher joins the newest `call-` room; if several exist, use the exact room:
+For the telephone test, the watcher joins the newest `call-` room; if several exist, use the exact room:
 `python3 scripts/mac_call_test.py watch call-EXACT-NAME`. On LiveKit Cloud, check
 Telephony → Calls and the associated session for the agent job and its actual
 version. The dispatch name must be `scam-guard`, deployment `production`.
@@ -209,9 +245,13 @@ cd 'backend/Transcript-Based Detector'
 node --test
 ```
 
-The Mac simulator CI compiles/tests the app without credentials. Real LiveKit,
-PSTN calls and model accuracy still require the manual checks above.
+The **Callshield simulator** Actions workflow can also be run manually on `main`.
+It builds and runs unit tests without credentials. The **LiveKit real models**
+workflow with `probe_only=true` checks both deployed pipelines without rebuilding.
+PSTN routing, audible playback, the tester's Mac audio permissions and model
+accuracy require the manual checks above.
 
 References: [LiveKit Swift SDK](https://github.com/livekit/client-sdk-swift),
 [CallKit simulator limitation](https://github.com/livekit-examples/flutter-callkit),
 [LiveKit dispatch rules](https://docs.livekit.io/telephony/accepting-calls/dispatch-rule/).
+

@@ -3,6 +3,8 @@ from pathlib import Path
 import stat
 import tempfile
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
 
 spec = importlib.util.spec_from_file_location("mac_call_test", Path(__file__).with_name("mac_call_test.py"))
 helper = importlib.util.module_from_spec(spec)
@@ -31,6 +33,15 @@ class HandoffTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=value):
                 helper.project_host(value)
 
+    def test_cloud_commands_route_to_hosted_probe_and_optional_simulator_invite(self):
+        for command in ("cloud-probe", "full-call"):
+            with patch.object(helper, "require_credentials"), patch.object(helper, "run") as run:
+                helper.cloud_probe(SimpleNamespace(command=command, wav=None, timeout=180))
+                args = run.call_args.args[0]
+                self.assertIn(helper.ROOT / "deploy/livekit/probe.py", args)
+                self.assertIn(helper.ROOT / "ios/ScamTranscriptTests/Fixtures/bank.wav", args)
+                self.assertEqual("--ring" in args, command == "full-call")
+
     def test_private_files_have_restricted_permissions_even_when_replaced(self):
         with tempfile.TemporaryDirectory() as temp:
             file = Path(temp) / "configuration"
@@ -43,3 +54,4 @@ class HandoffTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
