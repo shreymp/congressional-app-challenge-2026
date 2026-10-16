@@ -22,6 +22,10 @@ struct ProductionCallView: View {
                         VStack(spacing: 10) {
                             VoiceBadge(voice: call.voice, size: 13, onCall: true)
                             Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                            if let previous = call.lastDeepfakeResult,
+                               let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
+                                Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
+                            }
                             Text("Not an identity check").font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
                         }.padding(16).frame(maxWidth: .infinity)
                             .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
@@ -74,6 +78,7 @@ struct ProductionCallView: View {
         }
     }
     private var assessment: String {
+        if let deepfake = call.deepfake { return deepfake.message }
         switch call.voice {
         case .analyzing: return "Checking the caller’s voice…"
         case .ai: return "This voice may be AI-generated."

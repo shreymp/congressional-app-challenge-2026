@@ -69,8 +69,10 @@ for name, folder, product_type, extension in [
         sources.append(build_file(file_id, relative))
     resources = []
     resource_paths = (["Callshield/Assets.xcassets", "Callshield/PrivacyInfo.xcprivacy"] if name == "Callshield" else [])
+    if name == "CallshieldTests":
+        resource_paths.append("CallshieldTests/Fixtures/deepfake-wire.json")
     for path in resource_paths:
-        file_id = ref(path, "folder.assetcatalog" if path.endswith("xcassets") else "text.xml")
+        file_id = ref(path, "folder.assetcatalog" if path.endswith("xcassets") else "text.json" if path.endswith(".json") else "text.xml")
         files.append(file_id)
         resources.append(build_file(file_id, path))
     package_product = livekit if name == "Callshield" else None

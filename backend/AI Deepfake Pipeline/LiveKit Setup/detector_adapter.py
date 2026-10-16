@@ -41,6 +41,7 @@ class StubDetector:
     meta = {"threshold_eer": 0.9999904632568359, "threshold_1pct_fpr": 0.9999998807907104,
             "sample_rate": 16000, "window_sec": 4.0}
     device = "stub"
+    mode = "stub"
 
     def score_window(self, audio: np.ndarray) -> dict:
         time.sleep(0.02)
@@ -49,6 +50,7 @@ class StubDetector:
 
 
 class RealDetector:
+    mode = "real"
     def __init__(self):
         if WEIGHTS_DIR not in sys.path:
             sys.path.insert(0, WEIGHTS_DIR)
@@ -68,6 +70,8 @@ class RealDetector:
         t0 = time.perf_counter()
         win = int(self.meta["window_sec"] * self.meta["sample_rate"])
         x = np.asarray(audio, dtype=np.float32)
+        if x.ndim != 1 or len(x) == 0 or not np.isfinite(x).all():
+            raise ValueError("Expected nonempty, finite mono audio")
         if len(x) < win:
             x = np.tile(x, int(np.ceil(win / max(len(x), 1))))[:win]
         x = x[-win:]

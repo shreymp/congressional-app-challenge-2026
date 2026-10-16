@@ -12,7 +12,7 @@
 PRODUCT_BUNDLE_IDENTIFIER = org.callshield.Callshield
 
 // true = TSX demo, false = production phone interface.
-CALLSHIELD_DEMO = true
+CALLSHIELD_DEMO = false
 CALLSHIELD_DEFAULT_DIALER = false
 
 // Empty = sign without an entitlements file. Keep it empty unless your

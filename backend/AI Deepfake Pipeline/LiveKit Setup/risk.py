@@ -48,13 +48,23 @@ class RiskEngine:
     n_updates: int = 0
     _above: dict = field(default_factory=lambda: {"elevated": 0, "high": 0})
     _below: int = 0
+    _human_steps: int = 0
+
+    def __post_init__(self):
+        if not (0 < self.elevated_threshold <= self.high_threshold < 1):
+            raise ValueError("Thresholds must satisfy 0 < elevated <= high < 1")
+        if not (0 < self.alpha <= 1 and self.up_steps > 0 and self.down_steps > 0):
+            raise ValueError("Invalid smoothing parameters")
 
     def update(self, p_fake: float, z: float | None = None) -> dict:
         """p_fake: probability. z: the model's raw logit, if available (more precise near 1.0)."""
+        if not math.isfinite(p_fake) or not 0 <= p_fake <= 1 or (z is not None and not math.isfinite(z)):
+            raise ValueError("Non-finite or out-of-range detector score")
         if z is None:
             z = logit(p_fake)
         self.ema_logit = z if self.ema_logit is None else self.alpha * z + (1 - self.alpha) * self.ema_logit
         self.n_updates += 1
+        self._human_steps = self._human_steps + 1 if self.ema_logit < logit(self.elevated_threshold) else 0
 
         target = "listening"
         for name, thr in (("elevated", self.elevated_threshold), ("high", self.high_threshold)):
@@ -82,6 +92,7 @@ class RiskEngine:
             "logit_smoothed": round(self.ema_logit, 3),
             "level": self.level,
             "updates": self.n_updates,
+            "human_steps": self._human_steps,
         }
 
 
