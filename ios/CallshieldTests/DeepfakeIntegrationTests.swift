@@ -1,3 +1,4 @@
+import AVFAudio
 import XCTest
 @testable import Callshield
 
@@ -114,4 +115,105 @@ final class DeepfakeIntegrationTests: XCTestCase {
         XCTAssertEqual(store.history.first?.voice, .ai)
         XCTAssertEqual(repository.snapshot.history.first?.deepfake, assessment)
     }
+}
+
+
+final class TranscriptIntegrationTests: XCTestCase {
+    private let now = Date(timeIntervalSince1970: 1_800_000_000)
+    private func object(_ state: String = "monitoring", probability: Double = 0.91, age: Double = 1) -> [String: Any] {
+        ["schema": 1, "type": "status", "state": "unavailable", "room": "call-test", "callerIdentity": "sip-test",
+         "streamID": "01010101-0101-0101-0101-010101010101", "sequence": 1, "model": "real",
+         "transcript": ["state": state, "probability": probability, "scored_revision": 12, "age_sec": age]]
+    }
+    private func decode(_ object: [String: Any]) throws -> TranscriptUpdate {
+        try XCTUnwrap(TranscriptUpdate.decode(JSONSerialization.data(withJSONObject: object)))
+    }
+    func testTranscriptRunsEvenWhenVoiceIsUnavailableAndRejectsInvalidProbabilities() throws {
+        let update = try decode(object())
+        XCTAssertEqual(update.assessment(at: now).probability, 0.91)
+        XCTAssertTrue(update.assessment(at: now).isWarning)
+        XCTAssertEqual(update.assessment(at: now).scoredRevision, 12)
+        for probability in [-0.1, 1.1] {
+            XCTAssertNil(TranscriptUpdate.decode(try JSONSerialization.data(withJSONObject: object(probability: probability))))
+        }
+        for state in ["stt_unavailable", "jev_unavailable", "audio_overrun"] {
+            XCTAssertEqual(try decode(object(state)).assessment(at: now).state, .unavailable)
+            XCTAssertNil(try decode(object(state)).assessment(at: now).probability)
+        }
+        var stub = object(); stub["model"] = "stub"
+        XCTAssertEqual(try decode(stub).assessment(at: now).state, .unavailable)
+        XCTAssertEqual(try decode(object(age: 16)).assessment(at: now).state, .stale)
+    }
+    func testScopeOrderingRestartAndStaleScoreExpiration() throws {
+        var monitor = TranscriptMonitor()
+        let first = try decode(object(age: 14))
+        XCTAssertNil(monitor.receive(first, room: "other", callerIdentity: "sip-test", isAgent: true, at: now))
+        XCTAssertNil(monitor.receive(first, room: "call-test", callerIdentity: "sip-test", isAgent: false, at: now))
+        XCTAssertNotNil(monitor.receive(first, room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now))
+        XCTAssertNil(monitor.receive(first, room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now))
+        XCTAssertEqual(monitor.expire(at: now.addingTimeInterval(2), connectedAt: now)?.state, .stale)
+        var restart = object(); restart["streamID"] = UUID().uuidString
+        XCTAssertNotNil(monitor.receive(try decode(restart), room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now))
+        var old = object(); old["sequence"] = 100
+        XCTAssertNil(monitor.receive(try decode(old), room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now))
+    }
+    func testTranscriptCannotRelabelVoiceAndHistoryRemainsBackwardCompatible() throws {
+        var session = PhoneSessionState()
+        let id = UUID(), person = PhoneNumber.person("+13125550123")
+        let result = TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.93, scoredRevision: 5)
+        _ = session.begin(PhoneCall(id: id, person: person, direction: .incoming, createdAt: now, stage: .incoming))
+        session.assessTranscript(id: id, assessment: result)
+        XCTAssertNil(session.current?.transcript)
+        session.connected(id: id, at: now)
+        session.assessTranscript(id: UUID(), assessment: result)
+        XCTAssertNil(session.current?.transcript)
+        session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3))
+        session.assessTranscript(id: id, assessment: result)
+        XCTAssertEqual(session.current?.voice, .human)
+        session.assessTranscript(id: id, assessment: TranscriptAssessment(state: .unavailable, updatedAt: now))
+        let record = try XCTUnwrap(session.finish(id: id, outcome: .completed, at: now.addingTimeInterval(10)))
+        XCTAssertEqual(record.transcript, result)
+        XCTAssertEqual(try JSONDecoder().decode(PhoneCallRecord.self, from: JSONEncoder().encode(record)), record)
+        var old = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(record)) as? [String: Any])
+        old["transcript"] = nil
+        XCTAssertNil(try JSONDecoder().decode(PhoneCallRecord.self, from: JSONSerialization.data(withJSONObject: old)).transcript)
+    }
+
+    @MainActor
+    func testCoordinatorRoutesTranscriptAndHistoryRefreshPreservesIt() async throws {
+        let backend = TranscriptTestBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), backend: backend)
+        let id = UUID()
+        backend.onEvent?(.incoming(id, "+13125550123", nil))
+        backend.onEvent?(.connected(id, now))
+        let assessment = TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8)
+        backend.onEvent?(.transcriptAssessment(id, assessment))
+        XCTAssertEqual(store.active?.transcript, assessment)
+        backend.onEvent?(.ended(id, .completed, now.addingTimeInterval(5)))
+        XCTAssertEqual(store.history.first?.transcript, assessment)
+        let record = try XCTUnwrap(store.history.first)
+        store.mergeHistory([PhoneCallRecord(id: id, person: record.person, date: now, duration: 5,
+                                            direction: .incoming, outcome: .completed, voice: .unknown)])
+        XCTAssertEqual(store.history.first?.transcript, assessment)
+    }
+}
+
+@MainActor private final class TranscriptTestBackend: CallingBackend {
+    var isConfigured: Bool { true }
+    var usesVoIPPush: Bool { false }
+    var canPlaceOutgoingCalls: Bool { false }
+    var supportsHoldAndKeypad: Bool { false }
+    var onEvent: ((CallingEvent) -> Void)?
+    func listenForIncomingCalls() {}
+    func start(callID: UUID, number: String) async throws {}
+    func prepareIncoming(callID: UUID, number: String) async throws {}
+    func answer(callID: UUID) async throws {}
+    func end(callID: UUID) async throws {}
+    func setMuted(_ muted: Bool, callID: UUID) async throws {}
+    func setHeld(_ held: Bool, callID: UUID) async throws {}
+    func sendDTMF(_ digits: String, callID: UUID) async throws {}
+    func registerVoIPToken(_ token: Data?) async throws {}
+    func activateAudio(_ session: AVAudioSession) {}
+    func deactivateAudio(_ session: AVAudioSession) {}
+    func reset() {}
 }

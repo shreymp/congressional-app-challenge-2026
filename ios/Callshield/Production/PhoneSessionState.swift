@@ -30,6 +30,11 @@ struct PhoneSessionState {
             current?.lastDeepfakeResult = assessment
         }
     }
+    mutating func assessTranscript(id: UUID, assessment: TranscriptAssessment) {
+        guard current?.id == id, current?.connectedAt != nil else { return }
+        current?.transcript = assessment
+        if assessment.state == .monitoring { current?.lastTranscriptResult = assessment }
+    }
     mutating func setMuted(_ muted: Bool, id: UUID) {
         guard current?.id == id else { return }
         current?.muted = muted
@@ -51,6 +56,8 @@ struct PhoneSessionState {
                                duration: call.connectedAt.map { max(0, Int(date.timeIntervalSince($0))) } ?? 0,
                                direction: call.direction, outcome: outcome,
                                voice: call.connectedAt == nil || voice == .analyzing ? .unknown : voice,
-                               deepfake: call.connectedAt == nil ? nil : assessment)
+                               deepfake: call.connectedAt == nil ? nil : assessment,
+                               transcript: call.connectedAt == nil ? nil : (call.lastTranscriptResult ?? call.transcript))
     }
 }
+

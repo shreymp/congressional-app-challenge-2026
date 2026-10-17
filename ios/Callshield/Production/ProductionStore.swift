@@ -183,7 +183,8 @@ final class ProductionStore: ObservableObject {
             merged[entry.id] = PhoneCallRecord(id: entry.id, person: person, date: entry.date,
                 duration: entry.duration, direction: entry.direction, outcome: entry.outcome,
                 voice: entry.deepfake != nil ? entry.voice : (entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice),
-                deepfake: entry.deepfake ?? prior?.deepfake)
+                deepfake: entry.deepfake ?? prior?.deepfake,
+                transcript: entry.transcript ?? prior?.transcript)
         }
         history = Array(merged.values.sorted { $0.date > $1.date }.prefix(1000))
         persist()
@@ -207,3 +208,4 @@ final class MemoryPhoneRepository: PhoneRepository {
     func load() throws -> PhoneSnapshot { snapshot }
     func save(_ snapshot: PhoneSnapshot) throws { self.snapshot = snapshot }
 }
+

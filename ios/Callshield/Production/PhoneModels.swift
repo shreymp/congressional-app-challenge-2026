@@ -25,6 +25,7 @@ struct PhoneCallRecord: Identifiable, Codable, Equatable {
     let outcome: PhoneCallOutcome
     let voice: Voice
     var deepfake: DeepfakeAssessment? = nil
+    var transcript: TranscriptAssessment? = nil
 }
 
 struct PhoneCall: Identifiable, Equatable {
@@ -39,7 +40,9 @@ struct PhoneCall: Identifiable, Equatable {
     var muted = false
     var speaker = false
     var deepfake: DeepfakeAssessment? = nil
+    var transcript: TranscriptAssessment? = nil
     var lastDeepfakeResult: DeepfakeAssessment? = nil
+    var lastTranscriptResult: TranscriptAssessment? = nil
 }
 
 struct PhoneSnapshot: Codable {
@@ -88,3 +91,4 @@ enum PhoneNumber {
         return Person(name: display, number: number, initials: initials, color: .slate, voice: .unknown)
     }
 }
+
