@@ -69,6 +69,19 @@ final class ProductionStore: ObservableObject {
 
     deinit { if let historyObserver { NotificationCenter.default.removeObserver(historyObserver) } }
 
+    #if DEBUG
+    /// Fixture used only by the explicit UI-test launch path; never a live assessment.
+    func showAnalysisTestCall() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard arguments.contains("--ui-test-production"), arguments.contains("--ui-test-analysis") else { return }
+        let now = Date()
+        active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
+            direction: .incoming, createdAt: now, connectedAt: now, stage: .connected, voice: .human,
+            deepfake: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3),
+            transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
+    }
+    #endif
+
     var visibleHistory: [PhoneCallRecord] {
         let query = search.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         return history.filter {
