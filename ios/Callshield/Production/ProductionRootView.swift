@@ -11,13 +11,7 @@ struct ProductionRootView: View {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-test-production") {
             let store = ProductionStore(repository: MemoryPhoneRepository())
-            if ProcessInfo.processInfo.arguments.contains("--ui-test-analysis") {
-                let now = Date()
-                store.active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
-                    direction: .incoming, createdAt: now, connectedAt: now, stage: .connected, voice: .human,
-                    deepfake: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3),
-                    transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
-            }
+            store.showAnalysisTestCall()
             _store = StateObject(wrappedValue: store)
             return
         }
