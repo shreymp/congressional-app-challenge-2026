@@ -3,6 +3,8 @@
 from __future__ import annotations
 import argparse
 import base64
+import asyncio
+import uuid
 from datetime import timedelta
 import io
 import json
@@ -65,6 +67,46 @@ def issue(output):
     print("Created limited app access valid for seven days. No API credentials are in the artifact.")
 
 
+async def verify_delivery():
+    """Verify receive-only data delivery in an isolated room without displacing the app."""
+    from livekit import api, rtc
+    name = "tester-access-check-" + uuid.uuid4().hex
+    identity = "tester-access-check"
+    token = (api.AccessToken().with_identity(identity).with_ttl(timedelta(minutes=5))
+             .with_grants(api.VideoGrants(room_join=True, room=name, can_publish=False,
+                                          can_publish_data=False, can_subscribe=False)).to_jwt())
+    room = rtc.Room()
+    received = asyncio.Event()
+    topic = "callshield.tester-access-check"
+
+    @room.on("data_received")
+    def receive(packet):
+        if packet.topic == topic and packet.data == b"connection-check":
+            received.set()
+
+    async with api.LiveKitAPI() as backend:
+        try:
+            await room.connect(os.environ["LIVEKIT_URL"], token, rtc.RoomOptions(auto_subscribe=False))
+            for _ in range(3):
+                await backend.room.send_data(api.SendDataRequest(room=name, data=b"connection-check",
+                    kind=api.DataPacket.Kind.RELIABLE, destination_identities=[identity], topic=topic))
+                try:
+                    await asyncio.wait_for(received.wait(), 3)
+                    break
+                except asyncio.TimeoutError:
+                    pass
+            if not received.is_set():
+                raise RuntimeError("Receive-only app invitation delivery failed")
+            print("TESTER ACCESS DELIVERY PASSED: receive-only connection and server data verified")
+        finally:
+            await room.disconnect()
+            try:
+                await backend.room.delete_room(api.DeleteRoomRequest(room=name))
+            except api.TwirpError as error:
+                if error.code != api.TwirpErrorCode.NOT_FOUND:
+                    raise
+
+
 def gh_api(endpoint):
     if not shutil.which("gh"):
         raise RuntimeError("Install GitHub CLI and run gh auth login, or download the Tester app access artifact and use tester --config /path/CallshieldTester.json")
@@ -106,10 +148,13 @@ if __name__ == "__main__":
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("issue"); p.add_argument("--output", type=Path, required=True)
     p = sub.add_parser("install"); p.add_argument("--config", type=Path)
+    sub.add_parser("verify")
     args = parser.parse_args()
     try:
         if args.command == "issue":
             issue(args.output)
+        elif args.command == "verify":
+            asyncio.run(verify_delivery())
         else:
             install(args.config)
     except (OSError, ValueError, KeyError, RuntimeError) as error:
