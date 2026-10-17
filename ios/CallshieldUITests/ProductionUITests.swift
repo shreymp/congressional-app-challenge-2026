@@ -32,6 +32,16 @@ final class ProductionUITests: XCTestCase {
         app.buttons["Done"].tap()
         XCTAssertTrue(app.buttons["productionTabRecents"].exists)
     }
+    func testBothPipelineResultsAreVisibleOnTheCallScreen() {
+        app.terminate()
+        app.launchArguments = ["--ui-test-production", "--ui-test-analysis"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Voice / deepfake analysis"].waitForExistence(timeout: 5))
+        if !app.staticTexts["transcriptAssessmentTitle"].isHittable { app.swipeUp() }
+        XCTAssertEqual(app.staticTexts["transcriptAssessmentTitle"].label, "Possible scam language")
+        XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("94%"))
+        snapshot("Production-12-Both-Pipeline-Feedback")
+    }
     func testKeypadAndSimulatorCallError() {
         app.buttons["productionTabKeypad"].tap()
         snapshot("Production-06-Keypad")
@@ -48,3 +58,4 @@ final class ProductionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No recent calls"].exists)
     }
 }
+

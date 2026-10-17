@@ -10,7 +10,9 @@ struct ProductionRootView: View {
     init() {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-test-production") {
-            _store = StateObject(wrappedValue: ProductionStore(repository: MemoryPhoneRepository()))
+            let store = ProductionStore(repository: MemoryPhoneRepository())
+            store.showAnalysisTestCall()
+            _store = StateObject(wrappedValue: store)
             return
         }
         #endif
@@ -107,3 +109,4 @@ struct PhoneEmptyView: View {
         .padding(.horizontal, 28).padding(.vertical, 48)
     }
 }
+

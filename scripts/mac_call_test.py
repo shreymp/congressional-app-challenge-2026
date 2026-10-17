@@ -123,8 +123,7 @@ def setup(args):
     run([PYTHON, "-m", "pip", "install", "-r", requirements])
     if args.local:
         run([PYTHON, "-m", "pip", "install", "-r", JEV / "requirements-model.txt"])
-    print("Next: .venv-calltest/bin/python scripts/mac_call_test.py configure --backend")
-    print("Or configure without --backend if the owner supplied a lobby token only.")
+    print("Next: python3 scripts/mac_call_test.py tester (uses GitHub repository access; no LiveKit credentials)")
 
 
 def download_vosk(destination):
@@ -283,6 +282,11 @@ def services(args):
                 child.wait()
 
 
+def tester(args):
+    from tester_access import install
+    install(args.config)
+
+
 def cloud_probe(args):
     require_credentials()
     fixture = args.wav or ROOT / "ios/ScamTranscriptTests/Fixtures/bank.wav"
@@ -310,6 +314,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("setup"); p.add_argument("--local", action="store_true"); p.set_defaults(func=setup)
+    p = sub.add_parser("tester", help="install limited app access using GitHub; no LiveKit credentials"); p.add_argument("--config", type=Path); p.set_defaults(func=tester)
     p = sub.add_parser("configure"); p.add_argument("--backend", action="store_true"); p.add_argument("--days", type=float, default=1); p.set_defaults(func=configure)
     p = sub.add_parser("models"); p.add_argument("--deepfake-weights", type=Path); p.set_defaults(func=models)
     p = sub.add_parser("doctor"); p.add_argument("--backend", action="store_true"); p.add_argument("--local", action="store_true"); p.set_defaults(func=doctor)
