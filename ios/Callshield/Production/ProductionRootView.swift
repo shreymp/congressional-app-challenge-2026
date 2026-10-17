@@ -10,7 +10,15 @@ struct ProductionRootView: View {
     init() {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-test-production") {
-            _store = StateObject(wrappedValue: ProductionStore(repository: MemoryPhoneRepository()))
+            let store = ProductionStore(repository: MemoryPhoneRepository())
+            if ProcessInfo.processInfo.arguments.contains("--ui-test-analysis") {
+                let now = Date()
+                store.active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
+                    direction: .incoming, createdAt: now, connectedAt: now, stage: .connected, voice: .human,
+                    deepfake: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3),
+                    transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
+            }
+            _store = StateObject(wrappedValue: store)
             return
         }
         #endif
@@ -107,3 +115,4 @@ struct PhoneEmptyView: View {
         .padding(.horizontal, 28).padding(.vertical, 48)
     }
 }
+

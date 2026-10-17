@@ -231,6 +231,11 @@ struct ProductionPersonDetail: View {
                             Text("Last voice update \(assessment.updatedAt.formatted(date: .abbreviated, time: .shortened))")
                                 .font(.caption2).foregroundStyle(Palette.secondary)
                         }
+                        if let transcript = record.transcript {
+                            Text("Transcript analysis").font(.subheadline.weight(.semibold))
+                            Text(transcript.title).font(.caption)
+                            Text(transcript.message).font(.caption).foregroundStyle(Palette.secondary)
+                        }
                         VStack(spacing: 12) {
                             detailRow("Call type", record.direction.rawValue.capitalized)
                             detailRow("Status", record.outcome.rawValue.capitalized)
@@ -300,3 +305,4 @@ func openAppSettings() {
     guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
     UIApplication.shared.open(url)
 }
+

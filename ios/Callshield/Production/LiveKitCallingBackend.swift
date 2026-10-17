@@ -63,6 +63,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         var connected = false    // `connected` already emitted
         var connectedAt: Date?
         var detector = DeepfakeMonitor()
+        var transcriptDetector = TranscriptMonitor()
     }
 
     let isConfigured: Bool
@@ -418,6 +419,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         call?.connectedAt = now
         onEvent?(.connected(current.invite.callID, now))
         onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .waiting, updatedAt: now)))
+        onEvent?(.transcriptAssessment(current.invite.callID, TranscriptAssessment(state: .listening, updatedAt: now)))
         startAssessmentWatchdog(callID: current.invite.callID)
     }
 
@@ -496,12 +498,19 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
 
     private func receiveAssessment(_ data: Data, in room: Room, isAgent: Bool) {
         guard var current = call, current.room === room, current.connected,
-              room.connectionState == .connected,
-              let update = DeepfakeUpdate.decode(data),
-              let assessment = current.detector.receive(update, room: current.invite.room,
-                  callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: Date()) else { return }
+              room.connectionState == .connected else { return }
+        let now = Date()
+        let voice = DeepfakeUpdate.decode(data).flatMap {
+            current.detector.receive($0, room: current.invite.room,
+                callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: now)
+        }
+        let transcript = TranscriptUpdate.decode(data).flatMap {
+            current.transcriptDetector.receive($0, room: current.invite.room,
+                callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: now)
+        }
         call = current
-        onEvent?(.deepfakeAssessment(current.invite.callID, assessment))
+        if let voice { onEvent?(.deepfakeAssessment(current.invite.callID, voice)) }
+        if let transcript { onEvent?(.transcriptAssessment(current.invite.callID, transcript)) }
     }
 
     private func startAssessmentWatchdog(callID: UUID) {
@@ -511,10 +520,12 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
                 do { try await Task.sleep(nanoseconds: 2_000_000_000) } catch { return }
                 guard let self, var current = self.call, current.invite.callID == callID,
                       let connectedAt = current.connectedAt else { return }
-                if let expired = current.detector.expire(at: Date(), connectedAt: connectedAt) {
-                    self.call = current
-                    self.onEvent?(.deepfakeAssessment(callID, expired))
-                }
+                let now = Date()
+                let voice = current.detector.expire(at: now, connectedAt: connectedAt)
+                let transcript = current.transcriptDetector.expire(at: now, connectedAt: connectedAt)
+                self.call = current
+                if let voice { self.onEvent?(.deepfakeAssessment(callID, voice)) }
+                if let transcript { self.onEvent?(.transcriptAssessment(callID, transcript)) }
             }
         }
     }
@@ -522,6 +533,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     private func assessmentInterrupted(in room: Room) {
         guard let current = call, current.room === room, current.connected else { return }
         onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .unavailable, updatedAt: Date())))
+        onEvent?(.transcriptAssessment(current.invite.callID, TranscriptAssessment(state: .unavailable, updatedAt: Date())))
     }
 
     // MARK: - RoomDelegate
@@ -570,4 +582,5 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         Task { @MainActor in self.roomReconnected(room) }
     }
 }
+
 

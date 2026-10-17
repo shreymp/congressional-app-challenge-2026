@@ -23,6 +23,7 @@ struct ProductionCallView: View {
                     Text(status).monospacedDigit().foregroundStyle(Color(hex: 0x9FB5A8))
                     if call.connectedAt != nil {
                         VStack(spacing: 10) {
+                            Text("Voice / deepfake analysis").font(.caption.weight(.semibold))
                             VoiceBadge(voice: call.voice, size: 13, onCall: true)
                             Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
                             if let previous = call.lastDeepfakeResult,
@@ -30,6 +31,20 @@ struct ProductionCallView: View {
                                 Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
                             }
                             Text("Not an identity check").font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
+                        }.padding(16).frame(maxWidth: .infinity)
+                            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+                    }
+                    if call.connectedAt != nil {
+                        let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
+                        VStack(spacing: 8) {
+                            Label("Transcript analysis", systemImage: "text.bubble").font(.caption.weight(.semibold))
+                            Text(text.title).font(.subheadline.weight(.semibold))
+                                .foregroundStyle(text.isWarning ? Color(hex: 0xFFD59A) : Color.white)
+                                .accessibilityIdentifier("transcriptAssessmentTitle")
+                            Text(text.message).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                                .accessibilityIdentifier("transcriptAssessmentScore")
+                            Text("Based on the caller’s words. A low score does not prove a call is safe.")
+                                .font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
                         }.padding(16).frame(maxWidth: .infinity)
                             .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
                     }
@@ -110,4 +125,5 @@ struct ProductionCallView: View {
         }
     }
 }
+
 

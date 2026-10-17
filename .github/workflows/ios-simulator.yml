@@ -35,7 +35,7 @@ jobs:
           echo "SIMULATOR_ID=$DEVICE_ID" >> "$GITHUB_ENV"
       - name: Build and run unit tests without credentials
         run: |
-          xcodebuild -project ios/Callshield.xcodeproj -scheme Callshield -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" -derivedDataPath ios/build-calltest -resultBundlePath ios/TestResults/simulator.xcresult CODE_SIGNING_ALLOWED=NO -only-testing:CallshieldTests test
+          xcodebuild -project ios/Callshield.xcodeproj -scheme Callshield -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" -derivedDataPath ios/build-calltest -resultBundlePath ios/TestResults/simulator.xcresult CODE_SIGNING_ALLOWED=NO -only-testing:CallshieldTests -only-testing:CallshieldUITests/ProductionUITests test
       - name: Preserve test results
         if: always()
         uses: actions/upload-artifact@v4
