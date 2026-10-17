@@ -163,6 +163,8 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             session.assess(id: id, voice: voice); changed()
         case .deepfakeAssessment(let id, let assessment):
             session.assessDeepfake(id: id, assessment: assessment); changed()
+        case .transcriptAssessment(let id, let assessment):
+            session.assessTranscript(id: id, assessment: assessment); changed()
         case .failed(let id, let message):
             guard active?.id == id else { return }
             backend.reset()
@@ -406,4 +408,5 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         }
     }
 }
+
 

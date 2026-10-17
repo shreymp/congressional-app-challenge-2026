@@ -69,6 +69,19 @@ final class ProductionStore: ObservableObject {
 
     deinit { if let historyObserver { NotificationCenter.default.removeObserver(historyObserver) } }
 
+    #if DEBUG
+    /// Fixture used only by the explicit UI-test launch path; never a live assessment.
+    func showAnalysisTestCall() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard arguments.contains("--ui-test-production"), arguments.contains("--ui-test-analysis") else { return }
+        let now = Date()
+        active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
+            direction: .incoming, createdAt: now, connectedAt: now, stage: .connected, voice: .human,
+            deepfake: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3),
+            transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
+    }
+    #endif
+
     var visibleHistory: [PhoneCallRecord] {
         let query = search.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         return history.filter {
@@ -183,7 +196,8 @@ final class ProductionStore: ObservableObject {
             merged[entry.id] = PhoneCallRecord(id: entry.id, person: person, date: entry.date,
                 duration: entry.duration, direction: entry.direction, outcome: entry.outcome,
                 voice: entry.deepfake != nil ? entry.voice : (entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice),
-                deepfake: entry.deepfake ?? prior?.deepfake)
+                deepfake: entry.deepfake ?? prior?.deepfake,
+                transcript: entry.transcript ?? prior?.transcript)
         }
         history = Array(merged.values.sorted { $0.date > $1.date }.prefix(1000))
         persist()
@@ -207,3 +221,4 @@ final class MemoryPhoneRepository: PhoneRepository {
     func load() throws -> PhoneSnapshot { snapshot }
     func save(_ snapshot: PhoneSnapshot) throws { self.snapshot = snapshot }
 }
+

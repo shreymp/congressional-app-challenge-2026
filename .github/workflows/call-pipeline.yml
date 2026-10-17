@@ -6,6 +6,7 @@ on:
       - 'backend/Transcript-Based Detector/**'
       - '.github/workflows/call-pipeline.yml'
       - 'scripts/mac_call_test.py'
+      - 'scripts/tester_access.py'
       - 'scripts/test_*.py'
   pull_request:
     paths:
@@ -13,6 +14,7 @@ on:
       - 'backend/Transcript-Based Detector/**'
       - '.github/workflows/call-pipeline.yml'
       - 'scripts/mac_call_test.py'
+      - 'scripts/tester_access.py'
       - 'scripts/test_*.py'
 permissions:
   contents: read
