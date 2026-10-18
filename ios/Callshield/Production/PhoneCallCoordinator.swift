@@ -6,6 +6,9 @@ import PushKit
 @MainActor
 final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDelegate {
     let backend: CallingBackend
+    let transcript = TranscriptPipeline(model: TranscriptPipeline.Model(rawValue:
+        UserDefaults.standard.string(forKey: "callshield.transcriptModel") ?? "") ?? .behaviors)
+    private let callerStream = CallerAudioStream()
     private let provider: CXProvider
     private let controller = CXCallController()
     private var registry: PKPushRegistry?
@@ -18,7 +21,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     init(backend: CallingBackend) {
         self.backend = backend
         let configuration = CXProviderConfiguration()
-        configuration.supportedHandleTypes = [.phoneNumber]
+        configuration.supportedHandleTypes = [.phoneNumber, .generic]
         configuration.supportsVideo = false
         configuration.maximumCallGroups = 1
         configuration.maximumCallsPerCallGroup = 1
@@ -28,6 +31,8 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         provider.setDelegate(self, queue: .main)
         backend.onEvent = { [weak self] event in self?.receive(event) }
     }
+
+    deinit { provider.invalidate() }
 
     func registerIncomingCallsIfConfigured() {
         guard backend.isConfigured, registry == nil else { return }
@@ -93,6 +98,8 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     private func changed() { onCallChanged?(active) }
     private func finish(_ id: UUID, outcome: PhoneCallOutcome, reason: CXCallEndedReason, at date: Date = Date()) {
         guard let record = session.finish(id: id, outcome: outcome, at: date) else { return }
+        callerStream.disconnect()
+        transcript.cancel()
         provider.reportCall(with: id, endedAt: date, reason: reason)
         changed()
         onRecord?(record)
@@ -102,6 +109,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         switch event {
         case .connected(let id, let date):
             guard active?.id == id else { return }
+            if active?.connectedAt == nil { transcript.begin(callID: id) }
             session.connected(id: id, at: date)
             if active?.direction == .outgoing { provider.reportOutgoingCall(with: id, connectedAt: date) }
             changed()
@@ -116,6 +124,16 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             backend.reset()
             finish(id, outcome: .failed, reason: .failed)
             onError?(message)
+        case .callerAudio(let id, let buffer):
+            guard active?.id == id, active?.connectedAt != nil, active?.stage != .held else { return }
+            transcript.accept(buffer, callID: id)
+        case .callerStream(let id, let configuration):
+            guard active?.id == id, active?.connectedAt != nil else { return }
+            do { try callerStream.connect(configuration, callID: id, pipeline: transcript) }
+            catch { transcript.reportFailure(error, callID: id) }
+        case .analysisFailed(let id, let message):
+            transcript.reportFailure(NSError(domain: "Callshield.Analysis", code: 1,
+                userInfo: [NSLocalizedDescriptionKey: message]), callID: id)
         }
     }
 
@@ -212,6 +230,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
                 try await self.backend.setHeld(action.isOnHold, callID: action.callUUID)
                 guard self.active?.id == action.callUUID else { action.fail(); return }
                 self.session.setHeld(action.isOnHold, id: action.callUUID)
+                self.transcript.setPaused(action.isOnHold)
                 self.changed(); action.fulfill()
             } catch { action.fail(); self.onError?(error.localizedDescription) }
         }
@@ -259,6 +278,10 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         let number = (dictionary["handle"] as? String).flatMap { try? PhoneNumber.normalized($0) }
         let name = (dictionary["callerName"] as? String).map { String($0.prefix(128)) }
         Task { @MainActor in
+            if self.backend.handleVoIPPush(dictionary, reportIncoming: { [weak self] id, caller, done in
+                guard let self else { done(); return }
+                self.reportSDKIncoming(id: id, caller: caller, completion: done)
+            }, completion: completion) { return }
             // Report immediately, before any backend work. Even malformed VoIP pushes must
             // satisfy Apple's CallKit reporting obligation, then end the rejected call.
             let id = parsedID ?? UUID()
@@ -287,6 +310,31 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
                     self.finish(id, outcome: .failed, reason: .failed)
                     self.onError?(error.localizedDescription)
                 }
+            }
+        }
+    }
+
+    private func reportSDKIncoming(id: UUID, caller: String, completion: @escaping () -> Void) {
+        let caller = String(caller.prefix(128))
+        let number = try? PhoneNumber.normalized(caller)
+        let update = CXCallUpdate()
+        update.remoteHandle = CXHandle(type: number == nil ? .generic : .phoneNumber, value: number ?? caller)
+        update.localizedCallerName = caller
+        update.supportsHolding = true; update.supportsDTMF = true
+        provider.reportNewIncomingCall(with: id, update: update) { [weak self] error in
+            Task { @MainActor in
+                defer { completion() }
+                guard let self else { return }
+                guard error == nil else { try? await self.backend.end(callID: id); return }
+                guard self.session.begin(PhoneCall(id: id, person: PhoneNumber.person(number ?? caller),
+                    direction: .incoming, createdAt: Date(), stage: .incoming)) else {
+                    try? await self.backend.end(callID: id)
+                    self.provider.reportCall(with: id, endedAt: Date(), reason: .failed)
+                    return
+                }
+                self.changed()
+                do { try await self.backend.prepareIncoming(callID: id, number: number ?? caller) }
+                catch { self.finish(id, outcome: .failed, reason: .failed) }
             }
         }
     }

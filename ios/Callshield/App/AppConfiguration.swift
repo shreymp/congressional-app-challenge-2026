@@ -2,14 +2,17 @@ import Foundation
 
 enum AppConfiguration {
     /// Xcode → Callshield target → Build Settings → User-Defined → CALLSHIELD_DEMO.
-    /// Set true for the TSX demo, false for the production interface, then rebuild.
+    /// Debug: true selects the TSX demo, false selects the real calling interface.
+    /// Release always uses real calling and excludes development transcript tools.
     static var isDemo: Bool {
         #if DEBUG
-        // UI tests only; release builds always use the Xcode build setting.
+        // Development and UI tests only.
         if ProcessInfo.processInfo.arguments.contains("--ui-test-demo") { return true }
         if ProcessInfo.processInfo.arguments.contains("--ui-test-production") { return false }
-        #endif
         return (Bundle.main.object(forInfoDictionaryKey: "CallshieldDemoMode") as? String)?.lowercased() == "true"
+        #else
+        return false
+        #endif
     }
 
     /// Enable only after provisioning com.apple.developer.dialing-app on iOS 26.

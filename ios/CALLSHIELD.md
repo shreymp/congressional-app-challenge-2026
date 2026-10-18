@@ -1,10 +1,10 @@
 # Callshield for iPhone
 
-Native SwiftUI implementation of the `azim` branch’s Callshield frontend, with separate demo and production interfaces. Build with **Xcode 26 or later** (LiveCommunicationKit requires the iOS 26 SDK); deployment supports **iOS 16 or later**. There are no package dependencies or model downloads.
+Native SwiftUI implementation of the `azim` branch’s Callshield frontend, with separate demo and production interfaces. Build with **Xcode 26 or later** (LiveCommunicationKit requires the iOS 26 SDK); deployment supports **iOS 16 or later**. The production target now uses Twilio Voice SDK plus the local Vosk and Jev assets. See [Pipeline 2 setup and Twilio handoff](PIPELINE2_TWILIO_HANDOFF.md).
 
 ## Switch demo / production
 
-Open `Callshield.xcodeproj` → **Callshield target → Build Settings → User-Defined → `CALLSHIELD_DEMO`**. Set **`true`** for the existing TSX demo, **`false`** for the production phone interface, then rebuild. Set both Debug and Release if you want both configurations to use the same mode. The checked-in default is `true`. The value is expanded into Info.plist and read by `App/AppConfiguration.swift`.
+Open `Callshield.xcodeproj` → **Callshield target → Build Settings → User-Defined → `CALLSHIELD_DEMO`**. Set **`true`** for the existing TSX demo, **`false`** for the production phone interface, then rebuild. This setting only applies to Debug. Release always uses the real calling interface, even when `CALLSHIELD_DEMO=true`. The checked-in default is `false`. The value is expanded into Info.plist and read by `App/AppConfiguration.swift`.
 
 The two modes own different stores. Production never reads the demo’s fictional contacts/history, simulated timers or results. Debug-only UI test arguments select a mode and isolate production persistence; Release ignores these arguments.
 
@@ -12,7 +12,7 @@ The two modes own different stores. Production never reads the demo’s fictiona
 
 1. Open `Callshield.xcodeproj` from this folder.
 2. Select the **Callshield** scheme and an iPhone simulator, then Run.
-3. Tap **Demo**, choose Human voice, AI voice, or Uncertain voice, and accept or decline the incoming call.
+3. In a Debug development build with the real calling interface, open Settings → **Test transcript pipeline** to test recording, imported audio, or typed text. To test the original screen demo, rebuild with `CALLSHIELD_DEMO=true`.
 4. On a physical iPhone, select your development team in Signing & Capabilities before running.
 
 **In demo mode**, calls and voice assessments are simulated, exactly as in the supplied TSX. No real call is placed or received, and no microphone, address book, network, or classification service is accessed. Mute and speaker change demo state. The source's history and preferences reset when the app process restarts. This is a complete native implementation of the interactive frontend, not a live telephony or voice-detection product.
@@ -105,11 +105,11 @@ Production has **Favorites, Recents, Contacts, Keypad and Settings**, contact/ca
 
 ### Backend connection points
 
-Implement `Production/BackendContracts.swift` and replace the factories in `AppServices`. Injecting services into `ProductionStore` is also supported for tests and integration.
+The factory selects `TwilioCallingBackend` when a calling-server address and Keychain session credential are configured in Settings. See [the token/audio server contracts](PIPELINE2_TWILIO_HANDOFF.md). Injecting services into `ProductionStore` is also supported for tests and alternative providers.
 
-`CallingBackend` owns authenticated signaling and real media transport. `start` returns when signaling is accepted; `answer` must await incoming-session readiness, coordinating with `prepareIncoming` if necessary. Emit `connected` only for a real connection; emit assessment events only for the same call’s remote audio stream. Start/stop audio through CallKit’s `activateAudio`/`deactivateAudio`, and make `end`/`reset` cancel pending work. No provider SDK, credentials, signup, server, APNs sender, codec, voice model or simulated implementation is included.
+`CallingBackend` owns authenticated signaling and real media transport. `start` returns when signaling is accepted; `answer` must await incoming-session readiness, coordinating with `prepareIncoming` if necessary. Emit `connected` only for a real connection; emit assessment events only for the same call’s remote audio stream. Start/stop audio through CallKit’s `activateAudio`/`deactivateAudio`, and make `end`/`reset` cancel pending work. The Twilio SDK, mu-law codec, local transcript models and audio relay are included. The authenticated token/analysis server, TwiML routing and APNs provisioning must be supplied by the team. Pipeline 1 voice classification remains separate.
 
-`PhoneCallCoordinator` registers PushKit only when the backend is configured. The APNs **VoIP** payload contract is `callUUID` (UUID string), `handle` (phone number), and optional `callerName`. Every VoIP push is reported to CallKit **before** backend preparation, including invalid payloads which are immediately ended; the completion handler runs once. Upload/invalidate the VoIP device token through `registerVoIPToken`. Authenticate incoming sessions server-side rather than trusting a displayed name. Push delivery, lock-screen answering, interruption recovery, transport cancellation, and audio routes need end-to-end device validation with the chosen service.
+`PhoneCallCoordinator` registers PushKit only when the backend is configured. Twilio pushes are decoded by the SDK and immediately reported to CallKit. Alternative providers retain the APNs **VoIP** payload contract: `callUUID` (UUID string), `handle` (phone number), and optional `callerName`. Every VoIP push is reported to CallKit **before** backend preparation, including invalid payloads which are immediately ended; the completion handler runs once. Upload/invalidate the VoIP device token through `registerVoIPToken`. Authenticate incoming sessions server-side rather than trusting a displayed name. Push delivery, lock-screen answering, interruption recovery, transport cancellation, and audio routes need end-to-end device validation with the chosen service.
 
 `VoicemailBackend` supplies ordered messages, confirms mark-read/delete operations, and supplies short-lived authenticated HTTPS audio URLs for AVPlayer. Revisit the privacy manifest and permission wording when adding actual network data collection, analytics or third-party SDKs.
 
@@ -129,3 +129,5 @@ Select your development team and a unique bundle identifier. Enable Push Notific
 The cellular dialer APIs initiate calls and expose permitted history; they do **not** supply cellular call audio to this app or replace all Apple Phone features. Native cellular call control/ringing remain system-owned. Real voice assessments require media supplied by the VoIP service or a separately authorized integration; the current production UI never labels cellular audio using the demo model. Carrier voicemail, emergency/carrier routing, account provisioning, App Store eligibility and distribution signing remain service/platform work.
 
 Official references: [default calling app](https://developer.apple.com/documentation/callkit/preparing-your-app-to-be-the-default-calling-app), [default dialer app](https://developer.apple.com/documentation/livecommunicationkit/preparing-your-app-to-be-the-default-dialer-app), [responding to VoIP pushes](https://developer.apple.com/documentation/pushkit/responding-to-voip-notifications-from-pushkit).
+
+Development transcript tools (microphone recording, file import, sample script and typed inference) are compiled only in Debug. Release retains the live transcript model selector, Twilio audio connection, on-device Vosk/Jev analysis and in-call results.

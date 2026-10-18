@@ -8,6 +8,7 @@ struct ProductionCallView: View {
     private let clock = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var now = Date()
     var body: some View {
+        VStack(spacing: 0) {
         GeometryReader { geometry in
             ScrollView {
                 VStack(spacing: 18) {
@@ -17,6 +18,7 @@ struct ProductionCallView: View {
                     Text(call.person.number).font(.subheadline).foregroundStyle(Color(hex: 0xBDCCC3))
                     Text(status).monospacedDigit().foregroundStyle(Color(hex: 0x9FB5A8))
                     if call.connectedAt != nil {
+                        TranscriptStatusView(pipeline: store.coordinator.transcript, compact: true)
                         VStack(spacing: 10) {
                             VoiceBadge(voice: call.voice, size: 13, onCall: true)
                             Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
@@ -25,35 +27,41 @@ struct ProductionCallView: View {
                             .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
                     }
                     Spacer(minLength: 20)
-                    if call.stage == .incoming {
-                        HStack {
-                            action("Decline", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
-                            Spacer()
-                            action("Accept", "phone.fill", color: Color(hex: 0x32C968)) { try await store.coordinator.answer() }
-                        }.padding(.horizontal, 12)
-                    } else {
-                        if showingKeypad {
-                            PhoneKeypad { digit in perform { try await store.coordinator.sendDTMF(digit) } }
-                        } else {
-                            HStack(spacing: 24) {
-                                action(call.muted ? "unmute" : "mute", call.muted ? "mic.slash" : "mic", selected: call.muted) {
-                                    try await store.coordinator.setMuted(!call.muted)
-                                }
-                                action("speaker", "speaker.wave.2", selected: call.speaker) {
-                                    try store.coordinator.setSpeaker(!call.speaker)
-                                }
-                                action(call.stage == .held ? "resume" : "hold", "pause", selected: call.stage == .held) {
-                                    try await store.coordinator.setHeld(call.stage != .held)
-                                }
-                            }.disabled(call.connectedAt == nil)
-                        }
-                        Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
-                            .disabled(call.connectedAt == nil).padding(8)
-                        action("End call", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
-                    }
                 }
                 .padding(28).frame(maxWidth: 500).frame(minHeight: geometry.size.height).frame(maxWidth: .infinity)
             }.scrollIndicators(.hidden)
+        }
+        VStack(spacing: 12) {
+            if call.stage == .incoming {
+                HStack {
+                    action("Decline", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
+                    Spacer()
+                    action("Accept", "phone.fill", color: Color(hex: 0x32C968)) { try await store.coordinator.answer() }
+                }.padding(.horizontal, 12)
+            } else {
+                if showingKeypad {
+                    PhoneKeypad { digit in perform { try await store.coordinator.sendDTMF(digit) } }
+                } else {
+                    HStack(spacing: 24) {
+                        action(call.muted ? "unmute" : "mute", call.muted ? "mic.slash" : "mic", selected: call.muted) {
+                            try await store.coordinator.setMuted(!call.muted)
+                        }
+                        action("speaker", "speaker.wave.2", selected: call.speaker) {
+                            try store.coordinator.setSpeaker(!call.speaker)
+                        }
+                        action(call.stage == .held ? "resume" : "hold", "pause", selected: call.stage == .held) {
+                            try await store.coordinator.setHeld(call.stage != .held)
+                        }
+                    }.disabled(call.connectedAt == nil)
+                }
+                Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
+                    .disabled(call.connectedAt == nil).padding(8)
+            }
+            if call.stage != .incoming {
+                action("End call", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
+            }
+        }.padding(.horizontal, 28).padding(.vertical, 12)
+
         }
         .multilineTextAlignment(.center).foregroundStyle(.white)
         .background(RadialGradient(colors: [Color(hex: 0x3A554C), Color(hex: 0x25382F), Color(hex: 0x131F1C)], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())

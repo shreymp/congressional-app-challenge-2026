@@ -7,6 +7,11 @@ enum CallingEvent {
     case assessmentStarted(UUID)
     case assessed(UUID, Voice)
     case failed(UUID, String)
+    /// Owned remote-caller PCM, never the local microphone or mixed speakers.
+    case callerAudio(UUID, AVAudioPCMBuffer)
+    /// An authenticated per-call relay subscription, emitted after connected.
+    case callerStream(UUID, CallerStreamConfiguration)
+    case analysisFailed(UUID, String)
 }
 
 /// Implement with the future signaling/media provider. Emitting `connected` must
@@ -15,6 +20,8 @@ enum CallingEvent {
 /// `start` returns after signaling is accepted; `answer` waits until the incoming
 /// session is ready to connect (including any concurrent `prepareIncoming`). Audio
 /// starts only in `activateAudio`; reset/end must cancel all work for that call.
+/// Emit callerAudio from a Twilio custom audio renderer, or callerStream for
+/// a Media Streams relay. Use only one input for each call. Jev stays on-device.
 @MainActor
 protocol CallingBackend: AnyObject {
     var isConfigured: Bool { get }
@@ -30,6 +37,15 @@ protocol CallingBackend: AnyObject {
     func activateAudio(_ session: AVAudioSession)
     func deactivateAudio(_ session: AVAudioSession)
     func reset()
+    /// Provider-specific PushKit payloads must be decoded by their SDK, then
+    /// immediately reported to CallKit through reportIncoming before completion.
+    func handleVoIPPush(_ payload: [AnyHashable: Any], reportIncoming: @escaping (UUID, String, @escaping () -> Void) -> Void,
+                       completion: @escaping () -> Void) -> Bool
+}
+
+extension CallingBackend {
+    func handleVoIPPush(_ payload: [AnyHashable: Any], reportIncoming: @escaping (UUID, String, @escaping () -> Void) -> Void,
+                       completion: @escaping () -> Void) -> Bool { false }
 }
 
 @MainActor
@@ -78,6 +94,9 @@ struct UnconnectedVoicemailBackend: VoicemailBackend {
 /// services are available. Production never falls back to the demo's sample data.
 @MainActor
 enum AppServices {
-    static func makeCallingBackend() -> CallingBackend { UnconnectedCallingBackend() }
+    static func makeCallingBackend() -> CallingBackend {
+        guard let url = CallingConnection.serverURL, let credential = CallingConnection.token else { return UnconnectedCallingBackend() }
+        return TwilioCallingBackend(client: CallingServiceClient(baseURL: url, credential: credential))
+    }
     static func makeVoicemailBackend() -> VoicemailBackend { UnconnectedVoicemailBackend() }
 }

@@ -1,3 +1,5 @@
+For **Call Shield pipeline 2 and Twilio integration**, open `Callshield.xcodeproj` and follow [the handoff guide](PIPELINE2_TWILIO_HANDOFF.md). The standalone transcript prototype below remains available.
+
 # Scam Transcript — iPhone prototype
 
 Open **ScamTranscript.xcodeproj**, choose the **ScamTranscript** scheme and an

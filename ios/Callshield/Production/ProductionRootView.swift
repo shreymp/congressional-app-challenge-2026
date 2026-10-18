@@ -10,7 +10,7 @@ struct ProductionRootView: View {
     init() {
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--ui-test-production") {
-            _store = StateObject(wrappedValue: ProductionStore(repository: MemoryPhoneRepository()))
+            _store = StateObject(wrappedValue: ProductionStore(repository: MemoryPhoneRepository(), backend: UnconnectedCallingBackend()))
             return
         }
         #endif
@@ -77,6 +77,9 @@ struct ProductionRootView: View {
         .sheet(item: $store.detail) { person in ProductionPersonDetail(person: person).environmentObject(store) }
         .sheet(item: $store.recordDetail) { record in ProductionPersonDetail(person: record.person, record: record).environmentObject(store) }
         .sheet(isPresented: $store.showVoicemail) { ProductionVoicemailView().environmentObject(store) }
+        #if DEBUG
+        .sheet(isPresented: $store.showTranscriptTester) { TranscriptTestView() }
+        #endif
         .alert("Callshield", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("OK", role: .cancel) { store.errorMessage = nil }
         } message: { Text(store.errorMessage ?? "") }

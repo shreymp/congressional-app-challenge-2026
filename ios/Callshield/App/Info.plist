@@ -39,8 +39,13 @@
 	<string>$(CALLSHIELD_DEFAULT_DIALER)</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Show your selected contacts in Callshield so you can call them and add favorites.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Use the microphone for Callshield voice calls.</string>
+	<string>Use the microphone for Callshield voice calls and local transcript testing.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

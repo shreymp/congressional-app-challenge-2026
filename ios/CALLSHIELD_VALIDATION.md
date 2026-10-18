@@ -1,5 +1,27 @@
 # Native Callshield validation
 
+## Development tools excluded from Release — October 14, 2026
+
+The transcript tester UI, recording/import helper and typed-text test entry point now compile only in Debug. Release always opens the real calling interface, including when `CALLSHIELD_DEMO=true`; the live model selector, Twilio transport, Vosk/Jev and in-call results remain available.
+
+Verification: the Debug transcript UI test and 7 pipeline tests passed (the optional local relay test skipped because its server was stopped). In Release, the actual 8 kHz mu-law speech → Vosk → Jev integration test passed. A Release UI test with `CALLSHIELD_DEMO=true` confirmed the live model selector and calling connection remained present, while the transcript-test and demo buttons were absent. The final unsigned iPhone Release build passed. Production live Twilio calls still require the team's server connection and physical-device verification.
+
+## Pipeline 2 update — October 14, 2026
+
+Across the full suite and final targeted runs, **41 distinct unit/integration tests and 8 UI tests passed** with zero failures. The audio-only relay's **3 tests passed**. The unsigned Release build for a generic iPhone target passed. The Twilio SDK is pinned to 6.13.7 in Package.resolved; tested relay dependencies are pinned in its requirements.txt.
+
+Actual synthetic speech passed through Vosk and local Jev inside Call Shield. Telephone-format speech passed through the 8 kHz mu-law decoder/resampler into Vosk/Jev. A signed simulated Twilio stream also passed through the authenticated local relay and the native simulator WebSocket to ten Jev outputs. The opt-in WebSocket test was run with its local relay available; it was not skipped in these verification runs. Test sessions are retained under `/tmp/callshield-pipeline-build/Logs/Test/`.
+
+The latest targeted reruns verified the server contracts, transcript screen, connection settings and fixed call controls. Screenshots were visually inspected. The transcript and voice cards scroll independently of the call controls, which remain available at the bottom.
+
+- [Local Jev test screen](Review/Pipeline-01-Local-Jev.png)
+- [Call controls with transcript panel](Review/Pipeline-02-Call-Controls.png) — UI fixture, not a live call.
+- [Twilio setup and remaining server work](PIPELINE2_TWILIO_HANDOFF.md)
+
+The narrowband fixture misheard part of “verification code.” These checks establish pipeline operation, not speech-recognition accuracy, scam detection quality, or real Twilio calling. Physical-iPhone execution, microphone/Bluetooth routes, APNs delivery, and live server/call transport remain unverified. The temporary loopback relay used for testing was stopped afterward.
+
+## Earlier demo/production validation
+
 Validated October 7, 2026, against `azim` commit `74d8462ddc491f8617968dca85b31a0e6016b3e8`.
 
 ## Environment and results
