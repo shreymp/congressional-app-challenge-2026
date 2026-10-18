@@ -47,4 +47,29 @@ final class ProductionUITests: XCTestCase {
         app.buttons["productionTabRecents"].tap()
         XCTAssertTrue(app.staticTexts["No recent calls"].exists)
     }
+    #if DEBUG
+    func testTranscriptScreenRunsLocalJevAndReturnsToSettings() {
+        app.buttons["productionTabSettings"].tap()
+        app.swipeUp()
+        app.buttons["transcriptTestButton"].tap()
+        XCTAssertTrue(app.buttons["pipelineRecord"].waitForExistence(timeout: 5))
+        app.buttons["pipelineExample"].tap()
+        app.buttons["pipelineCheckText"].tap()
+        XCTAssertTrue(app.staticTexts["Experimental behavior estimates"].waitForExistence(timeout: 60))
+        XCTAssertTrue(app.staticTexts["pipelineTranscript"].label.contains("verification code"))
+        snapshot("Pipeline-01-Local-Jev")
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["productionTabSettings"].exists)
+    }
+    #else
+    func testReleaseExcludesTranscriptToolsAndKeepsLiveProtection() {
+        app.buttons["productionTabSettings"].tap()
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Transcript protection"].exists)
+        XCTAssertTrue(app.buttons["liveTranscriptModel"].exists)
+        XCTAssertFalse(app.buttons["transcriptTestButton"].exists)
+        XCTAssertFalse(app.buttons["demoButton"].exists)
+        XCTAssertTrue(app.staticTexts["Calling connection"].exists)
+    }
+    #endif
 }

@@ -242,6 +242,9 @@ struct ProductionPersonDetail: View {
 
 struct ProductionSettingsView: View {
     @EnvironmentObject private var store: ProductionStore
+    @State private var server = UserDefaults.standard.string(forKey: "callshield.serverURL") ?? ""
+    @State private var sessionToken = ""
+    @State private var connectionMessage = ""
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -257,6 +260,46 @@ struct ProductionSettingsView: View {
                     Divider()
                     row("Voice labels", store.coordinator.backend.isConfigured ? "During connected calls" : "Unavailable")
                 }.padding(.horizontal, 16).background(Color(hex: 0xF6F7F6), in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Transcript protection").font(.headline)
+                    Text("Caller speech is transcribed and checked on this device. Live analysis needs a Callshield audio connection.")
+                        .font(.subheadline).foregroundStyle(Palette.secondary)
+                    Picker("Live transcript model", selection: Binding(get: { store.coordinator.transcript.model }, set: { model in
+                        store.coordinator.transcript.select(model)
+                        UserDefaults.standard.set(model.rawValue, forKey: "callshield.transcriptModel")
+                    })) {
+                        ForEach(TranscriptPipeline.Model.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+                    }.pickerStyle(.menu).accessibilityIdentifier("liveTranscriptModel")
+                    #if DEBUG
+                    Button("Test transcript pipeline") { store.showTranscriptTester = true }
+                        .accessibilityIdentifier("transcriptTestButton")
+                    #endif
+                }
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Calling connection").font(.headline)
+                    TextField("https://your-callshield-server", text: $server)
+                        .keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .textFieldStyle(.roundedBorder)
+                    SecureField("Server-issued session token", text: $sessionToken)
+                        .textInputAutocapitalization(.never).autocorrectionDisabled().textFieldStyle(.roundedBorder)
+                    HStack {
+                        Button("Save connection") {
+                            do {
+                                try CallingConnection.save(server: server, token: sessionToken)
+                                try store.reloadCallingConnection()
+                                sessionToken = ""; connectionMessage = "Connection saved. Live calls require the server’s Twilio configuration."
+                            } catch { store.errorMessage = error.localizedDescription }
+                        }
+                        Button("Disconnect") {
+                            CallingConnection.clear()
+                            do { try store.reloadCallingConnection(); server = ""; sessionToken = ""; connectionMessage = "Disconnected." }
+                            catch { store.errorMessage = error.localizedDescription }
+                        }
+                    }
+                    if !connectionMessage.isEmpty { Text(connectionMessage).font(.caption) }
+                    Text("Use the session token from your calling server. It is saved in this iPhone’s Keychain.")
+                        .font(.caption).foregroundStyle(Palette.secondary)
+                }
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Default calling app").font(.headline)
                     Text("To choose Callshield where supported, open iPhone Settings → Apps → Default Apps.")

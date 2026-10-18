@@ -1,0 +1,33 @@
+diff --git a/ios/CallshieldUITests/ProductionUITests.swift b/ios/CallshieldUITests/ProductionUITests.swift
+index 486348e..e763685 100644
+--- a/ios/CallshieldUITests/ProductionUITests.swift
++++ b/ios/CallshieldUITests/ProductionUITests.swift
+@@ -16,7 +16,7 @@ final class ProductionUITests: XCTestCase {
+         XCTAssertFalse(app.staticTexts["Sarah Miller"].exists)
+         snapshot("Production-01-Recents")
+         app.buttons["productionTabFavorites"].tap()
+-        XCTAssertTrue(app.staticTexts["No favorites"].exists)
++        XCTAssertTrue(app.staticTexts["No favorites"].waitForExistence(timeout: 3))
+         snapshot("Production-02-Favorites")
+         app.buttons["productionTabContacts"].tap()
+         XCTAssertFalse(app.staticTexts["Daniel Chen"].exists)
+@@ -32,7 +32,10 @@ final class ProductionUITests: XCTestCase {
+         app.buttons["Done"].tap()
+         XCTAssertTrue(app.buttons["productionTabRecents"].exists)
+     }
+-    func testBothPipelineResultsAreVisibleOnTheCallScreen() {
++    func testBothPipelineResultsAreVisibleOnTheCallScreen() throws {
++        #if !DEBUG
++        throw XCTSkip("The analysis fixture is available only in Debug builds.")
++        #else
+         app.terminate()
+         app.launchArguments = ["--ui-test-production", "--ui-test-analysis"]
+         app.launch()
+@@ -41,6 +44,7 @@ final class ProductionUITests: XCTestCase {
+         XCTAssertEqual(app.staticTexts["transcriptAssessmentTitle"].label, "Possible scam language")
+         XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("94%"))
+         snapshot("Production-12-Both-Pipeline-Feedback")
++        #endif
+     }
+     func testKeypadAndSimulatorCallError() {
+         app.buttons["productionTabKeypad"].tap()

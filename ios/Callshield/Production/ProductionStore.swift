@@ -12,6 +12,9 @@ final class ProductionStore: ObservableObject {
     @Published var detail: Person?
     @Published var recordDetail: PhoneCallRecord?
     @Published var showVoicemail = false
+    #if DEBUG
+    @Published var showTranscriptTester = false
+    #endif
     @Published var errorMessage: String?
     @Published var largeText = false { didSet { persist() } }
     @Published private(set) var history: [PhoneCallRecord] = []
@@ -25,7 +28,7 @@ final class ProductionStore: ObservableObject {
     @Published private(set) var loadingVoicemail = false
     @Published var voicemailError: String?
     let voicemailBackend: VoicemailBackend
-    let coordinator: PhoneCallCoordinator
+    @Published private(set) var coordinator: PhoneCallCoordinator
     let systemPhone: SystemPhoneService
     private let repository: PhoneRepository
     private let contactsService: PhoneContactsService
@@ -52,19 +55,36 @@ final class ProductionStore: ObservableObject {
             canPersist = false
             errorMessage = "Your saved call information couldn’t be loaded. \(error.localizedDescription)"
         }
-        coordinator.onCallChanged = { [weak self] call in
-            self?.active = call
-            if call != nil { self?.detail = nil; self?.recordDetail = nil; self?.showVoicemail = false }
-            else { self?.tab = .recents }
-        }
-        coordinator.onRecord = { [weak self] record in self?.mergeHistory([record]) }
-        coordinator.onError = { [weak self] message in self?.errorMessage = message }
+        bindCoordinator()
         if #available(iOS 26, *), AppConfiguration.defaultDialerEnabled {
             historyObserver = NotificationCenter.default.addObserver(
                 forName: ConversationHistoryManager.ConversationHistoryDidUpdate.name, object: nil, queue: .main
             ) { [weak self] _ in Task { @MainActor in await self?.refreshHistory() } }
         }
         readyToPersist = true
+    }
+
+    private func bindCoordinator() {
+        coordinator.onCallChanged = { [weak self] call in
+            self?.active = call
+            if call != nil {
+                self?.detail = nil; self?.recordDetail = nil; self?.showVoicemail = false
+                #if DEBUG
+                self?.showTranscriptTester = false
+                #endif
+            }
+            else { self?.tab = .recents }
+        }
+        coordinator.onRecord = { [weak self] record in self?.mergeHistory([record]) }
+        coordinator.onError = { [weak self] message in self?.errorMessage = message }
+    }
+
+    func reloadCallingConnection() throws {
+        guard active == nil, !placingCall else { throw PhoneError.actionUnavailable }
+        coordinator.backend.reset()
+        coordinator = PhoneCallCoordinator(backend: AppServices.makeCallingBackend())
+        bindCoordinator()
+        coordinator.registerIncomingCallsIfConfigured()
     }
 
     deinit { if let historyObserver { NotificationCenter.default.removeObserver(historyObserver) } }

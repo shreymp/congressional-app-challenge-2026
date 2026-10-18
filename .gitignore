@@ -17,3 +17,5 @@ __pycache__/
 *.egg-info/
 :memory:.ses
 /verdict-151m/model.onnx
+
+/backend/transcript-relay/.venv-relay/
