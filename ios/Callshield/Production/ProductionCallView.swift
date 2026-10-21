@@ -24,13 +24,23 @@ struct ProductionCallView: View {
                     if call.connectedAt != nil {
                         VStack(spacing: 10) {
                             Text("Voice / deepfake analysis").font(.caption.weight(.semibold))
-                            VoiceBadge(voice: call.voice, size: 13, onCall: true)
+                            Text(voiceAssessment.title).font(.title3.weight(.semibold))
+                                .foregroundStyle(voiceAssessment.state == .ai ? Color(hex: 0xFFD59A) : Color.white)
+                                .accessibilityIdentifier("deepfakeAssessmentTitle")
+                            Text(voiceAssessment.scoreText).font(.subheadline.monospacedDigit())
+                                .accessibilityIdentifier("deepfakeAssessmentScore")
                             Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                            if voiceAssessment.recentAI == true {
+                                Text("Possible AI speech detected recently").font(.caption.weight(.semibold))
+                                    .foregroundStyle(Color(hex: 0xFFD59A))
+                                    .accessibilityIdentifier("deepfakeRecentWarning")
+                            }
                             if let previous = call.lastDeepfakeResult,
                                let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
-                                Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
+                                Text("Last result: \(previous.title) · \(previous.scoreText)").font(.caption.weight(.semibold))
                             }
-                            Text("Not an identity check").font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
+                            Text("AI score is an estimate, not a probability or an identity check.")
+                                .font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
                         }.padding(16).frame(maxWidth: .infinity)
                             .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
                     }
@@ -96,13 +106,19 @@ struct ProductionCallView: View {
         }
     }
     private var assessment: String {
-        if let deepfake = call.deepfake { return deepfake.message }
+        if call.deepfake != nil { return voiceAssessment.message }
         switch call.voice {
         case .analyzing: return "Checking the caller’s voice…"
         case .ai: return "This voice may be AI-generated."
         case .human: return "This voice appears to be human."
         case .unknown: return "A voice assessment is not available."
         }
+    }
+    private var voiceAssessment: DeepfakeAssessment {
+        let value = call.deepfake ?? DeepfakeAssessment(state: .analyzing, updatedAt: now)
+        guard let connectedAt = call.connectedAt,
+              now.timeIntervalSince(connectedAt) >= DeepfakeAssessment.initialDeadline else { return value }
+        return value.finalized(at: now)
     }
     private func action(_ title: String, _ symbol: String, color: Color = .white.opacity(0.13), selected: Bool = false,
                         operation: @escaping () async throws -> Void) -> some View {
@@ -125,5 +141,3 @@ struct ProductionCallView: View {
         }
     }
 }
-
-
