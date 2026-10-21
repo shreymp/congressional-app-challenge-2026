@@ -57,9 +57,9 @@ enum PhoneError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidNumber: return "Enter a valid phone number."
-        case .serviceUnavailable: return "Calling through Callshield isn’t available yet. You can call using your mobile service."
+        case .serviceUnavailable: return "Calling through callma. isn’t available yet. You can call using your mobile service."
         case .simulatorUnavailable: return "Phone calls require an iPhone. They aren’t available in the simulator."
-        case .microphoneDenied: return "Allow microphone access in Settings to make a Callshield call."
+        case .microphoneDenied: return "Allow microphone access in Settings to make a callma. call."
         case .actionUnavailable: return "That action isn’t available for this call."
         }
     }

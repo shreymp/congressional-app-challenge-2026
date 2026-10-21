@@ -39,7 +39,7 @@ struct ProductionRecentsView: View {
                         let ids = Set(offsets.map { store.visibleHistory[$0].id })
                         store.removeHistory(ids)
                     }
-                }.listStyle(.plain)
+                }.listStyle(.plain).scrollContentBackground(.hidden)
             }
         }
         .refreshable { await store.refresh() }
@@ -52,7 +52,7 @@ struct ProductionFavoritesView: View {
         ScrollView {
             if store.favorites.isEmpty {
                 PhoneEmptyView(symbol: "star", title: "No favorites", message: "Open a contact and tap Add to Favorites.")
-                Button("Open Contacts") { store.tab = .contacts }.tint(Palette.green)
+                Button("Open Contacts") { store.tab = .contacts }.tint(Palette.accent)
             } else {
                 LazyVStack(spacing: 0) {
                     ForEach(store.favorites) { person in
@@ -71,19 +71,19 @@ struct ProductionContactsView: View {
             VStack(spacing: 0) {
                 if store.contactsAccess == .notRequested || store.contactsAccess == .denied {
                     PhoneEmptyView(symbol: "person.crop.circle", title: "Your contacts",
-                                   message: store.contactsAccess == .notRequested ? "Choose which contacts Callshield can use." : "Allow contacts in Settings, or dial a number with the keypad.")
+                                   message: store.contactsAccess == .notRequested ? "Choose which contacts callma. can use." : "Allow contacts in Settings, or dial a number with the keypad.")
                     Button(store.contactsAccess == .notRequested ? "Allow Contacts" : "Open Settings") {
                         if store.contactsAccess == .notRequested { Task { await store.allowContacts() } }
                         else { openAppSettings() }
                     }
-                    .buttonStyle(.borderedProminent).tint(Palette.green).accessibilityIdentifier("allowContactsButton")
+                    .buttonStyle(.borderedProminent).tint(Palette.accent).accessibilityIdentifier("allowContactsButton")
                 } else {
                     PhoneSearchField(text: $store.contactSearch, label: "Search contacts").padding(.bottom, 14)
                     if store.contactsAccess == .limited {
                         HStack {
                             Text("Showing selected contacts").font(.caption).foregroundStyle(Palette.secondary)
                             Spacer()
-                            Button("Manage") { openAppSettings() }.font(.caption).tint(Palette.green)
+                            Button("Manage") { openAppSettings() }.font(.caption).tint(Palette.accent)
                         }.padding(.bottom, 12)
                     }
                     if store.loadingContacts { ProgressView().padding(40) }
@@ -133,7 +133,7 @@ struct PhoneSearchField: View {
                 Button { text = "" } label: { Image(systemName: "xmark.circle.fill") }
                     .foregroundStyle(Palette.secondary).accessibilityLabel("Clear search")
             }
-        }.padding(10).background(Color(hex: 0xF0F0F2), in: RoundedRectangle(cornerRadius: 10))
+        }.padding(10).background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -144,11 +144,11 @@ struct ProductionKeypadView: View {
         ScrollView {
             VStack(spacing: 16) {
                 TextField("Enter a number", text: $store.dialedNumber)
-                    .font(.system(size: 30, weight: .regular)).multilineTextAlignment(.center)
+                    .scaledFont(size: 30, weight: .regular).multilineTextAlignment(.center)
                     .keyboardType(.phonePad).focused($editing)
                     .textContentType(.telephoneNumber).accessibilityIdentifier("productionNumber")
                     .padding(.horizontal, 15).padding(.top, 12)
-                if editing { Button("Done") { editing = false }.tint(Palette.green) }
+                if editing { Button("Done") { editing = false }.tint(Palette.accent) }
                 PhoneKeypad { digit in editing = false; store.dialedNumber.append(digit) }
                 HStack {
                     Button { editing = false; if store.dialedNumber.isEmpty { store.dialedNumber = "+" } } label: {
@@ -158,16 +158,16 @@ struct ProductionKeypadView: View {
                     Button { editing = false; Task { await store.call() } } label: {
                         Group {
                             if store.placingCall { ProgressView().tint(.white) }
-                            else { Image(systemName: "phone.fill").font(.system(size: 29)) }
+                            else { Image(systemName: "phone.fill").scaledFont(size: 29) }
                         }
                         .foregroundStyle(.white).frame(width: 70, height: 70)
-                        .background(Color(hex: 0x32C968), in: Circle())
+                        .background(Palette.teal, in: Circle())
                     }
                     .buttonStyle(.plain).disabled(store.dialedNumber.isEmpty || store.placingCall)
                     .accessibilityLabel("Call").accessibilityIdentifier("productionCallButton")
                     Spacer()
                     Button { if !store.dialedNumber.isEmpty { store.dialedNumber.removeLast() } } label: {
-                        Image(systemName: "delete.left").font(.system(size: 23)).frame(width: 60, height: 60)
+                        Image(systemName: "delete.left").scaledFont(size: 23).frame(width: 60, height: 60)
                     }
                     .foregroundStyle(Palette.secondary).accessibilityLabel("Delete digit").accessibilityIdentifier("deleteDigit")
                     .contextMenu { Button("Clear number") { store.dialedNumber = "" } }
@@ -190,11 +190,11 @@ struct PhoneKeypad: View {
             ForEach(Array(digits.enumerated()), id: \.offset) { index, digit in
                 Button { action(digit) } label: {
                     VStack(spacing: 0) {
-                        Text(digit).font(.system(size: 31, weight: .regular))
-                        Text(letters[index]).font(.system(size: 9, weight: .semibold)).tracking(1.4)
+                        Text(digit).scaledFont(size: 31, weight: .regular)
+                        Text(letters[index]).scaledFont(size: 9, weight: .semibold).tracking(1.4)
                     }
                     .foregroundStyle(Palette.ink).frame(width: 74, height: 74)
-                    .background(Color(hex: 0xF0F0F2), in: Circle())
+                    .background(Palette.softAccent, in: Circle())
                 }
                 .buttonStyle(.plain).accessibilityLabel(digit).accessibilityIdentifier("dialKey\(digit)")
             }
@@ -219,10 +219,10 @@ struct ProductionPersonDetail: View {
                         Text(person.number).font(.body).foregroundStyle(Palette.secondary)
                         Button { Task { await store.call(person) } } label: {
                             Label("Call", systemImage: "phone.fill").frame(maxWidth: .infinity, minHeight: 36)
-                        }.buttonStyle(.borderedProminent).tint(Palette.green).disabled(store.placingCall)
+                        }.buttonStyle(.borderedProminent).tint(Palette.accent).disabled(store.placingCall)
                         Button { store.toggleFavorite(person) } label: {
                             Label(store.isFavorite(person) ? "Remove from Favorites" : "Add to Favorites", systemImage: store.isFavorite(person) ? "star.fill" : "star")
-                        }.tint(Palette.green)
+                        }.tint(Palette.accent)
                     }
                     if let record {
                         VoiceBadge(voice: record.voice, size: 12)
@@ -245,7 +245,7 @@ struct ProductionPersonDetail: View {
                             detailRow("Status", record.outcome.rawValue.capitalized)
                             detailRow("Time", record.date.formatted())
                             detailRow("Duration", callDuration(record.duration))
-                        }.padding(16).background(Color(hex: 0xF5F7F5), in: RoundedRectangle(cornerRadius: 12))
+                        }.padding(16).background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 12))
                         Text("Voice labels do not verify caller identity or safety.").font(.caption).foregroundStyle(Palette.secondary)
                     }
                 }.padding(23)
@@ -270,25 +270,26 @@ struct ProductionSettingsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 VStack(spacing: 12) {
                     BrandMark()
-                    Text("Callshield").font(.title3.weight(.semibold))
-                    Text("A little more clarity. Every call.").font(.caption).foregroundStyle(Palette.secondary)
-                }.frame(maxWidth: .infinity)
+                    Text(AppBrand.name).font(.title3.weight(.semibold))
+                    Text(AppBrand.tagline).font(.caption).foregroundStyle(Palette.secondary)
+                }.frame(maxWidth: .infinity).padding(20)
+                    .background(LinearGradient(colors: [Palette.softAccent, Palette.lavender, Palette.sand], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 24))
                 VStack(spacing: 0) {
-                    Toggle("Larger text", isOn: $store.largeText).tint(Palette.green).padding(.vertical, 12)
+                    Toggle("Larger text", isOn: $store.largeText).tint(Palette.accent).padding(.vertical, 12)
                     Divider()
-                    row("Calling", callshieldPlacesCalls ? "Callshield" : "Mobile service")
+                    row("Calling", callshieldPlacesCalls ? "callma." : "Mobile service")
                     Divider()
-                    row("Voice labels", store.coordinator.backend.isConfigured ? "On incoming Callshield calls" : "Unavailable")
-                }.padding(.horizontal, 16).background(Color(hex: 0xF6F7F6), in: RoundedRectangle(cornerRadius: 12))
+                    row("Voice labels", store.coordinator.backend.isConfigured ? "On incoming callma. calls" : "Unavailable")
+                }.padding(.horizontal, 16).background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 12))
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Default calling app").font(.headline)
-                    Text("To choose Callshield where supported, open iPhone Settings → Apps → Default Apps.")
+                    Text("To choose callma. where supported, open iPhone Settings → Apps → Default Apps.")
                         .font(.subheadline).foregroundStyle(Palette.secondary)
-                    Button("Open Settings") { openAppSettings() }.tint(Palette.green)
+                    Button("Open Settings") { openAppSettings() }.tint(Palette.accent)
                 }
                 Text("Voice checks can be wrong. If a caller asks for money, passwords, or a security code, hang up and call someone you trust.")
                     .font(.subheadline).foregroundStyle(Palette.secondary)
-                Text("Favorites and Callshield call history are stored on this iPhone. Contacts are accessed only with your permission.")
+                Text("Favorites and callma. call history are stored on this iPhone. Contacts are accessed only with your permission.")
                     .font(.caption).foregroundStyle(Palette.secondary)
             }.padding(.horizontal, 23).padding(.bottom, 24)
         }

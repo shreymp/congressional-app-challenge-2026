@@ -10,6 +10,20 @@ final class CallshieldStore: ObservableObject {
     @Published var search = ""
     @Published var sheet: AppSheet?
     @Published var largeText = false
+    @Published var dialedNumber = ""
+    @Published var errorMessage: String?
+    @Published private(set) var favoriteNumbers: Set<String> = []
+    var favorites: [Person] { SampleData.contacts.filter { favoriteNumbers.contains($0.number) } }
+
+    func toggleFavorite(_ person: Person) {
+        if favoriteNumbers.contains(person.number) { favoriteNumbers.remove(person.number) }
+        else { favoriteNumbers.insert(person.number) }
+    }
+
+    func previewOutgoing(_ number: String) {
+        guard !number.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        errorMessage = "This is an interactive demo. No call was placed. Use Demo to try a simulated incoming call."
+    }
     @Published private(set) var calls = SampleData.history
     @Published private(set) var active: ActiveCall?
     @Published private(set) var muted = false
@@ -79,6 +93,7 @@ final class CallshieldStore: ObservableObject {
         if seconds != newSeconds { seconds = newSeconds }
         if call.voice == .analyzing && elapsed >= 2.6 {
             call.voice = call.person.voice
+            call.scamRisk = SampleData.scamRisk(for: call.person)
             active = call
         }
     }
@@ -91,7 +106,8 @@ final class CallshieldStore: ObservableObject {
         calls.insert(CallEntry(id: UUID().uuidString, person: call.person,
                                when: formatter.string(from: now), missed: missed,
                                duration: missed ? 0 : max(0, Int(now.timeIntervalSince(call.started))),
-                               voice: missed || call.voice == .analyzing ? .unknown : call.voice), at: 0)
+                               voice: missed || call.voice == .analyzing ? .unknown : call.voice,
+                               scamRisk: missed ? nil : call.scamRisk), at: 0)
         active = nil
         sheet = nil
         tab = .recents

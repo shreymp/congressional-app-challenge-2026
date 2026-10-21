@@ -195,7 +195,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         #if targetEnvironment(simulator)
         guard session.begin(PhoneCall(id: id, person: person, direction: .incoming,
                                      createdAt: Date(), stage: .incoming)) else { return }
-        print("[Callshield] Simulator incoming call; use Accept in the app")
+        print("[callma.] Simulator incoming call; use Accept in the app")
         changed()
         Task { @MainActor in
             do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
@@ -211,7 +211,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             Task { @MainActor in
                 // CallKit can refuse (Do Not Disturb, a blocked caller). Then nothing rang and there is no session.
                 if let error {
-                    print("[Callshield] CallKit refused the incoming call: \(error.localizedDescription)")
+                    print("[callma.] CallKit refused the incoming call: \(error.localizedDescription)")
                     try? await self.backend.end(callID: id)
                     return
                 }
@@ -221,7 +221,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
                     try? await self.backend.end(callID: id)
                     return
                 }
-                print("[Callshield] CallKit reported the incoming call")
+                print("[callma.] CallKit reported the incoming call")
                 self.changed()
                 Task { @MainActor in
                     do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
