@@ -5,6 +5,14 @@ COPY deploy/livekit/download_models.py ./
 COPY model-sources.json ./
 RUN python download_models.py model-sources.json /models
 
+FROM python:3.11-slim-bookworm AS announcement
+RUN apt-get update && apt-get install -y --no-install-recommends espeak-ng sox \
+    && rm -rf /var/lib/apt/lists/*
+COPY deploy/livekit/generate_recording_notice.py /generate_recording_notice.py
+COPY ["backend/AI Deepfake Pipeline/LiveKit Setup/recording_notice.py", "/recording_notice.py"]
+RUN python /generate_recording_notice.py --output /recording_notice.wav \
+    && python -c "from pathlib import Path; from recording_notice import read_notice; read_notice(Path('/recording_notice.wav'))"
+
 FROM python:3.11-slim-bookworm
 ENV PYTHONUNBUFFERED=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
     DETECTOR=remote DETECTOR_DEVICE=cpu DETECTOR_SERVICE_URL=http://127.0.0.1:8000 \
@@ -22,6 +30,7 @@ COPY deploy/livekit/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir torch==2.9.1 --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir -r /tmp/requirements.txt
 COPY backend ./backend
+COPY --from=announcement ["/recording_notice.wav", "./backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav"]
 COPY deploy/livekit ./deploy/livekit
 COPY --from=models /models /app/models
 # Cache only the backbone architecture config, never untrained backbone weights.
