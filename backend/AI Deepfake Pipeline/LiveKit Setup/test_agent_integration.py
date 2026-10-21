@@ -4,7 +4,7 @@ import json
 import threading
 import types
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import numpy as np
 import agent
@@ -54,6 +54,11 @@ class FakeStream:
 
 
 class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        self.notice_patch = patch.object(agent, "play_recording_notice", new_callable=AsyncMock)
+        self.notice = self.notice_patch.start()
+        self.addCleanup(self.notice_patch.stop)
+
     def context(self, detector):
         room = FakeRoom()
         async def caller(**kwargs):
@@ -61,6 +66,78 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
             return types.SimpleNamespace(identity="sip-test", attributes={})
         return types.SimpleNamespace(room=room, proc=types.SimpleNamespace(userdata={"detector": detector}),
                                      wait_for_participant=caller, add_shutdown_callback=lambda callback: None)
+
+    async def test_notice_blocks_transcription_audio_and_recording_until_playback_finishes(self):
+        ctx, stream = self.context(FakeDetector()), FakeStream()
+        ctx.proc.userdata["stt_model"] = object()
+        started, release = asyncio.Event(), asyncio.Event()
+        async def play(room):
+            started.set()
+            await release.wait()
+        self.notice.side_effect = play
+        with patch.object(agent.transcript_pipeline, "for_call", side_effect=RuntimeError("test STT disabled")) as stt, \
+             patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream) as audio, \
+             patch.object(agent, "_save_wav") as save, patch.object(agent, "RECORD", True):
+            task = asyncio.create_task(agent._score_call(ctx))
+            try:
+                await asyncio.wait_for(started.wait(), 1)
+                stt.assert_not_called()
+                audio.assert_not_called()
+                save.assert_not_called()
+                release.set()
+                with self.assertLogs("scam-guard", level="ERROR"):
+                    await asyncio.wait_for(task, 3)
+                stt.assert_called_once()
+                audio.assert_called_once()
+                save.assert_called_once()
+                self.notice.assert_awaited_once_with(ctx.room)
+            finally:
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
+
+    async def test_failed_or_timed_out_notice_never_opens_processing_stream(self):
+        for failure in (RuntimeError("missing announcement"), asyncio.TimeoutError()):
+            ctx = self.context(FakeDetector())
+            ctx.proc.userdata["stt_model"] = object()
+            self.notice.side_effect = failure
+            with patch.object(agent.transcript_pipeline, "for_call") as stt, \
+                 patch.object(agent.rtc.AudioStream, "from_participant") as audio, \
+                 patch.object(agent, "_save_wav") as save, patch.object(agent, "RECORD", True):
+                with self.assertLogs("scam-guard", level="ERROR"):
+                    await agent._score_call(ctx)
+                stt.assert_not_called()
+                audio.assert_not_called()
+                save.assert_not_called()
+                self.assertEqual(ctx.room.messages[0][0]["reason"], "recording_notice_failed")
+
+    async def test_backend_probe_skips_notice(self):
+        ctx, stream = self.context(FakeDetector()), FakeStream()
+        ctx.wait_for_participant = AsyncMock(return_value=types.SimpleNamespace(identity="backend-probe-caller", attributes={}))
+        with patch.object(agent, "_probe_diag", return_value={}), \
+             patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream):
+            await agent._score_call(ctx, probe=True)
+        self.notice.assert_not_awaited()
+        ctx.wait_for_participant.assert_awaited_once_with(identity="backend-probe-caller")
+
+    async def test_notice_timeout_cancels_playback_and_preserves_ring_supervisor(self):
+        ctx = self.context(FakeDetector())
+        ctx.connect = AsyncMock()
+        ctx.job = types.SimpleNamespace(metadata="")
+        cancelled = asyncio.Event()
+        async def stalled(room):
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+        self.notice.side_effect = stalled
+        with patch.object(agent, "NOTICE_TIMEOUT_SEC", .01), \
+             patch.object(agent.senior_ring, "start_for_job") as ring, \
+             patch.object(agent.rtc.AudioStream, "from_participant") as audio:
+            with self.assertLogs("scam-guard", level="ERROR"):
+                await asyncio.wait_for(agent.scam_guard(ctx), 1)
+            ring.assert_called_once_with(ctx)
+            audio.assert_not_called()
+            self.assertTrue(cancelled.is_set())
 
     async def test_scores_and_publishes_versioned_caller_evidence_then_closes(self):
         ctx, stream = self.context(FakeDetector()), FakeStream()
