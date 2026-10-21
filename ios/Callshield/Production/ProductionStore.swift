@@ -75,9 +75,12 @@ final class ProductionStore: ObservableObject {
         let arguments = ProcessInfo.processInfo.arguments
         guard arguments.contains("--ui-test-production"), arguments.contains("--ui-test-analysis") else { return }
         let now = Date()
+        let deadlineFixture = arguments.contains("--ui-test-analysis-deadline")
         active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
-            direction: .incoming, createdAt: now, connectedAt: now, stage: .connected, voice: .human,
-            deepfake: DeepfakeAssessment(state: .human, updatedAt: now, windows: 3),
+            direction: .incoming, createdAt: now, connectedAt: deadlineFixture ? now.addingTimeInterval(-15) : now,
+            stage: .connected, voice: deadlineFixture ? .analyzing : .human,
+            deepfake: deadlineFixture ? DeepfakeAssessment(state: .analyzing, updatedAt: now)
+                : DeepfakeAssessment(state: .human, updatedAt: now, windows: 3, score: 12),
             transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
     }
     #endif
@@ -221,4 +224,3 @@ final class MemoryPhoneRepository: PhoneRepository {
     func load() throws -> PhoneSnapshot { snapshot }
     func save(_ snapshot: PhoneSnapshot) throws { self.snapshot = snapshot }
 }
-
