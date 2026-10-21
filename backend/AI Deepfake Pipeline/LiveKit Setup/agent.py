@@ -13,6 +13,9 @@ What it does per call
      Also handles no answer (a stub for now) and hangs up the caller after she hangs up.
   1. Finds the SIP participant (the phone caller) and logs its attributes, including the
      caller number LiveKit saw. That answers "does forwarding keep the real caller ID?".
+  2. Streams the caller's audio at 16 kHz, retaining contiguous four-second windows.
+  3. Checks about once per second for a distinct eligible window and scores it in a worker
+     thread (never blocking the audio loop), accumulates evidence, and publishes to the room on
   2. Plays "This call is being recorded." to the answered room before starting any caller
      stream, transcription or recording. If playback fails, all of those stay disabled.
      Then streams the caller's audio at 16 kHz, keeping the last ~4 s of speech.
@@ -266,4 +269,3 @@ def _probe_diag(userdata: dict, frames: int) -> dict:
 
 if __name__ == "__main__":
     cli.run_app(server)
-

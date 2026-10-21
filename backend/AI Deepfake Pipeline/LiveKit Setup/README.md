@@ -15,7 +15,7 @@ Scammer dials grandma's normal cell number
   -> scam-guard rings grandma's open app (senior_ring.py); she answers by joining the same
      room from the app, so the call never leaves LiveKit (see "Ringing the senior's app")
   -> scam-guard (this folder, running on the MacBook) subscribes to the caller's audio only
-  -> every ~1 s: last ~4 s of caller speech -> ../best.pt deepfake detector (MPS) -> risk engine
+  -> distinct 4 s audio windows -> ../best.pt deepfake detector -> cumulative call evidence
   -> same caller PCM, including silence -> local Vosk -> rolling transcript -> JEV HTTP connector
   -> deepfake level + fresh transcript probability -> existing fusion rule
   -> JSON update published to the room on topic "scam-guard.risk"
@@ -47,8 +47,8 @@ before enabling storage. Diagnostic backend probes skip the announcement and rin
 | `agent.py` | The LiveKit worker. Registers as `scam-guard`, starts the ring, finds the SIP caller, streams audio, scores, publishes. |
 | `recording_notice.py` | Plays the fixed notice and drains playback before caller audio processing can start. |
 | `detector_adapter.py` | The only file that knows about the model. Loads `../inference.py` + `../best.pt` on MPS. `DETECTOR=stub` gives fake scores. |
-| `audio_window.py` | Rolling 4 s buffer of caller *speech* (simple energy gate drops silence). |
-| `scoring.py` | Shared live/file scoring session, fresh-speech checks, inference state and silence reset. |
+| `audio_window.py` | Contiguous 4 s audio buffer; energy/coverage and clipping gates preserve natural pauses. |
+| `scoring.py` | Shared live/file scoring session; distinct windows, inference state and call evidence retained through silence. |
 | `risk_protocol.py` | Versioned caller/room/stream envelope for the iPhone app. |
 | `risk.py` | Smoothing (in log-odds), levels `listening / elevated / high`, hysteresis. Transcript fusion stub. |
 | `transcript_pipeline.py` | Per-call local Vosk recognition and bounded, coalesced HTTP transcript scoring. |
@@ -87,7 +87,7 @@ DETECTOR=stub python agent.py dev
 - On a test phone, turn on *forward all calls* to `+1 267-509-1164` (carrier code varies; often `*72` Verizon, `**21*` AT&T/T-Mobile).
 - From a *different* phone, call the test phone.
 - In the app, inspect the incoming caller number. **Record whether it is the real caller or the forwarding phone.** That decides whether grandma's app can show caller ID.
-- In a second terminal: `python tools/watch_risk.py` and watch updates arrive once there has been ~3 s of talking.
+- In a second terminal: `python tools/watch_risk.py` and watch updates after a complete 4 s window with enough usable caller speech.
 - Note what the calling phone hears (ringing, silence, or a tone) and when its call timer starts. Expected: ringing, and the timer starts only when grandma answers in the app (see Known issues). With the app closed nobody answers, so it just keeps ringing.
 
 **Step 3: real model on a real call.**
@@ -189,7 +189,9 @@ new lobby token for the app.
 
 Deploy the updated agent together with the updated iPhone app. Topic: `scam-guard.risk`, reliable data. Every message includes `schema: 1`, `room`, `callerIdentity`, `streamID` (UUID per scoring session), positive increasing `sequence`, and `model` (`real` or `stub`). The app requires a LiveKit agent participant as sender. The SDK exposes this through [Participant.kind](https://docs.livekit.io/reference/client-sdk-swift/documentation/livekit/participant/); data and reconnect callbacks follow the pinned [RoomDelegate API](https://github.com/livekit/client-sdk-swift/blob/2.17.0/Sources/LiveKit/Protocols/RoomDelegate.swift).
 
-`type: status` carries `state: waiting | analyzing | unavailable`. `type: risk` carries `deepfake` with `level`, `updates`, `human_steps`, `p_last`, `p_smoothed`, `logit_last`, `logit_smoothed`. Existing diagnostic fields (`level`, `transcript`, `infer_ms`, `voiced_sec`, `t`) remain available to the watcher. The app derives its voice label from `deepfake`, never from the combined `level`. A heartbeat sends current state every two seconds; scores arrive after fresh caller speech, around once per second. Silence for six seconds resets the voiced window and risk accumulation. Inference longer than ten seconds reports unavailable without starting more work. A model-load or per-window failure leaves calling operational.
+New evidence additionally carries `method: call-evidence-v1`, `state`, `score` (a heuristic 0–100 AI score), `score_kind: heuristic`, `recent_ai`, and `max_ai_run`. See [the feature notes](../../../docs/CUMULATIVE_VOICE_ANALYSIS.md) for exact aggregation, 15-second app deadline, limitations and rollout.
+
+`type: status` carries `state: waiting | analyzing | unavailable`. `type: risk` carries `deepfake` with `level`, `updates`, `human_steps`, `p_last`, `p_smoothed`, `logit_last`, `logit_smoothed`. Existing diagnostic fields (`level`, `transcript`, `infer_ms`, `voiced_sec`, `t`) remain available to the watcher. The app derives its voice label from `deepfake`, never from the combined `level`. A heartbeat sends current state every two seconds; new scores use distinct four-second audio windows. Silence for six seconds clears only the rolling audio window, retaining call evidence and verdicts. Inference longer than ten seconds reports unavailable without starting more work. A model-load or per-window failure leaves calling operational.
 
 Offline checks from the repository root:
 

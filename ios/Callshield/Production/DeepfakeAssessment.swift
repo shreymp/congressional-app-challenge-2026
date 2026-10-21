@@ -6,12 +6,36 @@ struct DeepfakeAssessment: Codable, Equatable {
     let state: State
     let updatedAt: Date
     var windows: Int = 0
+    /// Threshold-relative AI evidence, 0...100. Not a calibrated probability.
+    var score: Double? = nil
+    var recentAI: Bool? = nil
+
+    static let initialDeadline: TimeInterval = 15
+
+    var title: String {
+        switch state {
+        case .waiting, .analyzing: return "Analyzing"
+        case .human: return "Human"
+        case .ai: return "Likely AI"
+        case .uncertain: return "Inconclusive"
+        case .unavailable: return "Analysis unavailable"
+        }
+    }
+    var scoreText: String {
+        if let score { return "AI score: \(Int(score.rounded()))/100" }
+        return state == .waiting || state == .analyzing ? "Gathering voice evidence…" : "AI score unavailable"
+    }
+    func finalized(at date: Date) -> DeepfakeAssessment {
+        guard state == .waiting || state == .analyzing else { return self }
+        return DeepfakeAssessment(state: .uncertain, updatedAt: date, windows: windows,
+                                  score: score, recentAI: recentAI)
+    }
 
     var voice: Voice {
         switch state {
         case .human: return .human
         case .ai: return .ai
-        case .analyzing: return .analyzing
+        case .waiting, .analyzing: return .analyzing
         default: return .unknown
         }
     }
@@ -29,7 +53,7 @@ struct DeepfakeAssessment: Codable, Equatable {
         case .analyzing: return "Checking the caller’s voice…"
         case .human: return "This voice appears to be human."
         case .ai: return "This voice may be AI-generated. Verify the caller before sharing information."
-        case .uncertain: return "The voice result is uncertain. Keep listening."
+        case .uncertain: return windows < 2 ? "Not enough usable caller speech yet. Analysis will continue." : "The voice evidence is mixed. Analysis will continue."
         case .unavailable: return "Voice analysis is unavailable. Your call can continue."
         }
     }
@@ -57,6 +81,11 @@ struct DeepfakeUpdate: Decodable {
         let p_smoothed: Double
         let logit_last: Double
         let logit_smoothed: Double
+        let method: String?
+        let state: DeepfakeAssessment.State?
+        let score: Double?
+        let score_kind: String?
+        let recent_ai: Bool?
     }
 
     static func decode(_ data: Data) -> DeepfakeUpdate? {
@@ -70,6 +99,15 @@ struct DeepfakeUpdate: Decodable {
                   e.updates > 0, e.human_steps >= 0, e.human_steps <= e.updates,
                   (0...1).contains(e.p_last), (0...1).contains(e.p_smoothed),
                   e.logit_last.isFinite, e.logit_smoothed.isFinite else { return nil }
+            if let method = e.method {
+                guard method == "call-evidence-v1", e.score_kind == "heuristic",
+                      let score = e.score, score.isFinite, (0...100).contains(score),
+                      let state = e.state, [.analyzing, .human, .ai, .uncertain].contains(state),
+                      e.recent_ai != nil,
+                      state == .analyzing || e.updates >= 2 else { return nil }
+            } else if e.score != nil || e.state != nil || e.score_kind != nil || e.recent_ai != nil {
+                return nil
+            }
         } else { return nil }
         return value
     }
@@ -80,6 +118,10 @@ struct DeepfakeUpdate: Decodable {
             return DeepfakeAssessment(state: state ?? .unavailable, updatedAt: date)
         }
         let result: DeepfakeAssessment.State
+        if e.method == "call-evidence-v1", let state = e.state {
+            return DeepfakeAssessment(state: state, updatedAt: date, windows: e.updates,
+                                      score: e.score, recentAI: e.recent_ai)
+        }
         if e.level == "high", e.updates >= 3 { result = .ai }
         else if e.level == "elevated" { result = .uncertain }
         else if e.level == "listening", e.human_steps >= 3 { result = .human }
