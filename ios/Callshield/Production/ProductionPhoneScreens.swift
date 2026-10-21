@@ -228,13 +228,17 @@ struct ProductionPersonDetail: View {
                         VoiceBadge(voice: record.voice, size: 12)
                         if let assessment = record.deepfake {
                             Text(assessment.historyMessage).font(.caption).foregroundStyle(Palette.secondary)
-                            Text("Last voice update \(assessment.updatedAt.formatted(date: .abbreviated, time: .shortened))")
-                                .font(.caption2).foregroundStyle(Palette.secondary)
                         }
                         if let transcript = record.transcript {
                             Text("Transcript analysis").font(.subheadline.weight(.semibold))
                             Text(transcript.title).font(.caption)
                             Text(transcript.message).font(.caption).foregroundStyle(Palette.secondary)
+                            if let excerpt = transcript.savedExcerpt, transcript.isWarning {
+                                Text("Saved caller transcript excerpt").font(.headline)
+                                Text(excerpt).font(.body).textSelection(.enabled)
+                                Text("Automatic transcript; words may be missing or incorrect.")
+                                    .font(.caption).foregroundStyle(Palette.secondary)
+                            }
                         }
                         VStack(spacing: 12) {
                             detailRow("Call type", record.direction.rawValue.capitalized)
@@ -282,15 +286,8 @@ struct ProductionSettingsView: View {
                         .font(.subheadline).foregroundStyle(Palette.secondary)
                     Button("Open Settings") { openAppSettings() }.tint(Palette.green)
                 }
-                VStack(alignment: .leading, spacing: 14) {
-                    Text("Understanding voice labels").font(.headline)
-                    ForEach([Voice.ai, .human, .unknown], id: \.self) { voice in
-                        VStack(alignment: .leading, spacing: 7) {
-                            VoiceBadge(voice: voice, size: 12)
-                            Text(voice.explanation).font(.caption).foregroundStyle(Palette.secondary)
-                        }
-                    }
-                }
+                Text("Voice checks can be wrong. If a caller asks for money, passwords, or a security code, hang up and call someone you trust.")
+                    .font(.subheadline).foregroundStyle(Palette.secondary)
                 Text("Favorites and Callshield call history are stored on this iPhone. Contacts are accessed only with your permission.")
                     .font(.caption).foregroundStyle(Palette.secondary)
             }.padding(.horizontal, 23).padding(.bottom, 24)

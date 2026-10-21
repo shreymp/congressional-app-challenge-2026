@@ -9,8 +9,8 @@ extension Color {
 
 enum Palette {
     static let ink = Color(hex: 0x151719)
-    static let green = Color(hex: 0x24775D)
-    static let secondary = Color(hex: 0x8B9490)
+    static let green = Color(hex: 0x176EAA)
+    static let secondary = Color(hex: 0x617069)
     static let line = Color(hex: 0xF0F0F1)
     static let missed = Color(hex: 0xE45954)
 }
@@ -115,7 +115,7 @@ struct BrandMark: View {
             .font(.system(size: 28))
             .foregroundStyle(.white)
             .frame(width: 52, height: 55)
-            .background(Color(hex: 0x24765E), in: RoundedRectangle(cornerRadius: 16))
+            .background(Color(hex: 0x176EAA), in: RoundedRectangle(cornerRadius: 16))
             .accessibilityHidden(true)
     }
 }
@@ -133,5 +133,16 @@ struct Footnote: View {
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
         .padding(.top, 20)
+    }
+}
+
+/// A short press response, including End Call, while respecting Reduce Motion.
+struct CallActionStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.91 : 1)
+            .opacity(configuration.isPressed ? 0.8 : 1)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.16), value: configuration.isPressed)
     }
 }

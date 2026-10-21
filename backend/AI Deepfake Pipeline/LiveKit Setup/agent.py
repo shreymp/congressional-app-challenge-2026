@@ -125,6 +125,8 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
     if ctx.proc.userdata.get("stt_model") is not None:
         try:
             transcript = await asyncio.to_thread(transcript_pipeline.for_call, ctx.proc.userdata["stt_model"])
+            if probe:
+                transcript.save_excerpt = False
             transcript.start()
         except Exception:
             transcript_state = "stt_unavailable"
@@ -143,7 +145,8 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
         msg = publisher.message({**payload, "t": round(time.monotonic() - t_start, 2)})
         try:
             await room.local_participant.publish_data(
-                json.dumps(msg, allow_nan=False), reliable=True, topic=RISK_TOPIC)
+                json.dumps(msg, allow_nan=False, ensure_ascii=False), reliable=True, topic=RISK_TOPIC,
+                destination_identities=[senior_ring.SENIOR_IDENTITY] if text_state.get("saved_excerpt") and not probe else [])
         except Exception:
             log.warning("risk update could not be sent", exc_info=True)
 

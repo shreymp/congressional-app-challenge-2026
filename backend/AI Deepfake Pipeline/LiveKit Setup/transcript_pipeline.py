@@ -77,8 +77,10 @@ def score_http(url: str, transcript: str, timeout: float) -> float:
 class TranscriptPipeline:
     def __init__(self, recognizer, *, score: Callable[[str], float],
                  every: float = 2.5, max_age: float = 15, max_frames: int = 100,
-                 clock: Callable[[], float] = time.monotonic):
+                 clock: Callable[[], float] = time.monotonic, save_excerpt: bool = False):
         self.recognizer, self._score = recognizer, score
+        self.save_excerpt = save_excerpt
+        self._flagged = False
         self.every, self.max_age, self.clock = every, max_age, clock
         self._frames: asyncio.Queue[bytes] = asyncio.Queue(maxsize=max_frames)
         self._changed = asyncio.Event()
@@ -136,7 +138,8 @@ class TranscriptPipeline:
         state, p = self._state, self._probability
         if p is not None and age is not None and age > self.max_age:
             state, p = "stale", None
-        return {"state": state, "probability": p, "revision": self._revision,
+        excerpt = self._final if self.save_excerpt and self._flagged and self._final else None
+        return {**({"saved_excerpt": excerpt} if excerpt else {}), "state": state, "probability": p, "revision": self._revision,
                 "scored_revision": self._scored_revision,
                 "age_sec": None if age is None else round(age, 2), "chars": len(self.text)}
 
@@ -173,6 +176,7 @@ class TranscriptPipeline:
                 # so the transcript branch went "stale" after the first utterance.
                 if not self._audio_failed and self.text and withdrawals == self._withdrawals:
                     self._probability = probability
+                    self._flagged = self._flagged or probability >= 0.8
                     self._scored_at = self.clock()
                     self._scored_revision = revision
                     self._state = "monitoring"
@@ -196,6 +200,7 @@ class TranscriptPipeline:
             self._frames.get_nowait()
         self._final = self._partial = ""
         self._probability = None
+        self._flagged = False
 
 
 def for_call(model) -> TranscriptPipeline:
@@ -203,4 +208,6 @@ def for_call(model) -> TranscriptPipeline:
     timeout = env_seconds("TRANSCRIPT_SCORE_TIMEOUT_SEC", 4)
     return TranscriptPipeline(VoskRecognizer(model), score=lambda text: score_http(url, text, timeout),
                               every=env_seconds("TRANSCRIPT_SCORE_EVERY_SEC", 2.5),
-                              max_age=env_seconds("TRANSCRIPT_MAX_AGE_SEC", 15))
+                              max_age=env_seconds("TRANSCRIPT_MAX_AGE_SEC", 15),
+                              # Only enable for controlled calls with prior explicit consent.
+                              save_excerpt=os.environ.get("SAVE_SCAM_TRANSCRIPTS", "0") == "1")
