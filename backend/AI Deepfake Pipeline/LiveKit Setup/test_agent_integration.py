@@ -40,7 +40,7 @@ class FakeStream:
         self.frame = np.full(320, 5000, dtype=np.int16).tobytes()
 
     async def __aiter__(self):
-        for _ in range(170):
+        for _ in range(210):
             await asyncio.sleep(0)
             yield types.SimpleNamespace(frame=types.SimpleNamespace(data=self.frame))
         if self.hold:
@@ -91,7 +91,7 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         ctx.proc.userdata["stt_model"] = object()
         with patch.object(agent.transcript_pipeline, "for_call", return_value=text), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream), patch.object(agent, "SCORE_EVERY_SEC", 0):
             await asyncio.wait_for(agent._score_call(ctx), 3)
-        self.assertEqual(text.frames, 170)
+        self.assertEqual(text.frames, 210)
         self.assertTrue(text.closed)
         risks = [m for m, _ in ctx.room.messages if m["type"] == "risk"]
         self.assertTrue(risks)
@@ -110,7 +110,7 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         ctx.proc.userdata["stt_model"] = object()
         with patch.object(agent.transcript_pipeline, "for_call", return_value=text), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream):
             await asyncio.wait_for(agent._score_call(ctx), 3)
-        self.assertEqual(text.frames, 170)
+        self.assertEqual(text.frames, 210)
         self.assertTrue(stream.closed)
         self.assertEqual(ctx.room.messages[0][0]["state"], "unavailable")
         self.assertEqual(ctx.room.messages[0][0]["transcript"]["probability"], .5)
@@ -166,4 +166,3 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
