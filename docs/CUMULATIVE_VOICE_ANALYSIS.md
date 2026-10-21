@@ -127,7 +127,9 @@ swiftc -module-cache-path /tmp/cac-swift-cache \
 
 iOS XCTest regressions additionally cover 14.999 vs 15.000 seconds, incoming ring
 time exclusion, late results, warm-up after the deadline, retained early scores,
-invalid fields and history compatibility. The existing simulator CI builds the
+invalid fields and history compatibility. A coordinator test exercises the actual
+scheduled deadline task, and UI tests check the Human/score display and the
+no-evidence deadline state. The existing simulator CI builds the
 real app and runs these tests. A physical call/model accuracy test is still needed.
 
 Local validation in this editing environment: 25 backend/contract/transcript-state
@@ -138,6 +140,10 @@ The transcript HTTP test cannot bind a local socket here. LiveKit SDK
 orchestration tests and full iOS simulator tests require their normal CI runtime;
 local Xcode is unavailable. Record CI results separately rather than treating
 these environmental limits as passing tests.
+
+GitHub Actions [Call pipeline run 39539139934](https://github.com/shreymp/congressional-app-challenge-2026/actions/runs/39539139934)
+passed on feature commit `c182dda`, including the LiveKit orchestration, cumulative
+regressions, transcript HTTP integration and handoff tests unavailable locally.
 
 Before describing any score as a probability, collect representative consented
 phone-call examples, including mixed speech and long human-only calls. Separate

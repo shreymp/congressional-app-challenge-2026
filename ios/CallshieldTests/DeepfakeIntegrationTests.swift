@@ -159,6 +159,27 @@ final class DeepfakeIntegrationTests: XCTestCase {
     }
 
     @MainActor
+    func testCoordinatorActuallySchedulesDeadlineAndLateEvidenceRecovers() async throws {
+        let backend = TranscriptTestBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), backend: backend)
+        let id = UUID(), connectedAt = Date().addingTimeInterval(-15)
+        backend.onEvent?(.incoming(id, "+13125550123", nil))
+        backend.onEvent?(.connected(id, connectedAt))
+        // An already-due connection exercises the real scheduled task without a 15s test delay.
+        for _ in 0..<100 {
+            if store.active?.deepfake?.state == .uncertain { break }
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        XCTAssertEqual(store.active?.deepfake?.state, .uncertain)
+        XCTAssertNil(store.active?.deepfake?.score)
+        backend.onEvent?(.deepfakeAssessment(id, DeepfakeAssessment(state: .human, updatedAt: Date(), windows: 2, score: 12)))
+        XCTAssertEqual(store.active?.deepfake?.title, "Human")
+        XCTAssertEqual(store.active?.deepfake?.score, 12)
+        backend.onEvent?(.ended(id, .completed, Date()))
+        XCTAssertEqual(store.history.first?.deepfake?.score, 12)
+    }
+
+    @MainActor
     func testHistoryRefreshPreservesDetectorEvidence() {
         let repository = MemoryPhoneRepository()
         let store = ProductionStore(repository: repository)
