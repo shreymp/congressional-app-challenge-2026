@@ -20,6 +20,11 @@ finalizes any remaining waiting/analyzing state as **Inconclusive**. The call vi
 also derives this state from connection time when rendering, including on resume.
 This is a UI deadline, not a promise that network/inference always finishes in 15s.
 
+The simulator call path also avoids registering the CallKit provider delegate:
+simulator calls already bypass CallKit actions/audio activation, and an unsupported
+provider's asynchronous reset must not end a backend-managed simulator call while
+the deadline task is waiting. Physical-device CallKit delegate behavior is unchanged.
+
 **Human**, **Likely AI**, and **Inconclusive** use the same **AI score: N/100**.
 The score measures relative AI evidence, not human confidence or a probability.
 No result means **AI score unavailable**; it never defaults to 0 or 50. Explicit
