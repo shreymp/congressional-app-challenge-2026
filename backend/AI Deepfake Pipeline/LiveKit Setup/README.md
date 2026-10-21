@@ -22,11 +22,30 @@ Scammer dials grandma's normal cell number
   -> the iPhone app displays the voice assessment; tools/watch_risk.py can inspect updates
 ```
 
-The agent never publishes audio. The phone caller can't hear or detect it.
+After the senior answers, the agent plays **"This call is being recorded."** into the
+call room, then starts caller analysis. Both the caller and the answered app receive
+the announcement. It never publishes the announcement while the phone is ringing.
+If the asset is missing, invalid, or playback fails/times out, transcription, deepfake
+analysis and optional caller recording stay off for that call; the ring/hang-up
+supervisor continues and the app receives an unavailable status.
+
+The cloud image generates and bundles the fixed clip at build time using eSpeak NG
+and SoX. There is no per-call TTS request or API key. For a local worker, install
+`espeak-ng` and `sox` (on macOS: `brew install espeak-ng sox`), then run from the repo root:
+
+```sh
+python3 deploy/livekit/generate_recording_notice.py \
+  --output 'backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav'
+```
+
+This announcement is a disclosure, not a consent check. It does not enable audio
+storage: `RECORD_CALLER_AUDIO` still defaults to `0`. Obtain the required permission
+before enabling storage. Diagnostic backend probes skip the announcement and ringing.
 
 | File | What it does |
 |---|---|
 | `agent.py` | The LiveKit worker. Registers as `scam-guard`, starts the ring, finds the SIP caller, streams audio, scores, publishes. |
+| `recording_notice.py` | Plays the fixed notice and drains playback before caller audio processing can start. |
 | `detector_adapter.py` | The only file that knows about the model. Loads `../inference.py` + `../best.pt` on MPS. `DETECTOR=stub` gives fake scores. |
 | `audio_window.py` | Contiguous 4 s audio buffer; energy/coverage and clipping gates preserve natural pauses. |
 | `scoring.py` | Shared live/file scoring session; distinct windows, inference state and call evidence retained through silence. |
@@ -158,7 +177,7 @@ new lobby token for the app.
 ## Known issues / open questions
 
 - **Thresholds are probably wrong for phone audio.** The config thresholds (0.99999 / 0.9999999) come from the training test split. Real LiveKit audio will shift the scores. Use Step 3 and `recordings/` to recalibrate, then set `THRESHOLD_ELEVATED` / `THRESHOLD_HIGH` in `.env.local`.
-- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard never publishes audio, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
+- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard waits until after pickup to publish its announcement, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
 - **A second ring is possible after an agent crash.** If LiveKit re-dispatches the agent into a call that is still ringing, the new job sends a new `callUUID`. Harmless if the app already joined the call room (no invite is sent then); if grandma had declined, her phone rings again. The same happens if the app is quit and reopened inside the ring window for a call it never joined: the app remembers handled `callUUID`s in memory only, so the repeated invite rings again. That second case is arguably right, since the phone caller is still ringing.
 - **An early decline is reported as a timeout.** The agent only learns of a decline once the app has been in the call room. Declining while the app is still joining, Do Not Disturb refusing the CallKit call, or a failed join all show up as `no_answer_fallback(reason="timeout")` at the end of the ring window, not as `"declined"` after 5 s. The app ignores the repeated invites for that call meanwhile. The obvious shortcut (treat "back in the lobby" as a decline) is wrong: the app also leaves and rejoins the lobby when it is backgrounded or loses its network.
 - **Transcript branch needs its local models and services running.** Set `VOSK_MODEL_PATH`, start the JEV model service and connector, then run the agent. Missing STT/model services produce a null transcript probability and an explicit state; deepfake scoring continues. The fusion rule is still experimental and has not been calibrated on real-call prefixes. See [INCOMING_CALL_SETUP.md](INCOMING_CALL_SETUP.md).
