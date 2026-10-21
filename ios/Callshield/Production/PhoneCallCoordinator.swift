@@ -32,7 +32,11 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         configuration.includesCallsInRecents = true
         provider = CXProvider(configuration: configuration)
         super.init()
+        #if !targetEnvironment(simulator)
+        // Simulator calls are managed directly by the backend. Unsupported CallKit
+        // can asynchronously reset its provider and otherwise tear down that call.
         provider.setDelegate(self, queue: .main)
+        #endif
         backend.onEvent = { [weak self] event in self?.receive(event) }
     }
 
