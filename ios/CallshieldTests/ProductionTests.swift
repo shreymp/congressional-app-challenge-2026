@@ -125,6 +125,20 @@ final class ProductionTests: XCTestCase {
         XCTAssertNil(try decode([complete]))
         XCTAssertNil(IncomingCallInvite.decode(Data("not json".utf8)))
     }
+    func testContactsMatchUSCountryCodeAndRefreshSavedNames() async {
+        XCTAssertTrue(PhoneNumber.matches("(312) 555-0123", "+13125550123"))
+        XCTAssertFalse(PhoneNumber.matches("", ""))
+        XCTAssertFalse(PhoneNumber.matches("+443125550123", "+13125550123"))
+        let service = TestContacts(); service.access = .available
+        service.people = [PhoneNumber.person("3125550123", name: "Updated Name")]
+        let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: service)
+        store.mergeHistory([record()])
+        store.toggleFavorite(person)
+        await store.refreshContacts()
+        XCTAssertEqual(store.history.first?.person.name, "Updated Name")
+        XCTAssertEqual(store.favorites.first?.name, "Updated Name")
+    }
+
     func testNumberNormalizationAndRejection() throws {
         XCTAssertEqual(try PhoneNumber.normalized("+1 (312) 555-0123"), "+13125550123")
         XCTAssertEqual(try PhoneNumber.normalized("*123#"), "*123#")

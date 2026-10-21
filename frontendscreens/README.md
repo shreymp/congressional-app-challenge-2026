@@ -11,22 +11,14 @@ Check: `npm run lint`. Build: `npm run build`. Deploy the resulting `dist/` fold
 
 ```mermaid
 flowchart TD
-  Recents <--> Contacts
-  Recents <--> Settings
-  Contacts <--> Settings
-  Recents -->|Tap call| CallDetails
-  Contacts -->|Tap contact| ContactDetails
-  CallDetails -->|Done or Escape| Recents
-  ContactDetails -->|Done or Escape| Contacts
-  Recents -->|Demo| DemoPicker
-  Contacts -->|Demo| DemoPicker
-  Settings -->|Demo| DemoPicker
-  DemoPicker -->|Choose caller| IncomingCall
-  DemoPicker -->|Done or Escape| PreviousScreen
-  IncomingCall -->|Accept| ActiveCall
-  IncomingCall -->|Decline or timeout| Recents
-  ActiveCall -->|End call| Recents
+  Home[Recents, Contacts, or Settings] --> Demo[Choose a simulated caller]
+  Demo --> Incoming[Incoming call]
+  Incoming -->|Accept| Active[Call screen with simulated analysis]
+  Incoming -->|Decline or timeout| History[Recents and call details]
+  Active -->|End call| History
 ```
+
+For the real iPhone call pipeline, see [the production call flow](../docs/meeting-2026-10-20/CALL-FLOW.md).
 
 ## Code for each screen
 

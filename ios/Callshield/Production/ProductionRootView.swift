@@ -4,6 +4,7 @@ import SwiftUI
 
 struct ProductionRootView: View {
     @StateObject private var store: ProductionStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var systemTextSize
 
@@ -21,7 +22,7 @@ struct ProductionRootView: View {
 
     var body: some View {
         Group {
-            if let call = store.active { ProductionCallView(call: call) }
+            if let call = store.active { ProductionCallView(call: call).transition(.opacity) }
             else {
                 VStack(spacing: 0) {
                     HStack {
@@ -73,6 +74,7 @@ struct ProductionRootView: View {
                 .tint(Palette.green)
             }
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.22), value: store.active?.id)
         .environmentObject(store)
         .environment(\.dynamicTypeSize, store.largeText ? .xxLarge : systemTextSize)
         .preferredColorScheme(store.active == nil ? .light : .dark)

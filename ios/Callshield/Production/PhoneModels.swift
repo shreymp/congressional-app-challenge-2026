@@ -31,7 +31,7 @@ struct PhoneCallRecord: Identifiable, Codable, Equatable {
 struct PhoneCall: Identifiable, Equatable {
     enum Stage: String { case incoming, connecting, connected, held }
     let id: UUID
-    let person: Person
+    var person: Person
     let direction: CallDirection
     let createdAt: Date
     var connectedAt: Date?
@@ -82,6 +82,19 @@ enum PhoneNumber {
         guard url.scheme?.lowercased() == "tel", url.host == nil, url.query == nil, url.fragment == nil,
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { throw PhoneError.invalidNumber }
         return try normalized(components.path)
+    }
+
+    /// Match common US local and country-code forms without changing the dialed number.
+    static func matches(_ first: String, _ second: String) -> Bool {
+        func key(_ value: String) -> String? {
+            guard let normalized = try? normalized(value),
+                  !normalized.contains("*"), !normalized.contains("#") else { return nil }
+            let digits = normalized.filter { $0.isNumber }
+            if digits.count == 10 { return "1" + digits }
+            return digits.isEmpty ? nil : digits
+        }
+        guard let left = key(first), let right = key(second) else { return false }
+        return left == right
     }
 
     static func person(_ number: String, name: String? = nil) -> Person {

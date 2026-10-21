@@ -14,3 +14,5 @@ scam-language results, with unavailable/stale states and saved call assessments.
 Both real models and speech recognition run in LiveKit Cloud. No local model
 files or backend services are required. See [cloud deployment](deploy/livekit/README.md)
 and [the iOS guide](ios/README.md) for implementation details.
+
+For the October 20 meeting materials, longer staged call scripts, video plan, and implementation status, see [the meeting pack](docs/meeting-2026-10-20/MEETING-PACK.md).

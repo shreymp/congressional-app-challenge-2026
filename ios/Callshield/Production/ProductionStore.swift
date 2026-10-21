@@ -53,7 +53,11 @@ final class ProductionStore: ObservableObject {
             errorMessage = "Your saved call information couldn’t be loaded. \(error.localizedDescription)"
         }
         coordinator.onCallChanged = { [weak self] call in
-            self?.active = call
+            var resolved = call
+            if let call, let contact = self?.contacts.first(where: { PhoneNumber.matches($0.number, call.person.number) }) {
+                resolved?.person = contact
+            }
+            self?.active = resolved
             if call != nil { self?.detail = nil; self?.recordDetail = nil; self?.showVoicemail = false }
             else { self?.tab = .recents }
         }
@@ -121,6 +125,16 @@ final class ProductionStore: ObservableObject {
             guard contactEpoch == epoch else { return }
             contactsAccess = contactsService.access
             contacts = contactsAccess == .available || contactsAccess == .limited ? people : []
+            if var call = active, let contact = contacts.first(where: { PhoneNumber.matches($0.number, call.person.number) }) {
+                call.person = contact
+                active = call
+            }
+            let existingHistory = history
+            mergeHistory(existingHistory)
+            favorites = favorites.map { favorite in
+                contacts.first(where: { PhoneNumber.matches($0.number, favorite.number) }) ?? favorite
+            }
+            persist()
         } catch {
             guard contactEpoch == epoch else { return }
             contacts = []
@@ -169,7 +183,7 @@ final class ProductionStore: ObservableObject {
         defer { placingCall = false }
         do {
             let number = try PhoneNumber.normalized(person?.number ?? dialedNumber)
-            let resolved = person ?? contacts.first(where: { $0.number == number }) ?? PhoneNumber.person(number)
+            let resolved = person ?? contacts.first(where: { PhoneNumber.matches($0.number, number) }) ?? PhoneNumber.person(number)
             // An inbound-only calling service leaves outgoing calls to the mobile service.
             if coordinator.backend.isConfigured && coordinator.backend.canPlaceOutgoingCalls { try await coordinator.start(resolved) }
             else { try await systemPhone.dial(number) }
@@ -192,7 +206,7 @@ final class ProductionStore: ObservableObject {
             guard !hiddenHistoryIDs.contains(entry.id) else { continue }
             // Preserve an app assessment if a later system row has only Unknown.
             let prior = merged[entry.id]
-            let person = contacts.first(where: { $0.number == entry.person.number }) ?? entry.person
+            let person = contacts.first(where: { PhoneNumber.matches($0.number, entry.person.number) }) ?? entry.person
             merged[entry.id] = PhoneCallRecord(id: entry.id, person: person, date: entry.date,
                 duration: entry.duration, direction: entry.direction, outcome: entry.outcome,
                 voice: entry.deepfake != nil ? entry.voice : (entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice),

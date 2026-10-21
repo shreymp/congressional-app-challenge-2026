@@ -13,6 +13,7 @@ struct PhoneSessionState {
         guard current?.id == id, current?.connectedAt == nil else { return }
         current?.connectedAt = date
         current?.stage = .connected
+        current?.voice = .analyzing
     }
     mutating func connecting(id: UUID) {
         guard current?.id == id, current?.stage == .incoming else { return }
@@ -25,15 +26,25 @@ struct PhoneSessionState {
     mutating func assessDeepfake(id: UUID, assessment: DeepfakeAssessment) {
         guard current?.id == id, current?.connectedAt != nil else { return }
         current?.deepfake = assessment
-        current?.voice = assessment.voice
+        if [.waiting, .analyzing].contains(assessment.state), let previous = current?.lastDeepfakeResult {
+            current?.voice = previous.voice
+        } else {
+            current?.voice = assessment.voice
+        }
         if [.ai, .human, .uncertain].contains(assessment.state) {
             current?.lastDeepfakeResult = assessment
         }
     }
     mutating func assessTranscript(id: UUID, assessment: TranscriptAssessment) {
         guard current?.id == id, current?.connectedAt != nil else { return }
-        current?.transcript = assessment
-        if assessment.state == .monitoring { current?.lastTranscriptResult = assessment }
+        var result = assessment
+        // The displayed score is the highest observed risk for this call, not a new probability.
+        if assessment.state == .monitoring, let score = assessment.probability {
+            result.probability = max(score, current?.lastTranscriptResult?.probability ?? 0)
+            result.savedExcerpt = result.savedExcerpt ?? current?.lastTranscriptResult?.savedExcerpt
+        }
+        current?.transcript = result
+        if result.state == .monitoring { current?.lastTranscriptResult = result }
     }
     mutating func setMuted(_ muted: Bool, id: UUID) {
         guard current?.id == id else { return }
