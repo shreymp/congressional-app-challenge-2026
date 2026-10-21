@@ -1,10 +1,10 @@
-"""scam-guard: silent LiveKit agent that scores the phone caller's voice in real time.
+"""scam-guard: LiveKit agent that discloses recording, then scores the caller's voice.
 
 How it gets the audio
   Grandma's cell forwards all calls to the LiveKit number. LiveKit puts each call in its own
   room whose name starts with "call-" (dispatch rule "cac-inbound") and dispatches the agent
-  named "scam-guard" into it. The agent never publishes audio; it only subscribes to the phone
-  caller's track, so nobody on the call can hear it.
+  named "scam-guard" into it. After pickup it briefly publishes the recording notice, then
+  only processes the phone caller's track.
 
 What it does per call
   0. Rings grandma's app (senior_ring.py): as soon as the phone caller is in the room it sends
@@ -16,6 +16,11 @@ What it does per call
   2. Streams the caller's audio at 16 kHz, retaining contiguous four-second windows.
   3. Checks about once per second for a distinct eligible window and scores it in a worker
      thread (never blocking the audio loop), accumulates evidence, and publishes to the room on
+  2. Plays "This call is being recorded." to the answered room before starting any caller
+     stream, transcription or recording. If playback fails, all of those stay disabled.
+     Then streams the caller's audio at 16 kHz, keeping the last ~4 s of speech.
+  3. About once per second, scores that window with the deepfake detector in a worker thread
+     (never blocking the audio loop), smooths it, and publishes a JSON update to the room on
      topic "scam-guard.risk". Grandma's app (and tools/watch_risk.py) listen on that topic.
   4. Optionally saves the caller's audio for building phone-domain training data
      (RECORD_CALLER_AUDIO=1). Only for calls where everyone has agreed to be recorded.
@@ -45,6 +50,7 @@ from risk import combine
 from scoring import AudioScoringSession
 from risk_protocol import RISK_TOPIC, RiskPublisher
 import senior_ring
+from recording_notice import NOTICE_TIMEOUT_SEC, play_recording_notice
 
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 SAMPLE_RATE = 16000
@@ -116,6 +122,22 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
     session = AudioScoringSession(det, detector_adapter.thresholds(det)) if det is not None else None
     caller = (await ctx.wait_for_participant(identity="backend-probe-caller") if probe else
               await ctx.wait_for_participant(kind=rtc.ParticipantKind.PARTICIPANT_KIND_SIP))
+    if not probe:
+        # wait_for_participant returns an ACTIVE SIP caller: the senior's microphone has
+        # answered the call. Do not publish the notice while the app is still ringing.
+        try:
+            await asyncio.wait_for(play_recording_notice(room), timeout=NOTICE_TIMEOUT_SEC)
+        except Exception:
+            log.exception("recording notice failed; analysis and recording disabled for this call")
+            publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
+            try:
+                await room.local_participant.publish_data(json.dumps(publisher.message({
+                    "type": "status", "state": "unavailable", "reason": "recording_notice_failed",
+                    "transcript": {"state": "disabled", "probability": None},
+                })), reliable=True, topic=RISK_TOPIC)
+            except Exception:
+                log.warning("notice failure status could not be sent", exc_info=True)
+            return
     caller_number = caller.attributes.get("sip.phoneNumber", "unknown")
     publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
     t_start = time.monotonic()
