@@ -35,11 +35,14 @@ final class CallshieldUITests: XCTestCase {
         XCTAssertTrue(app.buttons["contact-DC"].exists)
         snapshot("03-Contacts")
         app.buttons["contact-DC"].tap()
-        XCTAssertTrue(app.staticTexts["Sample contact for incoming caller identification. Outgoing calls are not available."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Sample contact. Changes stay in this demo session."].waitForExistence(timeout: 3))
         snapshot("04-Contact-Details")
         app.buttons["sheetDone"].tap()
         XCTAssertTrue(app.buttons["contact-DC"].exists)
         app.buttons["tabSettings"].tap()
+        XCTAssertTrue(app.staticTexts["callma."].exists)
+        XCTAssertTrue(app.staticTexts["call with more peace of mind."].exists)
+        XCTAssertFalse(app.staticTexts["UNDERSTANDING VOICE LABELS"].exists)
         snapshot("05-Settings")
         app.switches["largerTextToggle"].tap()
         XCTAssertEqual(app.switches["largerTextToggle"].value as? String, "1")
@@ -50,6 +53,46 @@ final class CallshieldUITests: XCTestCase {
         XCTAssertTrue(app.switches["largerTextToggle"].exists)
         app.buttons["tabRecents"].tap()
         snapshot("07-Recents-Larger-Text")
+    }
+
+    func testDemoKeypadBlocksCallsAndFavoritesWork() {
+        app.buttons["tabKeypad"].tap()
+        XCTAssertFalse(app.buttons["demoCallButton"].isEnabled)
+        for digit in ["1", "2", "3", "4"] { app.buttons["dialKey\(digit)"].tap() }
+        XCTAssertEqual(app.textFields["demoNumber"].value as? String, "1234")
+        app.buttons["Delete digit"].tap()
+        XCTAssertEqual(app.textFields["demoNumber"].value as? String, "123")
+        snapshot("14-Demo-Keypad")
+        app.buttons["demoCallButton"].tap()
+        XCTAssertTrue(app.alerts["Calls unavailable in demo"].waitForExistence(timeout: 3))
+        app.alerts.buttons["OK"].tap()
+        XCTAssertFalse(app.buttons["endCall"].exists)
+        XCTAssertEqual(app.textFields["demoNumber"].value as? String, "123")
+        app.buttons["tabFavorites"].tap()
+        XCTAssertTrue(app.staticTexts["No favorites"].exists)
+        app.buttons["Open Contacts"].tap()
+        app.buttons["contact-DC"].tap()
+        app.buttons["demoContactCall"].tap()
+        XCTAssertTrue(app.alerts["Calls unavailable in demo"].waitForExistence(timeout: 3))
+        app.alerts.buttons["OK"].tap()
+        app.buttons["demoFavoriteToggle"].tap()
+        app.buttons["sheetDone"].tap()
+        app.buttons["tabFavorites"].tap()
+        XCTAssertTrue(app.buttons["favorite-DC"].exists)
+        app.buttons["favorite-DC"].tap()
+        app.buttons["demoFavoriteToggle"].tap()
+        app.buttons["sheetDone"].tap()
+        XCTAssertTrue(app.staticTexts["No favorites"].exists)
+    }
+
+    func testVoiceHelpAppearsAtTheResult() {
+        beginDemo("human")
+        app.buttons["acceptCall"].tap()
+        XCTAssertTrue(app.buttons["About Likely human"].waitForExistence(timeout: 6))
+        app.buttons["About Likely human"].tap()
+        XCTAssertTrue(app.staticTexts["The voice appears human. This does not verify the caller or mean the call is safe."].waitForExistence(timeout: 3))
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["endCall"].exists)
     }
 
     func testSearchFiltersAndEmptyState() {

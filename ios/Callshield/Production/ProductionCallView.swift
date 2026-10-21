@@ -17,12 +17,12 @@ struct ProductionCallView: View {
             }
         }
         .multilineTextAlignment(.center).foregroundStyle(.white)
-        .background(RadialGradient(colors: [Color(hex: 0x176EAA), Color(hex: 0x204778), Color(hex: 0x101D3A)], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
+        .background(RadialGradient(colors: [Color(hex: 0x195ED9), Color(hex: 0x274FA0), Color(hex: 0x152654)], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
         .onReceive(clock) { now = $0 }
     }
     private func callContent(height: CGFloat) -> some View {
         VStack(spacing: 12) {
-            Label("Callshield", systemImage: "checkmark.shield").font(.subheadline).foregroundStyle(Color(hex: 0xD3DFD7))
+            BrandWordmark(onDark: true).font(.subheadline).foregroundStyle(Color(hex: 0xD3DFD7))
             #if targetEnvironment(simulator)
             Text("Simulator call test").font(.caption).foregroundStyle(Color(hex: 0xD3DFD7))
             #endif
@@ -33,7 +33,10 @@ struct ProductionCallView: View {
             if call.connectedAt != nil {
                 VStack(spacing: 10) {
                     Text("Caller’s voice").font(.caption.weight(.semibold))
-                    VoiceBadge(voice: call.voice, size: 13, onCall: true)
+                    HStack(spacing: 4) {
+                        VoiceBadge(voice: call.voice, size: 13, onCall: true)
+                        ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Unknown means there is not enough information.", onDark: true)
+                    }
                     Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
                     if let previous = call.lastDeepfakeResult,
                        let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
@@ -60,9 +63,9 @@ struct ProductionCallView: View {
             Spacer(minLength: 8)
             if call.stage == .incoming {
                 HStack {
-                    action("Decline", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
+                    action("Decline", "phone.down.fill", color: Palette.coral) { try await store.coordinator.end() }
                     Spacer()
-                    action("Accept", "phone.fill", color: Color(hex: 0x32C968)) { try await store.coordinator.answer() }
+                    action("Accept", "phone.fill", color: Palette.teal) { try await store.coordinator.answer() }
                 }.padding(.horizontal, 12)
             } else {
                 if showingKeypad {
@@ -86,7 +89,7 @@ struct ProductionCallView: View {
                     Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
                         .disabled(call.connectedAt == nil).padding(8)
                 }
-                action("End call", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
+                action("End call", "phone.down.fill", color: Palette.coral) { try await store.coordinator.end() }
             }
         }
         .padding(20).frame(maxWidth: 500).frame(minHeight: height).frame(maxWidth: .infinity)
@@ -112,7 +115,7 @@ struct ProductionCallView: View {
                         operation: @escaping () async throws -> Void) -> some View {
         Button { perform(operation) } label: {
             VStack(spacing: 9) {
-                Image(systemName: symbol).font(.system(size: 27))
+                Image(systemName: symbol).scaledFont(size: 27)
                     .foregroundStyle(selected ? Color(hex: 0x273C31) : .white)
                     .frame(width: 64, height: 64).background(selected ? .white : color, in: Circle())
                 Text(title).font(.caption)

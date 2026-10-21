@@ -2,13 +2,12 @@
 
 The meeting is already happening in person, 9–11 p.m. Central. No calendar change was made.
 
-## Three name ideas
+## Confirmed brand
 
-- **CallKind** — short, friendly, and easy to say. My first choice for an app meant for older adults.
-- **VoiceHarbor** — suggests a place to pause and get help when a call feels wrong.
-- **CallBeacon** — suggests an early warning and a clear next step.
+**callma.**
+**call with more peace of mind.**
 
-These are proposals for a team vote. Availability and trademark clearance have not been checked. Keep Callshield in the code until the team chooses a name.
+Keep both lines lowercase, including the final periods. All logos and app icons are temporary placeholders until the team supplies final artwork. Use vibrant blue, teal, coral, and warm yellow accents. This replaces the earlier name proposals.
 
 ## Two feature ideas
 
@@ -19,7 +18,7 @@ Both are proposals, not implemented features. A guardian companion app is a late
 
 ## Plan from the meeting
 
-- Tuesday, October 20: choose a name and features; scripts and ideas ready for the meeting. The spoken “10:20” deadline is ambiguous; it may refer to the date rather than a clock time.
+- Tuesday, October 20: confirm the selected brand and choose features; scripts and ideas ready for the meeting. The spoken “10:20” deadline is ambiguous; it may refer to the date rather than a clock time.
 - Wednesday, October 21: finish app changes; review the branch and demo plan.
 - Thursday, October 22: test, fix failures, and rehearse.
 - Friday, October 23, 4:30–7 p.m.: record the video.
@@ -34,7 +33,7 @@ Both are proposals, not implemented features. A guardian companion app is a late
 
 ## Consent for controlled tests
 
-Before any audio is routed through the app or saved, tell each participant what will happen and get an explicit yes. Suggested wording: “This is a staged Callshield test. Your voice will be processed by our cloud services, and we may save a transcript excerpt and record the demo video. Do you agree?” Record consent separately from the scripted scam dialogue. Do not use real credentials, account numbers, payments, or a person's cloned voice without their permission.
+Before any audio is routed through the app or saved, tell each participant what will happen and get an explicit yes. Suggested wording: “This is a staged callma. test. Your voice will be processed by our cloud services, and we may save a transcript excerpt and record the demo video. Do you agree?” Record consent separately from the scripted scam dialogue. Do not use real credentials, account numbers, payments, or a person's cloned voice without their permission.
 
 The meeting's claim that silence automatically establishes recording consent is not a verified legal rule. Illinois law addresses consent of all parties to private conversations in its eavesdropping provisions. This pack does not establish that a notice alone meets the requirements for every call. The automatic notice and consent flow remain unfinished. Transcript excerpt delivery is therefore off by default and intended only for controlled, previously consented test calls when explicitly enabled on the server.
 

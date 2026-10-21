@@ -1,6 +1,10 @@
-# Callshield frontend screens
+# callma. frontend screens
 
-Incoming-only, iPhone-style React app. Calls and AI results are simulated.
+**call with more peace of mind.**
+
+Blue, teal, coral, and warm yellow accents; all logo slots and the favicon are placeholders.
+
+iPhone-style React demo with Favorites, Recents, Contacts, Keypad, and Settings. Calls and AI results are simulated.
 
 ## Run
 
@@ -11,7 +15,7 @@ Check: `npm run lint`. Build: `npm run build`. Deploy the resulting `dist/` fold
 
 ```mermaid
 flowchart TD
-  Home[Recents, Contacts, or Settings] --> Demo[Choose a simulated caller]
+  Home[Favorites, Recents, Contacts, Keypad, or Settings] --> Demo[Choose a simulated caller]
   Demo --> Incoming[Incoming call]
   Incoming -->|Accept| Active[Call screen with simulated analysis]
   Incoming -->|Decline or timeout| History[Recents and call details]
@@ -24,7 +28,8 @@ For the real iPhone call pipeline, see [the production call flow](../docs/meetin
 
 - `RecentsScreen.tsx`: initial screen, All/Missed filters, search, and call history. A row opens details, never a callback.
 - `ContactsScreen.tsx`: sample caller identities; each opens Contact Details.
-- `SettingsScreen.tsx`: larger text, incoming-only mode, and voice-label explanations.
+- `SettingsScreen.tsx`: larger text and demo service status. Voice explanations open beside results.
+- `KeypadScreen.tsx`: number entry, deletion, international prefix, and a blocked demo Call action.
 - `CallScreen.tsx`: Incoming Call when `active.stage` is `ringing`; Active Call when it is `connected`. The ringing screen shows Accept/Decline with no analysis. The active screen shows analysis, elapsed time, simulated mute/speaker controls, and End Call.
 - `DetailDialog.tsx`: Demo Picker when `demo` is true; otherwise Call Details or Contact Details according to `detail`. Done, Escape, and backdrop click return to the previous screen.
 - `App.tsx`: shared state, navigation, timers, desktop introduction, phone shell, and dialog coordination.
@@ -42,4 +47,4 @@ For the real iPhone call pipeline, see [the production call flow](../docs/meetin
 
 ## Prototype limits
 
-No real phone calls, microphone access, audio transmission, or AI classification service is connected. Mute/speaker controls change demo state only. History and preferences reset on reload. Real services must start analysis after acceptance and stop on call end. Likely human does not verify identity or safety, and Likely AI does not mean scam. There are no outgoing calls, dialer, or callback actions.
+No real phone calls, microphone access, audio transmission, or AI classification service is connected. Mute/speaker controls change demo state only. History and preferences reset on reload. Real services must start analysis after acceptance and stop on call end. Likely human does not verify identity or safety, and Likely AI does not mean scam. The dialer and contact Call actions display a demo-only explanation; no real outgoing call is placed. Favorites are session-only.

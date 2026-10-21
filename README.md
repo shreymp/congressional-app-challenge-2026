@@ -1,4 +1,8 @@
-# Callshield · Congressional App Challenge 2026
+# callma. · Congressional App Challenge 2026
+
+**call with more peace of mind.**
+
+Logos and app icons are temporary placeholders. The installed app displays `callma.`; existing Xcode scheme, bundle identifiers, service keys, and internal `Callshield` paths remain stable for compatibility.
 
 For the full MacBook simulator phone-call test, follow
 [MACBOOK_TESTING.md](MACBOOK_TESTING.md). Pull **main**, install the limited tester

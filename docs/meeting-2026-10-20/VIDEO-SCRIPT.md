@@ -1,6 +1,6 @@
 # Submission video: 2:55 target
 
-Callshield is the working name. Replace it after the team vote. The three people named below are identified in the meeting/context; confirm the full participant roster before recording. Rehearse with a timer. Timing is a plan, not a measured recording. Use only behavior the actual build demonstrates.
+The confirmed display name is **callma.** and the tagline is **call with more peace of mind.** Keep the lowercase lettering and periods in every title card. Use placeholder logos until final artwork is supplied. The three people named below are identified in the meeting/context; confirm the full participant roster before recording. Rehearse with a timer. Timing is a plan, not a measured recording. Use only behavior the actual build demonstrates.
 
 ## 0:00–0:20 · Team and purpose
 
@@ -8,7 +8,7 @@ Callshield is the working name. Replace it after the team vote. The three people
 
 **Shrey:** “I'm Shrey Patel.”
 
-**Azim:** “And I'm Azim Salomov. We built Callshield to help older adults recognize suspicious phone calls before sharing money or personal information.”
+**Azim:** “And I'm Azim Salomov. We built callma. to help older adults recognize suspicious phone calls before sharing money or personal information.”
 
 Show the actual app home screen. Add any other participating members if applicable.
 
@@ -54,10 +54,10 @@ Show Recents and call details. Only add “A transcript excerpt can also be revi
 
 **Keshav:** “Our prototype can make mistakes, so we treat its results as warnings, not proof. Our goal is to make it easier to pause, hang up, and verify a suspicious call.”
 
-End on the chosen app name and the team names. Mention a future guardian feature only as a future idea, not a finished feature.
+End on “callma.”, “call with more peace of mind.”, and the team names. Mention a future guardian feature only as a future idea, not a finished feature.
 
 ## Before uploading
 
-Confirm the participant roster, final name, actual language/tool list, demonstration results, and each person's contributions. The 2026 rules require disclosure of AI usage; include an accurate account of assistance, including this session's code and writing work. Do not invent contribution statements. Keep the final video within 1–3 minutes. The official rules require a public YouTube or Vimeo video; publication still requires the team's final review.
+Confirm the participant roster, exact brand lettering, actual language/tool list, demonstration results, and each person's contributions. The 2026 rules require disclosure of AI usage; include an accurate account of assistance, including this session's code and writing work. Do not invent contribution statements. Keep the final video within 1–3 minutes. The official rules require a public YouTube or Vimeo video; publication still requires the team's final review.
 
 Source: https://www.congressionalappchallenge.us/wp-content/uploads/2026/05/2026-CAC-Rules.pdf

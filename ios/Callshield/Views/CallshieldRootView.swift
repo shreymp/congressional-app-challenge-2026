@@ -2,27 +2,31 @@ import SwiftUI
 
 struct CallshieldRootView: View {
     @EnvironmentObject private var store: CallshieldStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var systemTextSize
     private let clock = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
             if let call = store.active {
-                CallScreen(call: call)
+                CallScreen(call: call).transition(.opacity)
             } else {
                 VStack(spacing: 0) {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
                             toolbar
                             Text(store.tab.rawValue)
-                                .font(.system(size: 36, weight: .bold))
+                                .scaledFont(size: 36, weight: .bold)
                                 .tracking(-1.2)
                                 .accessibilityAddTraits(.isHeader)
                                 .padding(.top, 11)
                                 .padding(.bottom, 19)
                             switch store.tab {
+                            case .favorites: DemoFavoritesScreen()
                             case .recents: RecentsScreen()
                             case .contacts: ContactsScreen()
+                            case .keypad: DemoKeypadScreen()
                             case .settings: SettingsScreen()
                             }
                         }
@@ -36,14 +40,15 @@ struct CallshieldRootView: View {
                     .scrollDismissesKeyboard(.interactively)
                     tabBar
                 }
-                .background(Color.white.ignoresSafeArea())
+                .background(Palette.canvas.ignoresSafeArea())
                 .foregroundStyle(Palette.ink)
             }
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.22), value: store.active?.id)
         .overlay(alignment: .bottom) {
             if !store.notice.isEmpty {
                 Label(store.notice, systemImage: "checkmark")
-                    .font(.system(size: 11))
+                    .scaledFont(size: 11)
                     .foregroundStyle(.white)
                     .padding(12)
                     .frame(maxWidth: .infinity)
@@ -61,7 +66,11 @@ struct CallshieldRootView: View {
                 .presentationDragIndicator(.visible)
                 .preferredColorScheme(.light)
         }
-        .preferredColorScheme(store.active == nil ? .light : .dark)
+        .alert("Calls unavailable in demo", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
+            Button("OK", role: .cancel) { store.errorMessage = nil }
+        } message: { Text(store.errorMessage ?? "") }
+        .environment(\.dynamicTypeSize, store.largeText ? max(systemTextSize, .xxLarge) : systemTextSize)
+        .preferredColorScheme(store.active == nil ? nil : .dark)
         .onReceive(clock) { now in
             if scenePhase == .active { store.tick(now: now) }
         }
@@ -72,17 +81,17 @@ struct CallshieldRootView: View {
 
     private var toolbar: some View {
         HStack {
-            Label("Callshield", systemImage: "checkmark.shield")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(Color(hex: 0x327459))
+            BrandWordmark()
+                .scaledFont(size: 12, weight: .semibold)
+                .foregroundStyle(Palette.accent)
             Spacer()
             Button { store.sheet = .demo } label: {
                 Label("Demo", systemImage: "play.fill")
-                    .font(.system(size: 10))
-                    .foregroundStyle(Color(hex: 0x6C7D72))
+                    .scaledFont(size: 10)
+                    .foregroundStyle(Palette.accent)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
-                    .background(Color(hex: 0xF0F5F1), in: Capsule())
+                    .background(Palette.softAccent, in: Capsule())
                     .frame(minHeight: 44)
                     .contentShape(Rectangle())
             }
@@ -98,11 +107,11 @@ struct CallshieldRootView: View {
             ForEach(AppTab.allCases, id: \.self) { tab in
                 Button { store.tab = tab } label: {
                     VStack(spacing: 4) {
-                        Image(systemName: tab == .recents ? "clock" : tab == .contacts ? "person.2" : "gearshape")
-                            .font(.system(size: 24, weight: store.tab == tab ? .semibold : .regular))
-                        Text(tab.rawValue).font(.system(size: 9))
+                        Image(systemName: tab.symbol)
+                            .scaledFont(size: 24, weight: store.tab == tab ? .semibold : .regular)
+                        Text(tab.rawValue).font(.system(size: 11))
                     }
-                    .foregroundStyle(store.tab == tab ? Palette.green : Color(hex: 0xA1A4A9))
+                    .foregroundStyle(store.tab == tab ? Palette.accent : Palette.secondary)
                     .frame(maxWidth: .infinity, minHeight: 50)
                     .contentShape(Rectangle())
                 }
@@ -114,7 +123,7 @@ struct CallshieldRootView: View {
         .padding(.horizontal, 12)
         .padding(.top, 9)
         .padding(.bottom, 8)
-        .background(Color(hex: 0xFAFAFB).ignoresSafeArea(edges: .bottom))
+        .background(Palette.surface.ignoresSafeArea(edges: .bottom))
         .overlay(alignment: .top) { Rectangle().fill(Color(hex: 0xEDEDEE)).frame(height: 1) }
     }
 }
