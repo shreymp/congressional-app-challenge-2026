@@ -37,6 +37,7 @@ jobs:
       - name: Worker integration and Mac handoff checks
         run: |
           python -m unittest discover -s 'backend/AI Deepfake Pipeline/LiveKit Setup' -p 'test*integration.py' -v
+          python -m unittest discover -s 'backend/AI Deepfake Pipeline/LiveKit Setup' -p 'test_cumulative.py' -v
           python -m unittest discover -s scripts -p 'test_*.py' -v
           (cd 'backend/AI Deepfake Pipeline/LiveKit Setup' && python test_senior_ring.py)
       - name: Real connector HTTP integration with fake model inference
@@ -46,5 +47,3 @@ jobs:
           node --test
       - name: Python syntax
         run: python -m compileall -q backend scripts
-
-

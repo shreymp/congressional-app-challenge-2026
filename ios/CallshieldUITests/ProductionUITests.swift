@@ -37,10 +37,21 @@ final class ProductionUITests: XCTestCase {
         app.launchArguments = ["--ui-test-production", "--ui-test-analysis"]
         app.launch()
         XCTAssertTrue(app.staticTexts["Voice / deepfake analysis"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Human")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentScore"].label, "AI score: 12/100")
         if !app.staticTexts["transcriptAssessmentTitle"].isHittable { app.swipeUp() }
         XCTAssertEqual(app.staticTexts["transcriptAssessmentTitle"].label, "Possible scam language")
         XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("94%"))
         snapshot("Production-12-Both-Pipeline-Feedback")
+    }
+    func testInitialDeadlineShowsInconclusiveWithoutInventingScore() {
+        app.terminate()
+        app.launchArguments = ["--ui-test-production", "--ui-test-analysis", "--ui-test-analysis-deadline"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["deepfakeAssessmentTitle"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Inconclusive")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentScore"].label, "AI score unavailable")
+        snapshot("Production-13-Initial-Verdict-Deadline")
     }
     func testKeypadAndSimulatorCallError() {
         app.buttons["productionTabKeypad"].tap()
@@ -58,4 +69,3 @@ final class ProductionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No recent calls"].exists)
     }
 }
-
