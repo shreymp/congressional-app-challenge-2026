@@ -1,0 +1,46 @@
+name: Callshield simulator
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'ios/Callshield/**'
+      - 'ios/CallshieldTests/**'
+      - 'ios/CallshieldUITests/**'
+      - 'ios/Callshield.xcodeproj/**'
+      - 'ios/Configuration/**'
+      - '.github/workflows/ios-simulator.yml'
+  push:
+    paths:
+      - 'ios/Callshield/**'
+      - 'ios/CallshieldTests/**'
+      - 'ios/CallshieldUITests/**'
+      - 'ios/Callshield.xcodeproj/**'
+      - 'ios/Configuration/**'
+      - '.github/workflows/ios-simulator.yml'
+permissions:
+  contents: read
+concurrency:
+  group: simulator-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Choose an available iPhone simulator
+        run: |
+          xcodebuild -version
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for runtime,devices in d["devices"].items() if ".iOS-" in runtime for x in devices if x["name"].startswith("iPhone")))')
+          echo "SIMULATOR_ID=$DEVICE_ID" >> "$GITHUB_ENV"
+      - name: Build and run unit tests without credentials
+        run: |
+          xcodebuild -project ios/Callshield.xcodeproj -scheme Callshield -configuration Debug -destination "platform=iOS Simulator,id=$SIMULATOR_ID" -derivedDataPath ios/build-calltest -resultBundlePath ios/TestResults/simulator.xcresult CODE_SIGNING_ALLOWED=NO -only-testing:CallshieldTests -only-testing:CallshieldUITests/ProductionUITests test
+      - name: Preserve test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: callshield-simulator-results
+          path: ios/TestResults/simulator.xcresult
+          if-no-files-found: ignore
+

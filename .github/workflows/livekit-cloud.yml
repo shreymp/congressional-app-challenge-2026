@@ -1,0 +1,67 @@
+name: LiveKit real models
+on:
+  pull_request:
+    paths:
+      - 'deploy/livekit/**'
+      - '.github/workflows/livekit-cloud.yml'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy the tested image to CAC production and run the backend audio probe
+        type: boolean
+        default: false
+      probe_only:
+        description: Skip build and deploy; only run the backend audio probe against the current CAC production worker
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Model server transport checks
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.probe_only) }}
+        run: |
+          python3 -m pip install numpy
+          python3 -m unittest discover -s deploy/livekit -p 'test_*.py' -v
+      - name: Prepare short-lived private model downloads
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.probe_only) }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 deploy/livekit/prepare.py --output .cloud-context
+      - name: Build real-model cloud image
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.probe_only) }}
+        run: docker build -t cac-model-check .cloud-context
+      - name: Run real deepfake, Vosk, JEV and connector inference
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.probe_only) }}
+        run: docker run --rm -v "$PWD/ios/ScamTranscriptTests/Fixtures/bank.wav:/test/bank.wav:ro" cac-model-check python deploy/livekit/check_models.py /test/bank.wav
+      - name: Deploy existing CAC worker
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy && !inputs.probe_only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+        run: |
+          test -n "$LIVEKIT_URL" && test -n "$LIVEKIT_API_KEY" && test -n "$LIVEKIT_API_SECRET"
+          python3 -c 'import shutil; shutil.rmtree(".cloud-context")'
+          python3 deploy/livekit/prepare.py --output .cloud-context
+          curl -fsSL https://github.com/livekit/livekit-cli/releases/download/v2.19.0/lk_2.19.0_linux_amd64.tar.gz -o /tmp/lk.tgz
+          echo '601ce74299db7e538014426644ab23b2a1ba171c506967197a259c3cd762d418  /tmp/lk.tgz' | sha256sum -c -
+          tar -xzf /tmp/lk.tgz -C /tmp
+          # One --secrets flag per KEY=value: a comma list is stored as a single DETECTOR value.
+          /tmp/lk agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production --attribute git_commit="$GITHUB_SHA" --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=0
+      - name: Backend audio probe
+        if: github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.probe_only)
+        env:
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+        run: |
+          test -n "$LIVEKIT_URL" && test -n "$LIVEKIT_API_KEY" && test -n "$LIVEKIT_API_SECRET"
+          python3 -m pip install -r scripts/requirements-calltest.txt scipy soundfile
+          # Fresh room per attempt: the previous version can keep serving jobs briefly after a deploy.
+          python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav --attempts 6 --timeout 90

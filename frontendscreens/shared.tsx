@@ -1,0 +1,27 @@
+import { ArrowDownLeft, AudioLines, BatteryFull, Bot, Check, ChevronLeft, ChevronRight, Clock3, Info, Mic, MicOff, Phone, PhoneIncoming, PhoneOff, Play, Search, Settings, ShieldCheck, Signal, UserRound, UsersRound, Volume2, Wifi, X } from 'lucide-react';
+export type Voice = 'ai' | 'human' | 'unknown' | 'analyzing';
+export type Person = { name: string; number: string; initials: string; color: string; voice: Voice };
+export type Entry = Person & { id: string; when: string; missed: boolean; duration: number };
+export type Active = { person: Person; stage: 'ringing' | 'connected'; voice: Voice; started: number };
+export const people: Person[] = [
+  { name: 'Sarah Miller', number: '(312) 555-0124', initials: 'SM', color: 'rose', voice: 'human' },
+  { name: 'Unknown Caller', number: '(800) 555-0198', initials: '?', color: 'slate', voice: 'ai' },
+  { name: 'Daniel Chen', number: '(415) 555-0132', initials: 'DC', color: 'blue', voice: 'human' },
+  { name: 'Appointment Reminder', number: '(312) 555-0186', initials: 'AR', color: 'mint', voice: 'ai' },
+  { name: 'Unknown Caller', number: '(646) 555-0147', initials: '?', color: 'slate', voice: 'unknown' },
+];
+export const initial: Entry[] = [
+  { ...people[0], id: '1', when: '10:42 AM', missed: false, duration: 142 },
+  { ...people[1], id: '2', when: '10:18 AM', missed: true, duration: 0, voice: 'unknown' },
+  { ...people[2], id: '3', when: '9:56 AM', missed: false, duration: 316 },
+  { ...people[3], id: '4', when: '9:30 AM', missed: false, duration: 42 },
+  { ...people[0], id: '5', when: 'Yesterday', missed: true, duration: 0, voice: 'unknown' },
+  { ...people[4], id: '6', when: 'Yesterday', missed: true, duration: 0 },
+  { ...people[2], id: '7', when: 'Yesterday', missed: false, duration: 83 },
+];
+export const labels: Record<Voice, string> = { ai: 'Likely AI', human: 'Likely human', unknown: 'Unknown', analyzing: 'Analyzing voice' };
+export const duration = (s: number) => `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`;
+export function VoiceBadge({ voice }: { voice: Voice }) {
+  const Icon = voice === 'ai' ? Bot : voice === 'human' ? UserRound : AudioLines;
+  return <span className={`voice-badge ${voice}`}><Icon size={12} />{labels[voice]}</span>;
+}
