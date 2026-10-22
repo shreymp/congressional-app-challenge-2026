@@ -1,0 +1,61 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 45,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Callshield · Built with macOS 26.5.2",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792593216.445,
+  "passedTests" : 45,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1792593053.957,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Asynchronous wait failed: Exceeded timeout of 3 seconds, with unfulfilled expectations: \"Expect predicate `hittable == 1` for object \"End call\" Button\".",
+      "targetName" : "CallshieldUITests",
+      "testIdentifier" : 41,
+      "testIdentifierString" : "ProductionUITests/testHighSignalReminderAppearsOnceOnReturn()",
+      "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testHighSignalReminderAppearsOnceOnReturn",
+      "testName" : "testHighSignalReminderAppearsOnceOnReturn()"
+    },
+    {
+      "failureText" : "Failed to tap \"About Human\" Button: No matches found for Elements matching predicate '\"About Human\" IN identifiers' from input {(\n    Button, identifier: 'info.circle', label: 'About Likely human',\n    Button, identifier: 'muteCall', label: 'mute', value: Off,\n    Button, identifier: 'speakerCall', label: 'speaker', value: Off,\n    Button, identifier: 'endCall', label: 'End call'\n)}",
+      "targetName" : "CallshieldUITests",
+      "testIdentifier" : 38,
+      "testIdentifierString" : "CallshieldUITests/testVoiceHelpAppearsAtTheResult()",
+      "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/CallshieldUITests/testVoiceHelpAppearsAtTheResult",
+      "testName" : "testVoiceHelpAppearsAtTheResult()"
+    }
+  ],
+  "title" : "Test - Callshield",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "97% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 0.96s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 47
+}

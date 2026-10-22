@@ -40,6 +40,7 @@ struct CallEntry: Equatable, Identifiable {
     let missed: Bool
     let duration: Int
     let voice: Voice
+    var scamRisk: Int? = nil
 }
 
 struct ActiveCall: Equatable, Identifiable {
@@ -49,11 +50,11 @@ struct ActiveCall: Equatable, Identifiable {
     var stage: Stage
     var voice: Voice
     var started: Date
+    var scamRisk: Int? = nil
 }
 
-enum AppTab: String, CaseIterable {
-    case recents = "Recents", contacts = "Contacts", settings = "Settings"
-}
+// Demo and production share the same primary navigation.
+typealias AppTab = PhoneTab
 
 enum CallFilter: String, CaseIterable { case all = "All", missed = "Missed" }
 
@@ -79,6 +80,16 @@ enum SampleData {
         Person(name: "Appointment Reminder", number: "(312) 555-0186", initials: "AR", color: .mint, voice: .ai),
         Person(name: "Unknown Caller", number: "(646) 555-0147", initials: "?", color: .slate, voice: .unknown)
     ]
+
+    // Authored scenario data, not an inference from the voice label.
+    static func scamRisk(for person: Person) -> Int {
+        switch person.number {
+        case people[1].number: return 94
+        case people[4].number: return 32
+        case people[3].number: return 4
+        default: return 8
+        }
+    }
 
     static let contacts = people.filter { $0.initials != "?" }
     static let demoPeople = [people[0], people[1], people[4]]

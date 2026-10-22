@@ -4,6 +4,7 @@ import SwiftUI
 
 struct ProductionRootView: View {
     @StateObject private var store: ProductionStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var systemTextSize
 
@@ -21,22 +22,22 @@ struct ProductionRootView: View {
 
     var body: some View {
         Group {
-            if let call = store.active { ProductionCallView(call: call) }
+            if let call = store.active { ProductionCallView(call: call).transition(.opacity) }
             else {
                 VStack(spacing: 0) {
                     HStack {
-                        Label("Callshield", systemImage: "checkmark.shield")
-                            .font(.system(size: 12, weight: .semibold)).foregroundStyle(Palette.green)
+                        BrandWordmark()
+                            .scaledFont(size: 12, weight: .semibold).foregroundStyle(Palette.accent)
                         Spacer()
                         if store.tab == .recents {
                             Button { store.showVoicemail = true } label: { Image(systemName: "recordingtape") }
-                                .frame(width: 44, height: 44).foregroundStyle(Palette.green)
+                                .frame(width: 44, height: 44).foregroundStyle(Palette.accent)
                                 .accessibilityLabel("Voicemail").accessibilityIdentifier("voicemailButton")
                         }
                     }
                     .frame(height: 26).padding(.horizontal, 23).padding(.top, 8)
                     HStack {
-                        Text(store.tab.rawValue).font(.system(size: 36, weight: .bold)).tracking(-1.2).foregroundStyle(Palette.ink)
+                        Text(store.tab.rawValue).scaledFont(size: 36, weight: .bold).tracking(-1.2).foregroundStyle(Palette.ink)
                             .accessibilityAddTraits(.isHeader)
                         Spacer()
                     }.padding(.horizontal, 23).padding(.top, 11).padding(.bottom, 19)
@@ -53,12 +54,12 @@ struct ProductionRootView: View {
                         ForEach(PhoneTab.allCases, id: \.self) { tab in
                             Button { store.tab = tab } label: {
                                 VStack(spacing: 4) {
-                                    Image(systemName: tab.symbol).font(.system(size: 23, weight: store.tab == tab ? .semibold : .regular))
-                                    Text(tab.rawValue).font(.system(size: 9))
+                                    Image(systemName: tab.symbol).scaledFont(size: 23, weight: store.tab == tab ? .semibold : .regular)
+                                    Text(tab.rawValue).font(.system(size: 11))
                                 }
                                 .frame(maxWidth: .infinity, minHeight: 50)
                                 .contentShape(Rectangle())
-                                .foregroundStyle(store.tab == tab ? Palette.green : Color(hex: 0xA1A4A9))
+                                .foregroundStyle(store.tab == tab ? Palette.accent : Palette.secondary)
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("productionTab\(tab.rawValue)")
@@ -66,20 +67,21 @@ struct ProductionRootView: View {
                         }
                     }
                     .padding(.top, 9).padding(.bottom, 8)
-                    .background(Color(hex: 0xFAFAFB).ignoresSafeArea(edges: .bottom))
+                    .background(Palette.surface.ignoresSafeArea(edges: .bottom))
                     .overlay(alignment: .top) { Divider() }
                 }
-                .background(Color.white.ignoresSafeArea())
-                .tint(Palette.green)
+                .background(Palette.canvas.ignoresSafeArea())
+                .tint(Palette.accent)
             }
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.22), value: store.active?.id)
         .environmentObject(store)
         .environment(\.dynamicTypeSize, store.largeText ? .xxLarge : systemTextSize)
-        .preferredColorScheme(store.active == nil ? .light : .dark)
+        .preferredColorScheme(store.active == nil ? nil : .dark)
         .sheet(item: $store.detail) { person in ProductionPersonDetail(person: person).environmentObject(store) }
         .sheet(item: $store.recordDetail) { record in ProductionPersonDetail(person: record.person, record: record).environmentObject(store) }
         .sheet(isPresented: $store.showVoicemail) { ProductionVoicemailView().environmentObject(store) }
-        .alert("Callshield", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
+        .alert(AppBrand.name, isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("OK", role: .cancel) { store.errorMessage = nil }
         } message: { Text(store.errorMessage ?? "") }
         .task { await store.refresh() }
@@ -101,8 +103,9 @@ struct PhoneEmptyView: View {
     let message: String
     var body: some View {
         VStack(spacing: 12) {
-            Image(systemName: symbol).font(.system(size: 34)).foregroundStyle(Color(hex: 0x8A9690))
-            Text(title).font(.title3.weight(.semibold)).foregroundStyle(Color(hex: 0x34473C))
+            Image(systemName: symbol).scaledFont(size: 32).foregroundStyle(Palette.accent)
+                .frame(width: 76, height: 76).background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 24))
+            Text(title).font(.title3.weight(.semibold)).foregroundStyle(Palette.ink)
             Text(message).font(.subheadline).foregroundStyle(Palette.secondary).multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)

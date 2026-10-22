@@ -25,5 +25,10 @@ APS_ENVIRONMENT = development
 CALLSHIELD_LIVEKIT_HOST =
 CALLSHIELD_LOBBY_TOKEN =
 
+// Optional authenticated blocking/reporting research service. Empty = offline local blocks.
+// Per-user credentials only; never put an admin token here.
+CALLSHIELD_SAFETY_BASE_URL =
+CALLSHIELD_SAFETY_TOKEN =
+
 // Optional and untracked. Keep this the last line so its values win.
 #include? "Local.xcconfig"

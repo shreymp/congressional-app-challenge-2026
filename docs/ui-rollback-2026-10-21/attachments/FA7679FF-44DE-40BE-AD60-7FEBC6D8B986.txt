@@ -1,0 +1,34 @@
+Application, 0x10a7ec000, pid: 88853, label: 'callma.' <App element pid: 88853>
+  Window (Main), 0x10a7ec280, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 88853, elementOrHash.elementID: 4432036864.4>
+    Other, 0x10a7ec3c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 88853, elementOrHash.elementID: 4488738816.5>
+      Other, 0x10a7ec500, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 88853, elementOrHash.elementID: 4489955200.6>
+        Other, 0x10a7ec640, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 88853, elementOrHash.elementID: 4432037888.7>
+          Other, 0x10a7ec780, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 88853, elementOrHash.elementID: 4488094912.8>
+            ScrollView, 0x10a7ec8c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'activeCallScreen' <AX element pid: 88853, elementOrHash.elementID: 4431963136.168>
+              Other, 0x10a7eca00, {{0.0, 62.0}, {402.0, 778.0}} <AX element pid: 88853, elementOrHash.elementID: 4661526016.169>
+                Other, 0x10a7ecb40, {{130.0, 71.0}, {89.0, 22.0}}, label: 'callma.' <AX element pid: 88853, elementOrHash.elementID: 4488159104.170>
+                  Image, 0x10a7ecc80, {{130.0, 71.0}, {22.0, 22.0}}, identifier: 'photo', label: 'Photo' <AX element pid: 88853, elementOrHash.elementID: 4488157760.178>
+                  StaticText, 0x10a7ecdc0, {{160.0, 71.8}, {59.0, 20.3}}, label: 'callma.' <AX element pid: 88853, elementOrHash.elementID: 4488158656.179>
+                StaticText, 0x10a7ecf00, {{230.0, 75.3}, {37.0, 13.3}}, label: 'DEMO' <AX element pid: 88853, elementOrHash.elementID: 4488159552.171>
+                StaticText, 0x10a7ed040, {{129.3, 194.0}, {143.3, 34.7}}, label: 'Sarah Miller' <AX element pid: 88853, elementOrHash.elementID: 4488160448.172>
+                StaticText, 0x10a7ed180, {{150.2, 237.7}, {101.7, 17.0}}, label: '(312) 555-0124' <AX element pid: 88853, elementOrHash.elementID: 4488160896.173>
+                StaticText, 0x10a7ed2c0, {{181.5, 259.7}, {39.0, 17.0}}, identifier: 'callStatus', label: '00:05' <AX element pid: 88853, elementOrHash.elementID: 4488161344.174>
+                StaticText, 0x10a7ed400, {{161.2, 308.7}, {79.7, 14.3}}, label: 'Caller’s voice' <AX element pid: 88853, elementOrHash.elementID: 4488167424.184>
+                Other, 0x10a7ed540, {{116.7, 331.3}, {121.0, 27.7}}, identifier: 'activeVoiceLabel', label: 'Likely human' <AX element pid: 88853, elementOrHash.elementID: 4488168768.185>
+                  Image, 0x10a7ed680, {{129.3, 339.0}, {11.3, 12.0}}, identifier: 'person', label: 'person' <AX element pid: 88853, elementOrHash.elementID: 4488167872.196>
+                  StaticText, 0x10a7ed7c0, {{145.2, 337.2}, {81.3, 15.7}}, label: 'Likely human' <AX element pid: 88853, elementOrHash.elementID: 4488168320.197>
+                Button, 0x10a7ed900, {{255.0, 336.3}, {17.0, 17.0}}, identifier: 'info.circle', label: 'About Likely human' <AX element pid: 88853, elementOrHash.elementID: 4488169216.186>
+                StaticText, 0x10a7eda40, {{109.2, 379.0}, {183.7, 14.3}}, label: 'This voice appears to be human.' <AX element pid: 88853, elementOrHash.elementID: 4488169664.187>
+                StaticText, 0x10a7edb80, {{97.8, 400.3}, {206.3, 13.3}}, label: 'Simulated result · Not an identity check' <AX element pid: 88853, elementOrHash.elementID: 4488170112.188>
+                StaticText, 0x10a7edcc0, {{159.3, 453.7}, {83.3, 14.3}}, label: 'Scam warning' <AX element pid: 88853, elementOrHash.elementID: 4488170560.189>
+                StaticText, 0x10a7ede00, {{121.7, 476.0}, {158.7, 18.0}}, label: 'No strong scam signal' <AX element pid: 88853, elementOrHash.elementID: 4488171008.190>
+                StaticText, 0x10a7edf40, {{114.2, 502.0}, {173.7, 14.3}}, label: 'Highest scam risk this call: 8%' <AX element pid: 88853, elementOrHash.elementID: 4488171456.191>
+                StaticText, 0x10a7ee080, {{47.2, 524.3}, {307.7, 13.3}}, label: 'Simulated result · A low score does not prove a call is safe.' <AX element pid: 88853, elementOrHash.elementID: 4488171904.192>
+                Button, 0x10a7ee1c0, {{120.7, 613.3}, {59.0, 83.3}}, identifier: 'muteCall', label: 'mute', value: Off <AX element pid: 88853, elementOrHash.elementID: 4488173696.193>
+                  Image, 0x10a7ee300, {{140.0, 627.7}, {20.3, 30.3}}, identifier: 'mic', label: 'Microphone' <AX element pid: 88853, elementOrHash.elementID: 4488172800.198>
+                  StaticText, 0x10a7ee440, {{135.8, 682.3}, {28.7, 14.3}}, label: 'mute' <AX element pid: 88853, elementOrHash.elementID: 4488173248.199>
+                Button, 0x10a7ee580, {{222.7, 613.3}, {59.0, 83.3}}, identifier: 'speakerCall', label: 'speaker', value: Off <AX element pid: 88853, elementOrHash.elementID: 4488175488.194>
+                  Image, 0x10a7ee6c0, {{236.3, 630.3}, {31.7, 25.0}}, identifier: 'speaker.wave.2', label: 'Volume High' <AX element pid: 88853, elementOrHash.elementID: 4488174144.200>
+                  StaticText, 0x10a7ee800, {{229.7, 682.3}, {45.0, 14.3}}, label: 'speaker' <AX element pid: 88853, elementOrHash.elementID: 4488175040.201>
+                Button, 0x10a7ee940, {{169.0, 720.7}, {64.0, 64.0}}, identifier: 'endCall', label: 'End call' <AX element pid: 88853, elementOrHash.elementID: 4488175936.195>
+                StaticText, 0x10a7eea80, {{98.5, 797.7}, {205.0, 13.3}}, label: 'Simulated call · No audio is transmitted' <AX element pid: 88853, elementOrHash.elementID: 4488165824.177>

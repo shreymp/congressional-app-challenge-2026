@@ -7,7 +7,7 @@ import UIKit
 /// its caller until WebRTC has applied it, so it must never run on the main thread.
 private let liveKitAudioQueue = DispatchQueue(label: "org.callshield.livekit.audio")
 
-private func callshieldLog(_ message: String) { print("[Callshield] \(message)") }
+private func callshieldLog(_ message: String) { print("[callma.] \(message)") }
 
 /// For the log only. The SDK's own description of an error can read just "Unknown", so its
 /// code goes with it; the person on the call is never shown this text.
@@ -194,7 +194,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
                 callshieldLog("lobby token refused: \(callshieldDetail(error))")
                 if !announcedRejection { // Once, not on every foreground; a later successful connection re-arms it.
                     announcedRejection = true
-                    onEvent?(.incomingCallsUnavailable("Callshield can’t take incoming calls right now: its access to the calling service was refused or has expired. It needs to be set up again."))
+                    onEvent?(.incomingCallsUnavailable("callma. can’t take incoming calls right now: its access to the calling service was refused or has expired. It needs to be set up again."))
                 }
                 return
             }

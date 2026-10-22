@@ -1,0 +1,616 @@
+[
+  {
+    "name": "compact words open",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 150,
+        "left": 24,
+        "right": 296,
+        "top": 367.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 367.6015625
+      },
+      "details": {
+        "client": 67,
+        "scroll": 335,
+        "top": 0
+      },
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "Words94 / 100 · High",
+      "hangup": {
+        "bottom": 517.6015625,
+        "height": 56,
+        "left": 132,
+        "right": 188,
+        "top": 461.6015625,
+        "width": 56,
+        "x": 132,
+        "y": 461.6015625
+      },
+      "identity": {
+        "bottom": 178.2421875,
+        "height": 80.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "popover": {
+        "bottom": 357.6015625,
+        "height": 113.359375,
+        "left": 24,
+        "right": 296,
+        "top": 244.2421875,
+        "width": 272,
+        "x": 24,
+        "y": 244.2421875
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  {
+    "name": "compact internal scroll",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 150,
+        "left": 24,
+        "right": 296,
+        "top": 367.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 367.6015625
+      },
+      "details": {
+        "client": 67,
+        "scroll": 335,
+        "top": 267.5
+      },
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "Words94 / 100 · High",
+      "hangup": {
+        "bottom": 517.6015625,
+        "height": 56,
+        "left": 132,
+        "right": 188,
+        "top": 461.6015625,
+        "width": 56,
+        "x": 132,
+        "y": 461.6015625
+      },
+      "identity": {
+        "bottom": 178.2421875,
+        "height": 80.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "popover": {
+        "bottom": 357.6015625,
+        "height": 113.359375,
+        "left": 24,
+        "right": 296,
+        "top": 244.2421875,
+        "width": 272,
+        "x": 24,
+        "y": 244.2421875
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  {
+    "name": "compact Escape closes and focuses Words",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 150,
+        "left": 24,
+        "right": 296,
+        "top": 367.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 367.6015625
+      },
+      "details": null,
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "Words94 / 100 · High",
+      "hangup": {
+        "bottom": 517.6015625,
+        "height": 56,
+        "left": 132,
+        "right": 188,
+        "top": 461.6015625,
+        "width": 56,
+        "x": 132,
+        "y": 461.6015625
+      },
+      "identity": {
+        "bottom": 178.2421875,
+        "height": 80.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  {
+    "name": "regular incoming",
+    "reading": {
+      "controls": {
+        "bottom": 787.6015625,
+        "height": 101,
+        "left": 24,
+        "right": 366,
+        "top": 686.6015625,
+        "width": 342,
+        "x": 24,
+        "y": 686.6015625
+      },
+      "details": null,
+      "document": [
+        390,
+        844
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "·callma.call with more peace of mind.Interactive prototypeA LITTLE SPACE TO THINKcall with morepeace of mind.The phone experience you know, with a simple label that helps you understand who—or what—is on the other end.Made for incoming callsAI and human voice labelsEvery conversation, in RecentsTry an incoming callDemo calls and detection results are simulated.No real calls or audio are connected.·callma. · incoming-call demo8:40·callma.DEMOSMSarah Miller(312) 555-0124Incoming callDeclineAcceptSimulated call · No audio is transmittedPHONE PREVIEWSIMULATED CALLSDoneCONTACT DETAILS\n\n",
+      "identity": {
+        "bottom": 302.5,
+        "height": 186.5,
+        "left": 24,
+        "right": 366,
+        "top": 116,
+        "width": 342,
+        "x": 24,
+        "y": 116
+      },
+      "screen": [
+        390,
+        390,
+        783,
+        783
+      ],
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  },
+  {
+    "name": "regular connected closed",
+    "reading": {
+      "controls": {
+        "bottom": 787.6015625,
+        "height": 183.5,
+        "left": 24,
+        "right": 366,
+        "top": 604.1015625,
+        "width": 342,
+        "x": 24,
+        "y": 604.1015625
+      },
+      "details": null,
+      "document": [
+        390,
+        844
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "·callma.call with more peace of mind.Interactive prototypeA LITTLE SPACE TO THINKcall with morepeace of mind.The phone experience you know, with a simple label that helps you understand who—or what—is on the other end.Made for incoming callsAI and human voice labelsEvery conversation, in RecentsTry an incoming callDemo calls and detection results are simulated.No real calls or audio are connected.·callma. · incoming-call demo8:40·callma.DEMOSMSarah Miller(312) 555-012400:00VoiceAnalyzing voiceWordsWaiting…mutekeypadspeakerSimulated call · No audio is transmittedDeclined demo call added to RecentsPHONE PREVIEWSIMULATED CALLSDoneCONTACT DETAILS\n\n",
+      "hangup": {
+        "bottom": 787.6015625,
+        "height": 70,
+        "left": 160,
+        "right": 230,
+        "top": 717.6015625,
+        "width": 70,
+        "x": 160,
+        "y": 717.6015625
+      },
+      "identity": {
+        "bottom": 302.5,
+        "height": 186.5,
+        "left": 24,
+        "right": 366,
+        "top": 116,
+        "width": 342,
+        "x": 24,
+        "y": 116
+      },
+      "screen": [
+        390,
+        390,
+        783,
+        783
+      ],
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  },
+  {
+    "name": "regular voice open",
+    "reading": {
+      "controls": {
+        "bottom": 787.6015625,
+        "height": 183.5,
+        "left": 24,
+        "right": 366,
+        "top": 604.1015625,
+        "width": 342,
+        "x": 24,
+        "y": 604.1015625
+      },
+      "details": {
+        "client": 142,
+        "scroll": 142,
+        "top": 0
+      },
+      "document": [
+        390,
+        844
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "VoiceLikely human",
+      "hangup": {
+        "bottom": 787.6015625,
+        "height": 70,
+        "left": 160,
+        "right": 230,
+        "top": 717.6015625,
+        "width": 70,
+        "x": 160,
+        "y": 717.6015625
+      },
+      "identity": {
+        "bottom": 302.5,
+        "height": 186.5,
+        "left": 24,
+        "right": 366,
+        "top": 116,
+        "width": 342,
+        "x": 24,
+        "y": 116
+      },
+      "popover": {
+        "bottom": 577,
+        "height": 187.5,
+        "left": 24,
+        "right": 366,
+        "top": 389.5,
+        "width": 342,
+        "x": 24,
+        "y": 389.5
+      },
+      "screen": [
+        390,
+        390,
+        783,
+        783
+      ],
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  },
+  {
+    "name": "regular words replaces voice",
+    "reading": {
+      "controls": {
+        "bottom": 787.6015625,
+        "height": 183.5,
+        "left": 24,
+        "right": 366,
+        "top": 604.1015625,
+        "width": 342,
+        "x": 24,
+        "y": 604.1015625
+      },
+      "details": {
+        "client": 155,
+        "scroll": 163,
+        "top": 0
+      },
+      "document": [
+        390,
+        844
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "Words8 / 100",
+      "hangup": {
+        "bottom": 787.6015625,
+        "height": 70,
+        "left": 160,
+        "right": 230,
+        "top": 717.6015625,
+        "width": 70,
+        "x": 160,
+        "y": 717.6015625
+      },
+      "identity": {
+        "bottom": 302.5,
+        "height": 186.5,
+        "left": 24,
+        "right": 366,
+        "top": 116,
+        "width": 342,
+        "x": 24,
+        "y": 116
+      },
+      "popover": {
+        "bottom": 590.1015625,
+        "height": 200.6015625,
+        "left": 24,
+        "right": 366,
+        "top": 389.5,
+        "width": 342,
+        "x": 24,
+        "y": 389.5
+      },
+      "screen": [
+        390,
+        390,
+        783,
+        783
+      ],
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  },
+  {
+    "name": "compact larger text words",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 150,
+        "left": 24,
+        "right": 296,
+        "top": 367.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 367.6015625
+      },
+      "details": {
+        "client": 67,
+        "scroll": 209,
+        "top": 0
+      },
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "WordsWaiting…",
+      "hangup": {
+        "bottom": 517.6015625,
+        "height": 56,
+        "left": 132,
+        "right": 188,
+        "top": 461.6015625,
+        "width": 56,
+        "x": 132,
+        "y": 461.6015625
+      },
+      "identity": {
+        "bottom": 178.2421875,
+        "height": 80.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "popover": {
+        "bottom": 357.6015625,
+        "height": 113.359375,
+        "left": 24,
+        "right": 296,
+        "top": 244.2421875,
+        "width": 272,
+        "x": 24,
+        "y": 244.2421875
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  {
+    "name": "compact larger text scored words",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 150,
+        "left": 24,
+        "right": 296,
+        "top": 367.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 367.6015625
+      },
+      "details": {
+        "client": 67,
+        "scroll": 488,
+        "top": 0
+      },
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "Words94 / 100 · High",
+      "hangup": {
+        "bottom": 517.6015625,
+        "height": 56,
+        "left": 132,
+        "right": 188,
+        "top": 461.6015625,
+        "width": 56,
+        "x": 132,
+        "y": 461.6015625
+      },
+      "identity": {
+        "bottom": 178.2421875,
+        "height": 80.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "popover": {
+        "bottom": 357.6015625,
+        "height": 113.359375,
+        "left": 24,
+        "right": 296,
+        "top": 244.2421875,
+        "width": 272,
+        "x": 24,
+        "y": 244.2421875
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  {
+    "name": "compact incoming final CSS",
+    "reading": {
+      "controls": {
+        "bottom": 517.6015625,
+        "height": 101,
+        "left": 24,
+        "right": 296,
+        "top": 416.6015625,
+        "width": 272,
+        "x": 24,
+        "y": 416.6015625
+      },
+      "details": null,
+      "document": [
+        320,
+        568
+      ],
+      "documentScroll": [
+        0,
+        0
+      ],
+      "focused": "·callma.call with more peace of mind.Interactive prototypeA LITTLE SPACE TO THINKcall with morepeace of mind.The phone experience you know, with a simple label that helps you understand who—or what—is on the other end.Made for incoming callsAI and human voice labelsEvery conversation, in RecentsTry an incoming callDemo calls and detection results are simulated.No real calls or audio are connected.·callma. · incoming-call demo8:42·callma.DEMOUnknown Caller(800) 555-0198Incoming callDeclineAcceptSimulated call · No audio is transmittedPHONE PREVIEWSIMULATED CALLSDoneCONTACT DETAILS\n\n",
+      "identity": {
+        "bottom": 260.2421875,
+        "height": 162.2421875,
+        "left": 24,
+        "right": 296,
+        "top": 98,
+        "width": 272,
+        "x": 24,
+        "y": 98
+      },
+      "screen": [
+        320,
+        320,
+        507,
+        507
+      ],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  }
+]

@@ -1,0 +1,15 @@
+Started UTC: 2026-10-19T06:12:00.606210+00:00
+Exit: 0
+test_both_real_service_contracts (test_cloud.CloudTests.test_both_real_service_contracts) ... ok
+test_invalid_pcm_or_transcripts_never_reach_inference (test_cloud.CloudTests.test_invalid_pcm_or_transcripts_never_reach_inference) ... /opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'Bad Request'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_failure_staleness_or_stream_restart_requires_new_healthy_period (test_probe_checks.ProbeTests.test_failure_staleness_or_stream_restart_requires_new_healthy_period) ... ok
+test_old_single_transcript_score_never_passes (test_probe_checks.ProbeTests.test_old_single_transcript_score_never_passes) ... ok
+test_requires_sustained_advancing_both_pipelines (test_probe_checks.ProbeTests.test_requires_sustained_advancing_both_pipelines) ... ok
+test_spoofs_stubs_wrong_calls_duplicates_and_nonfinite_rejected (test_probe_checks.ProbeTests.test_spoofs_stubs_wrong_calls_duplicates_and_nonfinite_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.534s
+
+OK

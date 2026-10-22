@@ -1,5 +1,7 @@
 # Jev scam-call post-training experiment
 
+For the later recorded-call fine-tuning passes (V3–V5), public-audio probes, hard-negative regressions, and explicit deployment decision, read [the October 20 evaluation](../../docs/testing/2026-10-20-transcript/REPORT.md) and [research methods](../../docs/testing/2026-10-20-transcript/RESEARCH.md). Results below describe the earlier synthetic-data runs, not real-world validation.
+
 This run starts from the public 151M-parameter GLiClass/ModernBERT Jev checkpoint and fine-tunes it for one proposition: **“The caller is attempting to scam or defraud the other person.”** It was trained locally on the Mac GPU. The app's existing ten caller-behavior questions are a different task and were not given fabricated labels.
 
 ## Data

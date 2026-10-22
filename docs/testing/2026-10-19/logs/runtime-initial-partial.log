@@ -1,0 +1,17 @@
+Partial stdout only: startup and initial invitations; later launches detached.
+[Callshield] lobby connected; waiting for incoming calls
+[Callshield] invite received: call C86F5635-1927-4194-BA05-3380BD43922B, handle "[test caller]"
+[Callshield] Simulator incoming call; use Accept in the app
+[Callshield] CallKit is ringing; joining call room call-_[test caller]_RwDFdv9cY5yU silently
+[Callshield] lobby disconnected
+[Callshield] joined call room
+[Callshield] caller left
+[Callshield] ended: the caller hung up
+[Callshield] lobby connected; waiting for incoming calls
+[Callshield] invite received: call D9BCF7E9-2963-4B75-AAB6-F282EA6A7619, handle "[test caller]"
+[Callshield] Simulator incoming call; use Accept in the app
+[Callshield] CallKit is ringing; joining call room call-_[test caller]_z8Hg4WuKrkT8 silently
+[Callshield] lobby disconnected
+[Callshield] joined call room
+[Callshield] call reset
+[Callshield] lobby connected; waiting for incoming calls

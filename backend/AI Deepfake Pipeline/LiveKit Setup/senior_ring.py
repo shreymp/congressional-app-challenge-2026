@@ -14,7 +14,7 @@ What SeniorRing decides, once per call
     has left, or the ring window (~30 s) is over;
   - "answered" = the senior identity has a microphone track in the call room;
   - no answer (ring window over, or the senior left without answering: decline / CallKit ring
-    timeout) -> no_answer_fallback(), a stub, exactly once;
+    timeout) -> no_answer_fallback() exactly once, then delete the room to disconnect the caller;
   - senior left after answering and did not come back within a few seconds -> delete the room,
     which disconnects the phone caller;
   - caller left -> stop quietly.
@@ -39,6 +39,7 @@ from typing import Any, Awaitable, Callable
 
 from dotenv import load_dotenv
 from livekit import api, rtc
+from safety_store import configured_block_check
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # agent.py imports this module before its own load_dotenv, and the settings below are read at
@@ -52,7 +53,7 @@ def _ring_timeout_from_env(default: float = 30.0, lowest: float = 5.0, highest: 
     """RING_TIMEOUT_SEC, or `default` when it is unset or unusable. This runs at import, so it must
     never raise: a typo in a Cloud secret ("30s") must not stop the whole agent from starting.
     Unusable = not a number, nan/inf, below `lowest` (the first invite would not even go out
-    before the stub fires) or above `highest`."""
+    before the call times out) or above `highest`."""
     raw = os.environ.get("RING_TIMEOUT_SEC")
     if not raw:
         return default
@@ -90,7 +91,10 @@ DELETE_ATTEMPTS = 3
 # What SeniorRing.run() returns.
 CALLER_LEFT = "caller_left"
 SENIOR_HUNG_UP = "senior_hung_up"
+UNANSWERED = "unanswered"
+CLEANUP_FAILED = "cleanup_failed"
 CRASHED = "error"
+BLOCKED = "blocked"
 
 
 def mint_call_token(room_name: str, *, identity: str = SENIOR_IDENTITY,
@@ -169,7 +173,7 @@ async def notify_senior(lk: Any, invite: dict, *, lobby_room: str = SENIOR_LOBBY
 
 
 def no_answer_fallback(*, room_name: str, call_uuid: str, handle: str, reason: str) -> None:
-    """STUB. Called exactly once per call when the senior did not pick up.
+    """Optional notification hook. Called exactly once when the senior did not pick up.
 
     reason: "timeout" (ring window over) or "declined" (the senior's app left the call room
     without answering: decline, or the phone's own ring timeout).
@@ -182,10 +186,10 @@ def no_answer_fallback(*, room_name: str, call_uuid: str, handle: str, reason: s
     backgrounded or loses its network, before it has seen any invite.
 
     TODO(team): this is where "agent takes a message + notify family" will go. Not built yet.
-    Nothing is done to the call here: the caller is NOT hung up and keeps hearing ringing until
-    they give up. This runs inside the ring loop, so keep it quick or start a task.
+    SeniorRing deletes the call room after this hook, disconnecting the caller even if the hook
+    raises. This runs inside the ring loop, so keep it quick or start a task.
     """
-    log.info("NO-ANSWER STUB (%s): room=%s callUUID=%s caller number=%r. Nothing else happens yet.",
+    log.info("NO-ANSWER (%s): room=%s callUUID=%s caller number=%r; disconnecting caller.",
              reason, room_name, call_uuid, handle)
 
 
@@ -207,7 +211,8 @@ class SeniorRing:
                  api_timeout: float = API_TIMEOUT_SEC,
                  mint_token: Callable[[str], str] = mint_call_token,
                  notify: Callable[..., Awaitable[bool]] = notify_senior,
-                 no_answer: Callable[..., None] = no_answer_fallback) -> None:
+                 no_answer: Callable[..., None] = no_answer_fallback,
+                 block_check: Callable[[str, str], bool] = configured_block_check) -> None:
         self._lk, self._room, self._delete_room = lk, room, delete_room
         self._caller_identity, self._caller_is_local = caller_identity, caller_is_local
         self._handle, self._caller_name = handle or "", caller_name
@@ -215,13 +220,15 @@ class SeniorRing:
         self._ring_timeout, self._resend_every = ring_timeout, resend_every
         self._left_grace, self._poll_every, self._api_timeout = left_grace, poll_every, api_timeout
         self._mint_token, self._notify, self._no_answer = mint_token, notify, no_answer
+        self._block_check = block_check
         self.call_uuid = str(uuid.uuid4())     # one per call: every re-send carries the same one
         self.joined = False                    # senior has been seen in the call room
         self.answered = False                  # senior has published a microphone track
 
     async def run(self) -> str:
-        """Runs until the call needs no more supervision. Returns CALLER_LEFT or SENIOR_HUNG_UP
-        (CRASHED after an unexpected error). Never raises, except when cancelled."""
+        """Returns CALLER_LEFT, SENIOR_HUNG_UP, UNANSWERED, BLOCKED, CLEANUP_FAILED, or CRASHED.
+        Never raises, except when cancelled. CLEANUP_FAILED means the caller may still be connected.
+        """
         try:
             return await self._run()
         except Exception:        # not BaseException: cancellation at job shutdown must get through
@@ -235,6 +242,30 @@ class SeniorRing:
 
     async def _run(self) -> str:
         room, name = self._room, self._room.name
+        # Only explicit manual personal blocks or separately reviewed shared blocks
+        # are consulted. Model scores never enter this decision. Do this before
+        # minting a call token or sending an incoming-call invite.
+        try:
+            blocked = await asyncio.wait_for(
+                asyncio.to_thread(self._block_check, self._senior_identity, self._handle),
+                self._api_timeout)
+        except Exception:
+            blocked = False
+            log.warning("manual block lookup unavailable; allowing this call to ring")
+        if blocked:
+            for attempt in range(DELETE_ATTEMPTS):
+                if not self._caller_here():
+                    return BLOCKED
+                try:
+                    await asyncio.wait_for(self._delete_room(), self._api_timeout)
+                except Exception:
+                    log.warning("manual block disconnect failed; retrying")
+                if not self._caller_here():
+                    return BLOCKED
+                if attempt + 1 < DELETE_ATTEMPTS:
+                    await asyncio.sleep(self._resend_every)
+            log.error("could not disconnect a manually blocked call")
+            return CLEANUP_FAILED
         invite = None
         try:
             invite = build_invite(call_uuid=self.call_uuid, room_name=name,
@@ -260,14 +291,16 @@ class SeniorRing:
             now = time.monotonic()
             if not self._caller_here():
                 if deletes:
-                    return SENIOR_HUNG_UP
+                    return UNANSWERED if no_answer_done else SENIOR_HUNG_UP
                 log.info("%s; nothing more to do",
                          f"caller left {name}" if room.isconnected() else f"room {name} closed")
                 return CALLER_LEFT
 
             # Match the senior on identity, not on participant kind.
             senior = room.remote_participants.get(self._senior_identity)
-            if senior is not None:
+            if no_answer_done:
+                pass    # terminal: a late join or microphone must not cancel room cleanup
+            elif senior is not None:
                 if not self.joined:
                     self.joined = True
                     log.info("senior joined %s (phone is ringing, not answered yet)", name)
@@ -285,28 +318,10 @@ class SeniorRing:
                          "after answering" if self.answered else "without answering", self._left_grace)
             gone = left_at is not None and now - left_at >= self._left_grace
 
-            if self.answered:
-                if gone and now >= next_delete:
-                    if deletes >= DELETE_ATTEMPTS:
-                        log.error("could not delete %s after %d attempts; the phone caller is "
-                                  "still connected", name, deletes)
-                        return SENIOR_HUNG_UP
-                    deletes += 1
-                    next_delete = now + self._resend_every
-                    log.info("senior hung up; deleting %s so the phone caller is disconnected too "
-                             "(attempt %d)", name, deletes)
-                    # JobContext.delete_room logs its own API errors and never raises, so a failed
-                    # delete shows up as the room still being connected: the loop then comes back
-                    # here after resend_every, up to DELETE_ATTEMPTS. This except only catches the
-                    # api_timeout (and whatever another delete_room might raise).
-                    try:
-                        await asyncio.wait_for(self._delete_room(), self._api_timeout)
-                    except Exception as e:
-                        log.warning("deleting %s failed: %r", name, e)
-            elif not no_answer_done:
+            if not self.answered and not no_answer_done:
                 reason = "declined" if gone else "timeout" if now >= ring_until else None
                 if reason is not None:
-                    no_answer_done = True     # keep looping: a late answer must still be supervised
+                    no_answer_done = True     # terminal decision: stop invites and disconnect the caller
                     log.info("no answer in %s: %s", name,
                              "the senior declined or the phone stopped ringing" if reason == "declined"
                              else f"not answered within {self._ring_timeout:g}s")
@@ -334,6 +349,26 @@ class SeniorRing:
                         else:
                             log.warning("could not send the invite (%s); retrying every %gs",
                                         detail, self._resend_every)
+
+            if no_answer_done or (self.answered and gone):
+                if now >= next_delete:
+                    if deletes >= DELETE_ATTEMPTS:
+                        log.error("could not delete %s after %d attempts; the phone caller is "
+                                  "still connected", name, deletes)
+                        return CLEANUP_FAILED
+                    deletes += 1
+                    next_delete = now + self._resend_every
+                    log.info("%s; deleting %s so the phone caller is disconnected "
+                             "(attempt %d)", "no answer" if no_answer_done else "senior hung up",
+                             name, deletes)
+                    # JobContext.delete_room logs its own API errors and never raises, so a failed
+                    # delete shows up as the room still being connected: the loop then comes back
+                    # here after resend_every, up to DELETE_ATTEMPTS. This except only catches the
+                    # api_timeout (and whatever another delete_room might raise).
+                    try:
+                        await asyncio.wait_for(self._delete_room(), self._api_timeout)
+                    except Exception as e:
+                        log.warning("deleting %s failed: %r", name, e)
 
             await asyncio.sleep(self._poll_every)
 
