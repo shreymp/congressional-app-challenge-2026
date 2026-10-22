@@ -1112,3 +1112,71 @@
     animation:none!important
   }
 }
+/* Callma: Paper & Midnight (light), Space Black (dark). */
+.callshield-app{
+ --ink:#25262a;--page:#f4ece0;--surface:#fffdf8;--soft:#e9e4dc;--line:#d6d1c9;--muted:#626873;--accent:#315b93;--accent-soft:#e1e8f1;--action:#25262a;--action-ink:#fffdf8;
+ color-scheme:light;background:radial-gradient(ellipse at 85% 10%,#315b9318,transparent 55%),var(--page);color:var(--ink)
+}
+.callshield-app[data-theme=dark]{
+ --ink:#f5f5f3;--page:#1c1d1f;--surface:#282a2d;--soft:#32353a;--line:#454a52;--muted:#b5beca;--accent:#cad8e6;--accent-soft:#353f4b;--action:#cad8e6;--action-ink:#1c1d1f;
+ color-scheme:dark;background:radial-gradient(ellipse at 85% 10%,#cad8e60a,transparent 55%),var(--page)
+}
+.callshield-app :is(button,input,a):focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.brand{font-size:30px;letter-spacing:-1.6px;gap:11px}
+.brand-mark{background:var(--action);color:var(--action-ink);box-shadow:0 6px 18px #1c1d1f16}
+.wordmark-dot{color:var(--accent);margin-left:-11px}
+.callma-wordmark,.app-toolbar>span.callma-wordmark{font-size:25px;font-weight:750;letter-spacing:-1.25px;color:var(--ink)}
+.settings-hero h2.callma-wordmark{font-size:30px}
+:is(.header-caption,.intro>p,.intro .demo-disclosure,.intro-bottom,.preview-caption,.section-description,.list-caption,.sample-caption,.row-sub,.row-end time,.list-footnote,.contact-list small,.demo-options small,.settings-hero p,.setting-value,.settings-label,.label-guide p,.settings-note,.sheet-top>span,.sheet-description,.sheet-note,.detail-number,.detail-detection p,.detail-info span,.empty-state){color:var(--muted)}
+.prototype-tag{background:var(--surface);border-color:var(--line);color:var(--muted)}
+.prototype-tag>span,.eyebrow>span,.preview-caption>span:first-child{background:var(--accent)}
+.eyebrow,.intro h1>span,.intro-features svg,.row-end>svg,.back-button{color:var(--accent)}
+.intro-features>div,.empty-state h2{color:var(--ink)}
+.primary-action{background:var(--action);color:var(--action-ink);box-shadow:0 8px 24px #1c1d1f20;border-radius:14px}
+.primary-action:hover{background:var(--accent);color:var(--action-ink)}
+.phone-frame{background:linear-gradient(135deg,#707782,#282a2d 25%,#1c1d1f 70%,#535b65);box-shadow:0 35px 65px -25px #1c1d1f55,0 0 0 1px #626873,0 0 0 4px #cad8e6}
+.phone-frame:before,.phone-frame:after{background:#626873}
+.phone-display{background:var(--page);color:var(--ink)}
+.demo-button{background:var(--accent-soft);color:var(--accent);padding:8px 11px}
+.segmented,.search-field,.settings-group,.detail-info{background:var(--soft);color:var(--ink)}
+.segmented button{color:var(--muted);min-height:32px}
+.segmented button[aria-pressed=true]{background:var(--surface);color:var(--ink)}
+.search-field{height:42px;border:1px solid var(--line)}
+.search-field input{color:var(--ink)}
+.search-field input::placeholder,.search-field button{color:var(--muted)}
+.call-row{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)!important;padding-left:10px;padding-right:10px;border-radius:13px;margin-bottom:7px}
+.call-row:hover,.contact-list>button:hover,.demo-options>button:hover{background:var(--accent-soft)}
+.rose,.blue,.mint{background:var(--accent-soft);color:var(--accent)}
+.slate{background:var(--soft);color:var(--muted)}
+.voice-badge.ai,.voice-badge.human,.voice-badge.analyzing{background:var(--accent-soft);color:var(--accent);border:1px solid var(--line);border-radius:6px}
+.voice-badge.unknown{background:var(--soft);color:var(--muted)}
+.tab-bar{background:var(--surface);border-color:var(--line)}
+.tab-bar button{color:var(--muted);border-radius:12px;padding:7px 12px}
+.tab-bar button[aria-current=page]{color:var(--accent);background:var(--accent-soft)}
+.home-indicator{background:var(--ink)}
+.caption-rule{background:var(--line)}
+.contact-list>button,.demo-options>button{color:var(--ink);border-bottom:1px solid var(--line)!important}
+.contact-list svg,.demo-options>button>svg{color:var(--muted)}
+.settings-group>div,.detail-info>div,.settings-note{border-color:var(--line)}
+.toggle{background:var(--line)}
+.toggle.enabled{background:var(--accent)}
+.toggle>span{background:var(--surface)}
+.theme-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 23px}
+.theme-picker button{display:flex;flex-direction:column;gap:8px;align-items:flex-start;text-align:left;background:var(--surface);color:var(--ink);padding:13px 10px;border-radius:14px;border:1px solid var(--line);font-size:11px;min-height:118px}
+.theme-picker button[aria-pressed=true]{border:2px solid var(--accent);padding:12px 9px;background:var(--accent-soft)}
+.theme-picker small{font-size:9px;line-height:1.5;color:var(--muted)}
+.palette-swatch{width:100%;height:27px;border-radius:7px;border:1px solid #62687355}
+.palette-swatch.paper{background:linear-gradient(90deg,#f4ece0 0 40%,#25262a 40% 70%,#315b93 70%)}
+.palette-swatch.space{background:linear-gradient(90deg,#1c1d1f 0 40%,#282a2d 40% 70%,#cad8e6 70%)}
+.on-call .phone-display{background:radial-gradient(ellipse at 20% 0%,#315b9355,transparent 65%),#1c1d1f;color:#f5f5f3}
+[data-theme=dark] .on-call .phone-display{background:radial-gradient(ellipse at 20% 0%,#cad8e614,transparent 65%),#1c1d1f}
+.call-service,.caller-number,.call-status,.call-footer,.detection-panel p,.detection-panel small{color:#cad8e6}
+.call-service>span{color:#cad8e6;border-color:#cad8e640}
+.detection-panel{background:#282a2d;border-color:#cad8e633;box-shadow:0 12px 30px #0002}
+.detection-panel .voice-badge.ai,.detection-panel .voice-badge.human,.detection-panel .voice-badge.unknown,.detection-panel .voice-badge.analyzing{background:#cad8e61a;color:#cad8e6;border-color:#cad8e633}
+.accept{background:#cad8e6;color:#1c1d1f}
+.connected-actions button>span.selected{background:#cad8e6;color:#1c1d1f}
+.detail-dialog{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.detail-dialog::backdrop{background:#1c1d1f88}
+.toast{background:var(--action);color:var(--action-ink)}
+@media(max-width:700px){.callshield-app,.phone-frame{background:var(--page)}.call-row{padding-left:10px;padding-right:10px}.phone-frame{box-shadow:none}.app-toolbar{padding:5px 0 8px}}
