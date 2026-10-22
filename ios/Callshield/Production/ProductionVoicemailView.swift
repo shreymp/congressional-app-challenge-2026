@@ -17,35 +17,47 @@ struct ProductionVoicemailView: View {
                     List {
                         if let error = store.voicemailError {
                             VStack(alignment: .leading, spacing: 12) {
-                                Text(error).foregroundStyle(.secondary)
+                                Text(error).font(.body).foregroundStyle(Theme.textSecondary)
                                 Button("Try again") { Task { await store.refreshVoicemail() } }
-                            }
+                                    .buttonStyle(ActionButtonStyle(kind: .secondary))
+                            }.listRowBackground(Color.clear)
                         } else if store.voicemail.isEmpty {
                             PhoneEmptyView(symbol: "recordingtape", title: "No voicemail", message: "New voicemail will appear here.")
+                                .listRowBackground(Color.clear)
                         }
                         ForEach(store.voicemail) { message in
                             Button { selected = message } label: {
                                 HStack(spacing: 12) {
-                                    Circle().fill(message.isRead ? .clear : Palette.green).frame(width: 8, height: 8)
+                                    Circle().fill(message.isRead ? .clear : Theme.actionAccent).frame(width: 12, height: 12)
+                                        .accessibilityHidden(true)
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text(message.caller.name).font(.headline).foregroundStyle(Palette.ink)
-                                        Text(message.date.formatted()).font(.caption).foregroundStyle(.secondary)
+                                        Text(message.caller.name).font(.body.weight(message.isRead ? .medium : .bold))
+                                            .foregroundStyle(Theme.textPrimary)
+                                        Text(message.isRead ? friendlyDate(message.date) : "New · \(friendlyDate(message.date))")
+                                            .font(.callout).foregroundStyle(Theme.textSecondary)
                                     }
                                     Spacer()
-                                    Text(callDuration(message.duration)).font(.caption).foregroundStyle(.secondary)
+                                    Text(callDuration(message.duration)).font(.callout).monospacedDigit().foregroundStyle(Theme.textSecondary)
+                                    Image(systemName: "play.circle.fill").font(.title2).foregroundStyle(Theme.actionAccent)
+                                        .accessibilityHidden(true)
                                 }
-                            }.swipeActions {
+                                .frame(minHeight: 60)
+                            }
+                            .listRowBackground(Theme.backgroundSurface)
+                            .swipeActions {
                                 Button("Delete", role: .destructive) { Task { await store.deleteVoicemail(message) } }
                             }
                         }
-                    }.listStyle(.plain).refreshable { await store.refreshVoicemail() }
+                    }.listStyle(.insetGrouped).scrollContentBackground(.hidden).refreshable { await store.refreshVoicemail() }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.backgroundPrimary.ignoresSafeArea())
             .navigationTitle("Voicemail")
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() }.font(.body.weight(.semibold)) } }
             .task { await store.refreshVoicemail() }
             .sheet(item: $selected) { message in VoicemailPlaybackView(message: message).environmentObject(store) }
-        }.preferredColorScheme(.light).tint(Palette.green)
+        }.tint(Theme.actionAccent)
     }
 }
 
@@ -64,25 +76,28 @@ struct VoicemailPlaybackView: View {
     @State private var failureObserver: NSObjectProtocol?
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                Avatar(person: message.caller, size: 80)
-                Text(message.caller.name).font(.title2.weight(.semibold))
-                Text(message.date.formatted()).foregroundStyle(.secondary)
-                Text(callDuration(message.duration)).monospacedDigit()
+            VStack(spacing: 16) {
+                Avatar(person: message.caller, size: 88)
+                Text(message.caller.name).font(.title.weight(.semibold)).foregroundStyle(Theme.textPrimary)
+                    .multilineTextAlignment(.center)
+                Text(message.date.formatted(date: .abbreviated, time: .shortened)).font(.title3).foregroundStyle(Theme.textSecondary)
+                Text(callDuration(message.duration)).font(.title3).monospacedDigit().foregroundStyle(Theme.textSecondary)
                 Button {
                     Task { await togglePlayback() }
-                } label: { Label(playing ? "Pause" : "Play", systemImage: playing ? "pause.fill" : "play.fill") }
-                .buttonStyle(.borderedProminent).disabled(busy)
-                if let error { Text(error).font(.caption).foregroundStyle(.secondary) }
+                } label: { Label(playing ? "Pause" : "Play message", systemImage: playing ? "pause.fill" : "play.fill") }
+                .buttonStyle(ActionButtonStyle()).disabled(busy).padding(.top, 8)
+                if let error { Text(error).font(.body).foregroundStyle(Theme.textSecondary).multilineTextAlignment(.center) }
                 Spacer()
             }.padding(24)
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Theme.backgroundPrimary.ignoresSafeArea())
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() }.font(.body.weight(.semibold)) } }
             .onDisappear { presented = false; stopPlayback() }
             .onChange(of: scenePhase) { phase in
                 allowsPlayback = phase == .active
                 if phase != .active { player?.pause(); playing = false }
             }
-        }.tint(Palette.green)
+        }.tint(Theme.actionAccent)
     }
     @MainActor private func togglePlayback() async {
         guard !busy else { return }

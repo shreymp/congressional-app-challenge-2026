@@ -6,6 +6,7 @@ struct ProductionRootView: View {
     @StateObject private var store: ProductionStore
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var systemTextSize
+    @AppStorage(AppearanceChoice.storageKey) private var appearance = AppearanceChoice.system
 
     init() {
         #if DEBUG
@@ -24,22 +25,26 @@ struct ProductionRootView: View {
             if let call = store.active { ProductionCallView(call: call) }
             else {
                 VStack(spacing: 0) {
-                    HStack {
-                        Label("Callshield", systemImage: "checkmark.shield")
-                            .font(.system(size: 12, weight: .semibold)).foregroundStyle(Palette.green)
-                        Spacer()
-                        if store.tab == .recents {
-                            Button { store.showVoicemail = true } label: { Image(systemName: "recordingtape") }
-                                .frame(width: 44, height: 44).foregroundStyle(Palette.green)
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Wordmark()
+                            Spacer()
+                            if store.tab == .recents {
+                                Button { store.showVoicemail = true } label: {
+                                    Label("Voicemail", systemImage: "recordingtape")
+                                        .font(.callout.weight(.semibold))
+                                        .padding(.horizontal, 14).frame(minHeight: 44)
+                                        .background(Theme.backgroundSurface, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Theme.borderInteractive, lineWidth: 1))
+                                }
+                                .buttonStyle(.plain).foregroundStyle(Theme.textPrimary)
                                 .accessibilityLabel("Voicemail").accessibilityIdentifier("voicemailButton")
+                            }
                         }
+                        .frame(minHeight: 44)
+                        ScreenTitle(text: store.tab.rawValue)
                     }
-                    .frame(height: 26).padding(.horizontal, 23).padding(.top, 8)
-                    HStack {
-                        Text(store.tab.rawValue).font(.system(size: 36, weight: .bold)).tracking(-1.2).foregroundStyle(Palette.ink)
-                            .accessibilityAddTraits(.isHeader)
-                        Spacer()
-                    }.padding(.horizontal, 23).padding(.top, 11).padding(.bottom, 19)
+                    .padding(.horizontal, Theme.margin).padding(.top, 4).padding(.bottom, 12)
                     Group {
                         switch store.tab {
                         case .favorites: ProductionFavoritesView()
@@ -49,33 +54,16 @@ struct ProductionRootView: View {
                         case .settings: ProductionSettingsView()
                         }
                     }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    HStack(spacing: 0) {
-                        ForEach(PhoneTab.allCases, id: \.self) { tab in
-                            Button { store.tab = tab } label: {
-                                VStack(spacing: 4) {
-                                    Image(systemName: tab.symbol).font(.system(size: 23, weight: store.tab == tab ? .semibold : .regular))
-                                    Text(tab.rawValue).font(.system(size: 9))
-                                }
-                                .frame(maxWidth: .infinity, minHeight: 50)
-                                .contentShape(Rectangle())
-                                .foregroundStyle(store.tab == tab ? Palette.green : Color(hex: 0xA1A4A9))
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("productionTab\(tab.rawValue)")
-                            .accessibilityAddTraits(store.tab == tab ? .isSelected : [])
-                        }
-                    }
-                    .padding(.top, 9).padding(.bottom, 8)
-                    .background(Color(hex: 0xFAFAFB).ignoresSafeArea(edges: .bottom))
-                    .overlay(alignment: .top) { Divider() }
+                    AppTabBar(tabs: PhoneTab.allCases, selection: $store.tab, title: \.rawValue, symbol: \.symbol,
+                              identifier: { "productionTab\($0.rawValue)" })
                 }
-                .background(Color.white.ignoresSafeArea())
-                .tint(Palette.green)
+                .background(Theme.backgroundPrimary.ignoresSafeArea())
+                .tint(Theme.actionAccent)
             }
         }
         .environmentObject(store)
-        .environment(\.dynamicTypeSize, store.largeText ? .xxLarge : systemTextSize)
-        .preferredColorScheme(store.active == nil ? .light : .dark)
+        .environment(\.dynamicTypeSize, store.largeText ? max(systemTextSize, .xxLarge) : systemTextSize)
+        .preferredColorScheme(appearance.colorScheme)
         .sheet(item: $store.detail) { person in ProductionPersonDetail(person: person).environmentObject(store) }
         .sheet(item: $store.recordDetail) { record in ProductionPersonDetail(person: record.person, record: record).environmentObject(store) }
         .sheet(isPresented: $store.showVoicemail) { ProductionVoicemailView().environmentObject(store) }
@@ -95,18 +83,4 @@ struct ProductionRootView: View {
     }
 }
 
-struct PhoneEmptyView: View {
-    let symbol: String
-    let title: String
-    let message: String
-    var body: some View {
-        VStack(spacing: 12) {
-            Image(systemName: symbol).font(.system(size: 34)).foregroundStyle(Color(hex: 0x8A9690))
-            Text(title).font(.title3.weight(.semibold)).foregroundStyle(Color(hex: 0x34473C))
-            Text(message).font(.subheadline).foregroundStyle(Palette.secondary).multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 28).padding(.vertical, 48)
-    }
-}
-
+typealias PhoneEmptyView = EmptyStateView

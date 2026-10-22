@@ -3,31 +3,24 @@ import SwiftUI
 struct ContactsScreen: View {
     @EnvironmentObject private var store: CallshieldStore
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 12) {
             Text("Familiar faces. Incoming calls only.")
-                .font(.system(size: 12))
-                .foregroundStyle(Palette.secondary)
-                .padding(.bottom, 25)
-            ForEach(SampleData.contacts) { person in
-                Button { store.sheet = .contact(person) } label: {
-                    HStack(spacing: 13) {
-                        Avatar(person: person)
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(person.name).font(.system(size: 13, weight: .semibold))
-                            Text(person.number).font(.system(size: 11)).foregroundStyle(Color(hex: 0x999999))
+                .font(.body)
+                .foregroundStyle(Theme.textSecondary)
+            GroupedRows {
+                ForEach(Array(SampleData.contacts.enumerated()), id: \.element.id) { index, person in
+                    if index > 0 { RowDivider(inset: 66) }
+                    Button { store.sheet = .contact(person) } label: {
+                        PersonRow(person: person) {
+                            Text(person.number).font(.callout).foregroundStyle(Theme.textSecondary)
                         }
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.system(size: 18)).foregroundStyle(Color(hex: 0xAAAAAA))
                     }
-                    .padding(.vertical, 16)
-                    .contentShape(Rectangle())
-                    .overlay(alignment: .bottom) { Rectangle().fill(Palette.line).frame(height: 1) }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("contact-\(person.initials)")
+                    .accessibilityLabel("\(person.name), \(person.number), contact details")
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("contact-\(person.initials)")
-                .accessibilityLabel("\(person.name), \(person.number), contact details")
             }
-            Footnote(text: "Demo contacts · No address book access")
+            Footnote(text: "Demo contacts. Callshield does not read your address book in demo mode.", symbol: "lock.fill")
         }
     }
 }

@@ -36,7 +36,7 @@ final class ProductionUITests: XCTestCase {
         app.terminate()
         app.launchArguments = ["--ui-test-production", "--ui-test-analysis"]
         app.launch()
-        XCTAssertTrue(app.staticTexts["Voice / deepfake analysis"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Voice check"].waitForExistence(timeout: 5))
         if !app.staticTexts["transcriptAssessmentTitle"].isHittable { app.swipeUp() }
         XCTAssertEqual(app.staticTexts["transcriptAssessmentTitle"].label, "Possible scam language")
         XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("94%"))
