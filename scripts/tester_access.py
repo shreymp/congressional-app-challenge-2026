@@ -18,8 +18,8 @@ import zipfile
 from mac_call_test import CONFIG, private_write, project_host, set_xcconfig
 
 REPO = "shreymp/congressional-app-challenge-2026"
-ARTIFACT = "callshield-tester-access"
-FILENAME = "CallshieldTester.json"
+ARTIFACT = "callma-tester-access"
+FILENAME = "CallmaTester.json"
 
 
 def claims(token):
@@ -77,7 +77,7 @@ async def verify_delivery():
                                           can_publish_data=False, can_subscribe=False)).to_jwt())
     room = rtc.Room()
     received = asyncio.Event()
-    topic = "callshield.tester-access-check"
+    topic = "callma.tester-access-check"
 
     @room.on("data_received")
     def receive(packet):
@@ -109,7 +109,7 @@ async def verify_delivery():
 
 def gh_api(endpoint):
     if not shutil.which("gh"):
-        raise RuntimeError("Install GitHub CLI and run gh auth login, or download the Tester app access artifact and use tester --config /path/CallshieldTester.json")
+        raise RuntimeError("Install GitHub CLI and run gh auth login, or download the Tester app access artifact and use tester --config /path/CallmaTester.json")
     result = subprocess.run(["gh", "api", endpoint], capture_output=True, timeout=90)
     if result.returncode:
         raise RuntimeError("GitHub artifact access failed. Use gh auth login with the account that can read this private repository and its Actions artifacts.")
@@ -135,12 +135,12 @@ def install(path=None):
     host, token, expiry = validate(config)
     original = CONFIG.read_text() if CONFIG.exists() else "// Private tester connection settings. Do not commit.\n"
     private_write(CONFIG, set_xcconfig(original, {
-        "CALLSHIELD_DEMO": "false", "CALLSHIELD_DEFAULT_DIALER": "false",
-        "CALLSHIELD_ENTITLEMENTS_FILE": "", "CALLSHIELD_LIVEKIT_HOST": host,
-        "CALLSHIELD_LOBBY_TOKEN": token,
+        "CALLMA_DEMO": "false", "CALLMA_DEFAULT_DIALER": "false",
+        "CALLMA_ENTITLEMENTS_FILE": "", "CALLMA_LIVEKIT_HOST": host,
+        "CALLMA_LOBBY_TOKEN": token,
     }))
     print("App access installed; expires", time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime(expiry)))
-    print("Build and run Callshield. No LiveKit account, API key, or API secret is needed on this Mac.")
+    print("Build and run Callma. No LiveKit account, API key, or API secret is needed on this Mac.")
 
 
 if __name__ == "__main__":

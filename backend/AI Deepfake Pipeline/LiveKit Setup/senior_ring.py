@@ -1,7 +1,7 @@
 """Ring the senior's iPhone when a phone call arrives (foreground-only ring: no PushKit, no APNs).
 
 How the phone is reached
-  While the Callshield app is open it stays connected to a small LiveKit "lobby" room. When a
+  While the Callma app is open it stays connected to a small LiveKit "lobby" room. When a
   real phone caller is waiting in a call room, scam-guard sends the app an invite through the
   LiveKit server API: a data message on topic "callshield.incoming" that names the call room and
   carries a short-lived token for it plus the caller's number. The app shows the native CallKit
@@ -69,7 +69,7 @@ def _ring_timeout_from_env(default: float = 30.0, lowest: float = 5.0, highest: 
 
 SENIOR_IDENTITY = os.environ.get("SENIOR_IDENTITY") or "senior"        # same in lobby and call room
 SENIOR_LOBBY_ROOM = os.environ.get("SENIOR_LOBBY_ROOM") or "senior-lobby"
-INCOMING_TOPIC = "callshield.incoming"       # fixed by the wire contract with the iOS app
+INCOMING_TOPIC = "callshield.incoming"       # fixed by the wire contract with the iOS app (pre-rename name, kept on purpose)
 RING_TIMEOUT_SEC = _ring_timeout_from_env()
 RESEND_EVERY_SEC = 3.0         # the app ignores repeats of a callUUID it has already handled
 SENIOR_LEFT_GRACE_SEC = 5.0    # a network blip also looks like "left": wait before acting on it

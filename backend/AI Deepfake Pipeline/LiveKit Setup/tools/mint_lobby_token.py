@@ -44,14 +44,14 @@ def main() -> None:
     print(f"// Lobby room \"{senior_ring.SENIOR_LOBBY_ROOM}\", identity \"{senior_ring.SENIOR_IDENTITY}\", "
           f"expires {datetime.now() + timedelta(days=a.days):%Y-%m-%d}.")
     if host:
-        print(f"CALLSHIELD_LIVEKIT_HOST = {host}")
+        print(f"CALLMA_LIVEKIT_HOST = {host}")
     else:
         # Commented out on purpose: a live placeholder line would be valid xcconfig and give the
         # app a broken host, while an unset host is treated by the app as "not configured".
         print("// LIVEKIT_URL is not set in .env.local. Add the next line with your project's host, "
               "without wss://")
-        print("// CALLSHIELD_LIVEKIT_HOST = <your-project-subdomain>.livekit.cloud")
-    print(f"CALLSHIELD_LOBBY_TOKEN = {token}")
+        print("// CALLMA_LIVEKIT_HOST = <your-project-subdomain>.livekit.cloud")
+    print(f"CALLMA_LOBBY_TOKEN = {token}")
 
 
 if __name__ == "__main__":

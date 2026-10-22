@@ -1,4 +1,4 @@
-# Callshield frontend screens
+# Callma frontend screens
 
 Incoming-only, iPhone-style React app. Calls and AI results are simulated.
 

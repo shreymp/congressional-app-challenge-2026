@@ -106,9 +106,9 @@ def configure(args):
             raise ValueError("Expected a LiveKit JWT lobby token")
     original = CONFIG.read_text() if CONFIG.exists() else "// Local test settings; do not commit.\n"
     private_write(CONFIG, set_xcconfig(original, {
-        "CALLSHIELD_DEMO": "false", "CALLSHIELD_DEFAULT_DIALER": "false",
-        "CALLSHIELD_ENTITLEMENTS_FILE": "", "CALLSHIELD_LIVEKIT_HOST": host,
-        "CALLSHIELD_LOBBY_TOKEN": token,
+        "CALLMA_DEMO": "false", "CALLMA_DEFAULT_DIALER": "false",
+        "CALLMA_ENTITLEMENTS_FILE": "", "CALLMA_LIVEKIT_HOST": host,
+        "CALLMA_LOBBY_TOKEN": token,
     }))
     print("Saved private local configuration. Rebuild the app. No credentials were printed.")
 
@@ -192,11 +192,11 @@ def doctor(args):
     def client_config():
         values = dict(line.split("=", 1) for line in CONFIG.read_text().splitlines() if "=" in line and not line.lstrip().startswith("//"))
         values = {k.strip(): v.strip() for k, v in values.items()}
-        project_host(values["CALLSHIELD_LIVEKIT_HOST"])
-        if values.get("CALLSHIELD_DEMO", "false").lower() != "false":
-            raise ValueError("CALLSHIELD_DEMO must be false for live testing")
+        project_host(values["CALLMA_LIVEKIT_HOST"])
+        if values.get("CALLMA_DEMO", "false").lower() != "false":
+            raise ValueError("CALLMA_DEMO must be false for live testing")
         import base64
-        claims = json.loads(base64.urlsafe_b64decode(values["CALLSHIELD_LOBBY_TOKEN"].split(".")[1] + "==="))
+        claims = json.loads(base64.urlsafe_b64decode(values["CALLMA_LOBBY_TOKEN"].split(".")[1] + "==="))
         video = claims.get("video", {})
         load_environment()
         if (claims.get("sub") != (os.environ.get("SENIOR_IDENTITY") or "senior")
@@ -301,9 +301,9 @@ def simulator(args):
     if not CONFIG.is_file():
         raise RuntimeError("Run configure first")
     run(["xcrun", "simctl", "bootstatus", args.device, "-b"])
-    run(["xcodebuild", "-project", "ios/Callshield.xcodeproj", "-scheme", "Callshield", "-configuration", "Debug",
+    run(["xcodebuild", "-project", "ios/Callma.xcodeproj", "-scheme", "Callma", "-configuration", "Debug",
          "-destination", f"platform=iOS Simulator,id={args.device}", "-derivedDataPath", "ios/build-calltest", "CODE_SIGNING_ALLOWED=NO", "build"])
-    app = ROOT / "ios/build-calltest/Build/Products/Debug-iphonesimulator/Callshield.app"
+    app = ROOT / "ios/build-calltest/Build/Products/Debug-iphonesimulator/Callma.app"
     result = subprocess.run(["/usr/libexec/PlistBuddy", "-c", "Print CFBundleIdentifier", str(app / "Info.plist")], capture_output=True, text=True, check=True)
     run(["xcrun", "simctl", "install", args.device, app])
     run(["open", "-a", "Simulator"])

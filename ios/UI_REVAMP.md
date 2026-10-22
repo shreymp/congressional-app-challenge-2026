@@ -1,4 +1,4 @@
-# Callshield UI/UX revamp (branch `improved-ui`)
+# Callma UI/UX revamp (branch `improved-ui`)
 
 Source: the "Paper & Midnight" design specification (warm Paper Tan, Space Black,
 Midnight Blue, Burnished Copper). Audience: older adults, so every decision below
@@ -50,6 +50,6 @@ Missed calls show "Missed call" in words; they never get a voice badge because t
 
 ## Out of scope for this branch
 
-- Renaming the product to "Callma." (the spec's working name). The app, tests and alerts still say Callshield.
+- Renaming the product to "Callma." (the spec's working name). The app, tests and alerts still say Callma.
 - The `frontendscreens` web prototype and the Expo `frontend` app.
 - New app icon artwork.
