@@ -1180,3 +1180,8 @@
 .detail-dialog::backdrop{background:#1c1d1f88}
 .toast{background:var(--action);color:var(--action-ink)}
 @media(max-width:700px){.callshield-app,.phone-frame{background:var(--page)}.call-row{padding-left:10px;padding-right:10px}.phone-frame{box-shadow:none}.app-toolbar{padding:5px 0 8px}}
+
+/* A typographic c. monogram replaces the shield throughout Callma. */
+.callma-monogram{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:30px;font-weight:800;letter-spacing:-3px;line-height:1;padding-right:3px;font-style:normal}
+.settings-hero .callma-monogram{font-size:42px;letter-spacing:-4px;padding-right:4px}
+.call-service>span.callma-monogram{display:inline-flex;align-items:center;justify-content:center;width:27px;height:29px;margin:0 2px 0 0;padding:0 3px 2px 0;border:0;border-radius:9px;background:#cad8e6;color:#1c1d1f;font-size:24px;font-weight:800;letter-spacing:-2px}
