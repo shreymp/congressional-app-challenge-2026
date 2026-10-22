@@ -1,0 +1,9 @@
+{
+  "checkpoint": "backend/jev-posttrain/runs/call-v3-real",
+  "checkpoint_sha256": "a2972c763ca0c1b36a0f10b649df6e5a3ce283ea0cf0ee2c8b405a6291dcb2d1",
+  "onnx_sha256": "463a200b03eccfbe28c1d185ed189b59ff4e7a1411d4daf28bd0c61f9fc44b45",
+  "onnx_bytes": 606323152,
+  "onnx_opset": 17,
+  "max_logit_difference_on_two_validation_examples": 1.1444091796875e-05,
+  "deployment_status": "experimental; not copied into iOS"
+}

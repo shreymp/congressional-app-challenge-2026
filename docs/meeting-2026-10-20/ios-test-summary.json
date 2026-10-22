@@ -1,0 +1,46 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 56,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Callshield · Built with macOS 26.5.2",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792550067.709,
+  "passedTests" : 56,
+  "result" : "Passed",
+  "skippedTests" : 0,
+  "startTime" : 1792550025.044,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Callshield",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "97% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 0.80s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 56
+}

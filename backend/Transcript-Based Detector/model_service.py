@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -25,6 +26,36 @@ def render_prompt(text: str) -> str:
             f"\n\nEvaluate proposition: {PROPOSITION}")
 
 
+def clean_context(text: str) -> str:
+    # These are classifier control tokens, never caller-authored labels.
+    return re.sub(r"<<(?:LABEL|SEP)>>", " ", text, flags=re.I).strip()
+
+
+def context_windows(tokenizer, transcript: str, mode: str = "tail") -> tuple[list[str], bool]:
+    """Bound inference while retaining early evidence in optional window mode.
+
+    Max pooling is an experimental risk score, not a calibrated probability.
+    Coverage is reported when the request exceeds the six-window budget.
+    """
+    text = clean_context(transcript)
+    ids = tokenizer.encode(text, add_special_tokens=False).ids
+    if mode not in ("tail", "windows"):
+        raise ValueError("invalid context mode")
+    if len(ids) <= 300:
+        return [text], True
+    if mode == "tail":
+        return [tokenizer.decode(ids[-300:], skip_special_tokens=True)], False
+    starts = list(range(0, len(ids) - 300, 225)) + [len(ids) - 300]
+    if len(starts) > 6:
+        starts = [starts[round(i * (len(starts) - 1) / 5)] for i in range(6)]
+    covered = all(b <= a + 300 for a, b in zip(starts, starts[1:]))
+    return [tokenizer.decode(ids[start:start+300], skip_special_tokens=True) for start in starts], covered
+
+
+class InsufficientEvidence(ValueError):
+    pass
+
+
 def calibrated_probability(yes: float, no: float, temperature: float) -> float:
     if not all(math.isfinite(x) for x in (yes, no, temperature)) or temperature <= 0:
         raise ValueError("invalid model logits or calibration")
@@ -33,9 +64,10 @@ def calibrated_probability(yes: float, no: float, temperature: float) -> float:
 
 
 class CallModel:
-    def __init__(self, directory: Path, version: str = "V2"):
+    def __init__(self, directory: Path, version: str = "V2", *, bundle_manifest: Path | None = None,
+                 context_mode: str = "tail"):
         # Check that ONNX, tokenizer and calibration are the SAME published bundle.
-        manifest = json.loads((ROOT / "backend/jev-posttrain/model_downloads.json").read_text())
+        manifest = json.loads((bundle_manifest or ROOT / "backend/jev-posttrain/model_downloads.json").read_text())
         bundle = next(x for x in manifest if x["version"] == version)
         for name, asset in bundle["files"].items():
             with (directory / name).open("rb") as source:
@@ -49,6 +81,8 @@ class CallModel:
         self.tokenizer.no_truncation()
         self.tokenizer.no_padding()
         self.temperature = float(json.loads((directory / "calibration.json").read_text())["temperature"])
+        self.version, self.context_mode = version, context_mode
+        self.bundle_sha256 = bundle["files"]["model.onnx"]["sha256"]
         calibrated_probability(0, 0, self.temperature)
         options = ort.SessionOptions()
         options.intra_op_num_threads = 4
@@ -57,19 +91,33 @@ class CallModel:
                                             providers=["CPUExecutionProvider"])
 
     def score(self, transcript: str) -> float:
+        return self.assess(transcript)["probability"]
+
+    def assess(self, transcript: str) -> dict:
         import numpy as np
-        text = transcript.strip()
-        ids = self.tokenizer.encode(text, add_special_tokens=False).ids
-        if len(ids) > 300:
-            text = self.tokenizer.decode(ids[-300:], skip_special_tokens=True)
-        ids = self.tokenizer.encode(render_prompt(text)).ids
-        if len(ids) > 512:
+        text = clean_context(transcript)
+        # Greetings/silence are not negative evidence of fraud. Never return 0.
+        meaningful = re.sub(r"^(?:caller|receiver):\s*", "", text, flags=re.I)
+        if len(re.findall(r"\w+", meaningful)) < 4:
+            raise InsufficientEvidence("Need more caller speech")
+        windows, covered = context_windows(self.tokenizer, text, self.context_mode)
+        encoded = [self.tokenizer.encode(render_prompt(window)).ids for window in windows]
+        length = max(map(len, encoded))
+        if length > 512:
             raise ValueError("Jev prompt exceeds 512 tokens")
+        pad = self.tokenizer.token_to_id("[PAD]")
+        if pad is None:
+            raise ValueError("Tokenizer is missing padding token")
+        ids = np.array([row + [pad] * (length-len(row)) for row in encoded], dtype=np.int64)
+        mask = np.array([[1]*len(row) + [0]*(length-len(row)) for row in encoded], dtype=np.int64)
         logits = self.session.run(["logits"], {
-            "input_ids": np.array([ids], dtype=np.int64),
-            "attention_mask": np.ones((1, len(ids)), dtype=np.int64),
-        })[0][0]
-        return calibrated_probability(float(logits[0]), float(logits[1]), self.temperature)
+            "input_ids": ids, "attention_mask": mask,
+        })[0]
+        probabilities = [calibrated_probability(float(row[0]), float(row[1]), self.temperature) for row in logits]
+        return {"probability": max(probabilities), "scoreType": "experimental_transcript_risk",
+                "calibratedOnRealCalls": False, "modelVersion": self.version,
+                "contextMode": self.context_mode, "windows": len(windows), "contextCovered": covered,
+                "modelSha256": self.bundle_sha256}
 
 
 def make_server(model, port: int = 8000) -> ThreadingHTTPServer:
@@ -94,7 +142,7 @@ def make_server(model, port: int = 8000) -> ThreadingHTTPServer:
             self.reply(404, {"error": "Not found"})
 
         def do_POST(self):
-            if self.path != "/predict":
+            if self.path not in ("/predict", "/assess"):
                 return self.reply(404, {"error": "Not found"})
             try:
                 size = int(self.headers.get("Content-Length", "0"))
@@ -110,10 +158,13 @@ def make_server(model, port: int = 8000) -> ThreadingHTTPServer:
             if not inference_lock.acquire(blocking=False):
                 return self.reply(503, {"error": "Model busy; retry latest context"})
             try:
-                probability = model.score(text)
+                assessment = model.assess(text) if hasattr(model, "assess") else {"probability": model.score(text)}
+                probability = assessment["probability"]
                 if type(probability) not in (int, float) or not math.isfinite(probability) or not 0 <= probability <= 1:
                     raise ValueError("invalid probability")
-                result = {"probability": probability}
+                result = assessment if self.path == "/assess" else {"probability": probability}
+            except InsufficientEvidence:
+                return self.reply(422, {"error": "Insufficient transcript evidence", "decision": "insufficient_evidence"})
             except Exception:
                 return self.reply(503, {"error": "Model inference unavailable"})
             finally:
@@ -130,13 +181,17 @@ def make_server(model, port: int = 8000) -> ThreadingHTTPServer:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", choices=["V1", "V2"], default="V2")
+    parser.add_argument("--version", choices=["V1", "V2", "V3", "V4", "V5"], default="V2")
+    parser.add_argument("--bundle-manifest", type=Path, help="Explicit checksummed local research bundle manifest")
+    parser.add_argument("--context-mode", choices=["tail", "windows"], default="tail")
     parser.add_argument("--model-dir", type=Path)
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
     directory = args.model_dir or Path(os.environ.get("JEV_MODEL_DIR") or
                                       ROOT / f"ios/ScamTranscript/Resources/JevCall{args.version}")
-    model = CallModel(directory, args.version)
+    if args.version in ("V3", "V4", "V5") and not args.bundle_manifest:
+        parser.error("Research models require an explicit local --bundle-manifest")
+    model = CallModel(directory, args.version, bundle_manifest=args.bundle_manifest, context_mode=args.context_mode)
     server = make_server(model, args.port)
     print(f"Jev {args.version} loaded; http://127.0.0.1:{args.port}/predict", flush=True)
     try:

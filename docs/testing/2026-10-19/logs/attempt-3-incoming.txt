@@ -1,0 +1,34 @@
+2026-10-19T06:15:57.641Z
+Window: "Callshield Oct 17 Validation", App: Simulator.
+0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise
+	1 button Action
+	2 button Volume Up
+	3 button Volume Down
+	4 button Sleep/Wake
+	5 container
+		6 text Description: Callshield, Secondary Actions: Cancel
+		7 text Description: Simulator call test, Secondary Actions: Cancel
+		8 text Description: [test caller], Secondary Actions: Cancel
+		9 text Description: [test caller], Secondary Actions: Cancel
+		10 text Description: Incoming call, Secondary Actions: Cancel
+		11 button Description: Decline, Value: Off, Secondary Actions: Cancel
+		12 button Description: Accept, Value: Off, Secondary Actions: Cancel
+	13 toolbar
+		14 button Description: Home, Secondary Actions: Move previous, Move next, Remove from toolbar
+		15 button Description: Save Screen, Secondary Actions: Move previous, Move next, Remove from toolbar
+		16 button Description: Rotate, Secondary Actions: Move previous, Move next, Remove from toolbar
+	17 close button
+	18 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	19 minimize button
+	20 text Callshield Oct 17 Validation – iOS 26.5
+21 menu bar
+	22 Simulator
+	23 File
+	24 Edit
+	25 Device
+	26 I/O
+	27 Features
+	28 Window
+	29 Help
+
+The focused UI element is 0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise

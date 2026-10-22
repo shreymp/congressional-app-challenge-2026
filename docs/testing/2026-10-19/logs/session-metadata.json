@@ -1,0 +1,22 @@
+{
+  "captured_utc": "2026-10-19T06:34:31.541052+00:00",
+  "commit": "dca989c3126be4778638a002d3355a463f8789eb",
+  "branch": "main",
+  "live_simulator": "C914D5D9-4B89-4DF0-8009-B06094CC1E60",
+  "automated_simulator": "10469AE2-2454-4954-913E-A1100BE59050",
+  "xcode": "26.6 (17F113)",
+  "ios_simulator": "26.5 (23F77)",
+  "timezone_for_report": "Europe/Warsaw",
+  "raw_result_bundles": [
+    "/private/tmp/callshield-oct19-debug.xcresult",
+    "/private/tmp/callshield-oct19-release.xcresult"
+  ],
+  "caller_cleanup_utc": "2026-10-19T06:32:01.877Z",
+  "audio_original_output_volume": 0,
+  "audio_test_output_volume": 0.4,
+  "audio_last_observed": {
+    "volume": 0.3375,
+    "muted": true
+  },
+  "runtime_source_changes": false
+}

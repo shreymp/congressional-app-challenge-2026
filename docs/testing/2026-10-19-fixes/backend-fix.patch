@@ -1,0 +1,414 @@
+diff --git a/backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md b/backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md
+index f72d653..50da0bc 100644
+--- a/backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md	
++++ b/backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md	
+@@ -148,8 +148,10 @@ not claim to deploy a hosted container or upload model weights.
+    `jev_unavailable` with a null probability while deepfake updates continue.
+    Restart the connector; the latest context is retried automatically.
+ 5. Hang up in the app. Confirm room deletion and phone disconnection. Also test
+-   caller hang-up and a call that is not answered. The existing no-answer handler
+-   is still a stub; it does not take voicemail or notify family.
++   caller hang-up and a call that is not answered. The ring supervisor disconnects unanswered callers by deleting the call room, after
++   the ring timeout or a 5 s grace period following an observed decline. An early decline
++   before the app joins can take the full ring timeout. The optional no-answer hook
++   only logs; it does not take voicemail or notify family.
+ 
+ The worker sends caller PCM, including silence, to Vosk. Only the deepfake branch
+ uses the speech energy gate. Each call has its own recognizer and bounded context;
+diff --git a/backend/AI Deepfake Pipeline/LiveKit Setup/README.md b/backend/AI Deepfake Pipeline/LiveKit Setup/README.md
+index dbec2cc..7a8c352 100644
+--- a/backend/AI Deepfake Pipeline/LiveKit Setup/README.md	
++++ b/backend/AI Deepfake Pipeline/LiveKit Setup/README.md	
+@@ -96,12 +96,15 @@ answer   -> the app publishes its microphone. That is what makes LiveKit answer
+ | What happens | What the agent does |
+ |---|---|
+ | Caller hangs up, at any time | Stops. The app ends the CallKit call when the caller's participant leaves. |
+-| Not answered within `RING_TIMEOUT_SEC` (30 s), or the app leaves the room without answering (decline, or the phone's own ring timeout) | Logs it and calls `no_answer_fallback()` exactly once. **That function is a stub**: "agent takes a message + notify family" goes there later. The caller is not hung up. |
++| Not answered within `RING_TIMEOUT_SEC` (30 s), or the app leaves the room without answering (decline, or the phone's own ring timeout) | Waits 5 s after the app leaves to allow reconnection, or until the ring window ends. Calls `no_answer_fallback()` exactly once, then deletes the room to disconnect the caller. The hook currently only logs; voicemail and family notifications are not implemented. |
+ | Senior hangs up after answering (or the app dies) and is not back within 5 s | Deletes the room, which disconnects the phone caller. |
+ 
+ The agent logs each step once (`scam-guard.ring`): `incoming call ... number sent to the app`,
+ `senior app not connected to lobby`, `invite sent`, `senior joined`, `senior answered`, `no answer`,
+-`senior hung up`. Offline test of this logic: `python test_senior_ring.py`.
++`senior hung up`. Room deletion is attempted up to 3 times with a 5 s timeout per request;
++if the caller remains connected, supervision returns `cleanup_failed` and logs an error instead
++of reporting a successful hang-up. A late answer cannot cancel cleanup after a no-answer decision.
++Offline test of this logic: `python test_senior_ring.py`.
+ 
+ ### Wire contract (must match the iOS app exactly)
+ 
+@@ -158,9 +161,9 @@ new lobby token for the app.
+ ## Known issues / open questions
+ 
+ - **Thresholds are probably wrong for phone audio.** The config thresholds (0.99999 / 0.9999999) come from the training test split. Real LiveKit audio will shift the scores. Use Step 3 and `recordings/` to recalibrate, then set `THRESHOLD_ELEVATED` / `THRESHOLD_HIGH` in `.env.local`.
+-- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard never publishes audio, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
++- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard never publishes audio, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (the ring supervisor disconnects unanswered callers; `no_answer_fallback()` is an optional notification hook). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
+ - **A second ring is possible after an agent crash.** If LiveKit re-dispatches the agent into a call that is still ringing, the new job sends a new `callUUID`. Harmless if the app already joined the call room (no invite is sent then); if grandma had declined, her phone rings again. The same happens if the app is quit and reopened inside the ring window for a call it never joined: the app remembers handled `callUUID`s in memory only, so the repeated invite rings again. That second case is arguably right, since the phone caller is still ringing.
+-- **An early decline is reported as a timeout.** The agent only learns of a decline once the app has been in the call room. Declining while the app is still joining, Do Not Disturb refusing the CallKit call, or a failed join all show up as `no_answer_fallback(reason="timeout")` at the end of the ring window, not as `"declined"` after 5 s. The app ignores the repeated invites for that call meanwhile. The obvious shortcut (treat "back in the lobby" as a decline) is wrong: the app also leaves and rejoins the lobby when it is backgrounded or loses its network.
++- **An early decline is reported as a timeout.** The agent only learns of a decline once the app has been in the call room. Declining while the app is still joining, Do Not Disturb refusing the CallKit call, or a failed join all show up as `no_answer_fallback(reason="timeout")` at the end of the ring window, not as `"declined"` after 5 s. The app ignores the repeated invites for that call meanwhile. In both cases the agent deletes the call room after the no-answer decision, so the caller is disconnected; an early decline can take the full ring window. The obvious shortcut (treat "back in the lobby" as a decline) is wrong: the app also leaves and rejoins the lobby when it is backgrounded or loses its network.
+ - **Transcript branch needs its local models and services running.** Set `VOSK_MODEL_PATH`, start the JEV model service and connector, then run the agent. Missing STT/model services produce a null transcript probability and an explicit state; deepfake scoring continues. The fusion rule is still experimental and has not been calibrated on real-call prefixes. See [INCOMING_CALL_SETUP.md](INCOMING_CALL_SETUP.md).
+ - **Energy gate, not a real VAD.** Fine for testing. Swap for Silero VAD if quiet speech is skipped or noise is scored.
+ - `sip.callStatus` exists as a SIP attribute; we log it, and the ring skips participants whose status is `dialing` (outbound calls). The `ringing` to `active` change is not used.
+diff --git a/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py b/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py
+index 2c5cc8e..a98a9ba 100644
+--- a/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py	
++++ b/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py	
+@@ -14,7 +14,7 @@ What SeniorRing decides, once per call
+     has left, or the ring window (~30 s) is over;
+   - "answered" = the senior identity has a microphone track in the call room;
+   - no answer (ring window over, or the senior left without answering: decline / CallKit ring
+-    timeout) -> no_answer_fallback(), a stub, exactly once;
++    timeout) -> no_answer_fallback() exactly once, then delete the room to disconnect the caller;
+   - senior left after answering and did not come back within a few seconds -> delete the room,
+     which disconnects the phone caller;
+   - caller left -> stop quietly.
+@@ -52,7 +52,7 @@ def _ring_timeout_from_env(default: float = 30.0, lowest: float = 5.0, highest:
+     """RING_TIMEOUT_SEC, or `default` when it is unset or unusable. This runs at import, so it must
+     never raise: a typo in a Cloud secret ("30s") must not stop the whole agent from starting.
+     Unusable = not a number, nan/inf, below `lowest` (the first invite would not even go out
+-    before the stub fires) or above `highest`."""
++    before the call times out) or above `highest`."""
+     raw = os.environ.get("RING_TIMEOUT_SEC")
+     if not raw:
+         return default
+@@ -90,6 +90,8 @@ DELETE_ATTEMPTS = 3
+ # What SeniorRing.run() returns.
+ CALLER_LEFT = "caller_left"
+ SENIOR_HUNG_UP = "senior_hung_up"
++UNANSWERED = "unanswered"
++CLEANUP_FAILED = "cleanup_failed"
+ CRASHED = "error"
+ 
+ 
+@@ -169,7 +171,7 @@ async def notify_senior(lk: Any, invite: dict, *, lobby_room: str = SENIOR_LOBBY
+ 
+ 
+ def no_answer_fallback(*, room_name: str, call_uuid: str, handle: str, reason: str) -> None:
+-    """STUB. Called exactly once per call when the senior did not pick up.
++    """Optional notification hook. Called exactly once when the senior did not pick up.
+ 
+     reason: "timeout" (ring window over) or "declined" (the senior's app left the call room
+     without answering: decline, or the phone's own ring timeout).
+@@ -182,10 +184,10 @@ def no_answer_fallback(*, room_name: str, call_uuid: str, handle: str, reason: s
+     backgrounded or loses its network, before it has seen any invite.
+ 
+     TODO(team): this is where "agent takes a message + notify family" will go. Not built yet.
+-    Nothing is done to the call here: the caller is NOT hung up and keeps hearing ringing until
+-    they give up. This runs inside the ring loop, so keep it quick or start a task.
++    SeniorRing deletes the call room after this hook, disconnecting the caller even if the hook
++    raises. This runs inside the ring loop, so keep it quick or start a task.
+     """
+-    log.info("NO-ANSWER STUB (%s): room=%s callUUID=%s caller number=%r. Nothing else happens yet.",
++    log.info("NO-ANSWER (%s): room=%s callUUID=%s caller number=%r; disconnecting caller.",
+              reason, room_name, call_uuid, handle)
+ 
+ 
+@@ -220,8 +222,9 @@ class SeniorRing:
+         self.answered = False                  # senior has published a microphone track
+ 
+     async def run(self) -> str:
+-        """Runs until the call needs no more supervision. Returns CALLER_LEFT or SENIOR_HUNG_UP
+-        (CRASHED after an unexpected error). Never raises, except when cancelled."""
++        """Returns CALLER_LEFT, SENIOR_HUNG_UP, UNANSWERED, CLEANUP_FAILED, or CRASHED.
++        Never raises, except when cancelled. CLEANUP_FAILED means the caller may still be connected.
++        """
+         try:
+             return await self._run()
+         except Exception:        # not BaseException: cancellation at job shutdown must get through
+@@ -260,14 +263,16 @@ class SeniorRing:
+             now = time.monotonic()
+             if not self._caller_here():
+                 if deletes:
+-                    return SENIOR_HUNG_UP
++                    return UNANSWERED if no_answer_done else SENIOR_HUNG_UP
+                 log.info("%s; nothing more to do",
+                          f"caller left {name}" if room.isconnected() else f"room {name} closed")
+                 return CALLER_LEFT
+ 
+             # Match the senior on identity, not on participant kind.
+             senior = room.remote_participants.get(self._senior_identity)
+-            if senior is not None:
++            if no_answer_done:
++                pass    # terminal: a late join or microphone must not cancel room cleanup
++            elif senior is not None:
+                 if not self.joined:
+                     self.joined = True
+                     log.info("senior joined %s (phone is ringing, not answered yet)", name)
+@@ -285,28 +290,10 @@ class SeniorRing:
+                          "after answering" if self.answered else "without answering", self._left_grace)
+             gone = left_at is not None and now - left_at >= self._left_grace
+ 
+-            if self.answered:
+-                if gone and now >= next_delete:
+-                    if deletes >= DELETE_ATTEMPTS:
+-                        log.error("could not delete %s after %d attempts; the phone caller is "
+-                                  "still connected", name, deletes)
+-                        return SENIOR_HUNG_UP
+-                    deletes += 1
+-                    next_delete = now + self._resend_every
+-                    log.info("senior hung up; deleting %s so the phone caller is disconnected too "
+-                             "(attempt %d)", name, deletes)
+-                    # JobContext.delete_room logs its own API errors and never raises, so a failed
+-                    # delete shows up as the room still being connected: the loop then comes back
+-                    # here after resend_every, up to DELETE_ATTEMPTS. This except only catches the
+-                    # api_timeout (and whatever another delete_room might raise).
+-                    try:
+-                        await asyncio.wait_for(self._delete_room(), self._api_timeout)
+-                    except Exception as e:
+-                        log.warning("deleting %s failed: %r", name, e)
+-            elif not no_answer_done:
++            if not self.answered and not no_answer_done:
+                 reason = "declined" if gone else "timeout" if now >= ring_until else None
+                 if reason is not None:
+-                    no_answer_done = True     # keep looping: a late answer must still be supervised
++                    no_answer_done = True     # terminal decision: stop invites and disconnect the caller
+                     log.info("no answer in %s: %s", name,
+                              "the senior declined or the phone stopped ringing" if reason == "declined"
+                              else f"not answered within {self._ring_timeout:g}s")
+@@ -335,6 +322,26 @@ class SeniorRing:
+                             log.warning("could not send the invite (%s); retrying every %gs",
+                                         detail, self._resend_every)
+ 
++            if no_answer_done or (self.answered and gone):
++                if now >= next_delete:
++                    if deletes >= DELETE_ATTEMPTS:
++                        log.error("could not delete %s after %d attempts; the phone caller is "
++                                  "still connected", name, deletes)
++                        return CLEANUP_FAILED
++                    deletes += 1
++                    next_delete = now + self._resend_every
++                    log.info("%s; deleting %s so the phone caller is disconnected "
++                             "(attempt %d)", "no answer" if no_answer_done else "senior hung up",
++                             name, deletes)
++                    # JobContext.delete_room logs its own API errors and never raises, so a failed
++                    # delete shows up as the room still being connected: the loop then comes back
++                    # here after resend_every, up to DELETE_ATTEMPTS. This except only catches the
++                    # api_timeout (and whatever another delete_room might raise).
++                    try:
++                        await asyncio.wait_for(self._delete_room(), self._api_timeout)
++                    except Exception as e:
++                        log.warning("deleting %s failed: %r", name, e)
++
+             await asyncio.sleep(self._poll_every)
+ 
+     async def _deliver(self, invite: dict) -> tuple[str, str]:
+diff --git a/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py b/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py
+index 6ab7433..f2eab34 100644
+--- a/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py	
++++ b/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py	
+@@ -20,7 +20,7 @@ from livekit import api, rtc
+ from livekit.agents import JobContext
+ 
+ import senior_ring
+-from senior_ring import CALLER_LEFT, CRASHED, SENIOR_HUNG_UP
++from senior_ring import CALLER_LEFT, CLEANUP_FAILED, CRASHED, SENIOR_HUNG_UP, UNANSWERED
+ 
+ KEY, SECRET = "APIdevkey", "dev-secret-only-used-by-this-offline-test"   # dummy, never sent anywhere
+ SENIOR, LOBBY = senior_ring.SENIOR_IDENTITY, senior_ring.SENIOR_LOBBY_ROOM
+@@ -243,53 +243,47 @@ async def test_no_invite_while_the_app_is_not_in_the_lobby():
+     await call.close()
+ 
+ 
+-async def test_timeout_fires_the_stub_exactly_once():
++async def test_timeout_disconnects_the_caller_exactly_once():
+     t0 = time.monotonic()
+     call = Call()
+-    await until(lambda: call.fallbacks, "no-answer stub")
++    await until(lambda: call.fallbacks, "no-answer callback")
+     assert time.monotonic() - t0 >= 0.9 * FAST["ring_timeout"], "fired before the ring window ended"
+     assert call.fallbacks[0] == {"room_name": call.room.name, "call_uuid": call.ring.call_uuid,
+                                  "handle": NUMBER, "reason": "timeout"}, call.fallbacks
+-    await asyncio.sleep(SETTLE)
++    assert await call.finish() == UNANSWERED
+     n = len(call.sent)
+     await asyncio.sleep(6 * FAST["resend_every"])
+     assert len(call.sent) == n, "no invites after the ring window"
+-    assert len(call.fallbacks) == 1 and call.deletes == 0
+-    assert not call.task.done(), "the caller is still there: the ring must keep supervising"
+-    call.room.leave(CALLER)
+-    assert await call.finish() == CALLER_LEFT
+-    assert len(call.fallbacks) == 1 and call.deletes == 0
++    assert len(call.fallbacks) == 1 and call.deletes == 1
++    assert not call.room.isconnected()
+ 
+ 
+-async def test_ringing_out_with_the_senior_in_the_room_fires_once():
++async def test_ringing_out_with_the_senior_in_the_room_disconnects():
+     call = Call()
+     await until(lambda: call.sent, "first invite")
+-    call.senior_joins()                    # CallKit is ringing; the caller's mic is published
+-    await until(lambda: call.fallbacks, "no-answer stub")
++    call.senior_joins()                    # CallKit is ringing; only the caller's mic is published
++    assert await call.finish() == UNANSWERED
+     assert call.fallbacks[0]["reason"] == "timeout"
+     assert not call.ring.answered, "the CALLER's microphone must not count as an answer"
+-    call.room.leave(SENIOR)                # the phone's own ring timeout ends the CallKit call
+-    await asyncio.sleep(3 * FAST["left_grace"])
+-    assert len(call.fallbacks) == 1 and call.deletes == 0
+-    await call.close()
++    assert len(call.fallbacks) == 1 and call.deletes == 1
++    assert not call.room.isconnected()
+ 
+ 
+-async def test_decline_fires_the_stub_exactly_once():
++async def test_decline_disconnects_the_caller_after_grace():
+     call = Call(ring_timeout=1.2)
+     await until(lambda: call.sent, "first invite")
+     call.senior_joins()
+     await asyncio.sleep(SETTLE)
+     t_left = time.monotonic()
+     call.room.leave(SENIOR)                # declined: the app leaves without publishing
+-    await until(lambda: call.fallbacks, "no-answer stub")
+-    assert time.monotonic() - t_left >= 0.9 * FAST["left_grace"], "fired before the grace period"
+-    assert time.monotonic() - t_left < 1.0, "should not have waited for the ring window"
++    assert await call.finish() == UNANSWERED
++    elapsed = time.monotonic() - t_left
++    assert elapsed >= 0.9 * FAST["left_grace"], "deleted before the grace period"
++    assert elapsed < 1.0, "should not have waited for the ring window"
+     assert call.fallbacks[0]["reason"] == "declined"
+     await asyncio.sleep(1.4)               # past the ring window: must not fire a second time
+-    assert len(call.fallbacks) == 1 and call.deletes == 0 and not call.task.done()
+-    call.room.leave(CALLER)
+-    assert await call.finish() == CALLER_LEFT
+-    assert len(call.fallbacks) == 1 and call.deletes == 0
++    assert len(call.fallbacks) == 1 and call.deletes == 1
++    assert not call.room.isconnected()
+ 
+ 
+ async def test_blip_before_answering_is_not_a_decline():
+@@ -339,16 +333,48 @@ async def test_rejoin_within_grace_keeps_the_room():
+     assert call.deletes == 1 and not call.fallbacks and not call.sent
+ 
+ 
+-async def test_late_answer_after_the_ring_window_is_still_supervised():
++async def test_late_answer_cannot_cancel_unanswered_cleanup():
+     call = Call()
++    call.delete_fails = True
+     call.senior_joins()
+-    await until(lambda: call.fallbacks, "no-answer stub")
+-    call.senior_answers()                  # CallKit can ring longer than our window
+-    await until(lambda: call.ring.answered, "answered")
+-    call.room.leave(SENIOR)
+-    await until(lambda: call.deletes, "delete_room")
+-    assert await call.finish() == SENIOR_HUNG_UP
+-    assert call.deletes == 1 and len(call.fallbacks) == 1
++    await until(lambda: call.deletes, "first cleanup attempt")
++    call.senior_answers()                  # timeout already committed, deletion needs a retry
++    await asyncio.sleep(2 * FAST["poll_every"])
++    assert not call.ring.answered, "late microphone must not revive a timed-out call"
++    call.delete_fails = False
++    assert await call.finish() == UNANSWERED
++    assert call.deletes >= 2 and len(call.fallbacks) == 1
++    assert not call.room.isconnected()
++
++
++async def test_unanswered_cleanup_failure_is_reported():
++    for decline in (False, True):
++        call = Call()
++        call.delete_fails = True
++        if decline:
++            call.senior_joins()
++            await asyncio.sleep(SETTLE)
++            call.room.leave(SENIOR)
++        assert await call.finish() == CLEANUP_FAILED
++        assert call.deletes == senior_ring.DELETE_ATTEMPTS
++        assert len(call.fallbacks) == 1
++        assert call.fallbacks[0]["reason"] == ("declined" if decline else "timeout")
++        assert call.room.isconnected(), "failed cleanup must not be claimed as disconnected"
++
++
++async def test_unanswered_cleanup_timeout_and_exception_are_bounded():
++    for failure in ("timeout", "exception"):
++        call = Call(api_timeout=0.05)
++        if failure == "timeout":
++            call.delete_hangs = True
++        else:
++            async def failing_delete():
++                call.deletes += 1
++                raise RuntimeError("delete unavailable")
++            call.ring._delete_room = failing_delete
++        assert await call.finish() == CLEANUP_FAILED
++        assert call.deletes == senior_ring.DELETE_ATTEMPTS
++        assert len(call.fallbacks) == 1 and call.room.isconnected()
+ 
+ 
+ async def test_caller_leaving_stops_quietly():
+@@ -379,39 +405,39 @@ async def test_nothing_raises_when_the_api_throws():
+     for failure in ("list", "send"):
+         call = Call()
+         call.lk.room.fail = failure
+-        await until(lambda: call.fallbacks, f"stub although {failure} fails")
++        await until(lambda: call.fallbacks, f"callback although {failure} fails")
+         assert not call.sent and call.fallbacks[0]["reason"] == "timeout"
+-        call.room.leave(CALLER)
+-        assert await call.finish() == CALLER_LEFT
++        assert await call.finish() == UNANSWERED
++        assert call.deletes == 1
+ 
+     hung = Call(api_timeout=0.05)          # a request that never returns must not stall the ring
+     hung.lk.room.hang = True
+     t0 = time.monotonic()
+-    await until(lambda: hung.fallbacks, "stub although the API hangs")
++    await until(lambda: hung.fallbacks, "callback although the API hangs")
+     assert time.monotonic() - t0 < 3 * FAST["ring_timeout"]
+-    await hung.close()
++    assert await hung.finish() == UNANSWERED
++    assert hung.deletes == 1
+ 
+     def bad_mint(room_name):
+         raise ValueError("api_key and api_secret must be set")
+     no_token = Call(mint_token=bad_mint)
+-    await until(lambda: no_token.fallbacks, "stub although the token cannot be minted")
++    await until(lambda: no_token.fallbacks, "callback although the token cannot be minted")
+     assert not no_token.sent
+-    await no_token.close()
++    assert await no_token.finish() == UNANSWERED
++    assert no_token.deletes == 1
+ 
+-    def bad_stub(**kw):
++    def bad_hook(**kw):
+         raise RuntimeError("fallback boom")
+-    bad = Call(no_answer=bad_stub)
+-    await asyncio.sleep(FAST["ring_timeout"] + 0.2)
+-    assert not bad.task.done()
+-    bad.room.leave(CALLER)
+-    assert await bad.finish() == CALLER_LEFT
++    bad = Call(no_answer=bad_hook)
++    assert await bad.finish() == UNANSWERED
++    assert bad.deletes == 1
+ 
+     undeletable = Call()
+     undeletable.delete_fails = True        # swallowed error, room stays connected: retried, then given up
+     undeletable.senior_joins(mic=True)
+     await until(lambda: undeletable.ring.answered, "answered")
+     undeletable.room.leave(SENIOR)
+-    assert await undeletable.finish() == SENIOR_HUNG_UP
++    assert await undeletable.finish() == CLEANUP_FAILED
+     assert undeletable.deletes == senior_ring.DELETE_ATTEMPTS, undeletable.deletes
+ 
+     stuck = Call(api_timeout=0.05)
+@@ -419,7 +445,7 @@ async def test_nothing_raises_when_the_api_throws():
+     stuck.senior_joins(mic=True)
+     await until(lambda: stuck.ring.answered, "answered")
+     stuck.room.leave(SENIOR)
+-    assert await stuck.finish() == SENIOR_HUNG_UP
++    assert await stuck.finish() == CLEANUP_FAILED
+     assert stuck.deletes == senior_ring.DELETE_ATTEMPTS, stuck.deletes
+ 
+     broken = Call()
+@@ -551,6 +577,15 @@ async def test_start_for_job_rings_once_for_a_real_sip_caller():
+     await ctx2.shutdown()
+     assert len(ring_tasks()) == before
+ 
++    # The actual job wiring must also delete an unanswered call, even with no app online.
++    room4 = FakeRoom([Person(CALLER, SIP, {"sip.callStatus": "ringing"})])
++    ctx4 = FakeCtx(room4, FakeLK([]))
++    senior_ring.start_for_job(ctx4, **dict(opts, ring_timeout=FAST["ring_timeout"]))
++    await until(lambda: ctx4.deleted, "unanswered call deleted through ctx.delete_room")
++    assert not room4.isconnected()
++    await ctx4.shutdown()
++    assert len(ring_tasks()) == before
++
+     class NoApi(FakeCtx):
+         @property
+         def api(self):

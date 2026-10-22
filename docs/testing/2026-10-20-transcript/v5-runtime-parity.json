@@ -1,0 +1,40 @@
+{
+  "version": "V5",
+  "bundle": [
+    {
+      "version": "V5",
+      "files": {
+        "model.onnx": {
+          "sha256": "e2bece563b6da2532027fc98852fe93b343bf4deeebfc2a583a70d90a66d6bdb",
+          "bytes": 606323152
+        },
+        "tokenizer.json": {
+          "sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+          "bytes": 3583596
+        },
+        "calibration.json": {
+          "sha256": "b8f9edcefa1492d1900af7d97791cd334c2800744396b916bc52cadadeb26fe5",
+          "bytes": 174
+        }
+      }
+    }
+  ],
+  "modes": {
+    "tail": {
+      "n": 23,
+      "max_probability_difference": 1.0001027874323443e-06,
+      "mean_cpu_service_ms": 32.203326082747914,
+      "max_windows": 1,
+      "parity_passed": true
+    },
+    "windows": {
+      "n": 23,
+      "max_probability_difference": 5.832132053962269e-07,
+      "mean_cpu_service_ms": 38.91796378783234,
+      "max_windows": 3,
+      "parity_passed": true
+    }
+  },
+  "short_greeting_abstains": true,
+  "real_onnx_http_predict_assess_and_abstention": true
+}

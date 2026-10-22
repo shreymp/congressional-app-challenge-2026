@@ -75,6 +75,154 @@ final class ProductionTests: XCTestCase {
         XCTAssertFalse(store.coordinator.backend.isConfigured)
         XCTAssertFalse(store.voicemailBackend.isConfigured)
     }
+
+    func testGuardianSetupValidatesInternationalNumberAndDeduplicates() throws {
+        let repository = MemorySafetyRepository()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyRepository: repository)
+        XCTAssertThrowsError(try store.addGuardian(name: "Family", number: "3125550123"))
+        XCTAssertThrowsError(try store.addGuardian(name: " ", number: "+13125550123"))
+        try store.addGuardian(name: "Family", number: "+1 (312) 555-0123")
+        try store.addGuardian(name: "Mom", number: "+13125550123")
+        XCTAssertEqual(store.guardians.count, 1)
+        XCTAssertEqual(store.guardians.first?.name, "Mom")
+        let reloaded = ProductionStore(repository: MemoryPhoneRepository(), safetyRepository: repository)
+        XCTAssertEqual(reloaded.guardians, store.guardians)
+        reloaded.removeGuardian(try XCTUnwrap(reloaded.guardians.first))
+        XCTAssertTrue(repository.snapshot.guardians.isEmpty)
+    }
+
+    func testManualBlockPersistsAndIsSentOnlyAfterExplicitAction() async {
+        let safety = TestSafetyService()
+        let repository = MemorySafetyRepository()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyRepository: repository, safetyBackend: safety)
+        XCTAssertTrue(safety.blockRequests.isEmpty)
+        await store.blockAfterCall(person, report: true)
+        XCTAssertEqual(safety.blockRequests, [person.number])
+        XCTAssertEqual(safety.reportFlags, [true])
+        XCTAssertTrue(store.isBlocked("(312) 555-0123"))
+        XCTAssertEqual(repository.snapshot.blocks.first?.serverSynced, true)
+        await store.unblock(store.blockedNumbers[0])
+        XCTAssertFalse(store.isBlocked(person.number))
+        XCTAssertEqual(safety.unblockRequests, [person.number])
+    }
+
+    func testOfflineBlockRemainsLocalThenRetriesExplicitReport() async {
+        let safety = TestSafetyService()
+        safety.configured = false
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyBackend: safety)
+        await store.blockAfterCall(person, report: true)
+        XCTAssertTrue(store.isBlocked(person.number))
+        XCTAssertEqual(store.blockedNumbers.first?.serverSynced, false)
+        XCTAssertEqual(store.blockedNumbers.first?.reportPending, true)
+        XCTAssertTrue(safety.blockRequests.isEmpty)
+        safety.configured = true
+        await store.refreshSafety()
+        XCTAssertEqual(safety.reportFlags, [true])
+        XCTAssertEqual(store.blockedNumbers.first?.serverSynced, true)
+        XCTAssertEqual(store.blockedNumbers.first?.reportPending, false)
+    }
+
+    func testFailedServerUnblockDoesNotClaimNumberIsUnblocked() async {
+        let safety = TestSafetyService()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyBackend: safety)
+        await store.blockAfterCall(person, report: false)
+        safety.fail = true
+        await store.unblock(store.blockedNumbers[0])
+        XCTAssertTrue(store.isBlocked(person.number))
+        XCTAssertTrue(store.safetyStatus?.contains("still active") == true)
+    }
+
+    func testReportAloneDoesNotCreatePersonalBlock() async {
+        let safety = TestSafetyService()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyBackend: safety)
+        await store.reportAfterCall(person)
+        XCTAssertEqual(safety.reports, [person.number])
+        XCTAssertTrue(store.blockedNumbers.isEmpty)
+    }
+
+    func testOfflineReportDoesNotClaimNumberWasBlocked() async {
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyBackend: UnconnectedSafetyBackend())
+        await store.reportAfterCall(person)
+        XCTAssertFalse(store.isBlocked(person.number))
+        XCTAssertFalse(store.safetyStatus?.contains("is blocked") == true)
+        XCTAssertTrue(store.safetyStatus?.contains("isn’t connected") == true)
+    }
+
+    func testInternationalBlocksDoNotTreatAnExplicitCountryCodeAsAUSLocalNumber() {
+        XCTAssertFalse(SafetyNumber.matches("+13581234567", "+3581234567"))
+        XCTAssertFalse(SafetyNumber.matches("+3581234567", "+13581234567"))
+        XCTAssertTrue(SafetyNumber.matches("+3581234567", "+358 123 4567"))
+        XCTAssertFalse(SafetyNumber.matches("+3581234567", "3581234567"))
+        XCTAssertTrue(SafetyNumber.matches("+13125550123", "(312) 555-0123"))
+    }
+
+    func testUnblockCannotRaceAnInFlightBlockAndLeaveRemoteBlockBehind() async throws {
+        let safety = TestSafetyService()
+        safety.holdBlock = true
+        let store = ProductionStore(repository: MemoryPhoneRepository(), safetyBackend: safety)
+        let action = Task { await store.blockAfterCall(person, report: false) }
+        for _ in 0..<100 where safety.blockContinuation == nil { await Task.yield() }
+        let continuation = try XCTUnwrap(safety.blockContinuation)
+        await store.unblock(try XCTUnwrap(store.blockedNumbers.first))
+        XCTAssertTrue(safety.unblockRequests.isEmpty)
+        XCTAssertTrue(store.isBlocked(person.number))
+        continuation.resume()
+        await action.value
+        XCTAssertEqual(store.blockedNumbers.first?.serverSynced, true)
+        XCTAssertFalse(store.syncingSafety)
+        await store.unblock(try XCTUnwrap(store.blockedNumbers.first))
+        XCTAssertFalse(store.isBlocked(person.number))
+        XCTAssertEqual(safety.unblockRequests, [person.number])
+    }
+
+    func testInsufficientTranscriptEvidenceCannotBecomeLowRiskOrAWarning() throws {
+        let payload: [String: Any] = ["schema": 1, "type": "status", "room": "test-call", "callerIdentity": "caller",
+                                    "streamID": UUID().uuidString, "sequence": 1, "model": "real",
+                                    "transcript": ["state": "insufficient_evidence", "probability": 0.99]]
+        let update = try XCTUnwrap(TranscriptUpdate.decode(JSONSerialization.data(withJSONObject: payload)))
+        let result = update.assessment(at: start)
+        XCTAssertEqual(result.state, .insufficientEvidence)
+        XCTAssertNil(result.probability)
+        XCTAssertFalse(result.isWarning)
+        XCTAssertEqual(result.title, "Not enough transcript evidence")
+        let decoded = try JSONDecoder().decode(TranscriptAssessment.self, from: JSONEncoder().encode(result))
+        XCTAssertEqual(decoded, result)
+    }
+
+    func testGuardianDraftNeverInventsTranscriptAndRequiresExcerptOptIn() {
+        let now = Date()
+        var call = PhoneCall(id: UUID(), person: person, direction: .incoming, createdAt: now, stage: .connected)
+        let missing = GuardianMessage.draft(call: call, includeExcerpt: true)
+        XCTAssertTrue(missing.contains("No caller transcript is available"))
+        call.transcript = TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, savedExcerpt: "Please read the private code.")
+        XCTAssertFalse(GuardianMessage.draft(call: call, includeExcerpt: false).contains("private code"))
+        XCTAssertTrue(GuardianMessage.draft(call: call, includeExcerpt: true).contains("private code"))
+        XCTAssertTrue(GuardianMessage.draft(call: call, includeExcerpt: true).contains("may contain errors"))
+    }
+
+    #if targetEnvironment(simulator)
+    func testManualLocalBlockRejectsIncomingCallWithoutAnswerOrRing() async {
+        let backend = TestInboundBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), backend: backend)
+        await store.blockAfterCall(person, report: false)
+        let id = UUID()
+        backend.onEvent?(.incoming(id, person.number, person.name))
+        await Task.yield()
+        XCTAssertNil(store.active)
+        XCTAssertTrue(backend.answered.isEmpty)
+        XCTAssertEqual(backend.ended, [id])
+    }
+
+    func testBlockActionRefusesAnActiveCall() async {
+        let backend = TestInboundBackend()
+        let safety = TestSafetyService()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), backend: backend, safetyBackend: safety)
+        backend.onEvent?(.incoming(UUID(), person.number, person.name))
+        await store.blockAfterCall(person, report: true)
+        XCTAssertTrue(store.blockedNumbers.isEmpty)
+        XCTAssertTrue(safety.blockRequests.isEmpty)
+    }
+    #endif
     func testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone() async {
         let phone = TestSystemPhone(); let backend = TestInboundBackend()
         let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: TestContacts(), systemPhone: phone, backend: backend)
@@ -125,6 +273,20 @@ final class ProductionTests: XCTestCase {
         XCTAssertNil(try decode([complete]))
         XCTAssertNil(IncomingCallInvite.decode(Data("not json".utf8)))
     }
+    func testContactsMatchUSCountryCodeAndRefreshSavedNames() async {
+        XCTAssertTrue(PhoneNumber.matches("(312) 555-0123", "+13125550123"))
+        XCTAssertFalse(PhoneNumber.matches("", ""))
+        XCTAssertFalse(PhoneNumber.matches("+443125550123", "+13125550123"))
+        let service = TestContacts(); service.access = .available
+        service.people = [PhoneNumber.person("3125550123", name: "Updated Name")]
+        let store = ProductionStore(repository: MemoryPhoneRepository(), contactsService: service)
+        store.mergeHistory([record()])
+        store.toggleFavorite(person)
+        await store.refreshContacts()
+        XCTAssertEqual(store.history.first?.person.name, "Updated Name")
+        XCTAssertEqual(store.favorites.first?.name, "Updated Name")
+    }
+
     func testNumberNormalizationAndRejection() throws {
         XCTAssertEqual(try PhoneNumber.normalized("+1 (312) 555-0123"), "+13125550123")
         XCTAssertEqual(try PhoneNumber.normalized("*123#"), "*123#")
@@ -393,3 +555,30 @@ private final class FailingRepository: PhoneRepository {
     func delete(id: String) async throws { if let failure { throw failure }; items.removeAll { $0.id == id } }
 }
 
+
+@MainActor
+private final class TestSafetyService: SafetyBackend {
+    var configured = true
+    var fail = false
+    var holdBlock = false
+    var blockContinuation: CheckedContinuation<Void, Never>?
+    var blockRequests: [String] = []
+    var reportFlags: [Bool] = []
+    var unblockRequests: [String] = []
+    var reports: [String] = []
+    var isConfigured: Bool { configured }
+    func blocks() async throws -> [ServerBlock] { [] }
+    func block(number: String, report: Bool) async throws {
+        if fail { throw SafetyError.requestFailed(503) }
+        if holdBlock { await withCheckedContinuation { blockContinuation = $0 } }
+        blockRequests.append(number); reportFlags.append(report)
+    }
+    func unblock(number: String) async throws {
+        if fail { throw SafetyError.requestFailed(503) }
+        unblockRequests.append(number)
+    }
+    func report(number: String, category: String) async throws {
+        if fail { throw SafetyError.requestFailed(503) }
+        reports.append(number)
+    }
+}

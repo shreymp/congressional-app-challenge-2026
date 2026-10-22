@@ -148,8 +148,10 @@ not claim to deploy a hosted container or upload model weights.
    `jev_unavailable` with a null probability while deepfake updates continue.
    Restart the connector; the latest context is retried automatically.
 5. Hang up in the app. Confirm room deletion and phone disconnection. Also test
-   caller hang-up and a call that is not answered. The existing no-answer handler
-   is still a stub; it does not take voicemail or notify family.
+   caller hang-up and a call that is not answered. The ring supervisor disconnects unanswered callers by deleting the call room, after
+   the ring timeout or a 5 s grace period following an observed decline. An early decline
+   before the app joins can take the full ring timeout. The optional no-answer hook
+   only logs; it does not take voicemail or notify family.
 
 The worker sends caller PCM, including silence, to Vosk. Only the deepfake branch
 uses the speech energy gate. Each call has its own recognizer and bounded context;

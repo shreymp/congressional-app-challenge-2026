@@ -1,0 +1,139 @@
+{
+  "base": "backend/jev-posttrain/runs/call-v3-real",
+  "seed": 20261020,
+  "lr": 4e-06,
+  "history": [
+    {
+      "epoch": 0,
+      "temperature": 3.8004611765383216,
+      "validation": {
+        "n": 416,
+        "positives": 198,
+        "negatives": 218,
+        "accuracy": 0.9639423076923077,
+        "precision": 0.9420289855072463,
+        "recall": 0.9848484848484849,
+        "specificity": 0.944954128440367,
+        "f1": 0.9629629629629629,
+        "brier": 0.03107057698071003,
+        "nll": 0.12874864041805267,
+        "ece_10_bin": 0.02880133053090851,
+        "confusion": {
+          "tp": 195,
+          "tn": 206,
+          "fp": 12,
+          "fn": 3
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.0006802069838158786,
+        "nll": 0.022720711305737495,
+        "ece_10_bin": 0.022370356465539625,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "authored_validation": {
+        "n": 24,
+        "positives": 12,
+        "negatives": 12,
+        "accuracy": 0.625,
+        "precision": 0.5714285714285714,
+        "recall": 1.0,
+        "specificity": 0.25,
+        "f1": 0.7272727272727273,
+        "brier": 0.3237496018409729,
+        "nll": 1.1811946630477905,
+        "ece_10_bin": 0.35257588823636377,
+        "confusion": {
+          "tp": 12,
+          "tn": 3,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "selection_loss": 0.6549716517329216,
+      "elapsed_sec": 10.526308375177905
+    },
+    {
+      "epoch": 1,
+      "temperature": 3.3832018672876054,
+      "validation": {
+        "n": 416,
+        "positives": 198,
+        "negatives": 218,
+        "accuracy": 0.9567307692307693,
+        "precision": 0.9245283018867925,
+        "recall": 0.98989898989899,
+        "specificity": 0.926605504587156,
+        "f1": 0.9560975609756097,
+        "brier": 0.03138510882854462,
+        "nll": 0.1111876592040062,
+        "ece_10_bin": 0.030770655770678636,
+        "confusion": {
+          "tp": 196,
+          "tn": 202,
+          "fp": 16,
+          "fn": 2
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.001408195705153048,
+        "nll": 0.02410547062754631,
+        "ece_10_bin": 0.023338862244159944,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "authored_validation": {
+        "n": 24,
+        "positives": 12,
+        "negatives": 12,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.004441861994564533,
+        "nll": 0.06150763854384422,
+        "ece_10_bin": 0.05914218739295999,
+        "confusion": {
+          "tp": 12,
+          "tn": 12,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "selection_loss": 0.08634764887392521,
+      "elapsed_sec": 202.15199083299376
+    }
+  ],
+  "real_training": 479,
+  "augmented_training": 479,
+  "authored_training": 104,
+  "authored_validation": 24,
+  "test_access": "none in training script; second-stage hard cases motivated by exploratory benchmark failures",
+  "deployment": "research candidate only; evaluate before promotion"
+}
