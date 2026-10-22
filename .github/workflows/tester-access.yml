@@ -1,0 +1,41 @@
+name: Tester app access
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/tester_access.py'
+      - '.github/workflows/tester-access.yml'
+permissions:
+  contents: read
+jobs:
+  app-access:
+    if: github.ref == 'refs/heads/main' && github.event.repository.private == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install token signing library
+        run: python -m pip install livekit-api livekit
+      - name: Create limited app settings from server secrets
+        env:
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+        run: python scripts/tester_access.py issue --output /tmp/tester-access/CallshieldTester.json
+      - name: Verify receive-only app connection and invitation delivery
+        env:
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+        run: python scripts/tester_access.py verify
+      - name: Private tester download
+        uses: actions/upload-artifact@v4
+        with:
+          name: callshield-tester-access
+          path: /tmp/tester-access/CallshieldTester.json
+          retention-days: 7
+          if-no-files-found: error

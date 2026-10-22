@@ -1,0 +1,29 @@
+// Callshield app target: checked-in defaults (Debug and Release).
+//
+// Do not put a team, a personal bundle identifier or a token in this file.
+// Copy Local.xcconfig.example to Local.xcconfig (gitignored) and override there.
+// A value set in Xcode's Build Settings or Signing editor is stored in
+// project.pbxproj; it overrides both files and is lost when the project is
+// regenerated.
+//
+// "//" starts a comment anywhere on a line, so a value can never contain it.
+// That is why the LiveKit setting is a host, not a wss:// URL.
+
+PRODUCT_BUNDLE_IDENTIFIER = org.callshield.Callshield
+
+// true = TSX demo, false = production phone interface.
+CALLSHIELD_DEMO = false
+CALLSHIELD_DEFAULT_DIALER = false
+
+// Empty = sign without an entitlements file. Keep it empty unless your
+// provisioning grants the capability: a free Apple "Personal Team" cannot sign
+// aps-environment.
+CALLSHIELD_ENTITLEMENTS_FILE =
+APS_ENVIRONMENT = development
+
+// LiveKit calling (foreground-only ring). Both are needed; empty = not configured.
+CALLSHIELD_LIVEKIT_HOST =
+CALLSHIELD_LOBBY_TOKEN =
+
+// Optional and untracked. Keep this the last line so its values win.
+#include? "Local.xcconfig"
