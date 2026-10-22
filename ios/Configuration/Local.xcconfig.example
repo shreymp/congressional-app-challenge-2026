@@ -1,6 +1,6 @@
 // Copy this file to Local.xcconfig in the same folder, then uncomment the
 // settings you need and replace their values. Local.xcconfig is gitignored and
-// is included at the end of Callshield.xcconfig, so every setting you uncomment
+// is included at the end of Callma.xcconfig, so every setting you uncomment
 // overrides the checked-in default. A fresh copy changes nothing.
 //
 // "//" starts a comment anywhere on a line: never paste a value that contains
@@ -13,14 +13,14 @@
 
 // Must be unique to you: Xcode cannot register an identifier that another
 // team already uses.
-// PRODUCT_BUNDLE_IDENTIFIER = com.example.yourname.Callshield
+// PRODUCT_BUNDLE_IDENTIFIER = com.example.yourname.Callma
 
 // false = production phone interface (required for LiveKit calling).
-// CALLSHIELD_DEMO = false
+// CALLMA_DEMO = false
 
 // Replace both lines with the two lines printed by
 // backend/AI Deepfake Pipeline/LiveKit Setup/tools/mint_lobby_token.py
 // The host is the LiveKit project host only: no wss://, no path.
 // The token is a credential and it expires; mint a new one when it does.
-// CALLSHIELD_LIVEKIT_HOST = your-project.livekit.cloud
-// CALLSHIELD_LOBBY_TOKEN = paste-the-token-here
+// CALLMA_LIVEKIT_HOST = your-project.livekit.cloud
+// CALLMA_LOBBY_TOKEN = paste-the-token-here

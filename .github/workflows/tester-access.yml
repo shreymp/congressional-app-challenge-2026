@@ -25,7 +25,7 @@ jobs:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
           LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
           LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
-        run: python scripts/tester_access.py issue --output /tmp/tester-access/CallshieldTester.json
+        run: python scripts/tester_access.py issue --output /tmp/tester-access/CallmaTester.json
       - name: Verify receive-only app connection and invitation delivery
         env:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
@@ -35,7 +35,7 @@ jobs:
       - name: Private tester download
         uses: actions/upload-artifact@v4
         with:
-          name: callshield-tester-access
-          path: /tmp/tester-access/CallshieldTester.json
+          name: callma-tester-access
+          path: /tmp/tester-access/CallmaTester.json
           retention-days: 7
           if-no-files-found: error
