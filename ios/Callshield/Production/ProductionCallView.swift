@@ -10,82 +10,108 @@ struct ProductionCallView: View {
     /// A service that cannot hold a call or send keypad tones (LiveKit) does not get buttons that can only fail.
     @MainActor private var offersHoldAndKeypad: Bool { store.coordinator.backend.supportsHoldAndKeypad }
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
-                VStack(spacing: 18) {
-                    Label("Callshield", systemImage: "checkmark.shield").font(.subheadline).foregroundStyle(Color(hex: 0xD3DFD7))
+        ScrollView {
+            VStack(spacing: 20) {
+                VStack(spacing: 4) {
+                    Wordmark()
                     #if targetEnvironment(simulator)
-                    Text("Simulator call test").font(.caption).foregroundStyle(Color(hex: 0xD3DFD7))
+                    Text("Simulator call test").font(.callout).foregroundStyle(Theme.textSecondary)
                     #endif
-                    Avatar(person: call.person, size: 80).padding(.top, 12)
-                    Text(call.person.name).font(.title.weight(.medium))
-                    Text(call.person.number).font(.subheadline).foregroundStyle(Color(hex: 0xBDCCC3))
-                    Text(status).monospacedDigit().foregroundStyle(Color(hex: 0x9FB5A8))
-                    if call.connectedAt != nil {
-                        VStack(spacing: 10) {
-                            Text("Voice / deepfake analysis").font(.caption.weight(.semibold))
-                            VoiceBadge(voice: call.voice, size: 13, onCall: true)
-                            Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
-                            if let previous = call.lastDeepfakeResult,
-                               let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
-                                Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
-                            }
-                            Text("Not an identity check").font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
-                        }.padding(16).frame(maxWidth: .infinity)
-                            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+                }
+                VStack(spacing: 8) {
+                    Avatar(person: call.person, size: call.connectedAt == nil ? 104 : 80)
+                    Text(call.person.name).font(.largeTitle.weight(.semibold)).foregroundStyle(Theme.textPrimary)
+                        .lineLimit(2).minimumScaleFactor(0.7).accessibilityAddTraits(.isHeader)
+                    if !call.person.number.isEmpty && call.person.number != call.person.name {
+                        Text(call.person.number).font(.title3).foregroundStyle(Theme.textSecondary)
                     }
-                    if call.connectedAt != nil {
-                        let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
-                        VStack(spacing: 8) {
-                            Label("Transcript analysis", systemImage: "text.bubble").font(.caption.weight(.semibold))
-                            Text(text.title).font(.subheadline.weight(.semibold))
-                                .foregroundStyle(text.isWarning ? Color(hex: 0xFFD59A) : Color.white)
-                                .accessibilityIdentifier("transcriptAssessmentTitle")
-                            Text(text.message).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
-                                .accessibilityIdentifier("transcriptAssessmentScore")
-                            Text("Based on the caller’s words. A low score does not prove a call is safe.")
-                                .font(.caption2).foregroundStyle(Color(hex: 0x8DA597))
-                        }.padding(16).frame(maxWidth: .infinity)
-                            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+                    Text(status).font(.title3.weight(.medium)).monospacedDigit().foregroundStyle(Theme.textSecondary)
+                }
+                if call.connectedAt != nil {
+                    VoiceStatusCard(voice: displayedVoice, heading: "Voice check", message: assessment) {
+                        if let previous = call.lastDeepfakeResult,
+                           let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
+                            Text("Last result: \(previous.voice.label)").font(.callout.weight(.semibold))
+                                .foregroundStyle(Theme.textPrimary)
+                        }
+                        Text("Not an identity check").font(.callout).foregroundStyle(Theme.textSecondary)
                     }
-                    Spacer(minLength: 20)
-                    if call.stage == .incoming {
-                        HStack {
-                            action("Decline", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
-                            Spacer()
-                            action("Accept", "phone.fill", color: Color(hex: 0x32C968)) { try await store.coordinator.answer() }
-                        }.padding(.horizontal, 12)
-                    } else {
-                        if showingKeypad {
-                            PhoneKeypad { digit in perform { try await store.coordinator.sendDTMF(digit) } }
-                        } else {
-                            HStack(spacing: 24) {
-                                action(call.muted ? "unmute" : "mute", call.muted ? "mic.slash" : "mic", selected: call.muted) {
-                                    try await store.coordinator.setMuted(!call.muted)
-                                }
-                                action("speaker", "speaker.wave.2", selected: call.speaker) {
-                                    try store.coordinator.setSpeaker(!call.speaker)
-                                }
-                                if offersHoldAndKeypad {
-                                    action(call.stage == .held ? "resume" : "hold", "pause", selected: call.stage == .held) {
-                                        try await store.coordinator.setHeld(call.stage != .held)
-                                    }
-                                }
-                            }.disabled(call.connectedAt == nil)
+                    let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Label("Scam-language check", systemImage: "text.bubble")
+                            .font(.callout.weight(.semibold)).foregroundStyle(Theme.textSecondary)
+                            .accessibilityAddTraits(.isHeader)
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Image(systemName: text.isWarning ? "exclamationmark.triangle.fill" : "text.magnifyingglass")
+                                .accessibilityHidden(true)
+                            Text(text.title).accessibilityIdentifier("transcriptAssessmentTitle")
+                        }
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(text.isWarning ? Theme.statusAI : Theme.textPrimary)
+                        Text(text.message).font(.body).foregroundStyle(Theme.textPrimary)
+                            .accessibilityIdentifier("transcriptAssessmentScore")
+                        Text("Based on the caller’s words. A low score does not prove a call is safe.")
+                            .font(.callout).foregroundStyle(Theme.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .card(background: text.isWarning ? Theme.statusAIBackground : Theme.backgroundSurface,
+                          border: text.isWarning ? Theme.statusAI : Theme.borderDecorative)
+                }
+            }
+            .padding(.horizontal, 24).padding(.vertical, 16)
+            .frame(maxWidth: 520).frame(maxWidth: .infinity)
+        }
+        .scrollIndicators(.hidden)
+        .safeAreaInset(edge: .bottom, spacing: 0) { controls }
+        .multilineTextAlignment(.center)
+        .background(Theme.backgroundPrimary.ignoresSafeArea())
+        .onReceive(clock) { now = $0 }
+    }
+    /// Answer and end controls stay pinned to the bottom so they are never scrolled out of reach.
+    @ViewBuilder private var controls: some View {
+        VStack(spacing: 16) {
+            if call.stage == .incoming {
+                Text("Callshield checks the voice after you answer.")
+                    .font(.callout).foregroundStyle(Theme.textSecondary)
+                HStack {
+                    control("Decline", "phone.down.fill", style: .decline, size: 84) { try await store.coordinator.end() }
+                    Spacer()
+                    control("Accept", "phone.fill", style: .accept, size: 84) { try await store.coordinator.answer() }
+                }.padding(.horizontal, 16)
+            } else {
+                if showingKeypad {
+                    PhoneKeypad { digit in perform { try await store.coordinator.sendDTMF(digit) } }
+                } else {
+                    HStack(spacing: 20) {
+                        control("Mute", call.muted ? "mic.slash.fill" : "mic.fill", style: .toggle(call.muted)) {
+                            try await store.coordinator.setMuted(!call.muted)
+                        }
+                        control("Speaker", "speaker.wave.2.fill", style: .toggle(call.speaker)) {
+                            try store.coordinator.setSpeaker(!call.speaker)
                         }
                         if offersHoldAndKeypad {
-                            Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
-                                .disabled(call.connectedAt == nil).padding(8)
+                            control(call.stage == .held ? "Resume" : "Hold", "pause.fill", style: .toggle(call.stage == .held)) {
+                                try await store.coordinator.setHeld(call.stage != .held)
+                            }
                         }
-                        action("End call", "phone.down.fill", color: Color(hex: 0xF44E54)) { try await store.coordinator.end() }
-                    }
+                    }.disabled(call.connectedAt == nil)
                 }
-                .padding(28).frame(maxWidth: 500).frame(minHeight: geometry.size.height).frame(maxWidth: .infinity)
-            }.scrollIndicators(.hidden)
+                if offersHoldAndKeypad {
+                    Button(showingKeypad ? "Hide keypad" : "Show keypad") { showingKeypad.toggle() }
+                        .buttonStyle(ActionButtonStyle(kind: .secondary))
+                        .disabled(call.connectedAt == nil)
+                }
+                Button { perform { try await store.coordinator.end() } } label: {
+                    Label("End call", systemImage: "phone.down.fill")
+                }
+                .buttonStyle(ActionButtonStyle(kind: .destructive)).disabled(busy)
+            }
         }
-        .multilineTextAlignment(.center).foregroundStyle(.white)
-        .background(RadialGradient(colors: [Color(hex: 0x3A554C), Color(hex: 0x25382F), Color(hex: 0x131F1C)], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
-        .onReceive(clock) { now = $0 }
+        .padding(.horizontal, 24).padding(.top, 12).padding(.bottom, 8)
+        .frame(maxWidth: 520).frame(maxWidth: .infinity)
+        .background(Theme.backgroundPrimary.ignoresSafeArea(edges: .bottom))
     }
     private var status: String {
         switch call.stage {
@@ -95,6 +121,8 @@ struct ProductionCallView: View {
         case .connected: return callDuration(call.connectedAt.map { max(0, Int(now.timeIntervalSince($0))) } ?? 0)
         }
     }
+    /// Waiting for enough speech is the start of a check, so it looks like Analyzing rather than an inconclusive result.
+    private var displayedVoice: Voice { call.deepfake?.state == .waiting ? .analyzing : call.voice }
     private var assessment: String {
         if let deepfake = call.deepfake { return deepfake.message }
         switch call.voice {
@@ -104,16 +132,9 @@ struct ProductionCallView: View {
         case .unknown: return "A voice assessment is not available."
         }
     }
-    private func action(_ title: String, _ symbol: String, color: Color = .white.opacity(0.13), selected: Bool = false,
-                        operation: @escaping () async throws -> Void) -> some View {
-        Button { perform(operation) } label: {
-            VStack(spacing: 9) {
-                Image(systemName: symbol).font(.system(size: 27))
-                    .foregroundStyle(selected ? Color(hex: 0x273C31) : .white)
-                    .frame(width: 64, height: 64).background(selected ? .white : color, in: Circle())
-                Text(title).font(.caption)
-            }
-        }.buttonStyle(.plain).disabled(busy).accessibilityValue(selected ? "On" : "Off")
+    private func control(_ title: String, _ symbol: String, style: CallControlButton.Style, size: CGFloat = 76,
+                         operation: @escaping () async throws -> Void) -> some View {
+        CallControlButton(title: title, symbol: symbol, style: style, size: size) { perform(operation) }.disabled(busy)
     }
     private func perform(_ operation: @escaping () async throws -> Void) {
         guard !busy else { return }
