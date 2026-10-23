@@ -22,6 +22,12 @@ struct ProductionCallView: View {
         guard let voice = call.deepfake, [.human, .ai, .uncertain].contains(voice.state) else { return nil }
         return voice.aiScore
     }
+    private var voiceAssessment: DeepfakeAssessment {
+        let value = call.deepfake ?? DeepfakeAssessment(state: .analyzing, updatedAt: now)
+        guard let connectedAt = call.connectedAt,
+              now.timeIntervalSince(connectedAt) >= DeepfakeAssessment.initialDeadline else { return value }
+        return value.finalized(at: now)
+    }
     private var needsSafetySteps: Bool { (transcriptScore ?? 0) >= 0.75 || (voiceScore ?? 0) >= 0.75 }
     private var veryHighSignal: Bool { (transcriptScore ?? 0) >= 0.9 || (voiceScore ?? 0) >= 0.9 }
 
