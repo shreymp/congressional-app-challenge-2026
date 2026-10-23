@@ -74,14 +74,13 @@ struct ProductionCallView: View {
                 VStack(spacing: 10) {
                     Text("Caller’s voice").font(.caption.weight(.semibold))
                     HStack(spacing: 4) {
-                        VoiceBadge(voice: call.voice, size: 13, onCall: true)
-                        ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Unknown means there is not enough information.", onDark: true)
+                        Text(voiceAssessment.title).font(.subheadline.weight(.semibold))
+                            .accessibilityIdentifier("deepfakeAssessmentTitle")
+                        ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Inconclusive means there is not enough information.", onDark: true)
                     }
                     Text(assessment).font(.caption).foregroundStyle(Palette.secondary)
-                    if let voiceScore {
-                        Text("Experimental voice warning score: \(Int((voiceScore * 100).rounded())) out of 100")
-                            .font(.caption).foregroundStyle(Palette.secondary)
-                    }
+                    Text(voiceAssessment.scoreText).font(.caption).foregroundStyle(Palette.secondary)
+                        .accessibilityIdentifier("deepfakeAssessmentScore")
                     if let previous = call.lastDeepfakeResult,
                        let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
                         Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
