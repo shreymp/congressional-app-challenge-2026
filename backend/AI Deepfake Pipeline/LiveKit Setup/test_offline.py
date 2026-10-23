@@ -85,7 +85,7 @@ def main():
         print(f"\ninference ms: median {statistics.median(times):.0f}, max {max(times):.0f}"
               f"  (must stay well under 1000 ms to keep up with once-per-second scoring)")
     else:
-        print("Not enough speech for a single window (needs ~3 s of voiced audio).")
+        print("No eligible window (needs 4 s of contiguous audio with at least 1.5 s of speech).")
 
 
 if __name__ == "__main__":

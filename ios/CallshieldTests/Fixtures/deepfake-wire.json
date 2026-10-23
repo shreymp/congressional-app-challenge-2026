@@ -160,6 +160,90 @@
         "streamID": "00000000-0000-4000-8000-000000000001",
         "sequence": 8
       }
+    },
+    {
+      "name": "cumulative_human",
+      "expected": "human",
+      "payload": {
+        "type": "risk",
+        "deepfake": {
+          "method": "call-evidence-v1",
+          "state": "human",
+          "score": 1.8,
+          "score_kind": "heuristic",
+          "recent_ai": false,
+          "max_ai_run": 0,
+          "level": "listening",
+          "updates": 3,
+          "human_steps": 3,
+          "p_last": 0.11920292202211755,
+          "logit_last": -2,
+          "p_smoothed": 0.39983021672785063,
+          "logit_smoothed": -0.406
+        },
+        "schema": 1,
+        "room": "call-test",
+        "callerIdentity": "sip-test",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000001",
+        "sequence": 9
+      }
+    },
+    {
+      "name": "cumulative_ai",
+      "expected": "ai",
+      "payload": {
+        "type": "risk",
+        "deepfake": {
+          "method": "call-evidence-v1",
+          "state": "ai",
+          "score": 85.4,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999999979388463,
+          "logit_last": 20,
+          "p_smoothed": 0.9999999979388463,
+          "logit_smoothed": 20.0
+        },
+        "schema": 1,
+        "room": "call-test",
+        "callerIdentity": "sip-test",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000001",
+        "sequence": 10
+      }
+    },
+    {
+      "name": "cumulative_mixed",
+      "expected": "uncertain",
+      "payload": {
+        "type": "risk",
+        "deepfake": {
+          "method": "call-evidence-v1",
+          "state": "uncertain",
+          "score": 50.0,
+          "score_kind": "heuristic",
+          "recent_ai": false,
+          "max_ai_run": 0,
+          "level": "elevated",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999989322971299,
+          "logit_last": 13.75,
+          "p_smoothed": 0.9999989322971299,
+          "logit_smoothed": 13.75
+        },
+        "schema": 1,
+        "room": "call-test",
+        "callerIdentity": "sip-test",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000001",
+        "sequence": 11
+      }
     }
   ]
 }

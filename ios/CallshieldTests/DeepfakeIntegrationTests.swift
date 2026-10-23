@@ -75,7 +75,7 @@ final class DeepfakeIntegrationTests: XCTestCase {
         XCTAssertNil(session.current?.deepfake)
         session.connected(id: id, at: now)
         session.assessDeepfake(id: other, assessment: assessment)
-        XCTAssertNil(session.current?.deepfake)
+        XCTAssertEqual(session.current?.deepfake?.state, .analyzing)
         session.assessDeepfake(id: id, assessment: assessment)
         XCTAssertEqual(session.current?.voice, .ai)
         session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .waiting, updatedAt: now.addingTimeInterval(5)))
@@ -134,6 +134,85 @@ final class DeepfakeIntegrationTests: XCTestCase {
         let decoded = try JSONDecoder().decode(PhoneCallRecord.self, from: JSONSerialization.data(withJSONObject: old))
         XCTAssertNil(decoded.deepfake)
         XCTAssertEqual(decoded.voice, .human)
+    }
+
+    func testFifteenSecondDeadlineUsesCallConnectionNotSpeechDuration() {
+        var session = PhoneSessionState()
+        let id = UUID()
+        _ = session.begin(PhoneCall(id: id, person: PhoneNumber.person("+13125550123"),
+                                   direction: .incoming, createdAt: now.addingTimeInterval(-40), stage: .incoming))
+        session.connected(id: id, at: now)
+        XCTAssertEqual(session.current?.deepfake?.title, "Analyzing")
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(14.999))
+        XCTAssertEqual(session.current?.deepfake?.state, .analyzing)
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(15))
+        XCTAssertEqual(session.current?.deepfake?.title, "Inconclusive")
+        XCTAssertNil(session.current?.deepfake?.score)
+        // Late warm-up heartbeats cannot bring Analyzing back after the deadline.
+        session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .analyzing, updatedAt: now.addingTimeInterval(16), windows: 1, score: 10))
+        XCTAssertEqual(session.current?.deepfake?.state, .uncertain)
+        XCTAssertEqual(session.current?.deepfake?.score, 10)
+        session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .human, updatedAt: now.addingTimeInterval(20), windows: 2, score: 12))
+        XCTAssertEqual(session.current?.deepfake?.title, "Human")
+        XCTAssertEqual(session.current?.deepfake?.scoreText, "AI score: 12/100")
+    }
+
+    func testDeadlineAndPauseDoNotEraseAnEarlyVerdictOrScore() {
+        var session = PhoneSessionState()
+        let id = UUID()
+        _ = session.begin(PhoneCall(id: id, person: PhoneNumber.person("+13125550123"),
+                                   direction: .incoming, createdAt: now, stage: .incoming))
+        session.connected(id: id, at: now)
+        let early = DeepfakeAssessment(state: .ai, updatedAt: now.addingTimeInterval(9), windows: 2, score: 87, recentAI: true)
+        session.assessDeepfake(id: id, assessment: early)
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(15))
+        XCTAssertEqual(session.current?.deepfake, early)
+        session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .waiting, updatedAt: now.addingTimeInterval(25)))
+        XCTAssertEqual(session.current?.deepfake, early)
+        XCTAssertEqual(session.finish(id: id, outcome: .completed, at: now.addingTimeInterval(30))?.deepfake, early)
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(31))
+        XCTAssertNil(session.current)
+    }
+
+    func testCumulativeContractRejectsMissingAndOutOfRangeScoreFields() throws {
+        let object = try payload(named: "cumulative_ai")
+        let e = try XCTUnwrap(object["deepfake"] as? [String: Any])
+        for key in ["score", "score_kind", "state", "recent_ai", "method"] {
+            var invalid = object, evidence = e
+            evidence[key] = nil; invalid["deepfake"] = evidence
+            XCTAssertNil(DeepfakeUpdate.decode(try JSONSerialization.data(withJSONObject: invalid)), key)
+        }
+        for score in [-1.0, 101.0] {
+            var invalid = object, evidence = e
+            evidence["score"] = score; invalid["deepfake"] = evidence
+            XCTAssertNil(DeepfakeUpdate.decode(try JSONSerialization.data(withJSONObject: invalid)))
+        }
+        let result = try decode(object).assessment(at: now)
+        XCTAssertEqual(result.title, "Likely AI")
+        XCTAssertNotNil(result.score)
+        let data = try JSONEncoder().encode(result)
+        XCTAssertEqual(try JSONDecoder().decode(DeepfakeAssessment.self, from: data), result)
+    }
+
+    @MainActor
+    func testCoordinatorActuallySchedulesDeadlineAndLateEvidenceRecovers() async throws {
+        let backend = TranscriptTestBackend()
+        let store = ProductionStore(repository: MemoryPhoneRepository(), backend: backend)
+        let id = UUID(), connectedAt = Date().addingTimeInterval(-15)
+        backend.onEvent?(.incoming(id, "+13125550123", nil))
+        backend.onEvent?(.connected(id, connectedAt))
+        // An already-due connection exercises the real scheduled task without a 15s test delay.
+        for _ in 0..<100 {
+            if store.active?.deepfake?.state == .uncertain { break }
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        XCTAssertEqual(store.active?.deepfake?.state, .uncertain)
+        XCTAssertNil(store.active?.deepfake?.score)
+        backend.onEvent?(.deepfakeAssessment(id, DeepfakeAssessment(state: .human, updatedAt: Date(), windows: 2, score: 12)))
+        XCTAssertEqual(store.active?.deepfake?.title, "Human")
+        XCTAssertEqual(store.active?.deepfake?.score, 12)
+        backend.onEvent?(.ended(id, .completed, Date()))
+        XCTAssertEqual(store.history.first?.deepfake?.score, 12)
     }
 
     @MainActor

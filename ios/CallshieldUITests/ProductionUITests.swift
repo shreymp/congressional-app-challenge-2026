@@ -60,6 +60,15 @@ final class ProductionUITests: XCTestCase {
         reveal(app.buttons["End call"])
         XCTAssertTrue(app.buttons["End call"].isHittable)
     }
+    func testInitialDeadlineShowsInconclusiveWithoutInventingScore() {
+        app.terminate()
+        app.launchArguments = ["--ui-test-production", "--ui-test-analysis", "--ui-test-analysis-deadline"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["deepfakeAssessmentTitle"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Inconclusive")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentScore"].label, "AI score unavailable")
+        snapshot("Production-13-Initial-Verdict-Deadline")
+    }
     func testKeypadAndSimulatorCallError() {
         selectTab("Keypad")
         snapshot("Production-06-Keypad")
@@ -169,4 +178,3 @@ final class ProductionUITests: XCTestCase {
     }
 
 }
-

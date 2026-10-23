@@ -349,4 +349,3 @@ final class MemoryPhoneRepository: PhoneRepository {
     func load() throws -> PhoneSnapshot { snapshot }
     func save(_ snapshot: PhoneSnapshot) throws { self.snapshot = snapshot }
 }
-

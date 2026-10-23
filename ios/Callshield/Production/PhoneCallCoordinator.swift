@@ -11,6 +11,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     private let controller = CXCallController()
     private var registry: PKPushRegistry?
     private var session = PhoneSessionState()
+    private var initialAssessmentTask: Task<Void, Never>?
     var onCallChanged: ((PhoneCall?) -> Void)?
     var onRecord: ((PhoneCallRecord) -> Void)?
     var onError: ((String) -> Void)?
@@ -32,7 +33,11 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         configuration.includesCallsInRecents = true
         provider = CXProvider(configuration: configuration)
         super.init()
+        #if !targetEnvironment(simulator)
+        // Simulator calls are managed directly by the backend. Unsupported CallKit
+        // can asynchronously reset its provider and otherwise tear down that call.
         provider.setDelegate(self, queue: .main)
+        #endif
         backend.onEvent = { [weak self] event in self?.receive(event) }
     }
 
@@ -148,6 +153,8 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     private func changed() { onCallChanged?(active) }
     private func finish(_ id: UUID, outcome: PhoneCallOutcome, reason: CXCallEndedReason, at date: Date = Date()) {
         guard let record = session.finish(id: id, outcome: outcome, at: date) else { return }
+        initialAssessmentTask?.cancel()
+        initialAssessmentTask = nil
         #if targetEnvironment(simulator)
         backend.deactivateAudio(AVAudioSession.sharedInstance())
         #else
@@ -160,8 +167,16 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     private func receive(_ event: CallingEvent) {
         switch event {
         case .connected(let id, let date):
-            guard active?.id == id else { return }
+            guard active?.id == id, active?.connectedAt == nil else { return }
             session.connected(id: id, at: date)
+            initialAssessmentTask?.cancel()
+            initialAssessmentTask = Task { @MainActor [weak self] in
+                let remaining = max(0, date.addingTimeInterval(DeepfakeAssessment.initialDeadline).timeIntervalSinceNow)
+                do { try await Task.sleep(nanoseconds: UInt64(remaining * 1_000_000_000)) } catch { return }
+                guard let self, self.active?.id == id else { return }
+                self.session.finalizeInitialAssessment(id: id, at: Date())
+                self.changed()
+            }
             #if !targetEnvironment(simulator)
             if active?.direction == .outgoing { provider.reportOutgoingCall(with: id, connectedAt: date) }
             #endif
@@ -421,5 +436,3 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         }
     }
 }
-
-

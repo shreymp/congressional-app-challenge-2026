@@ -485,7 +485,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         let now = Date()
         call?.connectedAt = now
         onEvent?(.connected(current.invite.callID, now))
-        onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .waiting, updatedAt: now)))
+        onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .analyzing, updatedAt: now)))
         onEvent?(.transcriptAssessment(current.invite.callID, TranscriptAssessment(state: .listening, updatedAt: now)))
         startAssessmentWatchdog(callID: current.invite.callID)
     }
@@ -654,5 +654,3 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         Task { @MainActor in self.roomReconnected(room) }
     }
 }
-
-
