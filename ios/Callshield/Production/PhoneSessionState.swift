@@ -14,6 +14,7 @@ struct PhoneSessionState {
         current?.connectedAt = date
         current?.stage = .connected
         current?.voice = .analyzing
+        current?.deepfake = DeepfakeAssessment(state: .analyzing, updatedAt: date)
     }
     mutating func connecting(id: UUID) {
         guard current?.id == id, current?.stage == .incoming else { return }
