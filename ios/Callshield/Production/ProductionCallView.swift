@@ -77,6 +77,11 @@ struct ProductionCallView: View {
                         VoiceBadge(voice: call.voice, size: 13, onCall: true)
                         ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Unknown means there is not enough information.", onDark: true)
                     }
+                    Text(voiceAssessment.title).font(.subheadline.weight(.semibold))
+                        .foregroundStyle(voiceAssessment.state == .ai ? Palette.warning : Palette.ink)
+                        .accessibilityIdentifier("deepfakeAssessmentTitle")
+                    Text(voiceAssessment.scoreText).font(.caption).foregroundStyle(Palette.secondary)
+                        .accessibilityIdentifier("deepfakeAssessmentScore")
                     Text(assessment).font(.caption).foregroundStyle(Palette.secondary)
                     if let voiceScore {
                         Text("Experimental voice warning score: \(Int((voiceScore * 100).rounded())) out of 100")
