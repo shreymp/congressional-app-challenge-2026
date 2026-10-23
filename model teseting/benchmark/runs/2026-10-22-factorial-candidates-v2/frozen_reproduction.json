@@ -1,0 +1,368 @@
+{
+  "kind": "frozen_input_logits_completion_reproduction",
+  "tolerance_logit": 0.01,
+  "passed": true,
+  "checks": [
+    {
+      "case": "original",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 33,
+      "actual_count": 33
+    },
+    {
+      "case": "original",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "8khz_bandwidth_only",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 32,
+      "actual_count": 32
+    },
+    {
+      "case": "8khz_bandwidth_only",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "g711_mulaw",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 32,
+      "actual_count": 32
+    },
+    {
+      "case": "g711_mulaw",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "low_volume_minus20dB",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 16,
+      "actual_count": 16
+    },
+    {
+      "case": "low_volume_minus20dB",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 0,
+      "actual_count": 0
+    },
+    {
+      "case": "mild_clipping",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 34,
+      "actual_count": 34
+    },
+    {
+      "case": "mild_clipping",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "white_noise_30dB_SNR",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 33,
+      "actual_count": 33
+    },
+    {
+      "case": "white_noise_30dB_SNR",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "white_noise_20dB_SNR",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 33,
+      "actual_count": 33
+    },
+    {
+      "case": "white_noise_20dB_SNR",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "white_noise_10dB_SNR",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 36,
+      "actual_count": 36
+    },
+    {
+      "case": "white_noise_10dB_SNR",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 9,
+      "actual_count": 9
+    },
+    {
+      "case": "pause_2s_after_16s",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 33,
+      "actual_count": 33
+    },
+    {
+      "case": "pause_2s_after_16s",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 10,
+      "actual_count": 10
+    },
+    {
+      "case": "pause_10s_after_16s",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 29,
+      "actual_count": 29
+    },
+    {
+      "case": "pause_10s_after_16s",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 10,
+      "actual_count": 10
+    },
+    {
+      "case": "librispeech_test_clean_1320_40s",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 37,
+      "actual_count": 37
+    },
+    {
+      "case": "librispeech_test_clean_1320_40s",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 10,
+      "actual_count": 10
+    },
+    {
+      "case": "librispeech_test_clean_6930_40s",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 35,
+      "actual_count": 35
+    },
+    {
+      "case": "librispeech_test_clean_6930_40s",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 10,
+      "actual_count": 10
+    },
+    {
+      "case": "human60_then_ai",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 95,
+      "actual_count": 95
+    },
+    {
+      "case": "human60_then_ai",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 24,
+      "actual_count": 24
+    },
+    {
+      "case": "ai_then_human",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 73,
+      "actual_count": 73
+    },
+    {
+      "case": "ai_then_human",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 19,
+      "actual_count": 19
+    },
+    {
+      "case": "diagnostic_human16_then_ai",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 49,
+      "actual_count": 49
+    },
+    {
+      "case": "diagnostic_human16_then_ai",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 13,
+      "actual_count": 13
+    },
+    {
+      "case": "diagnostic_human_prefix60_then_ai",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 93,
+      "actual_count": 93
+    },
+    {
+      "case": "diagnostic_human_prefix60_then_ai",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 24,
+      "actual_count": 24
+    },
+    {
+      "case": "diagnostic_human_prefix120_then_ai",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 153,
+      "actual_count": 153
+    },
+    {
+      "case": "diagnostic_human_prefix120_then_ai",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 39,
+      "actual_count": 39
+    },
+    {
+      "case": "diagnostic_ai_then_human6930",
+      "selection": "baseline",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 73,
+      "actual_count": 73
+    },
+    {
+      "case": "diagnostic_ai_then_human6930",
+      "selection": "current",
+      "passed": true,
+      "exact_input_hashes_and_intervals": true,
+      "same_completion_semantics": true,
+      "max_logit_abs_error": 0.0,
+      "reference_count": 19,
+      "actual_count": 19
+    }
+  ],
+  "notes": "Inference completion times are measured again; display policy is intentionally separate. No frozen artifacts were rewritten."
+}

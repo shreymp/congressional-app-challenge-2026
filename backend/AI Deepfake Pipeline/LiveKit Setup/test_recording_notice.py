@@ -21,6 +21,15 @@ class NoticeAssetTests(unittest.TestCase):
             wav.writeframes(pcm if pcm is not None else struct.pack("<h", 1000) * 16000)
         return path
 
+    def test_bundled_spoken_asset_is_nonempty_and_matches_manifest(self):
+        import hashlib
+        import json
+        pcm = notice.read_notice()
+        self.assertGreater(len(pcm), notice.SAMPLE_RATE)
+        metadata = json.loads(notice.NOTICE_PATH.with_suffix(".json").read_text())
+        self.assertEqual(metadata["text"], notice.NOTICE_TEXT)
+        self.assertEqual(hashlib.sha256(notice.NOTICE_PATH.read_bytes()).hexdigest(), metadata["sha256"])
+
     def test_reads_expected_pcm(self):
         with tempfile.TemporaryDirectory() as folder:
             self.assertEqual(len(notice.read_notice(self.make_wav(folder))), 32000)

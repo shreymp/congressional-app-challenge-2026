@@ -1,0 +1,15 @@
+File:           /Users/spatel7/Downloads/ElevenLabs_2026-10-23T01_11_44_shrey_ivc_sp100_s50_sb75_v4.mp3
+File type ID:   MPG3
+Num Tracks:     1
+----
+Data format:     1 ch,  44100 Hz, .mp3 (0x00000000) 0 bits/channel, 0 bytes/packet, 1152 frames/packet, 0 bytes/frame
+                no channel layout.
+estimated duration: 38.347750 sec
+audio bytes: 613564
+audio packets: 1468
+bit rate: 128000 bits per second
+packet size upper bound: 1052
+maximum packet size: 418
+audio data file offset: 16937
+optimized
+----

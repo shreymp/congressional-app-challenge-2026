@@ -1,0 +1,85 @@
+{
+  "passed": [
+    "all_256_G711_codewords_match_original_decoder",
+    "G711_encoder_golden_vectors",
+    "all_submitted_intervals_cover_exact_input",
+    "completion_times_match_measured_latency",
+    "all_production_submissions_executed_model",
+    "matched_aggregation_inputs_identical",
+    "timeline_monotonic_and_label_bounds"
+  ],
+  "case_counts": [
+    {
+      "case": "original",
+      "production_submissions": 42
+    },
+    {
+      "case": "8khz_bandwidth_only",
+      "production_submissions": 41
+    },
+    {
+      "case": "g711_mulaw",
+      "production_submissions": 41
+    },
+    {
+      "case": "low_volume_minus20dB",
+      "production_submissions": 16
+    },
+    {
+      "case": "mild_clipping",
+      "production_submissions": 43
+    },
+    {
+      "case": "white_noise_30dB_SNR",
+      "production_submissions": 42
+    },
+    {
+      "case": "white_noise_20dB_SNR",
+      "production_submissions": 42
+    },
+    {
+      "case": "white_noise_10dB_SNR",
+      "production_submissions": 45
+    },
+    {
+      "case": "pause_2s_after_16s",
+      "production_submissions": 43
+    },
+    {
+      "case": "pause_10s_after_16s",
+      "production_submissions": 39
+    },
+    {
+      "case": "librispeech_test_clean_1320_40s",
+      "production_submissions": 47
+    },
+    {
+      "case": "librispeech_test_clean_6930_40s",
+      "production_submissions": 45
+    },
+    {
+      "case": "human60_then_ai",
+      "production_submissions": 119
+    },
+    {
+      "case": "ai_then_human",
+      "production_submissions": 92
+    },
+    {
+      "case": "diagnostic_human16_then_ai",
+      "production_submissions": 62
+    },
+    {
+      "case": "diagnostic_human_prefix60_then_ai",
+      "production_submissions": 117
+    },
+    {
+      "case": "diagnostic_human_prefix120_then_ai",
+      "production_submissions": 192
+    },
+    {
+      "case": "diagnostic_ai_then_human6930",
+      "production_submissions": 92
+    }
+  ]
+}

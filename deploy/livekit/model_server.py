@@ -32,7 +32,9 @@ def make_server(deepfake, jev, port=8000):
         def do_GET(self):
             if self.path == "/health":
                 return self.reply(200, {"ok": True, "modelLoaded": True, "deepfakeLoaded": True,
-                                        "device": deepfake.device, "mode": "real", "meta": deepfake.meta})
+                                        "device": deepfake.device, "mode": "real", "meta": deepfake.meta,
+                                        # Checkpoint hashes only; lets the agent bind calibration.json.
+                                        "integrity": getattr(deepfake, "diagnostics", {}).get("integrity")})
             self.reply(404, {"error": "Not found"})
 
         def do_POST(self):
