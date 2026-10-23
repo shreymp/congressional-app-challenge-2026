@@ -37,3 +37,10 @@ Windows has no Xcode or iOS simulator. Swift compilation, XCTest execution and r
 2. On a physical iPhone, accept an incoming forwarded call and confirm waiting → analyzing → result, mute/speaker audio, history details and caller hang-up. Calling remains foreground-only under the existing ringing architecture.
 3. Interrupt/reconnect the network or stop/restart the detector agent; confirm analysis becomes unavailable, the call can continue when media remains connected, and new valid assessments recover.
 4. Confirm actual phone-audio performance and calibrate thresholds/energy gating against representative callers. No live audio stream was available here. Transcript risk, carrier outgoing-call audio, background VoIP push and voicemail remain outside this voice connector and retain their existing service limitations.
+
+# Shrey cumulative-scoring update
+
+The results below describe the earlier connector and its overlapping-window
+scoring; they are historical, not validation of the new aggregation method.
+Current behavior, local checks and remaining phone-domain validation are recorded
+in [CUMULATIVE_VOICE_ANALYSIS.md](../docs/CUMULATIVE_VOICE_ANALYSIS.md).

@@ -22,9 +22,23 @@ struct PhoneSessionState {
     mutating func assess(id: UUID, voice: Voice) {
         guard current?.id == id, current?.connectedAt != nil else { return }
         current?.voice = voice
+        let state: DeepfakeAssessment.State
+        switch voice {
+        case .human: state = .human
+        case .ai: state = .ai
+        case .unknown: state = .uncertain
+        case .analyzing: state = .analyzing
+        }
+        current?.deepfake = DeepfakeAssessment(state: state, updatedAt: Date())
     }
     mutating func assessDeepfake(id: UUID, assessment: DeepfakeAssessment) {
-        guard current?.id == id, current?.connectedAt != nil else { return }
+        guard current?.id == id, let connectedAt = current?.connectedAt else { return }
+        // Warm-up heartbeats/restarts cannot erase a completed call assessment.
+        if [.waiting, .analyzing].contains(assessment.state),
+           let previous = current?.deepfake, [.human, .ai, .uncertain].contains(previous.state),
+           previous.windows >= 2 { return }
+        let assessment = assessment.updatedAt.timeIntervalSince(connectedAt) >= DeepfakeAssessment.initialDeadline
+            ? assessment.finalized(at: assessment.updatedAt) : assessment
         current?.deepfake = assessment
         if [.waiting, .analyzing].contains(assessment.state), let previous = current?.lastDeepfakeResult {
             current?.voice = previous.voice
@@ -34,6 +48,12 @@ struct PhoneSessionState {
         if [.ai, .human, .uncertain].contains(assessment.state) {
             current?.lastDeepfakeResult = assessment
         }
+    }
+    mutating func finalizeInitialAssessment(id: UUID, at date: Date) {
+        guard current?.id == id, let connectedAt = current?.connectedAt,
+              date.timeIntervalSince(connectedAt) >= DeepfakeAssessment.initialDeadline else { return }
+        let latest = current?.deepfake ?? DeepfakeAssessment(state: .analyzing, updatedAt: date)
+        assessDeepfake(id: id, assessment: latest.finalized(at: date))
     }
     mutating func assessTranscript(id: UUID, assessment: TranscriptAssessment) {
         guard current?.id == id, current?.connectedAt != nil else { return }
@@ -71,4 +91,3 @@ struct PhoneSessionState {
                                transcript: call.connectedAt == nil ? nil : (call.lastTranscriptResult ?? call.transcript))
     }
 }
-

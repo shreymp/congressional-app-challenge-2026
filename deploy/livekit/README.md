@@ -18,6 +18,15 @@ Startup checks require deepfake warm-up, real JEV inference through the connecto
 and a successful Vosk load before the worker starts registering. A crashed model
 service terminates the worker so LiveKit can restart it. Audio recording is off.
 
+The image also bundles a mono 16 kHz PCM announcement, generated at build time with
+eSpeak NG and SoX: **"This call is being recorded."** Startup and image checks reject
+a missing, silent or invalid clip. Immediately after the senior answers, the worker
+publishes that clip into the call room and waits for playback to finish before it
+opens the caller's analysis/recording stream. If playback fails, analysis and recording
+stay off for that call while the normal call and hang-up supervisor continue.
+The disclosure does not itself collect consent or enable audio storage. Verify both
+phones hear the full sentence on a real PSTN test; the backend inference probe skips it.
+
 ## Deploy
 
 1. Authorize the deployment environment for project **CAC** using `lk cloud auth`.

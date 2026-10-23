@@ -7,7 +7,8 @@ How the phone is reached
   carries a short-lived token for it plus the caller's number. The app shows the native CallKit
   screen and joins the call room silently. Only when the senior answers does it publish its
   microphone. LiveKit keeps the phone caller ringing until some participant publishes audio, so
-  that microphone publish IS the answer. scam-guard itself never publishes audio.
+  that microphone publish IS the answer. Only after pickup does scam-guard publish its
+  brief recording announcement; the ring supervisor does not depend on that playback.
 
 What SeniorRing decides, once per call
   - re-sends the same invite every ~3 s until the senior has joined the call room, the caller

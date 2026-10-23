@@ -26,6 +26,10 @@ class Services:
         self.stopping = threading.Event()
 
     def start(self):
+        sys.path.insert(0, str(LIVE))
+        from recording_notice import read_notice
+        read_notice()  # Missing/invalid disclosure must fail image checks and startup.
+        print("Recording notice asset validated", flush=True)
         self.children.append(subprocess.Popen([sys.executable, str(Path(__file__).with_name("model_server.py"))]))
         self.children.append(subprocess.Popen(["node", str(ROOT / "backend/Transcript-Based Detector/server.js")]))
         deadline = time.monotonic() + 210

@@ -156,7 +156,7 @@ struct ProductionCallView: View {
         }
     }
     private var assessment: String {
-        if let deepfake = call.deepfake { return deepfake.message }
+        if call.deepfake != nil { return voiceAssessment.message }
         switch call.voice {
         case .analyzing: return "Checking the caller’s voice…"
         case .ai: return "This voice may be AI-generated."
@@ -185,5 +185,3 @@ struct ProductionCallView: View {
         }
     }
 }
-
-
