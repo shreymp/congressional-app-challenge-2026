@@ -6,7 +6,54 @@ struct DeepfakeAssessment: Codable, Equatable {
     let state: State
     let updatedAt: Date
     var windows: Int = 0
-    var aiScore: Double? = nil
+    /// Threshold-relative AI evidence, 0...100. Not a calibrated probability.
+    var score: Double? = nil
+    var recentAI: Bool? = nil
+
+    /// The initial voice result is finalized from the connection clock, not speech duration.
+    static let initialDeadline: TimeInterval = 15
+
+    init(state: State, updatedAt: Date, windows: Int = 0,
+         score: Double? = nil, recentAI: Bool? = nil) {
+        self.state = state
+        self.updatedAt = updatedAt
+        self.windows = windows
+        self.score = score
+        self.recentAI = recentAI
+    }
+
+    /// Compatibility initializer for older local fixtures that express the score as 0...1.
+    init(state: State, updatedAt: Date, windows: Int = 0, aiScore: Double?) {
+        self.init(state: state, updatedAt: updatedAt, windows: windows,
+                  score: aiScore.map { $0 * 100 })
+    }
+
+    /// Compatibility view for the existing Call Shield warning UI, which uses 0...1.
+    var aiScore: Double? {
+        get { score.map { $0 / 100 } }
+        set { score = newValue.map { $0 * 100 } }
+    }
+
+    var title: String {
+        switch state {
+        case .waiting, .analyzing: return "Analyzing"
+        case .human: return "Human"
+        case .ai: return "Likely AI"
+        case .uncertain: return "Inconclusive"
+        case .unavailable: return "Analysis unavailable"
+        }
+    }
+
+    var scoreText: String {
+        if let score { return "AI score: \(Int(score.rounded()))/100" }
+        return state == .waiting || state == .analyzing ? "Gathering voice evidence…" : "AI score unavailable"
+    }
+
+    func finalized(at date: Date) -> DeepfakeAssessment {
+        guard state == .waiting || state == .analyzing else { return self }
+        return DeepfakeAssessment(state: .uncertain, updatedAt: date, windows: windows,
+                                  score: score, recentAI: recentAI)
+    }
 
     var voice: Voice {
         switch state {
@@ -103,7 +150,8 @@ struct DeepfakeUpdate: Decodable {
         else if e.level == "elevated" { result = .uncertain }
         else if e.level == "listening", e.human_steps >= 3 { result = .human }
         else { result = .analyzing }
-        return DeepfakeAssessment(state: result, updatedAt: date, windows: e.updates, aiScore: e.p_smoothed)
+        return DeepfakeAssessment(state: result, updatedAt: date, windows: e.updates,
+                                  score: e.p_smoothed * 100)
     }
 }
 
