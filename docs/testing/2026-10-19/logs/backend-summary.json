@@ -1,0 +1,44 @@
+[
+  {
+    "suite": "transcript",
+    "started_utc": "2026-10-19T06:11:48.962630+00:00",
+    "exit_code": 0,
+    "seconds": 0.93
+  },
+  {
+    "suite": "worker-integration",
+    "started_utc": "2026-10-19T06:11:49.888730+00:00",
+    "exit_code": 0,
+    "seconds": 1.82
+  },
+  {
+    "suite": "tester-tools",
+    "started_utc": "2026-10-19T06:11:51.709116+00:00",
+    "exit_code": 0,
+    "seconds": 1.42
+  },
+  {
+    "suite": "ring-lifecycle",
+    "started_utc": "2026-10-19T06:11:53.126194+00:00",
+    "exit_code": 0,
+    "seconds": 6.19
+  },
+  {
+    "suite": "transcript-service",
+    "started_utc": "2026-10-19T06:11:59.315356+00:00",
+    "exit_code": 0,
+    "seconds": 1.09
+  },
+  {
+    "suite": "node-connector",
+    "started_utc": "2026-10-19T06:12:00.406134+00:00",
+    "exit_code": 0,
+    "seconds": 0.2
+  },
+  {
+    "suite": "cloud-contracts",
+    "started_utc": "2026-10-19T06:12:00.606210+00:00",
+    "exit_code": 0,
+    "seconds": 0.68
+  }
+]

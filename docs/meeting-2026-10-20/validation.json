@@ -1,0 +1,44 @@
+{
+  "base_commit": "dca989c3126be4778638a002d3355a463f8789eb",
+  "date": "2026-10-20",
+  "test_source": "isolated review files over committed main; excludes earlier local changes",
+  "ios": {
+    "result": "Passed",
+    "totalTestCount": 56,
+    "passedTests": 56,
+    "failedTests": 0
+  },
+  "backend": {
+    "passed": 26,
+    "failed": 0,
+    "suite": "transcript pipeline, scoring integration, agent orchestration"
+  },
+  "scripts": [
+    {
+      "scenario": "human conversation",
+      "spoken_words": 218,
+      "estimated_seconds_at_150_wpm": 87.2
+    },
+    {
+      "scenario": "synthetic scam",
+      "spoken_words": 248,
+      "estimated_seconds_at_150_wpm": 99.2
+    },
+    {
+      "scenario": "human scam",
+      "spoken_words": 250,
+      "estimated_seconds_at_150_wpm": 100
+    }
+  ],
+  "preexisting_tracked_changes_preserved": true,
+  "live_calls_performed": false,
+  "deployed": false,
+  "transcript_excerpts_default": "off",
+  "limitations": [
+    "model false positive unresolved",
+    "outgoing app routing not provisioned",
+    "automatic consent/notice unfinished",
+    "recording durations estimated, not measured",
+    "new features and name need team selection"
+  ]
+}

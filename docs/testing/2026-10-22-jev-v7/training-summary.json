@@ -1,0 +1,154 @@
+{
+  "prefix_attempt": {
+    "base": "backend/jev-posttrain/runs/call-v5-balanced",
+    "seed": 20261020,
+    "lr": 5e-07,
+    "weighting": {
+      "presentations": 2593,
+      "parents": 1341,
+      "parent_classes": {
+        "true": 583,
+        "false": 758
+      },
+      "effective_class_share": {
+        "true": 0.5,
+        "false": 0.5
+      }
+    },
+    "split_audit": {
+      "parent": 0,
+      "group": 0,
+      "speaker": 0,
+      "text": 0
+    },
+    "selection": "fixed baseline temperature; no additional parent-call FN/FP at .5/.75, per original domain, tail AND windows; then parent/domain NLL",
+    "real_training": 479,
+    "augmented_training": 479,
+    "extra_training": 1035,
+    "extra_validation": 159,
+    "test_access": "none",
+    "deployment": "research only; separate operating-point validation and fresh evaluation required",
+    "selected_epoch": 0,
+    "improved_checkpoint": false,
+    "baseline_retained_if_no_candidate_passes": true,
+    "epochs": [
+      {
+        "epoch": 0,
+        "eligible": true,
+        "loss": 0.09536505618141268,
+        "confusion": {
+          "tp": 196,
+          "tn": 343,
+          "fp": 10,
+          "fn": 2
+        },
+        "gate_failures": {
+          "tail": [],
+          "windows": []
+        }
+      },
+      {
+        "epoch": 1,
+        "eligible": false,
+        "loss": 0.04944266296996192,
+        "confusion": {
+          "tp": 194,
+          "tn": 350,
+          "fp": 3,
+          "fn": 4
+        },
+        "gate_failures": {
+          "tail": [
+            "all@0.5: fn increased 2 -> 4",
+            "all@0.75: fn increased 4 -> 6",
+            "source:ncsu_ftc@0.75: fn increased 0 -> 1",
+            "source:shake@0.5: fn increased 2 -> 4",
+            "source:shake@0.75: fn increased 4 -> 5"
+          ],
+          "windows": [
+            "all@0.5: fn increased 2 -> 4",
+            "all@0.75: fn increased 4 -> 6",
+            "source:ncsu_ftc@0.75: fn increased 0 -> 1",
+            "source:shake@0.5: fn increased 2 -> 4",
+            "source:shake@0.75: fn increased 4 -> 5"
+          ]
+        }
+      }
+    ]
+  },
+  "smaller_refinement": {
+    "base": "backend/jev-posttrain/runs/call-v5-balanced",
+    "seed": 20261020,
+    "lr": 1e-07,
+    "weighting": {
+      "presentations": 1822,
+      "parents": 1341,
+      "parent_classes": {
+        "true": 583,
+        "false": 758
+      },
+      "effective_class_share": {
+        "true": 0.5,
+        "false": 0.5
+      }
+    },
+    "split_audit": {
+      "parent": 0,
+      "group": 0,
+      "speaker": 0,
+      "text": 0
+    },
+    "selection": "fixed baseline temperature; no additional parent-call FN/FP at .5/.75, per original domain, tail AND windows; then parent/domain NLL",
+    "real_training": 479,
+    "augmented_training": 479,
+    "extra_training": 264,
+    "extra_validation": 159,
+    "test_access": "none",
+    "deployment": "research only; separate operating-point validation and fresh evaluation required",
+    "selected_epoch": 0,
+    "improved_checkpoint": false,
+    "baseline_retained_if_no_candidate_passes": true,
+    "epochs": [
+      {
+        "epoch": 0,
+        "eligible": true,
+        "loss": 0.09536505618141268,
+        "confusion": {
+          "tp": 196,
+          "tn": 343,
+          "fp": 10,
+          "fn": 2
+        },
+        "gate_failures": {
+          "tail": [],
+          "windows": []
+        }
+      },
+      {
+        "epoch": 1,
+        "eligible": false,
+        "loss": 0.06912430191079717,
+        "confusion": {
+          "tp": 194,
+          "tn": 346,
+          "fp": 7,
+          "fn": 4
+        },
+        "gate_failures": {
+          "tail": [
+            "all@0.5: fn increased 2 -> 4",
+            "all@0.75: fn increased 4 -> 5",
+            "source:shake@0.5: fn increased 2 -> 4",
+            "source:shake@0.75: fn increased 4 -> 5"
+          ],
+          "windows": [
+            "all@0.5: fn increased 2 -> 4",
+            "all@0.75: fn increased 4 -> 5",
+            "source:shake@0.5: fn increased 2 -> 4",
+            "source:shake@0.75: fn increased 4 -> 5"
+          ]
+        }
+      }
+    ]
+  }
+}

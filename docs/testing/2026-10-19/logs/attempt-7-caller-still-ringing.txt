@@ -1,0 +1,22 @@
+2026-10-19T06:30:10.695Z
+":
+  - region "Ongoing call":
+    - heading "Ongoing call" [level=3]
+    - img: person
+    - generic: ‪(267) 509-1164‬
+    - generic [active]: Call with 2 6 7 5 0 9 1 1 6 4
+    - generic: Calling…
+    - button "Hold call" [disabled]:
+      - img: pause
+      - generic: Hold
+    - button "Open keypad":
+      - img: dialpad
+    - generic: Keypad
+    - button "Mute call":
+      - img: mic_off
+    - generic: Mute
+    - button "Send a message":
+      - img: chat
+    - generic: Message
+    - button "Hang up call":
+      - generic: call_end

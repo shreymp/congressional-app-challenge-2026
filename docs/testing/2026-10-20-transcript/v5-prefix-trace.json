@@ -1,0 +1,213 @@
+{
+  "version": "V5",
+  "modelSha256": "e2bece563b6da2532027fc98852fe93b343bf4deeebfc2a583a70d90a66d6bdb",
+  "contextMode": "tail",
+  "warningThreshold": 0.75,
+  "limits": "Development clips; FTC scripts may overlap training, banking is roleplay. Prefix labels not adjudicated. No early-recall or field-latency claim.",
+  "clips": [
+    {
+      "id": "youtube:HlTpousFPsM",
+      "source": "ftc_youtube_recording",
+      "audio_sha256": "c60591536af7c8201b595c72f59edf6594d6171d7badde9b3915ff94fda95a8c",
+      "duration_sec": 34.70225,
+      "whole_call_label": 1,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.00849763929882998,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.6298877414871595,
+          "guidance": false
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.9901884318761761,
+          "guidance": true
+        },
+        {
+          "seconds": 34.70225,
+          "score": 0.9901884318761761,
+          "guidance": true
+        }
+      ]
+    },
+    {
+      "id": "youtube:8sT121uUFOo",
+      "source": "ftc_youtube_recording",
+      "audio_sha256": "e08ccf2bb5158eb659ce9241ab8fd83adb9383d904395f2b131c5c30297034b1",
+      "duration_sec": 30.6735625,
+      "whole_call_label": 1,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.18918912311069108,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.10721006294646972,
+          "guidance": false
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.9668015113290501,
+          "guidance": true
+        },
+        {
+          "seconds": 30.6735625,
+          "score": 0.9668015113290501,
+          "guidance": true
+        }
+      ]
+    },
+    {
+      "id": "youtube:IQyu_yFqWGA",
+      "source": "ftc_youtube_recording",
+      "audio_sha256": "9afbf077410960a9c22587d17421550982c89e87cfe9c1255e20afc8e29657fe",
+      "duration_sec": 30.1046875,
+      "whole_call_label": 1,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.10658196967164398,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.9738513738960384,
+          "guidance": true
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.9847332559385051,
+          "guidance": true
+        },
+        {
+          "seconds": 30.1046875,
+          "score": 0.9847332559385051,
+          "guidance": true
+        }
+      ]
+    },
+    {
+      "id": "hvb:b8103a521e78469f",
+      "source": "hvb_recorded_roleplay",
+      "audio_sha256": "4da397cfea00d010c9a17de2742a11533d92b7afef4ca861757d8456a312935c",
+      "duration_sec": 49.23,
+      "whole_call_label": 0,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.01160698838404547,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.024517325753097435,
+          "guidance": false
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.025601011924520856,
+          "guidance": false
+        },
+        {
+          "seconds": 40.0,
+          "score": 0.015150130849878972,
+          "guidance": false
+        },
+        {
+          "seconds": 49.23,
+          "score": 0.008024772883726742,
+          "guidance": false
+        }
+      ]
+    },
+    {
+      "id": "hvb:ecb17f35e85b4761",
+      "source": "hvb_recorded_roleplay",
+      "audio_sha256": "7c598888ad80fb02887708d08284395d57a9c724cce8bc787dd26822c3fe6fe3",
+      "duration_sec": 41.39,
+      "whole_call_label": 0,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.013598849118598792,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.011421338791912828,
+          "guidance": false
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.03201435077515937,
+          "guidance": false
+        },
+        {
+          "seconds": 40.0,
+          "score": 0.020036429534491657,
+          "guidance": false
+        },
+        {
+          "seconds": 41.39,
+          "score": 0.016531557787557927,
+          "guidance": false
+        }
+      ]
+    },
+    {
+      "id": "hvb:57fd086178b0442a",
+      "source": "hvb_recorded_roleplay",
+      "audio_sha256": "5218146b470ccb6a5dd6ebc82afb4139e73db248978e6255e42664207f4bdbea",
+      "duration_sec": 75.96,
+      "whole_call_label": 0,
+      "trace": [
+        {
+          "seconds": 10.0,
+          "score": 0.01390170605918716,
+          "guidance": false
+        },
+        {
+          "seconds": 20.0,
+          "score": 0.039857047283704636,
+          "guidance": false
+        },
+        {
+          "seconds": 30.0,
+          "score": 0.02060530998027709,
+          "guidance": false
+        },
+        {
+          "seconds": 40.0,
+          "score": 0.02060530998027709,
+          "guidance": false
+        },
+        {
+          "seconds": 50.0,
+          "score": 0.014779423870979257,
+          "guidance": false
+        },
+        {
+          "seconds": 60.0,
+          "score": 0.017887999950393866,
+          "guidance": false
+        },
+        {
+          "seconds": 70.0,
+          "score": 0.009311215329431348,
+          "guidance": false
+        },
+        {
+          "seconds": 75.96,
+          "score": 0.004586842994135088,
+          "guidance": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,416 @@
+{
+  "base": "backend/jev-posttrain/runs/call-v5-balanced",
+  "seed": 20261020,
+  "lr": 5e-07,
+  "history": [
+    {
+      "epoch": 0,
+      "temperature": 2.174683380080517,
+      "validation": {
+        "n": 551,
+        "positives": 198,
+        "negatives": 353,
+        "accuracy": 0.9782214156079855,
+        "precision": 0.9514563106796117,
+        "recall": 0.98989898989899,
+        "specificity": 0.9716713881019831,
+        "f1": 0.9702970297029703,
+        "brier": 0.017213888466358185,
+        "nll": 0.06548750400543213,
+        "ece_10_bin": 0.015444277983476603,
+        "confusion": {
+          "tp": 196,
+          "tn": 343,
+          "fp": 10,
+          "fn": 2
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.00028270541224628687,
+        "nll": 0.006419292651116848,
+        "ece_10_bin": 0.006269627986776252,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "extra_validation": {
+        "n": 159,
+        "positives": 12,
+        "negatives": 147,
+        "accuracy": 0.9685534591194969,
+        "precision": 0.7058823529411765,
+        "recall": 1.0,
+        "specificity": 0.9659863945578231,
+        "f1": 0.8275862068965517,
+        "brier": 0.02479367144405842,
+        "nll": 0.08189751952886581,
+        "ece_10_bin": 0.05068291607752162,
+        "confusion": {
+          "tp": 12,
+          "tn": 142,
+          "fp": 5,
+          "fn": 0
+        }
+      },
+      "validation_by_source": {
+        "authored_paired_training": {
+          "n": 24,
+          "positives": 12,
+          "negatives": 12,
+          "accuracy": 0.875,
+          "precision": 0.8,
+          "recall": 1.0,
+          "specificity": 0.75,
+          "f1": 0.8888888888888888,
+          "brier": 0.10547620803117752,
+          "nll": 0.3063514530658722,
+          "ece_10_bin": 0.16942961607128382,
+          "confusion": {
+            "tp": 12,
+            "tn": 9,
+            "fp": 3,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training": {
+          "n": 32,
+          "positives": 0,
+          "negatives": 32,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 0.00152583047747612,
+          "nll": 0.020532354712486267,
+          "ece_10_bin": 0.019676008116221055,
+          "confusion": {
+            "tp": 0,
+            "tn": 32,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training_prefix": {
+          "n": 51,
+          "positives": 0,
+          "negatives": 51,
+          "accuracy": 0.9607843137254902,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 0.9607843137254902,
+          "f1": 0.0,
+          "brier": 0.026649290695786476,
+          "nll": 0.09438440203666687,
+          "ece_10_bin": 0.06206771322325164,
+          "confusion": {
+            "tp": 0,
+            "tn": 49,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "ncsu_ftc": {
+          "n": 5,
+          "positives": 5,
+          "negatives": 0,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 0.0,
+          "f1": 1.0,
+          "brier": 0.0016674731159582734,
+          "nll": 0.02598869800567627,
+          "ece_10_bin": 0.025103747844696045,
+          "confusion": {
+            "tp": 5,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "shake": {
+          "n": 361,
+          "positives": 181,
+          "negatives": 180,
+          "accuracy": 0.9806094182825484,
+          "precision": 0.9728260869565217,
+          "recall": 0.988950276243094,
+          "specificity": 0.9722222222222222,
+          "f1": 0.9808219178082191,
+          "brier": 0.015329348854720592,
+          "nll": 0.06333217024803162,
+          "ece_10_bin": 0.010044590695154886,
+          "confusion": {
+            "tp": 179,
+            "tn": 175,
+            "fp": 5,
+            "fn": 2
+          }
+        },
+        "switchboard": {
+          "n": 26,
+          "positives": 0,
+          "negatives": 26,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 1.6403930203523487e-05,
+          "nll": 0.0026559457182884216,
+          "ece_10_bin": 0.002647681860253215,
+          "confusion": {
+            "tp": 0,
+            "tn": 26,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "switchboard_prefix": {
+          "n": 52,
+          "positives": 0,
+          "negatives": 52,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 5.431884710560553e-05,
+          "nll": 0.003819821635261178,
+          "ece_10_bin": 0.0037920624017715454,
+          "confusion": {
+            "tp": 0,
+            "tn": 52,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "selection_loss": 0.07386640648889754,
+      "elapsed_sec": 11.899067332968116
+    },
+    {
+      "epoch": 1,
+      "temperature": 2.3318524603915844,
+      "validation": {
+        "n": 551,
+        "positives": 198,
+        "negatives": 353,
+        "accuracy": 0.9891107078039928,
+        "precision": 0.9897959183673469,
+        "recall": 0.9797979797979798,
+        "specificity": 0.9943342776203966,
+        "f1": 0.9847715736040609,
+        "brier": 0.011229127645492554,
+        "nll": 0.04898044839501381,
+        "ece_10_bin": 0.009724462763178171,
+        "confusion": {
+          "tp": 194,
+          "tn": 351,
+          "fp": 2,
+          "fn": 4
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.005699575878679752,
+        "nll": 0.02068418823182583,
+        "ece_10_bin": 0.016664178583831075,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "extra_validation": {
+        "n": 159,
+        "positives": 12,
+        "negatives": 147,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 0.0012125038774684072,
+        "nll": 0.012647196650505066,
+        "ece_10_bin": 0.011953148639427043,
+        "confusion": {
+          "tp": 12,
+          "tn": 147,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "validation_by_source": {
+        "authored_paired_training": {
+          "n": 24,
+          "positives": 12,
+          "negatives": 12,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "f1": 1.0,
+          "brier": 0.007819061167538166,
+          "nll": 0.06149859353899956,
+          "ece_10_bin": 0.05700892023742198,
+          "confusion": {
+            "tp": 12,
+            "tn": 12,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training": {
+          "n": 32,
+          "positives": 0,
+          "negatives": 32,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 2.3121148842619732e-05,
+          "nll": 0.0039689503610134125,
+          "ece_10_bin": 0.003957322333008051,
+          "confusion": {
+            "tp": 0,
+            "tn": 32,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training_prefix": {
+          "n": 51,
+          "positives": 0,
+          "negatives": 51,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 7.816393917892128e-05,
+          "nll": 0.00583673408254981,
+          "ece_10_bin": 0.005796997342258692,
+          "confusion": {
+            "tp": 0,
+            "tn": 51,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "ncsu_ftc": {
+          "n": 5,
+          "positives": 5,
+          "negatives": 0,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 0.0,
+          "f1": 1.0,
+          "brier": 0.0353081189095974,
+          "nll": 0.11881177127361298,
+          "ece_10_bin": 0.09390236139297486,
+          "confusion": {
+            "tp": 5,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "shake": {
+          "n": 361,
+          "positives": 181,
+          "negatives": 180,
+          "accuracy": 0.9833795013850416,
+          "precision": 0.9888268156424581,
+          "recall": 0.9779005524861878,
+          "specificity": 0.9888888888888889,
+          "f1": 0.9833333333333333,
+          "brier": 0.016115719452500343,
+          "nll": 0.06741305440664291,
+          "ece_10_bin": 0.014196659684686835,
+          "confusion": {
+            "tp": 177,
+            "tn": 178,
+            "fp": 2,
+            "fn": 4
+          }
+        },
+        "switchboard": {
+          "n": 26,
+          "positives": 0,
+          "negatives": 26,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 5.627201062452514e-06,
+          "nll": 0.0018134998390451074,
+          "ece_10_bin": 0.0018106818897649646,
+          "confusion": {
+            "tp": 0,
+            "tn": 26,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "switchboard_prefix": {
+          "n": 52,
+          "positives": 0,
+          "negatives": 52,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 7.776823622407392e-06,
+          "nll": 0.002120355609804392,
+          "ece_10_bin": 0.0021164482459425926,
+          "confusion": {
+            "tp": 0,
+            "tn": 52,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "selection_loss": 0.037351851301666884,
+      "elapsed_sec": 272.80113258305937
+    }
+  ],
+  "real_training": 479,
+  "augmented_training": 479,
+  "extra_training": 1035,
+  "extra_validation": 159,
+  "domain_balanced_selection": true,
+  "extra_training_sources": {
+    "authored_paired_training": 104,
+    "hvb_recorded_roleplay_training": 160,
+    "hvb_recorded_roleplay_training_prefix": 251,
+    "switchboard_prefix": 520
+  },
+  "test_access": "none in training script; second-stage hard cases motivated by exploratory benchmark failures",
+  "deployment": "research candidate only; evaluate before promotion"
+}

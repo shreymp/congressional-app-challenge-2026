@@ -1,0 +1,33 @@
+// Copy this file to Local.xcconfig in the same folder, then uncomment the
+// settings you need and replace their values. Local.xcconfig is gitignored and
+// is included at the end of Callshield.xcconfig, so every setting you uncomment
+// overrides the checked-in default. A fresh copy changes nothing.
+//
+// "//" starts a comment anywhere on a line: never paste a value that contains
+// it (for example a wss:// URL).
+
+// Your 10-character Apple Team ID. Set it here, not in Signing & Capabilities.
+// Free Personal Team: Keychain Access > your "Apple Development" certificate >
+// Organizational Unit (not the code shown in the certificate's name).
+// DEVELOPMENT_TEAM = ABCDE12345
+
+// Must be unique to you: Xcode cannot register an identifier that another
+// team already uses.
+// PRODUCT_BUNDLE_IDENTIFIER = com.example.yourname.Callshield
+
+// false = production phone interface (required for LiveKit calling).
+// CALLSHIELD_DEMO = false
+
+// Replace both lines with the two lines printed by
+// backend/AI Deepfake Pipeline/LiveKit Setup/tools/mint_lobby_token.py
+// The host is the LiveKit project host only: no wss://, no path.
+// The token is a credential and it expires; mint a new one when it does.
+// CALLSHIELD_LIVEKIT_HOST = your-project.livekit.cloud
+// CALLSHIELD_LOBBY_TOKEN = paste-the-token-here
+
+// Optional blocking/reporting service for a provisioned research tester.
+// Escape the double slash using $() so xcconfig does not treat it as a comment.
+// CALLSHIELD_SAFETY_BASE_URL = https:/$()/your-safety-service.example
+// Use a per-user token mapped to the same user identity as the incoming-call service.
+// Never include the shared-list administrator token in the app.
+// CALLSHIELD_SAFETY_TOKEN = your-private-per-user-test-token

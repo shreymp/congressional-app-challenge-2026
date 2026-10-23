@@ -12,9 +12,9 @@ struct RecentsScreen: View {
                 ForEach(CallFilter.allCases, id: \.self) { filter in
                     Button { store.filter = filter } label: {
                         Text(filter.rawValue)
-                            .font(.system(size: 12, weight: .semibold))
+                            .scaledFont(size: 12, weight: .semibold)
                             .frame(maxWidth: .infinity, minHeight: 27)
-                            .background(store.filter == filter ? Color.white : .clear,
+                            .background(store.filter == filter ? Palette.surface : .clear,
                                         in: RoundedRectangle(cornerRadius: 7))
                             .shadow(color: .black.opacity(store.filter == filter ? 0.1 : 0), radius: 2, y: 1)
                             .contentShape(Rectangle())
@@ -25,13 +25,13 @@ struct RecentsScreen: View {
                 }
             }
             .padding(3)
-            .background(Color(hex: 0xEDEDF0), in: RoundedRectangle(cornerRadius: 9))
+            .background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 9))
             .padding(.bottom, 14)
 
             HStack(spacing: 7) {
-                Image(systemName: "magnifyingglass").font(.system(size: 18))
+                Image(systemName: "magnifyingglass").scaledFont(size: 18)
                 TextField("Search", text: $store.search)
-                    .font(.system(size: 14))
+                    .scaledFont(size: 14)
                     .foregroundStyle(Palette.ink)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
@@ -42,17 +42,17 @@ struct RecentsScreen: View {
                     .accessibilityIdentifier("callSearch")
                 if !store.search.isEmpty {
                     Button { store.search = "" } label: {
-                        Image(systemName: "xmark").font(.system(size: 15)).frame(width: 30, height: 37)
+                        Image(systemName: "xmark").scaledFont(size: 15).frame(width: 30, height: 37)
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Clear search")
                 }
             }
-            .foregroundStyle(Color(hex: 0x8F9097))
+            .foregroundStyle(Palette.secondary)
             .padding(.leading, 10)
             .padding(.trailing, 4)
-            .frame(height: 37)
-            .background(Color(hex: 0xF0F0F2), in: RoundedRectangle(cornerRadius: 10))
+            .frame(minHeight: 42)
+            .background(Palette.soft, in: RoundedRectangle(cornerRadius: 10))
             .padding(.bottom, 24)
 
             HStack {
@@ -60,19 +60,19 @@ struct RecentsScreen: View {
                 Spacer()
                 Text("Sample history")
             }
-            .font(.system(size: 9))
-            .foregroundStyle(Color(hex: 0x92979A))
+            .scaledFont(size: 9)
+            .foregroundStyle(Palette.secondary)
             .padding(.bottom, 7)
 
             if store.visibleCalls.isEmpty {
                 VStack(spacing: 10) {
-                    Image(systemName: "magnifyingglass").font(.system(size: 30))
-                    Text("No calls found").font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(Color(hex: 0x34473C))
+                    Image(systemName: "magnifyingglass").scaledFont(size: 30)
+                    Text("No calls found").scaledFont(size: 16, weight: .semibold)
+                        .foregroundStyle(Palette.ink)
                     Text(store.search.isEmpty ? "Your missed calls will appear here." : "Try another name, number, or voice label.")
-                        .font(.system(size: 12)).multilineTextAlignment(.center)
+                        .scaledFont(size: 12).multilineTextAlignment(.center)
                 }
-                .foregroundStyle(Color(hex: 0x8A9690))
+                .foregroundStyle(Palette.secondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 48)
                 .accessibilityIdentifier("emptyCalls")
@@ -98,7 +98,7 @@ struct RecentsScreen: View {
             Avatar(person: call.person)
             VStack(alignment: .leading, spacing: 5) {
                 Text(call.person.name)
-                    .font(.system(size: nameSize + (store.largeText ? 2 : 0), weight: .semibold))
+                    .scaledFont(size: nameSize + (store.largeText ? 2 : 0), weight: .semibold)
                     .tracking(-0.15)
                     .foregroundStyle(call.missed ? Palette.missed : Palette.ink)
                     .lineLimit(1)
@@ -114,8 +114,8 @@ struct RecentsScreen: View {
                         VoiceBadge(voice: call.voice, size: store.largeText ? 11 : 10)
                     }
                 }
-                .font(.system(size: captionSize))
-                .foregroundStyle(Color(hex: 0x959BA0))
+                .scaledFont(size: captionSize)
+                .foregroundStyle(Palette.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             if store.largeText {
@@ -125,18 +125,21 @@ struct RecentsScreen: View {
             }
         }
         .padding(.vertical, 16)
+        .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-        .overlay(alignment: .bottom) { Rectangle().fill(Palette.line).frame(height: 1) }
+        .background(Palette.surface, in: RoundedRectangle(cornerRadius: 13))
+        .overlay(RoundedRectangle(cornerRadius: 13).stroke(Palette.line, lineWidth: 0.5))
+        .padding(.bottom, 7)
     }
 
     @ViewBuilder private func rowEnd(_ call: CallEntry) -> some View {
         Text(call.when)
-            .font(.system(size: 10))
-            .foregroundStyle(Color(hex: 0x96999E))
+            .scaledFont(size: 10)
+            .foregroundStyle(Palette.secondary)
             .fixedSize()
         Image(systemName: "info.circle")
-            .font(.system(size: 17))
-            .foregroundStyle(Color(hex: 0x528FCB))
+            .scaledFont(size: 17)
+            .foregroundStyle(Palette.accent)
     }
 }

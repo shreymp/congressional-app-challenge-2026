@@ -1,29 +1,34 @@
 import AppKit
-let image = NSImage(size: NSSize(width: 1024, height: 1024))
-image.lockFocus()
-NSColor(srgbRed: 36/255, green: 118/255, blue: 94/255, alpha: 1).setFill()
-NSBezierPath(rect: NSRect(x: 0, y: 0, width: 1024, height: 1024)).fill()
-let shield = NSBezierPath()
-shield.move(to: NSPoint(x: 512, y: 790))
-shield.curve(to: NSPoint(x: 732, y: 711), controlPoint1: NSPoint(x: 589, y: 750), controlPoint2: NSPoint(x: 655, y: 723))
-shield.line(to: NSPoint(x: 732, y: 540))
-shield.curve(to: NSPoint(x: 512, y: 231), controlPoint1: NSPoint(x: 732, y: 400), controlPoint2: NSPoint(x: 654, y: 308))
-shield.curve(to: NSPoint(x: 292, y: 540), controlPoint1: NSPoint(x: 370, y: 308), controlPoint2: NSPoint(x: 292, y: 400))
-shield.line(to: NSPoint(x: 292, y: 711))
-shield.curve(to: NSPoint(x: 512, y: 790), controlPoint1: NSPoint(x: 369, y: 723), controlPoint2: NSPoint(x: 435, y: 750))
-shield.close()
-shield.lineWidth = 33
-shield.lineJoinStyle = .round
-NSColor.white.setStroke()
-shield.stroke()
-let check = NSBezierPath()
-check.move(to: NSPoint(x: 410, y: 521))
-check.line(to: NSPoint(x: 481, y: 450))
-check.line(to: NSPoint(x: 619, y: 592))
-check.lineWidth = 36
-check.lineCapStyle = .round
-check.lineJoinStyle = .round
-check.stroke()
-image.unlockFocus()
-let bitmap = NSBitmapImageRep(data: image.tiffRepresentation!)!
-try bitmap.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: CommandLine.arguments[1]))
+
+// Temporary asset only. Replace these exports when the team supplies final artwork.
+// Usage: draw_icon OUTPUT [SIZE] [opaque|transparent|mono|background]
+let output = CommandLine.arguments[1]
+let size = CGFloat(Int(CommandLine.arguments.dropFirst(2).first ?? "1024") ?? 1024)
+let mode = CommandLine.arguments.dropFirst(3).first ?? "opaque"
+let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size), pixelsHigh: Int(size), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+let context = NSGraphicsContext(bitmapImageRep: bitmap)!
+NSGraphicsContext.saveGraphicsState()
+NSGraphicsContext.current = context
+let bounds = NSRect(x: 0, y: 0, width: size, height: size)
+NSColor.clear.setFill()
+NSBezierPath(rect: bounds).fill()
+if mode == "opaque" || mode == "background" {
+    NSColor(srgbRed: 227.0/255, green: 238.0/255, blue: 1, alpha: 1).setFill()
+    NSBezierPath(rect: bounds).fill()
+}
+if mode != "background" {
+    let color = mode == "mono" ? NSColor.black : NSColor(srgbRed: 25.0/255, green: 94.0/255, blue: 217.0/255, alpha: 1)
+    let box = NSRect(x: size * 0.21, y: size * 0.21, width: size * 0.58, height: size * 0.58)
+    let path = NSBezierPath(roundedRect: box, xRadius: size * 0.065, yRadius: size * 0.065)
+    path.lineWidth = size * 0.012
+    let dash: [CGFloat] = [size * 0.028, size * 0.02]
+    path.setLineDash(dash, count: dash.count, phase: 0)
+    color.setStroke()
+    path.stroke()
+    let label = "logo" as NSString
+    let attributes: [NSAttributedString.Key: Any] = [.font: NSFont.monospacedSystemFont(ofSize: size * 0.11, weight: .medium), .foregroundColor: color]
+    let textSize = label.size(withAttributes: attributes)
+    label.draw(at: NSPoint(x: (size - textSize.width)/2, y: (size - textSize.height)/2), withAttributes: attributes)
+}
+NSGraphicsContext.restoreGraphicsState()
+try bitmap.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: output))

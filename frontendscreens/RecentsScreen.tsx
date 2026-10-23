@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction, RefObject } from 'react';
-import { ArrowDownLeft, AudioLines, BatteryFull, Bot, Check, ChevronLeft, ChevronRight, Clock3, Info, Mic, MicOff, Phone, PhoneIncoming, PhoneOff, Play, Search, Settings, ShieldCheck, Signal, UserRound, UsersRound, Volume2, Wifi, X } from 'lucide-react';
+import { ArrowDownLeft, AudioLines, BatteryFull, Bot, Check, ChevronLeft, ChevronRight, Clock3, Info, Mic, MicOff, Phone, PhoneIncoming, PhoneOff, Play, Search, Settings, Signal, UserRound, UsersRound, Volume2, Wifi, X } from 'lucide-react';
 import { type Voice, type Person, type Entry, type Active, people, labels, duration, VoiceBadge } from "./shared";
 
 type Props = { filter: "all" | "missed"; setFilter: Dispatch<SetStateAction<"all" | "missed">>; search: string; setSearch: Dispatch<SetStateAction<string>>; visible: Entry[]; setDetail: Dispatch<SetStateAction<Entry | Person | null>>; };

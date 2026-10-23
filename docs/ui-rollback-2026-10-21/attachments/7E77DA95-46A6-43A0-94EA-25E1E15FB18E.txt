@@ -1,0 +1,30 @@
+Attributes: Button, 0x11770a080, {{169.0, 1000.0}, {64.0, 87.3}}, label: 'End call', value: Off
+Element subtree:
+ →Button, 0x11770a080, {{169.0, 1000.0}, {64.0, 87.3}}, label: 'End call', value: Off
+Path to element:
+ →Application, 0x117709900, pid: 89385, label: 'callma.'
+  ↳Window (Main), 0x117708dc0, {{0.0, 0.0}, {402.0, 874.0}}
+   ↳Other, 0x117708f00, {{0.0, 0.0}, {402.0, 874.0}}
+    ↳Other, 0x1177097c0, {{0.0, 0.0}, {402.0, 874.0}}
+     ↳Other, 0x117709b80, {{0.0, 0.0}, {402.0, 874.0}}
+      ↳Other, 0x117709cc0, {{0.0, 0.0}, {402.0, 874.0}}
+       ↳ScrollView, 0x117709e00, {{0.0, 0.0}, {402.0, 874.0}}
+        ↳Other, 0x117709f40, {{0.0, 62.0}, {402.0, 1045.3}}
+         ↳Button, 0x11770a080, {{169.0, 1000.0}, {64.0, 87.3}}, label: 'End call', value: Off
+Query chain:
+ →Find: Target Application 'org.callshield.Callshield'
+  Output: {
+    Application, 0x117886f80, pid: 89385, label: 'callma.'
+  }
+  ↪︎Find: Descendants matching type Button
+    Output: {
+      Button, 0x1178852c0, {{255.0, 384.0}, {17.0, 17.0}}, identifier: 'info.circle', label: 'About Voice labels'
+      Button, 0x117885f40, {{36.0, 758.3}, {330.0, 58.0}}, identifier: 'alertGuardianButton', label: 'Alert Guardian'
+      Button, 0x117886440, {{125.0, 900.7}, {64.0, 87.3}}, label: 'mute', value: Off
+      Button, 0x117886800, {{213.0, 900.7}, {64.0, 87.3}}, label: 'speaker', value: Off
+      Button, 0x117886bc0, {{169.0, 1000.0}, {64.0, 87.3}}, label: 'End call', value: Off
+    }
+    ↪︎Find: Elements matching predicate '"End call" IN identifiers'
+      Output: {
+        Button, 0x10a7ef200, {{169.0, 1000.0}, {64.0, 87.3}}, label: 'End call', value: Off
+      }

@@ -1,0 +1,29 @@
+{
+  "split_counts": {
+    "train": 479,
+    "validation": 31,
+    "test": 31
+  },
+  "comparisons": {
+    "train/validation": {
+      "exact_overlaps": 0,
+      "script_overlaps": 0,
+      "speaker_overlaps": 0,
+      "max_character_ngram_cosine": 0.7213374787560696
+    },
+    "train/test": {
+      "exact_overlaps": 0,
+      "script_overlaps": 0,
+      "speaker_overlaps": 0,
+      "max_character_ngram_cosine": 0.7166220441200724
+    },
+    "validation/test": {
+      "exact_overlaps": 0,
+      "script_overlaps": 0,
+      "speaker_overlaps": 0,
+      "max_character_ngram_cosine": 0.6593328012458696
+    }
+  },
+  "passed": true,
+  "limits": "Character similarity and source annotations cannot prove semantic independence or gold label correctness."
+}

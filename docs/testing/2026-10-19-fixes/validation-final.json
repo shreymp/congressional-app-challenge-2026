@@ -1,0 +1,78 @@
+{
+  "base_commit": "dca989c3126be4778638a002d3355a463f8789eb",
+  "recorded_utc": "2026-10-19T11:29:34.573021+00:00",
+  "scope": "Local automated checks; production not deployed or retested",
+  "passed": 65,
+  "failed": 0,
+  "suites": [
+    {
+      "suite": "transcript",
+      "started_utc": "2026-10-19T11:28:04.180331+00:00",
+      "exit_code": 0,
+      "seconds": 0.87,
+      "passed": 9,
+      "failed": 0,
+      "evidence": "logs/transcript.log"
+    },
+    {
+      "suite": "worker-integration",
+      "started_utc": "2026-10-19T11:28:05.053340+00:00",
+      "exit_code": 0,
+      "seconds": 1.08,
+      "passed": 15,
+      "failed": 0,
+      "evidence": "logs/worker-integration.log"
+    },
+    {
+      "suite": "tester-tools",
+      "started_utc": "2026-10-19T11:28:06.130495+00:00",
+      "exit_code": 0,
+      "seconds": 1.49,
+      "passed": 12,
+      "failed": 0,
+      "evidence": "logs/tester-tools.log"
+    },
+    {
+      "suite": "ring-lifecycle",
+      "exit_code": 0,
+      "passed": 20,
+      "failed": 0,
+      "evidence": "logs/ring-lifecycle-final.log",
+      "rerun": true
+    },
+    {
+      "suite": "transcript-service",
+      "started_utc": "2026-10-19T11:28:12.983832+00:00",
+      "exit_code": 0,
+      "seconds": 0.74,
+      "passed": 2,
+      "failed": 0,
+      "evidence": "logs/transcript-service.log"
+    },
+    {
+      "suite": "node-connector",
+      "started_utc": "2026-10-19T11:28:13.727482+00:00",
+      "exit_code": 0,
+      "seconds": 0.12,
+      "passed": 1,
+      "failed": 0,
+      "evidence": "logs/node-connector.log"
+    },
+    {
+      "suite": "cloud-contracts",
+      "started_utc": "2026-10-19T11:28:13.845413+00:00",
+      "exit_code": 0,
+      "seconds": 1.1,
+      "passed": 6,
+      "failed": 0,
+      "evidence": "logs/cloud-contracts.log"
+    }
+  ],
+  "source_sha256": {
+    "backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py": "144c8f290ba517e462831674a723fb73bfb50ea3b909e712b7693f04f56102e0",
+    "backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py": "043527986cb240311024b79445bdd8523b96220ae1a9c6e69a6fb75c291b3f51",
+    "backend/AI Deepfake Pipeline/LiveKit Setup/README.md": "656596921992a34e9a6c68b091581fb789591cfc284543857b355cbc6d02a9bc",
+    "backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md": "9ea47e1593291f46379cae03c0347c32557858f34f416b31aa191a154954ea63"
+  },
+  "earlier_runs": "Original logs retained, including old-code failures and the corrected test deadline failure."
+}

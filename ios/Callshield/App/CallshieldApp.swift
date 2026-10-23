@@ -2,10 +2,12 @@ import SwiftUI
 
 @main
 struct CallshieldApp: App {
+    @AppStorage("callma.connectionRevision") private var connectionRevision = ""
+
     var body: some Scene {
         WindowGroup {
             if AppConfiguration.isDemo { DemoAppRoot() }
-            else { ProductionRootView() }
+            else { ProductionRootView().id(connectionRevision) }
         }
     }
 }

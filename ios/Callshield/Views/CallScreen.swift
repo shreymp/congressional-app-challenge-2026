@@ -10,13 +10,13 @@ struct CallScreen: View {
             ScrollView {
                 VStack(spacing: 0) {
                     HStack(spacing: 6) {
-                        Label("Callshield", systemImage: "checkmark.shield")
+                        BrandWordmark(onDark: true)
                             .font(.system(size: 12))
                         Text("DEMO").font(.system(size: 8)).tracking(1)
                             .padding(.horizontal, 5).padding(.vertical, 2)
-                            .overlay(RoundedRectangle(cornerRadius: 4).stroke(.white.opacity(0.15)))
+                            .overlay(RoundedRectangle(cornerRadius: 4).stroke(Palette.line))
                     }
-                    .foregroundStyle(Color(hex: 0xD3DFD7))
+                    .foregroundStyle(Palette.secondary)
                     Avatar(person: call.person, size: connected ? 70 : 90)
                         .padding(.top, connected ? 17 : 29)
                         .padding(.bottom, connected ? 14 : 20)
@@ -24,32 +24,32 @@ struct CallScreen: View {
                         .font(.system(size: 29, weight: .medium)).tracking(-0.7)
                         .accessibilityAddTraits(.isHeader)
                     Text(call.person.number)
-                        .font(.system(size: 14)).foregroundStyle(Color(hex: 0xBDCCC3))
+                        .font(.system(size: 14)).foregroundStyle(Palette.secondary)
                         .padding(.top, 9).padding(.bottom, 5)
                     Text(connected ? callDuration(store.seconds) : "Incoming call")
                         .font(.system(size: 14)).monospacedDigit()
-                        .foregroundStyle(Color(hex: 0x9FB5A8))
+                        .foregroundStyle(Palette.secondary)
                         .accessibilityIdentifier("callStatus")
                     if connected {
                         VStack(spacing: 0) {
                             VoiceBadge(voice: call.voice, size: 13, onCall: true)
                                 .accessibilityIdentifier("activeVoiceLabel")
                             Text(assessmentText)
-                                .font(.system(size: 12)).foregroundStyle(Color(hex: 0xD0DCD5))
+                                .font(.system(size: 12)).foregroundStyle(Palette.secondary)
                                 .padding(.top, 12).padding(.bottom, 7)
                             Text("Simulated result · Not an identity check")
-                                .font(.system(size: 9)).foregroundStyle(Color(hex: 0x8DA597))
+                                .font(.system(size: 9)).foregroundStyle(Palette.secondary)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14).padding(.horizontal, 10)
-                        .background(.white.opacity(0.03), in: RoundedRectangle(cornerRadius: 18))
-                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(.white.opacity(0.09)))
+                        .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
+                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Palette.line))
                         .padding(.top, 18)
                     }
                     Spacer(minLength: 20)
                     if connected { connectedActions } else { answerActions }
                     Text("Simulated call · No audio is transmitted")
-                        .font(.system(size: 9)).foregroundStyle(Color(hex: 0x829C8C))
+                        .font(.system(size: 9)).foregroundStyle(Palette.secondary)
                         .padding(.top, connected ? 13 : 27)
                         .padding(.bottom, 4)
                 }
@@ -63,9 +63,9 @@ struct CallScreen: View {
             }
             .scrollIndicators(.hidden)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(Palette.ink)
         .background {
-            RadialGradient(colors: [Color(hex: 0x3A554C), Color(hex: 0x25382F), Color(hex: 0x131F1C)],
+            RadialGradient(colors: [Palette.softAccent, Palette.surface, Palette.canvas],
                            center: .init(x: 0.2, y: 0.2), startRadius: 0, endRadius: 700)
                 .ignoresSafeArea()
         }
@@ -84,10 +84,10 @@ struct CallScreen: View {
     private var answerActions: some View {
         HStack {
             roundButton("Decline", symbol: "phone.down.fill", size: 70,
-                        color: Color(hex: 0xF44E54), id: "declineCall") { store.finishCall() }
+                        color: Palette.destructive, foreground: .white, id: "declineCall") { store.finishCall() }
             Spacer()
             roundButton("Accept", symbol: "phone.fill", size: 70,
-                        color: Color(hex: 0x32C968), id: "acceptCall") { store.accept() }
+                        color: Palette.action, foreground: Palette.actionInk, id: "acceptCall") { store.accept() }
         }
         .padding(.horizontal, 12)
     }
@@ -96,20 +96,20 @@ struct CallScreen: View {
         VStack(spacing: 24) {
             HStack(spacing: 43) {
                 roundButton(store.muted ? "unmute" : "mute", symbol: store.muted ? "mic.slash" : "mic",
-                            size: 59, color: store.muted ? .white : .white.opacity(0.13),
-                            foreground: store.muted ? Color(hex: 0x273C31) : .white,
+                            size: 59, color: store.muted ? Palette.action : Palette.softAccent,
+                            foreground: store.muted ? Palette.actionInk : Palette.ink,
                             id: "muteCall") { store.toggleMute() }
                     .accessibilityValue(store.muted ? "On" : "Off")
                 roundButton("speaker", symbol: "speaker.wave.2", size: 59,
-                            color: store.speaker ? .white : .white.opacity(0.13),
-                            foreground: store.speaker ? Color(hex: 0x273C31) : .white,
+                            color: store.speaker ? Palette.action : Palette.softAccent,
+                            foreground: store.speaker ? Palette.actionInk : Palette.ink,
                             id: "speakerCall") { store.toggleSpeaker() }
                     .accessibilityValue(store.speaker ? "On" : "Off")
             }
             Button { store.finishCall() } label: {
-                Image(systemName: "phone.down.fill").font(.system(size: 30))
+                Image(systemName: "phone.down.fill").font(.system(size: 30)).foregroundStyle(.white)
                     .frame(width: 64, height: 64)
-                    .background(Color(hex: 0xF44E54), in: Circle())
+                    .background(Palette.destructive, in: Circle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel("End call")
@@ -118,7 +118,7 @@ struct CallScreen: View {
     }
 
     private func roundButton(_ label: String, symbol: String, size: CGFloat, color: Color,
-                             foreground: Color = .white, id: String, action: @escaping () -> Void) -> some View {
+                             foreground: Color = Palette.ink, id: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(spacing: 10) {
                 Image(systemName: symbol).font(.system(size: 29))

@@ -68,7 +68,8 @@ const app = http.createServer(async (req, res) => {
 
 if (require.main === module) {
   const port = process.env.PORT || 3000;
-  app.listen(port, '0.0.0.0', () => console.log(`JEV connector listening on port ${port}`));
+  app.listen(port, process.env.HOST || '127.0.0.1', () => console.log(`JEV connector listening on port ${port}`));
 }
 
 module.exports = { app };
+

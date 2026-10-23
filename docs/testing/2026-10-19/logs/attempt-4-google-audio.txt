@@ -1,0 +1,22 @@
+2026-10-19T06:23:11.978Z
+ [active]:
+  - generic: Microphone
+  - img: mic
+  - img "No sound detected in the last 3 seconds."
+  - combobox "Microphone":
+    - generic: MacBook Pro Microphone (Built-in)
+  - separator
+  - generic: Ringing
+  - button "Test":
+    - img: volume_up
+    - generic: Test
+  - combobox "Ringing":
+    - generic: Default - MacBook Pro Speakers (Built-in)
+  - separator
+  - generic: Speakers
+  - button "Test":
+    - img: volume_up
+    - generic: Test
+  - combobox "Speakers":
+    - generic: Default - MacBook Pro Speakers (Built-in)
+- generic: 15 contacts found

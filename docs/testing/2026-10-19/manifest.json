@@ -1,0 +1,372 @@
+[
+  {
+    "path": "REPORT.md",
+    "bytes": 14654,
+    "sha256": "8853abb51a2d9bca9bd8288f4b790bb5d0bd8a668fdc657e82508a1c6d87886e"
+  },
+  {
+    "path": "audio/benign-samantha.aiff",
+    "bytes": 1948504,
+    "sha256": "5a53283e068dcce7f8f3cb33de20d5cc5dc5a06adb793683c5dbdde1ea4e3eb6"
+  },
+  {
+    "path": "audio/scam-samantha.aiff",
+    "bytes": 2037080,
+    "sha256": "c4bc32b4ac40b3c724d860a0dc23fee31766590b54386acacbf0b88d5ed48fed"
+  },
+  {
+    "path": "benign-synthetic-script.txt",
+    "bytes": 699,
+    "sha256": "0b47b3effaa9c4358c60e116cdba9b58f312d5b63ff4f8873e9dc398ce2b6b81"
+  },
+  {
+    "path": "logs/attempt-3-connected.txt",
+    "bytes": 2239,
+    "sha256": "ee83aed024296ed32ac6d9ff5e5b9e11298534bdd35a99378cf914f2edb84c3b"
+  },
+  {
+    "path": "logs/attempt-3-controls-and-result.txt",
+    "bytes": 2211,
+    "sha256": "62cf266aab98ffdec320171408d88bffea0af28b116ea8a18ac6111dced4bac1"
+  },
+  {
+    "path": "logs/attempt-3-incoming.txt",
+    "bytes": 1442,
+    "sha256": "c05ed1c9d4e87801264265f0a1accde41f7f0bd0daa75d38ab1eac475c7bf1ed"
+  },
+  {
+    "path": "logs/attempt-3-saved-details.txt",
+    "bytes": 2349,
+    "sha256": "f168082e7199714af42e1508bf11ecbf1f49774892fc75b5ff97109d15245f3b"
+  },
+  {
+    "path": "logs/attempt-3-synthetic-mid.txt",
+    "bytes": 2240,
+    "sha256": "e98ce25ecf60ee6365af9973fac663d26af011b0a5411138379f591c20039f29"
+  },
+  {
+    "path": "logs/attempt-4-after-silence.txt",
+    "bytes": 2295,
+    "sha256": "0c64e600a60726e9daadcf3b8516818303c672ec5d6e5d4ece2b0595e97393c3"
+  },
+  {
+    "path": "logs/attempt-4-after-synthetic.txt",
+    "bytes": 2266,
+    "sha256": "c9ce7d10a49d718348c3b3f8e15875e6b281dd876c779f468026f131498c9b1f"
+  },
+  {
+    "path": "logs/attempt-4-caller-hangup.txt",
+    "bytes": 2310,
+    "sha256": "e9845be13308cb013dfdafcc03483ba99ffedb12766248c47e88bedd58837b50"
+  },
+  {
+    "path": "logs/attempt-4-fresh-no-old-score.txt",
+    "bytes": 2240,
+    "sha256": "918744a31218b7b106e51e2104fbf1cad6140c692bd5f1fa0caa6e03befea748"
+  },
+  {
+    "path": "logs/attempt-4-google-audio.txt",
+    "bytes": 582,
+    "sha256": "8bcbe67a347a6f42c71bb08e0d7e5b546688bedb604b2fdfa9fecbc2f5c31d4e"
+  },
+  {
+    "path": "logs/attempt-4-incoming.txt",
+    "bytes": 1442,
+    "sha256": "198423626e08fedca66f72c516472f2e33ec47dbdcabb4dcf9ad8304473c61cc"
+  },
+  {
+    "path": "logs/attempt-4-saved-details.txt",
+    "bytes": 2389,
+    "sha256": "6c89d1f26e67c9d2a9657f4b7c45e39792281b0badda93e6b29890b443e49a68"
+  },
+  {
+    "path": "logs/attempt-4-silence-start.txt",
+    "bytes": 80,
+    "sha256": "cff36f1da6dccb4502a9ccd6aabf9a28c2e5dc605800976d4591c8d184a3805b"
+  },
+  {
+    "path": "logs/attempt-5-fresh-no-old-score.txt",
+    "bytes": 2240,
+    "sha256": "dac4cb93ca9c50f2248f169ed58c2cbd776ca7e3314cc2c040bfdc54a9f82175"
+  },
+  {
+    "path": "logs/attempt-5-saved-details.txt",
+    "bytes": 2382,
+    "sha256": "fec75b10291ed1dae3ca7023115fd02cce4bcef48e337728cef5c1e3b604b8e5"
+  },
+  {
+    "path": "logs/attempt-5-scam-final.txt",
+    "bytes": 2259,
+    "sha256": "c5290f6e2249024d755f26b72165e848fd353e51ac92ff9593562a32c70f3ae7"
+  },
+  {
+    "path": "logs/attempt-5-scam-mid.txt",
+    "bytes": 2258,
+    "sha256": "f491ec53810f275cf6fee4d5e440b77dc87b9c3a28d932d74afb158ea33699a6"
+  },
+  {
+    "path": "logs/attempt-6-saved-details-uncontrolled.txt",
+    "bytes": 2345,
+    "sha256": "4b70c9be41b65404b55e73c4b21a9ebbb9d422bfcb68e6c3b63e77b31a0e35d2"
+  },
+  {
+    "path": "logs/attempt-6-uncontrolled-connected.txt",
+    "bytes": 2521,
+    "sha256": "a2da87a03eee7b750bf4d13ad166b1c993717aa160146eae11ca4a6ddf3ac525"
+  },
+  {
+    "path": "logs/attempt-6-user-confirmation.json",
+    "bytes": 641,
+    "sha256": "1e7afa4942251011a1f84e699507f275ee782e4ea741866592928d602b0fea00"
+  },
+  {
+    "path": "logs/attempt-7-after-decline.txt",
+    "bytes": 2634,
+    "sha256": "c3fa43b20762c60b7fc09ace7fba8820263f2935acb8f52310714b657d85a0e9"
+  },
+  {
+    "path": "logs/attempt-7-before-decline.txt",
+    "bytes": 1442,
+    "sha256": "83a2b8859083f4dbe55359277ffe48494edf53d60e8ed1029f684e6b0e6a5403"
+  },
+  {
+    "path": "logs/attempt-7-caller-still-ringing.txt",
+    "bytes": 571,
+    "sha256": "82d8ea2a6fbe90e3063e0475547e1906c7637b2da6683677acca76e84e4f7a55"
+  },
+  {
+    "path": "logs/automated-window-interference.txt",
+    "bytes": 958,
+    "sha256": "3ff8ecc83e3b3b4299ad2c2100e01d65817361d23c49fedc3b54caa3b793e974"
+  },
+  {
+    "path": "logs/backend-summary.json",
+    "bytes": 950,
+    "sha256": "49a6f6652cab9761c41fa09ee62f57cec7fbd9b9f8e0826edf1f4bd10acb057a"
+  },
+  {
+    "path": "logs/call-records-summary.json",
+    "bytes": 2589,
+    "sha256": "65945be4c0881bd0c1ba37d4abfb99de37aa8be0f92d126b04ba33997b788fa2"
+  },
+  {
+    "path": "logs/cloud-contracts.log",
+    "bytes": 1236,
+    "sha256": "efbd2fd47a6b881d559df8a7e50efb129d2a4800294e75941739deec857978a8"
+  },
+  {
+    "path": "logs/ios-debug-summary.json",
+    "bytes": 1179,
+    "sha256": "6dfb7328e1bf72b10a5c3446381b096830c7b117727cd1efd35187b8465973e0"
+  },
+  {
+    "path": "logs/ios-debug-test-cases.json",
+    "bytes": 31407,
+    "sha256": "559c0fe5bfa12cbe5dd2c7918d7fab554db3a2986d1c3d498964d07c7340b3cd"
+  },
+  {
+    "path": "logs/ios-debug.log",
+    "bytes": 1605,
+    "sha256": "d17472c5b710bf7f01c998416b9222f45beb2622624b8943c0845b8fa194c621"
+  },
+  {
+    "path": "logs/ios-live-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "logs/ios-release-summary.json",
+    "bytes": 1179,
+    "sha256": "3b59c653e4ab76d0f43feef34a6b38fb20755cfd7695588dfd34d9136a840056"
+  },
+  {
+    "path": "logs/ios-release-test-cases.json",
+    "bytes": 30845,
+    "sha256": "a47f18379e0ce30f89c05bd37224abf0e4dd2e0112e14cb3f5476e44f9a0689d"
+  },
+  {
+    "path": "logs/ios-release.log",
+    "bytes": 1037,
+    "sha256": "58c8be56a8f565aebc138e1f692655e95fa00e685fde48ad1f7e319c4e2940fd"
+  },
+  {
+    "path": "logs/ios-test-build.log",
+    "bytes": 2188,
+    "sha256": "9e4f72f66cd6885e3f73d409edb9831507d1a0f10a2eb34f27417fbef5bb1f29"
+  },
+  {
+    "path": "logs/node-connector.log",
+    "bytes": 251,
+    "sha256": "4f4d97fe02094d9419ea1cff99f9a95e3bc81d0495fabb82be40bc8458c9b586"
+  },
+  {
+    "path": "logs/playback-events.txt",
+    "bytes": 881,
+    "sha256": "a5d895c18514227b253a362d128199d73a71d011b9b027784f6cf1903b552c3e"
+  },
+  {
+    "path": "logs/ring-lifecycle.log",
+    "bytes": 1123,
+    "sha256": "14d9e02268228ed520509a3250effd0c68ba26622865608749c1c565724939b5"
+  },
+  {
+    "path": "logs/runtime-initial-partial.log",
+    "bytes": 960,
+    "sha256": "a1d91ee2761ac0f3c7860e25639c0ae12be41440dcb392b99891e265406ba20e"
+  },
+  {
+    "path": "logs/saved-test-call-history.json",
+    "bytes": 3149,
+    "sha256": "26bdd593560e04401d140bc31b803280a55f7c52ed52d7cd95ba38b34331c916"
+  },
+  {
+    "path": "logs/session-metadata.json",
+    "bytes": 730,
+    "sha256": "65d043fc0972fd4ae279f727ebb40a6534d2caf9074ed88f67c8743ebb5993d2"
+  },
+  {
+    "path": "logs/tester-tools.log",
+    "bytes": 2336,
+    "sha256": "18ce6d4251ff182b46d7cfd686e6dfe2f0eaaac93b42f528633fe69c31e508a5"
+  },
+  {
+    "path": "logs/transcript-service.log",
+    "bytes": 954,
+    "sha256": "33b56e84c10a01182ee3c3c7dc09c30837c45813f1c0f91a6d17ac7c7869edea"
+  },
+  {
+    "path": "logs/transcript.log",
+    "bytes": 1675,
+    "sha256": "ceb66554a8f6cd8a984e92759dc28fefccc936a4c89e4f2d35bb124e28dd021a"
+  },
+  {
+    "path": "logs/worker-integration.log",
+    "bytes": 2596,
+    "sha256": "e04d597fe5668ecb2e595b081cb638cc258b8cf889fa3852b1963bc2d0fdea01"
+  },
+  {
+    "path": "run-backend-checks.py",
+    "bytes": 2103,
+    "sha256": "cfa4baedd9b809d03580d854bf551940fa9413eb630103717a070c5c2e19fb33"
+  },
+  {
+    "path": "scam-synthetic-script.txt",
+    "bytes": 747,
+    "sha256": "f7124719a95fcda1e3d865243ccc426ea96ef7ff2c8b05ea67a14f08cebeb2e9"
+  },
+  {
+    "path": "screenshots/attempt-3-connected.png",
+    "bytes": 139250,
+    "sha256": "8ea6f88e20b9008991720c6305e9889da2f722c4cfcab243f379e6863e787367"
+  },
+  {
+    "path": "screenshots/attempt-3-controls-and-result.png",
+    "bytes": 140032,
+    "sha256": "3a465c053ecfc92e05f9dd5dd9a3aaa78e42c7c9cc7d594b5e7c89eb5522da50"
+  },
+  {
+    "path": "screenshots/attempt-3-incoming.png",
+    "bytes": 106119,
+    "sha256": "dbde16219b5a8ca54ea6333bc8c0bf8f677f4719150ed55c09b3b09a3deeadbc"
+  },
+  {
+    "path": "screenshots/attempt-3-saved-details.png",
+    "bytes": 144702,
+    "sha256": "e7386017c389a1d9c65a20f438ac3c2c68039876874a7ea69b83d9ec8171c16f"
+  },
+  {
+    "path": "screenshots/attempt-3-synthetic-mid.png",
+    "bytes": 142417,
+    "sha256": "117b85414ca7a4ed1308e0aed3404e78b90b55de3552f92c0336e3e023cea5ce"
+  },
+  {
+    "path": "screenshots/attempt-4-after-silence.png",
+    "bytes": 146717,
+    "sha256": "b2bf0337c99c8af9ba37b1d6a5256593ad5e17dd43aa9f873aab21a62f199108"
+  },
+  {
+    "path": "screenshots/attempt-4-after-synthetic.png",
+    "bytes": 146203,
+    "sha256": "046a704d663f158898810207e6809d2c66361a7834f77e0aee858b82e94894c0"
+  },
+  {
+    "path": "screenshots/attempt-4-caller-hangup.png",
+    "bytes": 138990,
+    "sha256": "b5df6af691472a91e97b0f8d825b4138cbaa0080f7bed0dd760cb95c30d77e9c"
+  },
+  {
+    "path": "screenshots/attempt-4-fresh-no-old-score.png",
+    "bytes": 142521,
+    "sha256": "ea6617d21e9287dd234793fe1f802e655423d0ca5ff5f76d1c6ccc7e476d3e23"
+  },
+  {
+    "path": "screenshots/attempt-4-incoming.png",
+    "bytes": 110354,
+    "sha256": "2af046704cb40e7afdc39b7c97c2777d2f4dfabf71eb2b5443fcb248b8927891"
+  },
+  {
+    "path": "screenshots/attempt-4-saved-details.png",
+    "bytes": 147392,
+    "sha256": "a1164f9dd556e7ddeb38a4f7ca89ac3404715dde3590c758f626c9ced2c392c2"
+  },
+  {
+    "path": "screenshots/attempt-5-fresh-no-old-score.png",
+    "bytes": 142618,
+    "sha256": "2e8077416845f5921403f6a68043e40b1f709f96333e6e4ba889cdef83f5dc36"
+  },
+  {
+    "path": "screenshots/attempt-5-saved-details.png",
+    "bytes": 147017,
+    "sha256": "8e8c14a21299b079d122f4387a9f5858cb47b67c1f08d70022d44b58bb3a3091"
+  },
+  {
+    "path": "screenshots/attempt-5-scam-final.png",
+    "bytes": 146396,
+    "sha256": "ce636c6981faa05eb50ffbdc1796571c749340599d23953f6873d5477c300348"
+  },
+  {
+    "path": "screenshots/attempt-5-scam-mid.png",
+    "bytes": 146486,
+    "sha256": "04d659d3ee91497f97ffd8dbbf8f75db170fead8c89ec5d09be78d995b3dfbe3"
+  },
+  {
+    "path": "screenshots/attempt-6-saved-details-uncontrolled.png",
+    "bytes": 138608,
+    "sha256": "c064da7f18608bdd08a842583eb61aac4b2ab923335fb53445df66ec771b20ca"
+  },
+  {
+    "path": "screenshots/attempt-6-uncontrolled-connected.png",
+    "bytes": 156067,
+    "sha256": "cf93c2ed93caca2c5670e02affaebf6dd1eca8160fa6b1598b88ec4238d22a2b"
+  },
+  {
+    "path": "screenshots/attempt-7-after-decline.png",
+    "bytes": 153793,
+    "sha256": "99e3472caf2fce7318ec01db5043d73b870b34791d1f0baf78c222d559d6137d"
+  },
+  {
+    "path": "screenshots/attempt-7-before-decline.png",
+    "bytes": 106262,
+    "sha256": "b42e6c1daa8486b5ffe825999ee85e38760eb36c8596cdad875013747aa2de77"
+  },
+  {
+    "path": "screenshots/attempt-7-caller-still-ringing.jpg",
+    "bytes": 12011,
+    "sha256": "d03fe74cc8605c5526bd40dc0aedca51f723c2d553ff97636fab43cc380976fd"
+  },
+  {
+    "path": "screenshots/automated-window-interference.png",
+    "bytes": 194514,
+    "sha256": "1923c6866da8add3c2ffd3db86112158ae0e87e15e4346e6f9ed50492f9f6eee"
+  },
+  {
+    "path": "screenshots/google-voice-attempt-1.jpg",
+    "bytes": 11624,
+    "sha256": "d2e0626491031679428a3dd98221c8b9ffc3d648008a310adf4ea5d4cb4f2ce0"
+  },
+  {
+    "path": "screenshots/incoming-call.png",
+    "bytes": 106087,
+    "sha256": "e19695d576baaa400889d4e57e45e32569475fa9a9527bff4e791362d9189935"
+  }
+]

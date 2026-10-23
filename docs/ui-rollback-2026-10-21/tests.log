@@ -1,0 +1,1352 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project ios/Callshield.xcodeproj -scheme Callshield -destination "platform=iOS Simulator,id=10469AE2-2454-4954-913E-A1100BE59050" -derivedDataPath /tmp/callshield-ui-redesign-build -resultBundlePath /tmp/callma-ui-rollback-20261021.xcresult "-only-testing:CallshieldTests/ProductionTests" "-only-testing:CallshieldUITests/ProductionUITests" "-only-testing:CallshieldUITests/CallshieldUITests/testAllScreensAndNavigation" "-only-testing:CallshieldUITests/CallshieldUITests/testVoiceHelpAppearsAtTheResult" CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  LiveKitWebRTC: https://github.com/livekit/webrtc-xcframework.git @ 150.7871.2
+  LiveKitUniFFI: https://github.com/livekit/livekit-uniffi-xcframework.git @ 0.1.9
+  LiveKit: https://github.com/livekit/client-sdk-swift @ 2.17.0
+
+Writing result bundle at path:
+	/tmp/callma-ui-rollback-20261021.xcresult
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (12 targets)
+    Target 'CallshieldUITests' in project 'Callshield'
+        ➜ Explicit dependency on target 'Callshield' in project 'Callshield'
+    Target 'CallshieldTests' in project 'Callshield'
+        ➜ Explicit dependency on target 'Callshield' in project 'Callshield'
+        ➜ Explicit dependency on target 'LiveKit' in project 'LiveKit'
+    Target 'Callshield' in project 'Callshield'
+        ➜ Explicit dependency on target 'LiveKit' in project 'LiveKit'
+    Target 'LiveKit' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKit' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKit_LiveKit' in project 'LiveKit'
+        ➜ Explicit dependency on target 'CLiveKitProto' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKitNanopb' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LKObjCHelpers' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKitWebRTC' in project 'LiveKitWebRTC'
+        ➜ Explicit dependency on target 'LiveKitUniFFI' in project 'LiveKitUniFFI'
+    Target 'LiveKit' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKit_LiveKit' in project 'LiveKit'
+        ➜ Explicit dependency on target 'CLiveKitProto' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKitNanopb' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LKObjCHelpers' in project 'LiveKit'
+        ➜ Explicit dependency on target 'LiveKitWebRTC' in project 'LiveKitWebRTC'
+        ➜ Explicit dependency on target 'LiveKitUniFFI' in project 'LiveKitUniFFI'
+    Target 'LiveKitUniFFI' in project 'LiveKitUniFFI'
+        ➜ Explicit dependency on target 'LiveKitUniFFI' in project 'LiveKitUniFFI'
+    Target 'LiveKitUniFFI' in project 'LiveKitUniFFI' (no dependencies)
+    Target 'LiveKitWebRTC' in project 'LiveKitWebRTC' (no dependencies)
+    Target 'LKObjCHelpers' in project 'LiveKit' (no dependencies)
+    Target 'LiveKitNanopb' in project 'LiveKit'
+        ➜ Explicit dependency on target 'CLiveKitProto' in project 'LiveKit'
+    Target 'CLiveKitProto' in project 'LiveKit' (no dependencies)
+    Target 'LiveKit_LiveKit' in project 'LiveKit' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 347fb2cb4c15d86c9c3d0aa4059016c1
+Build description path: /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/XCBuildData/347fb2cb4c15d86c9c3d0aa4059016c1.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+
+MkDir /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'LiveKit_LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    /bin/mkdir -p /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle
+
+MkDir /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /bin/mkdir -p /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest
+
+MkDir /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /bin/mkdir -p /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle/Info.plist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKit.build/Debug-iphonesimulator/LiveKit_LiveKit.build/empty-LiveKit_LiveKit.plist (in target 'LiveKit_LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    builtin-infoPlistUtility /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKit.build/Debug-iphonesimulator/LiveKit_LiveKit.build/empty-LiveKit_LiveKit.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle/Info.plist
+
+RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'LiveKit_LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    builtin-RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle
+
+Touch /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'LiveKit_LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    /usr/bin/touch -c /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/Info.plist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKitUniFFI.build/Debug-iphonesimulator/LiveKitUniFFI\ product.build/empty-LiveKitUniFFI_-749A832529F5F93A_PackageProduct.plist (in target 'LiveKitUniFFI' from project 'LiveKitUniFFI')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/livekit-uniffi-xcframework
+    builtin-infoPlistUtility /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKitUniFFI.build/Debug-iphonesimulator/LiveKitUniFFI\ product.build/empty-LiveKitUniFFI_-749A832529F5F93A_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/Info.plist
+
+SwiftDriver Callshield normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Callshield -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/Info.plist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKit.build/Debug-iphonesimulator/LiveKit\ product.build/empty-LiveKit_35C63016FCEE6E3F_PackageProduct.plist (in target 'LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    builtin-infoPlistUtility /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/LiveKit.build/Debug-iphonesimulator/LiveKit\ product.build/empty-LiveKit_35C63016FCEE6E3F_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/Info.plist
+
+CpResource /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'LiveKit' from project 'LiveKit')
+    cd /tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app
+
+Ld /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/__preview.dylib normal (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -Os -L/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -install_name @rpath/Callshield.debug.dylib -Xlinker -dead_strip -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_dependency_info.dat -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/__preview.dylib
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitWebRTC.framework /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework/LiveKitWebRTC -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitWebRTC.framework/LiveKitWebRTC
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/LiveKitUniFFI_-749A832529F5F93A_PackageProduct -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/LiveKitUniFFI_-749A832529F5F93A_PackageProduct
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/RustLiveKitUniFFI.framework /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework/RustLiveKitUniFFI -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/RustLiveKitUniFFI.framework/RustLiveKitUniFFI
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Info.plist /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/App/Info.plist (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-infoPlistUtility /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/App/Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/assetcatalog_generated_info.plist -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitWebRTC.framework -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/RustLiveKitUniFFI.framework -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/LiveKit_LiveKit.bundle -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Info.plist
+
+SwiftCompile normal arm64 Compiling\ ProductionCallView.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionCallView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionCallView.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ProductionRootView.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionRootView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionRootView.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ProductionVoicemailView.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionVoicemailView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionVoicemailView.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ CallScreen.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/CallScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/CallScreen.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ProductionPhoneScreens.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionPhoneScreens.swift (in target 'Callshield' from project 'Callshield')
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Production/ProductionPhoneScreens.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ DesignSystem.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/DesignSystem.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/DesignSystem.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Callshield (in target 'Callshield' from project 'Callshield')
+
+EmitSwiftModule normal arm64 (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for Callshield (in target 'Callshield' from project 'Callshield')
+
+SwiftDriver\ Compilation\ Requirements Callshield normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Callshield -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.swiftdoc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftdoc (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftdoc /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.abi.json (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.abi.json /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftsourceinfo (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftsourceinfo /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriver CallshieldTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldTests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver CallshieldUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldUITests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling DesignSystem.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 Compiling\ SettingsScreen.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/SettingsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/SettingsScreen.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ DetailSheet.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/DetailSheet.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/DetailSheet.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ RecentsScreen.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/RecentsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/RecentsScreen.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ContactsScreen.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/ContactsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/ContactsScreen.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ CallshieldRootView.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/CallshieldRootView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/Views/CallshieldRootView.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionVoicemailView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CallScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionRootView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 Compiling\ CallshieldApp.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/App/CallshieldApp.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/Callshield/App/CallshieldApp.swift (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling SettingsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 Compiling\ ProductionUITests.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/ProductionUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/ProductionUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ CallshieldUITests.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/CallshieldUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/CallshieldUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CallshieldUITests (in target 'CallshieldUITests' from project 'Callshield')
+
+EmitSwiftModule normal arm64 (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling ContactsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftCompile normal arm64 Compiling\ DeepfakeIntegrationTests.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/DeepfakeIntegrationTests.swift (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/DeepfakeIntegrationTests.swift (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CallshieldTests (in target 'CallshieldTests' from project 'Callshield')
+
+EmitSwiftModule normal arm64 (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ CallshieldStoreTests.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/CallshieldStoreTests.swift (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/CallshieldStoreTests.swift (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ProductionTests.swift /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/ProductionTests.swift (in target 'CallshieldTests' from project 'Callshield')
+SwiftCompile normal arm64 /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldTests/ProductionTests.swift (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling CallshieldApp.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CallshieldUITests (in target 'CallshieldUITests' from project 'Callshield')
+
+SwiftDriver\ Compilation\ Requirements CallshieldUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldUITests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.abi.json (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.abi.json /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftsourceinfo (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftsourceinfo /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionCallView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RecentsScreen.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CallshieldUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CallshieldTests (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftDriver\ Compilation\ Requirements CallshieldTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldTests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionUITests.swift (in target 'CallshieldUITests' from project 'Callshield')
+
+SwiftDriver\ Compilation CallshieldUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldUITests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldTests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.abi.json (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.abi.json /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftDriverJobDiscovery normal arm64 Compiling CallshieldStoreTests.swift (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling DetailSheet.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CallshieldRootView.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling DeepfakeIntegrationTests.swift (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionPhoneScreens.swift (in target 'Callshield' from project 'Callshield')
+
+SwiftDriver\ Compilation Callshield normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Callshield -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib normal (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -Os -L/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -filelist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.LinkFileList -install_name @rpath/Callshield.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.swiftmodule @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield-linker-args.resp -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductionTests.swift (in target 'CallshieldTests' from project 'Callshield')
+
+SwiftDriver\ Compilation CallshieldTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CallshieldTests -Onone @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/LKObjCHelpers.modulemap -Xcc -fmodule-map-file\=/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/CLiveKitProto.modulemap -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.0-simulator -g -module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/callshield-ui-redesign-build/Index.noindex/DataStore -swift-version 5 -I /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -c -j15 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/callshield-ui-redesign-build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -sdk-module-cache-path /tmp/callshield-ui-redesign-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/callshield-ui-redesign-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-generated-files.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-own-target-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield-6ae5a82ae1935b5d39f0b88d64844954-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests-project-headers.hmap -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/LKObjCHelpers/include -Xcc -I/tmp/callshield-ui-redesign-build/SourcePackages/checkouts/client-sdk-swift/Sources/CLiveKitProto/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources/arm64 -Xcc -I/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-Swift.h -working-directory /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios -experimental-emit-module-separately -disable-cmo
+
+ConstructStubExecutorLinkFileList /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-ExecutorLinkFileList-normal-arm64.txt (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    construct-stub-executor-link-file-list /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'Callshield' from project 'Callshield')
+
+Ld /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield normal (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -Os -L/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield-ExecutorLinkFileList-normal-arm64.txt /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield
+
+CopySwiftLibs /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/SystemExtensions --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Extensions --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name Callshield --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 16.0 --bundle-identifier org.callshield.Callshield --output /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app --target-triple arm64-apple-ios16.0-simulator --binary-file /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield --dependency-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield_dependency_info.dat --stringsdata-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.SwiftFileList --metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield.DependencyMetadataFileList --static-metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Objects-normal/arm64/Callshield.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 09:30:59.738 appintentsmetadataprocessor[88551:43632369] Starting appintentsmetadataprocessor export
+2026-10-21 09:30:59.755 appintentsmetadataprocessor[88551:43632369] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/LiveKit_LiveKit.bundle /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/RustLiveKitUniFFI.framework /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/livekit-uniffi-xcframework/RustLiveKitUniFFI/RustLiveKitUniFFI.xcframework/ios-arm64_x86_64-simulator/RustLiveKitUniFFI.framework/RustLiveKitUniFFI -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/RustLiveKitUniFFI.framework/RustLiveKitUniFFI
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct
+Ld /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/CallshieldTests normal (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -Os -L/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -filelist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield -Xlinker -object_path_lto -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.swiftmodule @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/LiveKit_35C63016FCEE6E3F_PackageProduct /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Callshield.debug.dylib -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/CallshieldTests
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/LiveKitUniFFI_-749A832529F5F93A_PackageProduct -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/LiveKitUniFFI_-749A832529F5F93A_PackageProduct
+
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitWebRTC.framework /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/callshield-ui-redesign-build/SourcePackages/artifacts/webrtc-xcframework/LiveKitWebRTC/LiveKitWebRTC.xcframework/ios-arm64_x86_64-simulator/LiveKitWebRTC.framework/LiveKitWebRTC -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitWebRTC.framework/LiveKitWebRTC
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Info.plist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/empty-CallshieldTests.plist (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-infoPlistUtility /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/empty-CallshieldTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/LiveKit_LiveKit.bundle -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Info.plist
+
+CopySwiftLibs /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/CallshieldTests --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/PlugIns --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/SystemExtensions --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Extensions --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CallshieldTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 16.0 --bundle-identifier org.callshield.CallshieldTests --output /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest --target-triple arm64-apple-ios16.0-simulator --binary-file /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/CallshieldTests --dependency-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests_dependency_info.dat --stringsdata-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.SwiftFileList --metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests.DependencyMetadataFileList --static-metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/CallshieldTests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldTests.build/Objects-normal/arm64/CallshieldTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 09:30:59.938 appintentsmetadataprocessor[88558:43632455] Starting appintentsmetadataprocessor export
+2026-10-21 09:30:59.939 appintentsmetadataprocessor[88558:43632455] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest
+
+Touch /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest (in target 'CallshieldTests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /usr/bin/touch -c /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest
+
+Validate /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app (in target 'Callshield' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-validationUtility /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app -shallow-bundle -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/Info.plist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/empty-CallshieldUITests.plist (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-infoPlistUtility /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/empty-CallshieldUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/Info.plist
+
+Ld /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/CallshieldUITests normal (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios16.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -Os -L/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -filelist /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.swiftmodule @/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/CallshieldUITests
+
+CopySwiftLibs /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/CallshieldUITests --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/Frameworks --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/PlugIns --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/SystemExtensions --scan-folder /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CallshieldUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 16.0 --bundle-identifier org.callshield.CallshieldUITests --output /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest --target-triple arm64-apple-ios16.0-simulator --binary-file /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/CallshieldUITests --dependency-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests_dependency_info.dat --stringsdata-file /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.SwiftFileList --metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests.DependencyMetadataFileList --static-metadata-file-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/Objects-normal/arm64/CallshieldUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 09:31:00.084 appintentsmetadataprocessor[88562:43632493] Starting appintentsmetadataprocessor export
+2026-10-21 09:31:00.085 appintentsmetadataprocessor[88562:43632493] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+MkDir /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /bin/mkdir -p /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app
+
+CopyAndPreserveArchs /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/CallshieldUITests-Runner (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/XCTRunner -output /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/CallshieldUITests-Runner -extract arm64
+
+RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    builtin-RegisterExecutionPolicyException /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest
+
+Touch /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest (in target 'CallshieldUITests' from project 'Callshield')
+    cd /Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios
+    /usr/bin/touch -c /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield.app-Simulated.xcent'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/Callshield.app-Simulated.xcent.der'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/Callshield.build/DerivedSources/Entitlements-Simulated.plist'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKitWebRTC.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitUniFFI_-749A832529F5F93A_PackageProduct.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests.xctest-Simulated.xcent'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/Frameworks/RustLiveKitUniFFI.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/CallshieldUITests.xctest-Simulated.xcent.der'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Intermediates.noindex/Callshield.build/Debug-iphonesimulator/CallshieldUITests.build/DerivedSources/Entitlements-Simulated.plist'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKitWebRTC.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/PlugIns/CallshieldTests.xctest/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/PlugIns/CallshieldUITests.xctest/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/LiveKit_35C63016FCEE6E3F_PackageProduct.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/RustLiveKitUniFFI.framework/_CodeSignature'
+
+note: Removed stale file '/tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/_CodeSignature'
+
+Test Suite 'Selected tests' started at 2026-10-21 09:31:03.119.
+Test Suite 'CallshieldTests.xctest' started at 2026-10-21 09:31:03.120.
+Test Suite 'ProductionTests' started at 2026-10-21 09:31:03.120.
+Test Case '-[CallshieldTests.ProductionTests testBackendThatCannotListenAnymoreIsShownToThePerson]' started.
+Test Case '-[CallshieldTests.ProductionTests testBackendThatCannotListenAnymoreIsShownToThePerson]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testBlockActionRefusesAnActiveCall]' started.
+[callma.] Simulator incoming call; use Accept in the app
+Test Case '-[CallshieldTests.ProductionTests testBlockActionRefusesAnActiveCall]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testContactsMatchUSCountryCodeAndRefreshSavedNames]' started.
+Test Case '-[CallshieldTests.ProductionTests testContactsMatchUSCountryCodeAndRefreshSavedNames]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testContactsRequirePermissionAndClearWhenRevoked]' started.
+Test Case '-[CallshieldTests.ProductionTests testContactsRequirePermissionAndClearWhenRevoked]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testCorruptRepositoryIsNotOverwrittenAndWriteErrorsAreVisible]' started.
+Test Case '-[CallshieldTests.ProductionTests testCorruptRepositoryIsNotOverwrittenAndWriteErrorsAreVisible]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testExplicitCallUsesSystemPhoneWithoutInventedHistory]' started.
+Test Case '-[CallshieldTests.ProductionTests testExplicitCallUsesSystemPhoneWithoutInventedHistory]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testExternalURLsPrefillWithoutCalling]' started.
+Test Case '-[CallshieldTests.ProductionTests testExternalURLsPrefillWithoutCalling]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testFailedServerUnblockDoesNotClaimNumberIsUnblocked]' started.
+Test Case '-[CallshieldTests.ProductionTests testFailedServerUnblockDoesNotClaimNumberIsUnblocked]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testFavoritesAndPreferencePersistWithoutDemoData]' started.
+Test Case '-[CallshieldTests.ProductionTests testFavoritesAndPreferencePersistWithoutDemoData]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testGuardianDraftNeverInventsTranscriptAndRequiresExcerptOptIn]' started.
+Test Case '-[CallshieldTests.ProductionTests testGuardianDraftNeverInventsTranscriptAndRequiresExcerptOptIn]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testGuardianSetupValidatesInternationalNumberAndDeduplicates]' started.
+Test Case '-[CallshieldTests.ProductionTests testGuardianSetupValidatesInternationalNumberAndDeduplicates]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testHistoryMergeFiltersAndDeletedRowsStayDeletedAfterRefreshAndRelaunch]' started.
+Test Case '-[CallshieldTests.ProductionTests testHistoryMergeFiltersAndDeletedRowsStayDeletedAfterRefreshAndRelaunch]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone]' started.
+Test Case '-[CallshieldTests.ProductionTests testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads]' started.
+Test Case '-[CallshieldTests.ProductionTests testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testInsufficientTranscriptEvidenceCannotBecomeLowRiskOrAWarning]' started.
+Test Case '-[CallshieldTests.ProductionTests testInsufficientTranscriptEvidenceCannotBecomeLowRiskOrAWarning]' passed (0.002 seconds).
+Test Case '-[CallshieldTests.ProductionTests testInternationalBlocksDoNotTreatAnExplicitCountryCodeAsAUSLocalNumber]' started.
+Test Case '-[CallshieldTests.ProductionTests testInternationalBlocksDoNotTreatAnExplicitCountryCodeAsAUSLocalNumber]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testInvalidNumberNeverReachesSystemService]' started.
+Test Case '-[CallshieldTests.ProductionTests testInvalidNumberNeverReachesSystemService]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testLimitedContactsAndFetchFailure]' started.
+Test Case '-[CallshieldTests.ProductionTests testLimitedContactsAndFetchFailure]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testLocalFileRoundTripAndHistoryBound]' started.
+Test Case '-[CallshieldTests.ProductionTests testLocalFileRoundTripAndHistoryBound]' passed (0.012 seconds).
+Test Case '-[CallshieldTests.ProductionTests testManualBlockPersistsAndIsSentOnlyAfterExplicitAction]' started.
+Test Case '-[CallshieldTests.ProductionTests testManualBlockPersistsAndIsSentOnlyAfterExplicitAction]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testManualLocalBlockRejectsIncomingCallWithoutAnswerOrRing]' started.
+Test Case '-[CallshieldTests.ProductionTests testManualLocalBlockRejectsIncomingCallWithoutAnswerOrRing]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testNumberNormalizationAndRejection]' started.
+Test Case '-[CallshieldTests.ProductionTests testNumberNormalizationAndRejection]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testOfflineBlockRemainsLocalThenRetriesExplicitReport]' started.
+Test Case '-[CallshieldTests.ProductionTests testOfflineBlockRemainsLocalThenRetriesExplicitReport]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testOfflineReportDoesNotClaimNumberWasBlocked]' started.
+Test Case '-[CallshieldTests.ProductionTests testOfflineReportDoesNotClaimNumberWasBlocked]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testProductionStartsWithoutSamplesOrCallingService]' started.
+Test Case '-[CallshieldTests.ProductionTests testProductionStartsWithoutSamplesOrCallingService]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testRenderProductionCallStatesForVisualReview]' started.
+Test Case '-[CallshieldTests.ProductionTests testRenderProductionCallStatesForVisualReview]' passed (1.845 seconds).
+Test Case '-[CallshieldTests.ProductionTests testReportAloneDoesNotCreatePersonalBlock]' started.
+Test Case '-[CallshieldTests.ProductionTests testReportAloneDoesNotCreatePersonalBlock]' passed (0.003 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSessionIgnoresStaleEventsAndDuplicateConnections]' started.
+Test Case '-[CallshieldTests.ProductionTests testSessionIgnoresStaleEventsAndDuplicateConnections]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSessionOnlyRealConnectionStartsClockAndAssessment]' started.
+Test Case '-[CallshieldTests.ProductionTests testSessionOnlyRealConnectionStartsClockAndAssessment]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSimulatorDeclineDoesNotActivateAudio]' started.
+[callma.] Simulator incoming call; use Accept in the app
+Test Case '-[CallshieldTests.ProductionTests testSimulatorDeclineDoesNotActivateAudio]' passed (0.005 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit]' started.
+[callma.] Simulator incoming call; use Accept in the app
+Test Case '-[CallshieldTests.ProductionTests testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSimulatorMicrophoneDenialEndsCallWithoutPublishing]' started.
+[callma.] Simulator incoming call; use Accept in the app
+Test Case '-[CallshieldTests.ProductionTests testSimulatorMicrophoneDenialEndsCallWithoutPublishing]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testSystemCallFailureDoesNotCreateFakeCall]' started.
+Test Case '-[CallshieldTests.ProductionTests testSystemCallFailureDoesNotCreateFakeCall]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testUnansweredAndUnfinishedAssessmentSaveUnknown]' started.
+Test Case '-[CallshieldTests.ProductionTests testUnansweredAndUnfinishedAssessmentSaveUnknown]' passed (0.000 seconds).
+Test Case '-[CallshieldTests.ProductionTests testUnblockCannotRaceAnInFlightBlockAndLeaveRemoteBlockBehind]' started.
+Test Case '-[CallshieldTests.ProductionTests testUnblockCannotRaceAnInFlightBlockAndLeaveRemoteBlockBehind]' passed (0.001 seconds).
+Test Case '-[CallshieldTests.ProductionTests testVoicemailServiceStateAndActionsWaitForBackend]' started.
+Test Case '-[CallshieldTests.ProductionTests testVoicemailServiceStateAndActionsWaitForBackend]' passed (0.001 seconds).
+Test Suite 'ProductionTests' passed at 2026-10-21 09:31:05.052.
+	 Executed 36 tests, with 0 failures (0 unexpected) in 1.895 (1.933) seconds
+Test Suite 'CallshieldTests.xctest' passed at 2026-10-21 09:31:05.052.
+	 Executed 36 tests, with 0 failures (0 unexpected) in 1.895 (1.933) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 09:31:05.053.
+	 Executed 36 tests, with 0 failures (0 unexpected) in 1.895 (1.933) seconds
+2026-10-21 09:31:05.836322-0500 CallshieldUITests-Runner[88632:43633348] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-21 09:31:06.363.
+Test Suite 'CallshieldUITests.xctest' started at 2026-10-21 09:31:06.363.
+Test Suite 'CallshieldUITests' started at 2026-10-21 09:31:06.363.
+Test Case '-[CallshieldUITests.CallshieldUITests testAllScreensAndNavigation]' started.
+    t =     0.00s Start Test at 2026-10-21 09:31:06.364
+    t =     0.10s Set Up
+    t =     0.11s     Open org.callshield.Callshield
+    t =     0.11s         Launch org.callshield.Callshield
+2026-10-21 09:31:06.628 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:06.628 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.47s             Setting up automation session
+objc[88632]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10b00c310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a868398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.05s             Wait for org.callshield.Callshield to idle
+    t =     2.27s Waiting 3.0s for "callRow-1" Button to exist
+    t =     3.31s     Checking `Expect predicate `existsNoRetry == 1` for object "callRow-1" Button`
+    t =     3.31s         Checking existence of `"callRow-1" Button`
+    t =     3.40s Find the Target Application 'org.callshield.Callshield'
+    t =     3.48s Added attachment named '01-Recents'
+    t =     3.48s Tap "callRow-1" Button
+    t =     3.48s     Wait for org.callshield.Callshield to idle
+    t =     3.48s     Find the "callRow-1" Button
+    t =     3.51s     Check for interrupting elements affecting "callRow-1" Button
+    t =     3.54s     Synthesize event
+    t =     3.94s     Wait for org.callshield.Callshield to idle
+    t =     4.37s Waiting 3.0s for "02:22" StaticText to exist
+    t =     5.41s     Checking `Expect predicate `existsNoRetry == 1` for object "02:22" StaticText`
+    t =     5.41s         Checking existence of `"02:22" StaticText`
+    t =     5.48s Find the Target Application 'org.callshield.Callshield'
+    t =     5.56s Added attachment named '02-Call-Details'
+    t =     5.56s Tap "sheetDone" Button
+    t =     5.56s     Wait for org.callshield.Callshield to idle
+    t =     5.56s     Find the "sheetDone" Button
+    t =     5.59s     Check for interrupting elements affecting "sheetDone" Button
+    t =     5.61s     Synthesize event
+    t =     5.90s     Wait for org.callshield.Callshield to idle
+    t =     6.27s Tap "tabContacts" Button
+    t =     6.27s     Wait for org.callshield.Callshield to idle
+    t =     6.27s     Find the "tabContacts" Button
+    t =     6.31s     Check for interrupting elements affecting "tabContacts" Button
+    t =     6.33s     Synthesize event
+    t =     6.62s     Wait for org.callshield.Callshield to idle
+    t =     6.62s Checking existence of `"contact-DC" Button`
+    t =     6.64s Find the Target Application 'org.callshield.Callshield'
+    t =     6.71s Added attachment named '03-Contacts'
+    t =     6.71s Tap "contact-DC" Button
+    t =     6.71s     Wait for org.callshield.Callshield to idle
+    t =     6.71s     Find the "contact-DC" Button
+    t =     6.73s     Check for interrupting elements affecting "contact-DC" Button
+    t =     6.74s     Synthesize event
+    t =     7.03s     Wait for org.callshield.Callshield to idle
+    t =     7.36s Waiting 3.0s for "Sample contact. Changes stay in this demo session." StaticText to exist
+    t =     8.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Sample contact. Changes stay in this demo session." StaticText`
+    t =     8.40s         Checking existence of `"Sample contact. Changes stay in this demo session." StaticText`
+    t =     8.43s Find the Target Application 'org.callshield.Callshield'
+    t =     8.50s Added attachment named '04-Contact-Details'
+    t =     8.50s Tap "sheetDone" Button
+    t =     8.50s     Wait for org.callshield.Callshield to idle
+    t =     8.50s     Find the "sheetDone" Button
+    t =     8.52s     Check for interrupting elements affecting "sheetDone" Button
+    t =     8.54s     Synthesize event
+    t =     8.83s     Wait for org.callshield.Callshield to idle
+    t =     9.19s Checking existence of `"contact-DC" Button`
+    t =     9.21s Tap "tabSettings" Button
+    t =     9.21s     Wait for org.callshield.Callshield to idle
+    t =     9.21s     Find the "tabSettings" Button
+    t =     9.22s     Check for interrupting elements affecting "tabSettings" Button
+    t =     9.24s     Synthesize event
+    t =     9.53s     Wait for org.callshield.Callshield to idle
+    t =     9.53s Checking existence of `"callma." StaticText`
+    t =     9.55s Checking existence of `"call with more peace of mind." StaticText`
+    t =     9.56s Checking existence of `"UNDERSTANDING VOICE LABELS" StaticText`
+    t =     9.57s Find the Target Application 'org.callshield.Callshield'
+    t =     9.64s Added attachment named '05-Settings'
+    t =     9.64s Tap "largerTextToggle" Switch
+    t =     9.64s     Wait for org.callshield.Callshield to idle
+    t =     9.65s     Find the "largerTextToggle" Switch
+    t =     9.66s     Check for interrupting elements affecting "largerTextToggle" Switch
+    t =     9.67s     Synthesize event
+    t =     9.96s     Wait for org.callshield.Callshield to idle
+    t =    11.27s Find the "largerTextToggle" Switch
+    t =    11.30s Tap "demoButton" Button
+    t =    11.30s     Wait for org.callshield.Callshield to idle
+    t =    11.30s     Find the "demoButton" Button
+    t =    11.32s     Check for interrupting elements affecting "demoButton" Button
+    t =    11.33s     Synthesize event
+    t =    11.63s     Wait for org.callshield.Callshield to idle
+    t =    11.97s Waiting 3.0s for "demoCaller-human" Button to exist
+    t =    13.01s     Checking `Expect predicate `existsNoRetry == 1` for object "demoCaller-human" Button`
+    t =    13.01s         Checking existence of `"demoCaller-human" Button`
+    t =    13.05s Find the Target Application 'org.callshield.Callshield'
+    t =    13.14s Added attachment named '06-Demo-Picker'
+    t =    13.14s Tap "sheetDone" Button
+    t =    13.14s     Wait for org.callshield.Callshield to idle
+    t =    13.14s     Find the "sheetDone" Button
+    t =    13.16s     Check for interrupting elements affecting "sheetDone" Button
+    t =    13.17s     Synthesize event
+    t =    13.46s     Wait for org.callshield.Callshield to idle
+    t =    13.82s Checking existence of `"largerTextToggle" Switch`
+    t =    13.83s Tap "tabRecents" Button
+    t =    13.83s     Wait for org.callshield.Callshield to idle
+    t =    13.83s     Find the "tabRecents" Button
+    t =    13.85s     Check for interrupting elements affecting "tabRecents" Button
+    t =    13.86s     Synthesize event
+    t =    14.15s     Wait for org.callshield.Callshield to idle
+    t =    14.15s Find the Target Application 'org.callshield.Callshield'
+    t =    14.24s Added attachment named '07-Recents-Larger-Text'
+    t =    14.24s Tear Down
+Test Case '-[CallshieldUITests.CallshieldUITests testAllScreensAndNavigation]' passed (14.504 seconds).
+Test Case '-[CallshieldUITests.CallshieldUITests testVoiceHelpAppearsAtTheResult]' started.
+    t =     0.00s Start Test at 2026-10-21 09:31:20.870
+    t =     0.03s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:88636
+2026-10-21 09:31:21.946 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:21.946 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s             Setting up automation session
+    t =     1.81s             Wait for org.callshield.Callshield to idle
+    t =     3.04s Tap "demoButton" Button
+    t =     3.04s     Wait for org.callshield.Callshield to idle
+    t =     3.04s     Find the "demoButton" Button
+    t =     3.10s     Check for interrupting elements affecting "demoButton" Button
+    t =     3.12s     Synthesize event
+    t =     3.41s     Wait for org.callshield.Callshield to idle
+    t =     3.80s Waiting 3.0s for "demoCaller-human" Button to exist
+    t =     4.84s     Checking `Expect predicate `existsNoRetry == 1` for object "demoCaller-human" Button`
+    t =     4.84s         Checking existence of `"demoCaller-human" Button`
+    t =     4.90s Tap "demoCaller-human" Button
+    t =     4.90s     Wait for org.callshield.Callshield to idle
+    t =     4.90s     Find the "demoCaller-human" Button
+    t =     4.93s     Check for interrupting elements affecting "demoCaller-human" Button
+    t =     4.96s     Synthesize event
+    t =     5.25s     Wait for org.callshield.Callshield to idle
+    t =     5.64s Waiting 3.0s for "acceptCall" Button to exist
+    t =     6.67s     Checking `Expect predicate `existsNoRetry == 1` for object "acceptCall" Button`
+    t =     6.67s         Checking existence of `"acceptCall" Button`
+    t =     6.68s Tap "acceptCall" Button
+    t =     6.68s     Wait for org.callshield.Callshield to idle
+    t =     6.69s     Find the "acceptCall" Button
+    t =     6.70s     Check for interrupting elements affecting "acceptCall" Button
+    t =     6.72s     Synthesize event
+    t =     7.01s     Wait for org.callshield.Callshield to idle
+    t =     7.01s Waiting 6.0s for "This voice appears to be human." StaticText to exist
+    t =     8.04s     Checking `Expect predicate `existsNoRetry == 1` for object "This voice appears to be human." StaticText`
+    t =     8.04s         Checking existence of `"This voice appears to be human." StaticText`
+    t =     8.06s         Capturing element debug description
+    t =     9.10s     Checking `Expect predicate `existsNoRetry == 1` for object "This voice appears to be human." StaticText`
+    t =     9.10s         Checking existence of `"This voice appears to be human." StaticText`
+    t =     9.12s         Capturing element debug description
+    t =    10.06s     Checking `Expect predicate `existsNoRetry == 1` for object "This voice appears to be human." StaticText`
+    t =    10.06s         Checking existence of `"This voice appears to be human." StaticText`
+    t =    10.08s Tap "About Human" Button
+    t =    10.08s     Wait for org.callshield.Callshield to idle
+    t =    10.08s     Find the "About Human" Button
+    t =    11.10s         Find the "About Human" Button (retry 1)
+    t =    12.12s         Find the "About Human" Button (retry 2)
+    t =    12.15s Requesting snapshot of accessibility hierarchy for app with pid 88853
+/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/CallshieldUITests.swift:92: error: -[CallshieldUITests.CallshieldUITests testVoiceHelpAppearsAtTheResult] : Failed to tap "About Human" Button: No matches found for Elements matching predicate '"About Human" IN identifiers' from input {(
+    Button, identifier: 'info.circle', label: 'About Likely human',
+    Button, identifier: 'muteCall', label: 'mute', value: Off,
+    Button, identifier: 'speakerCall', label: 'speaker', value: Off,
+    Button, identifier: 'endCall', label: 'End call'
+)}
+    t =    12.42s Tear Down
+Test Case '-[CallshieldUITests.CallshieldUITests testVoiceHelpAppearsAtTheResult]' failed (12.652 seconds).
+Test Suite 'CallshieldUITests' failed at 2026-10-21 09:31:33.522.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 27.156 (27.159) seconds
+Test Suite 'ProductionUITests' started at 2026-10-21 09:31:33.523.
+Test Case '-[CallshieldUITests.ProductionUITests testBothPipelineResultsAreVisibleOnTheCallScreen]' started.
+    t =     0.00s Start Test at 2026-10-21 09:31:33.524
+    t =     0.02s Set Up
+    t =     0.02s     Open org.callshield.Callshield
+    t =     0.02s         Launch org.callshield.Callshield
+    t =     0.02s             Terminate org.callshield.Callshield:88853
+2026-10-21 09:31:34.641 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:34.641 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.32s             Setting up automation session
+    t =     1.82s             Wait for org.callshield.Callshield to idle
+    t =     3.04s Terminate org.callshield.Callshield:89088
+    t =     4.08s Open org.callshield.Callshield
+    t =     4.08s     Launch org.callshield.Callshield
+2026-10-21 09:31:37.608 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:37.608 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.29s         Setting up automation session
+    t =     4.79s         Wait for org.callshield.Callshield to idle
+    t =     6.03s Waiting 5.0s for "transcriptAssessmentTitle" StaticText to exist
+    t =     7.05s     Checking `Expect predicate `existsNoRetry == 1` for object "transcriptAssessmentTitle" StaticText`
+    t =     7.05s         Checking existence of `"transcriptAssessmentTitle" StaticText`
+    t =     7.09s Find the "transcriptAssessmentTitle" StaticText
+    t =     7.11s Find the "transcriptAssessmentTitle" StaticText
+    t =     7.12s Find the "transcriptAssessmentScore" StaticText
+    t =     7.13s Find the "transcriptAssessmentScore" StaticText
+    t =     7.14s Checking existence of `"Caller’s voice" StaticText`
+    t =     7.15s Find the Target Application 'org.callshield.Callshield'
+    t =     7.26s Added attachment named 'Restored-Call-Pipeline-Feedback'
+    t =     7.26s Find the "End call" Button
+    t =     7.28s Swipe up ScrollView (First Match)
+    t =     7.28s     Wait for org.callshield.Callshield to idle
+    t =     7.28s     Find the ScrollView (First Match)
+    t =     7.29s     Check for interrupting elements affecting ScrollView
+    t =     7.30s     Synthesize event
+    t =     7.73s     Wait for org.callshield.Callshield to idle
+    t =     8.30s Find the "End call" Button
+    t =     8.33s Find the "End call" Button
+    t =     8.35s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testBothPipelineResultsAreVisibleOnTheCallScreen]' passed (8.587 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testEitherIndependentScoreCanRevealSafetyStepsAtThreshold]' started.
+    t =     0.00s Start Test at 2026-10-21 09:31:42.112
+    t =     0.03s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:89138
+2026-10-21 09:31:43.182 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:43.182 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     1.84s             Wait for org.callshield.Callshield to idle
+    t =     3.07s Terminate org.callshield.Callshield:89163
+    t =     4.11s Open org.callshield.Callshield
+    t =     4.11s     Launch org.callshield.Callshield
+2026-10-21 09:31:46.224 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:46.224 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.32s         Setting up automation session
+    t =     4.81s         Wait for org.callshield.Callshield to idle
+    t =     6.02s Waiting 5.0s for "alertGuardianButton" Button to exist
+    t =     7.05s     Checking `Expect predicate `existsNoRetry == 1` for object "alertGuardianButton" Button`
+    t =     7.06s         Checking existence of `"alertGuardianButton" Button`
+    t =     7.08s Find the "alertGuardianButton" Button
+    t =     7.11s Find the "alertGuardianButton" Button
+    t =     7.12s Find the "End call" Button
+    t =     7.14s Swipe up ScrollView (First Match)
+    t =     7.14s     Wait for org.callshield.Callshield to idle
+    t =     7.15s     Find the ScrollView (First Match)
+    t =     7.15s     Check for interrupting elements affecting ScrollView
+    t =     7.17s     Synthesize event
+    t =     7.59s     Wait for org.callshield.Callshield to idle
+    t =     8.16s Find the "End call" Button
+    t =     8.18s Find the "End call" Button
+    t =     8.20s Terminate org.callshield.Callshield:89210
+    t =     9.23s Open org.callshield.Callshield
+    t =     9.23s     Launch org.callshield.Callshield
+2026-10-21 09:31:51.342 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:51.342 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     9.44s         Setting up automation session
+    t =     9.94s         Wait for org.callshield.Callshield to idle
+    t =    11.17s Waiting 5.0s for "alertGuardianButton" Button to exist
+    t =    12.20s     Checking `Expect predicate `existsNoRetry == 1` for object "alertGuardianButton" Button`
+    t =    12.20s         Checking existence of `"alertGuardianButton" Button`
+    t =    12.23s Find the "alertGuardianButton" Button
+    t =    12.25s Find the "alertGuardianButton" Button
+    t =    12.28s Find the "End call" Button
+    t =    12.31s Swipe up ScrollView (First Match)
+    t =    12.31s     Wait for org.callshield.Callshield to idle
+    t =    12.31s     Find the ScrollView (First Match)
+    t =    12.32s     Check for interrupting elements affecting ScrollView
+    t =    12.34s     Synthesize event
+    t =    12.78s     Wait for org.callshield.Callshield to idle
+    t =    13.30s Find the "End call" Button
+    t =    13.33s Find the "End call" Button
+    t =    13.34s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testEitherIndependentScoreCanRevealSafetyStepsAtThreshold]' passed (13.584 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testHighSignalReminderAppearsOnceOnReturn]' started.
+    t =     0.00s Start Test at 2026-10-21 09:31:55.697
+    t =     0.02s Set Up
+    t =     0.02s     Open org.callshield.Callshield
+    t =     0.02s         Launch org.callshield.Callshield
+    t =     0.02s             Terminate org.callshield.Callshield:89251
+2026-10-21 09:31:56.770 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:56.770 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     1.78s             Wait for org.callshield.Callshield to idle
+    t =     3.00s Terminate org.callshield.Callshield:89332
+    t =     4.05s Open org.callshield.Callshield
+    t =     4.05s     Launch org.callshield.Callshield
+2026-10-21 09:31:59.744 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:31:59.744 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.26s         Setting up automation session
+    t =     4.77s         Wait for org.callshield.Callshield to idle
+    t =     5.98s Waiting 5.0s for "End call" Button to exist
+    t =     7.03s     Checking `Expect predicate `existsNoRetry == 1` for object "End call" Button`
+    t =     7.03s         Checking existence of `"End call" Button`
+    t =     7.07s Pressing Home button
+    t =     7.54s Open org.callshield.Callshield
+    t =     7.54s     Activate org.callshield.Callshield
+    t =     8.04s         Wait for org.callshield.Callshield to idle
+    t =     8.06s Waiting 5.0s for "Pause Before Sharing" Alert to exist
+    t =     9.13s     Checking `Expect predicate `existsNoRetry == 1` for object "Pause Before Sharing" Alert`
+    t =     9.13s         Checking existence of `"Pause Before Sharing" Alert`
+    t =     9.17s Find the Target Application 'org.callshield.Callshield'
+    t =     9.28s Added attachment named 'Production-15-Return-Reminder'
+    t =     9.28s Tap "Continue Call" Button
+    t =     9.28s     Wait for org.callshield.Callshield to idle
+    t =     9.28s     Find the "Continue Call" Button
+    t =     9.30s     Check for interrupting elements affecting "Continue Call" Button
+    t =     9.32s     Synthesize event
+    t =     9.61s     Wait for org.callshield.Callshield to idle
+    t =     9.85s Waiting 3.0s for "Pause Before Sharing" Alert to not exist
+    t =    10.91s     Checking `Expect predicate `existsNoRetry == 0` for object "Pause Before Sharing" Alert`
+    t =    10.91s         Checking existence of `"Pause Before Sharing" Alert`
+    t =    10.93s Pressing Home button
+    t =    11.40s Open org.callshield.Callshield
+    t =    11.40s     Activate org.callshield.Callshield
+    t =    11.90s         Wait for org.callshield.Callshield to idle
+    t =    11.91s Wait for org.callshield.Callshield to become Running Foreground
+    t =    11.91s Checking existence of `"Pause Before Sharing" Alert`
+    t =    11.93s Find the "End call" Button
+    t =    13.02s Checking `Expect predicate `hittable == 1` for object "End call" Button`
+    t =    13.02s     Find the "End call" Button
+    t =    13.04s     Capturing element debug description
+    t =    13.07s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    13.08s         Find: Descendants matching type Button
+    t =    13.08s         Find: Elements matching predicate '"End call" IN identifiers'
+    t =    13.08s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    13.09s         Find: Descendants matching type Button
+    t =    13.10s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    13.97s Checking `Expect predicate `hittable == 1` for object "End call" Button`
+    t =    13.97s     Find the "End call" Button
+    t =    14.00s     Capturing element debug description
+    t =    14.03s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    14.05s         Find: Descendants matching type Button
+    t =    14.05s         Find: Elements matching predicate '"End call" IN identifiers'
+    t =    14.05s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    14.06s         Find: Descendants matching type Button
+    t =    14.06s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    14.97s Checking `Expect predicate `hittable == 1` for object "End call" Button`
+    t =    14.97s     Find the "End call" Button
+    t =    15.00s     Capturing element debug description
+    t =    15.04s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    15.06s         Find: Descendants matching type Button
+    t =    15.06s         Find: Elements matching predicate '"End call" IN identifiers'
+    t =    15.06s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+    t =    15.07s         Find: Descendants matching type Button
+    t =    15.07s         Requesting snapshot of accessibility hierarchy for app with pid 89385
+/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/ios/CallshieldUITests/ProductionUITests.swift:119: error: -[CallshieldUITests.ProductionUITests testHighSignalReminderAppearsOnceOnReturn] : Asynchronous wait failed: Exceeded timeout of 3 seconds, with unfulfilled expectations: "Expect predicate `hittable == 1` for object "End call" Button".
+    t =    15.11s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testHighSignalReminderAppearsOnceOnReturn]' failed (15.356 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testKeypadAndSimulatorCallError]' started.
+    t =     0.00s Start Test at 2026-10-21 09:32:11.053
+    t =     0.02s Set Up
+    t =     0.02s     Open org.callshield.Callshield
+    t =     0.02s         Launch org.callshield.Callshield
+    t =     0.02s             Terminate org.callshield.Callshield:89385
+2026-10-21 09:32:12.090 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:32:12.090 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.24s             Setting up automation session
+    t =     1.76s             Wait for org.callshield.Callshield to idle
+    t =     3.01s Waiting 3.0s for "productionTabKeypad" Button to exist
+    t =     4.08s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabKeypad" Button`
+    t =     4.08s         Checking existence of `"productionTabKeypad" Button`
+    t =     4.14s Tap "productionTabKeypad" Button
+    t =     4.14s     Wait for org.callshield.Callshield to idle
+    t =     4.14s     Find the "productionTabKeypad" Button
+    t =     4.15s     Check for interrupting elements affecting "productionTabKeypad" Button
+    t =     4.17s     Synthesize event
+    t =     4.46s     Wait for org.callshield.Callshield to idle
+    t =     4.46s Find the Target Application 'org.callshield.Callshield'
+    t =     4.53s Added attachment named 'Production-06-Keypad'
+    t =     4.53s Tap "dialKey1" Button
+    t =     4.53s     Wait for org.callshield.Callshield to idle
+    t =     4.53s     Find the "dialKey1" Button
+    t =     4.55s     Check for interrupting elements affecting "dialKey1" Button
+    t =     4.56s     Synthesize event
+    t =     4.86s     Wait for org.callshield.Callshield to idle
+    t =     4.86s Tap "dialKey2" Button
+    t =     4.86s     Wait for org.callshield.Callshield to idle
+    t =     4.86s     Find the "dialKey2" Button
+    t =     4.88s     Check for interrupting elements affecting "dialKey2" Button
+    t =     4.90s     Synthesize event
+    t =     5.19s     Wait for org.callshield.Callshield to idle
+    t =     5.20s Tap "dialKey3" Button
+    t =     5.20s     Wait for org.callshield.Callshield to idle
+    t =     5.20s     Find the "dialKey3" Button
+    t =     5.23s     Check for interrupting elements affecting "dialKey3" Button
+    t =     5.25s     Synthesize event
+    t =     5.54s     Wait for org.callshield.Callshield to idle
+    t =     5.55s Tap "dialKey4" Button
+    t =     5.55s     Wait for org.callshield.Callshield to idle
+    t =     5.55s     Find the "dialKey4" Button
+    t =     5.58s     Check for interrupting elements affecting "dialKey4" Button
+    t =     5.60s     Synthesize event
+    t =     5.90s     Wait for org.callshield.Callshield to idle
+    t =     5.90s Find the "productionNumber" TextField
+    t =     5.93s Tap "deleteDigit" Button
+    t =     5.93s     Wait for org.callshield.Callshield to idle
+    t =     5.93s     Find the "deleteDigit" Button
+    t =     5.95s     Check for interrupting elements affecting "deleteDigit" Button
+    t =     5.97s     Synthesize event
+    t =     6.26s     Wait for org.callshield.Callshield to idle
+    t =     6.27s Find the "productionNumber" TextField
+    t =     6.29s Tap "productionCallButton" Button
+    t =     6.29s     Wait for org.callshield.Callshield to idle
+    t =     6.29s     Find the "productionCallButton" Button
+    t =     6.31s     Check for interrupting elements affecting "productionCallButton" Button
+    t =     6.33s     Synthesize event
+    t =     6.63s     Wait for org.callshield.Callshield to idle
+    t =     6.92s Waiting 3.0s for "callma." Alert to exist
+    t =     7.99s     Checking `Expect predicate `existsNoRetry == 1` for object "callma." Alert`
+    t =     7.99s         Checking existence of `"callma." Alert`
+    t =     8.02s Checking existence of `"Phone calls require an iPhone. They aren’t available in the simulator." StaticText`
+    t =     8.04s Find the Target Application 'org.callshield.Callshield'
+    t =     8.11s Added attachment named 'Production-07-Simulator-Call'
+    t =     8.11s Tap "OK" Button
+    t =     8.11s     Wait for org.callshield.Callshield to idle
+    t =     8.12s     Find the "OK" Button
+    t =     8.14s     Check for interrupting elements affecting "OK" Button
+    t =     8.16s     Synthesize event
+    t =     8.45s     Wait for org.callshield.Callshield to idle
+    t =     8.68s Waiting 3.0s for "productionTabRecents" Button to exist
+    t =     9.70s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabRecents" Button`
+    t =     9.70s         Checking existence of `"productionTabRecents" Button`
+    t =     9.73s Tap "productionTabRecents" Button
+    t =     9.73s     Wait for org.callshield.Callshield to idle
+    t =     9.73s     Find the "productionTabRecents" Button
+    t =     9.76s     Check for interrupting elements affecting "productionTabRecents" Button
+    t =     9.77s     Synthesize event
+    t =    10.07s     Wait for org.callshield.Callshield to idle
+    t =    10.07s Checking existence of `"No recent calls" StaticText`
+    t =    10.08s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testKeypadAndSimulatorCallError]' passed (10.442 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testLargestSystemTextKeepsCallControlsReachable]' started.
+    t =     0.00s Start Test at 2026-10-21 09:32:21.496
+    t =     0.02s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:89601
+2026-10-21 09:32:22.582 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:32:22.582 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.30s             Setting up automation session
+    t =     1.82s             Wait for org.callshield.Callshield to idle
+    t =     3.05s Terminate org.callshield.Callshield:89808
+    t =     4.10s Open org.callshield.Callshield
+    t =     4.10s     Launch org.callshield.Callshield
+2026-10-21 09:32:25.599 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:32:25.599 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.31s         Setting up automation session
+    t =     4.86s         Wait for org.callshield.Callshield to idle
+    t =     6.10s Waiting 5.0s for "End call" Button to exist
+    t =     7.15s     Checking `Expect predicate `existsNoRetry == 1` for object "End call" Button`
+    t =     7.15s         Checking existence of `"End call" Button`
+    t =     7.20s Find the "End call" Button
+    t =     7.22s Swipe up ScrollView (First Match)
+    t =     7.22s     Wait for org.callshield.Callshield to idle
+    t =     7.22s     Find the ScrollView (First Match)
+    t =     7.23s     Check for interrupting elements affecting ScrollView
+    t =     7.24s     Synthesize event
+    t =     7.67s     Wait for org.callshield.Callshield to idle
+    t =     9.77s Find the "End call" Button
+    t =     9.79s Swipe up ScrollView (First Match)
+    t =     9.79s     Wait for org.callshield.Callshield to idle
+    t =     9.79s     Find the ScrollView (First Match)
+    t =     9.80s     Check for interrupting elements affecting ScrollView
+    t =     9.82s     Synthesize event
+    t =    10.25s     Wait for org.callshield.Callshield to idle
+    t =    12.36s Find the "End call" Button
+    t =    12.39s Swipe up ScrollView (First Match)
+    t =    12.39s     Wait for org.callshield.Callshield to idle
+    t =    12.39s     Find the ScrollView (First Match)
+    t =    12.40s     Check for interrupting elements affecting ScrollView
+    t =    12.41s     Synthesize event
+    t =    12.84s     Wait for org.callshield.Callshield to idle
+    t =    14.95s Find the "End call" Button
+    t =    14.99s Find the "End call" Button
+    t =    15.01s Find the Target Application 'org.callshield.Callshield'
+    t =    15.12s Added attachment named 'Restored-Accessibility-Call-Controls'
+    t =    15.12s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testLargestSystemTextKeepsCallControlsReachable]' passed (15.400 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testProductionNavigationWithoutSampleCallers]' started.
+    t =     0.00s Start Test at 2026-10-21 09:32:36.897
+    t =     0.03s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:89870
+2026-10-21 09:32:37.970 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:32:37.970 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     1.81s             Wait for org.callshield.Callshield to idle
+    t =     3.05s Waiting 5.0s for "No recent calls" StaticText to exist
+    t =     4.08s     Checking `Expect predicate `existsNoRetry == 1` for object "No recent calls" StaticText`
+    t =     4.08s         Checking existence of `"No recent calls" StaticText`
+    t =     4.13s Checking existence of `"demoButton" Button`
+    t =     4.15s Checking existence of `"Sarah Miller" StaticText`
+    t =     4.16s Find the Target Application 'org.callshield.Callshield'
+    t =     4.22s Added attachment named 'Production-01-Recents'
+    t =     4.22s Waiting 3.0s for "productionTabFavorites" Button to exist
+    t =     5.24s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabFavorites" Button`
+    t =     5.24s         Checking existence of `"productionTabFavorites" Button`
+    t =     5.26s Tap "productionTabFavorites" Button
+    t =     5.26s     Wait for org.callshield.Callshield to idle
+    t =     5.26s     Find the "productionTabFavorites" Button
+    t =     5.28s     Check for interrupting elements affecting "productionTabFavorites" Button
+    t =     5.29s     Synthesize event
+    t =     5.59s     Wait for org.callshield.Callshield to idle
+    t =     5.59s Checking existence of `"No favorites" StaticText`
+    t =     5.60s Find the Target Application 'org.callshield.Callshield'
+    t =     5.67s Added attachment named 'Production-02-Favorites'
+    t =     5.67s Waiting 3.0s for "productionTabContacts" Button to exist
+    t =     6.70s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabContacts" Button`
+    t =     6.70s         Checking existence of `"productionTabContacts" Button`
+    t =     6.72s Tap "productionTabContacts" Button
+    t =     6.72s     Wait for org.callshield.Callshield to idle
+    t =     6.73s     Find the "productionTabContacts" Button
+    t =     6.74s     Check for interrupting elements affecting "productionTabContacts" Button
+    t =     6.75s     Synthesize event
+    t =     7.04s     Wait for org.callshield.Callshield to idle
+    t =     7.05s Checking existence of `"Daniel Chen" StaticText`
+    t =     7.07s Find the Target Application 'org.callshield.Callshield'
+    t =     7.14s Added attachment named 'Production-03-Contacts'
+    t =     7.14s Waiting 3.0s for "productionTabSettings" Button to exist
+    t =     8.17s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabSettings" Button`
+    t =     8.17s         Checking existence of `"productionTabSettings" Button`
+    t =     8.20s Tap "productionTabSettings" Button
+    t =     8.20s     Wait for org.callshield.Callshield to idle
+    t =     8.20s     Find the "productionTabSettings" Button
+    t =     8.23s     Check for interrupting elements affecting "productionTabSettings" Button
+    t =     8.25s     Synthesize event
+    t =     8.54s     Wait for org.callshield.Callshield to idle
+    t =     8.55s Checking existence of `"callma." StaticText`
+    t =     8.56s Checking existence of `"call with more peace of mind." StaticText`
+    t =     8.58s Checking existence of `"Mobile service" StaticText`
+    t =     8.59s Checking existence of `Any (First Match)`
+    t =     8.61s Find the Target Application 'org.callshield.Callshield'
+    t =     8.68s Added attachment named 'Production-04-Settings'
+    t =     8.68s Waiting 3.0s for "productionTabRecents" Button to exist
+    t =     9.69s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabRecents" Button`
+    t =     9.69s         Checking existence of `"productionTabRecents" Button`
+    t =     9.72s Tap "productionTabRecents" Button
+    t =     9.72s     Wait for org.callshield.Callshield to idle
+    t =     9.72s     Find the "productionTabRecents" Button
+    t =     9.74s     Check for interrupting elements affecting "productionTabRecents" Button
+    t =     9.76s     Synthesize event
+    t =    10.04s     Wait for org.callshield.Callshield to idle
+    t =    10.05s Tap "voicemailButton" Button
+    t =    10.05s     Wait for org.callshield.Callshield to idle
+    t =    10.05s     Find the "voicemailButton" Button
+    t =    10.07s     Check for interrupting elements affecting "voicemailButton" Button
+    t =    10.08s     Synthesize event
+    t =    10.37s     Wait for org.callshield.Callshield to idle
+    t =    10.79s Waiting 3.0s for "Voicemail unavailable" StaticText to exist
+    t =    11.82s     Checking `Expect predicate `existsNoRetry == 1` for object "Voicemail unavailable" StaticText`
+    t =    11.82s         Checking existence of `"Voicemail unavailable" StaticText`
+    t =    11.86s Find the Target Application 'org.callshield.Callshield'
+    t =    11.94s Added attachment named 'Production-05-Voicemail'
+    t =    11.94s Tap "Done" Button
+    t =    11.94s     Wait for org.callshield.Callshield to idle
+    t =    11.94s     Find the "Done" Button
+    t =    11.95s     Check for interrupting elements affecting "Done" Button
+    t =    11.97s     Synthesize event
+    t =    12.26s     Wait for org.callshield.Callshield to idle
+    t =    13.04s Checking existence of `"productionTabRecents" Button`
+    t =    13.06s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testProductionNavigationWithoutSampleCallers]' passed (13.271 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testRestoredContactsAndSettingsKeepSafetyEntryPoints]' started.
+    t =     0.00s Start Test at 2026-10-21 09:32:50.168
+    t =     0.02s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:90291
+2026-10-21 09:32:51.241 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:32:51.241 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     1.83s             Wait for org.callshield.Callshield to idle
+    t =     3.08s Waiting 3.0s for "productionTabContacts" Button to exist
+    t =     4.12s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabContacts" Button`
+    t =     4.12s         Checking existence of `"productionTabContacts" Button`
+    t =     4.18s Tap "productionTabContacts" Button
+    t =     4.18s     Wait for org.callshield.Callshield to idle
+    t =     4.18s     Find the "productionTabContacts" Button
+    t =     4.20s     Check for interrupting elements affecting "productionTabContacts" Button
+    t =     4.21s     Synthesize event
+    t =     4.50s     Wait for org.callshield.Callshield to idle
+    t =     4.50s Waiting 3.0s for "addTrustedGuardian" Button to exist
+    t =     5.52s     Checking `Expect predicate `existsNoRetry == 1` for object "addTrustedGuardian" Button`
+    t =     5.52s         Checking existence of `"addTrustedGuardian" Button`
+    t =     5.55s Tap "addTrustedGuardian" Button
+    t =     5.55s     Wait for org.callshield.Callshield to idle
+    t =     5.55s     Find the "addTrustedGuardian" Button
+    t =     5.57s     Check for interrupting elements affecting "addTrustedGuardian" Button
+    t =     5.59s     Synthesize event
+    t =     5.88s     Wait for org.callshield.Callshield to idle
+    t =     6.66s Waiting 3.0s for "guardianName" TextField to exist
+    t =     7.68s     Checking `Expect predicate `existsNoRetry == 1` for object "guardianName" TextField`
+    t =     7.68s         Checking existence of `"guardianName" TextField`
+    t =     7.76s Find the "saveGuardian" Button
+    t =     7.80s Tap "Cancel" Button
+    t =     7.80s     Wait for org.callshield.Callshield to idle
+    t =     7.80s     Find the "Cancel" Button
+    t =     7.84s     Check for interrupting elements affecting "Cancel" Button
+    t =     7.91s     Synthesize event
+    t =     8.21s     Wait for org.callshield.Callshield to idle
+    t =     8.95s Find the Target Application 'org.callshield.Callshield'
+    t =     9.04s Added attachment named 'Restored-Contacts-Guardians'
+    t =     9.04s Waiting 3.0s for "productionTabSettings" Button to exist
+    t =    10.07s     Checking `Expect predicate `existsNoRetry == 1` for object "productionTabSettings" Button`
+    t =    10.07s         Checking existence of `"productionTabSettings" Button`
+    t =    10.10s Tap "productionTabSettings" Button
+    t =    10.10s     Wait for org.callshield.Callshield to idle
+    t =    10.10s     Find the "productionTabSettings" Button
+    t =    10.12s     Check for interrupting elements affecting "productionTabSettings" Button
+    t =    10.14s     Synthesize event
+    t =    10.43s     Wait for org.callshield.Callshield to idle
+    t =    10.44s Find the "blockedNumbersButton" Button
+    t =    10.47s Tap "blockedNumbersButton" Button
+    t =    10.47s     Wait for org.callshield.Callshield to idle
+    t =    10.47s     Find the "blockedNumbersButton" Button
+    t =    10.49s     Check for interrupting elements affecting "blockedNumbersButton" Button
+    t =    10.50s     Synthesize event
+    t =    10.80s     Wait for org.callshield.Callshield to idle
+    t =    11.40s Waiting 3.0s for "Blocked Numbers" NavigationBar to exist
+    t =    12.42s     Checking `Expect predicate `existsNoRetry == 1` for object "Blocked Numbers" NavigationBar`
+    t =    12.43s         Checking existence of `"Blocked Numbers" NavigationBar`
+    t =    12.47s Checking existence of `"No blocked numbers" StaticText`
+    t =    12.50s Find the Target Application 'org.callshield.Callshield'
+    t =    12.58s Added attachment named 'Restored-Blocked-Numbers'
+    t =    12.58s Tap "Done" Button
+    t =    12.58s     Wait for org.callshield.Callshield to idle
+    t =    12.58s     Find the "Done" Button
+    t =    12.60s     Check for interrupting elements affecting "Done" Button
+    t =    12.63s     Synthesize event
+    t =    12.92s     Wait for org.callshield.Callshield to idle
+    t =    13.69s Checking existence of `"productionTabSettings" Button`
+    t =    13.71s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testRestoredContactsAndSettingsKeepSafetyEntryPoints]' passed (13.952 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testSafetyStepsOpenAReviewedGuardianDraftWithoutSending]' started.
+    t =     0.00s Start Test at 2026-10-21 09:33:04.120
+    t =     0.02s Set Up
+    t =     0.02s     Open org.callshield.Callshield
+    t =     0.02s         Launch org.callshield.Callshield
+    t =     0.02s             Terminate org.callshield.Callshield:90417
+2026-10-21 09:33:05.189 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:33:05.189 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.27s             Setting up automation session
+    t =     1.81s             Wait for org.callshield.Callshield to idle
+    t =     3.05s Terminate org.callshield.Callshield:90481
+    t =     4.10s Open org.callshield.Callshield
+    t =     4.10s     Launch org.callshield.Callshield
+2026-10-21 09:33:08.224 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:33:08.224 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.31s         Setting up automation session
+    t =     4.81s         Wait for org.callshield.Callshield to idle
+    t =     6.03s Waiting 5.0s for "alertGuardianButton" Button to exist
+    t =     7.06s     Checking `Expect predicate `existsNoRetry == 1` for object "alertGuardianButton" Button`
+    t =     7.06s         Checking existence of `"alertGuardianButton" Button`
+    t =     7.10s Find the "alertGuardianButton" Button
+    t =     7.13s Find the "alertGuardianButton" Button
+    t =     7.15s Find the Target Application 'org.callshield.Callshield'
+    t =     7.26s Added attachment named 'Restored-Call-Safety-Steps'
+    t =     7.26s Tap "alertGuardianButton" Button
+    t =     7.26s     Wait for org.callshield.Callshield to idle
+    t =     7.27s     Find the "alertGuardianButton" Button
+    t =     7.28s     Check for interrupting elements affecting "alertGuardianButton" Button
+    t =     7.29s     Synthesize event
+    t =     7.58s     Wait for org.callshield.Callshield to idle
+    t =     8.32s Waiting 3.0s for "Contact a Guardian" NavigationBar to exist
+    t =     9.33s     Checking `Expect predicate `existsNoRetry == 1` for object "Contact a Guardian" NavigationBar`
+    t =     9.33s         Checking existence of `"Contact a Guardian" NavigationBar`
+    t =     9.40s Checking existence of `"guardianMessagePreview" StaticText`
+    t =     9.42s Find the Target Application 'org.callshield.Callshield'
+    t =     9.51s Added attachment named 'Production-14-Guardian-Draft'
+    t =     9.51s Tap "Add a Guardian" Button
+    t =     9.51s     Wait for org.callshield.Callshield to idle
+    t =     9.51s     Find the "Add a Guardian" Button
+    t =     9.54s     Check for interrupting elements affecting "Add a Guardian" Button
+    t =     9.56s     Synthesize event
+    t =     9.85s     Wait for org.callshield.Callshield to idle
+    t =    10.52s Waiting 3.0s for "guardianName" TextField to exist
+    t =    11.54s     Checking `Expect predicate `existsNoRetry == 1` for object "guardianName" TextField`
+    t =    11.54s         Checking existence of `"guardianName" TextField`
+    t =    11.62s Find the "saveGuardian" Button
+    t =    11.67s Tap "Cancel" Button
+    t =    11.67s     Wait for org.callshield.Callshield to idle
+    t =    11.67s     Find the "Cancel" Button
+    t =    11.71s     Check for interrupting elements affecting "Cancel" Button
+    t =    11.75s     Synthesize event
+    t =    12.05s     Wait for org.callshield.Callshield to idle
+    t =    12.70s Tap "Done" Button
+    t =    12.70s     Wait for org.callshield.Callshield to idle
+    t =    12.71s     Find the "Done" Button
+    t =    12.75s     Check for interrupting elements affecting "Done" Button
+    t =    12.78s     Synthesize event
+    t =    13.07s     Wait for org.callshield.Callshield to idle
+    t =    13.85s Find the "End call" Button
+    t =    13.88s Swipe up ScrollView (First Match)
+    t =    13.88s     Wait for org.callshield.Callshield to idle
+    t =    13.89s     Find the ScrollView (First Match)
+    t =    13.90s     Check for interrupting elements affecting ScrollView
+    t =    13.92s     Synthesize event
+    t =    14.35s     Wait for org.callshield.Callshield to idle
+    t =    14.90s Find the "End call" Button
+    t =    14.93s Find the "End call" Button
+    t =    14.95s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testSafetyStepsOpenAReviewedGuardianDraftWithoutSending]' passed (15.205 seconds).
+Test Case '-[CallshieldUITests.ProductionUITests testScoresBelowThresholdDoNotShowSafetySteps]' started.
+    t =     0.00s Start Test at 2026-10-21 09:33:19.327
+    t =     0.03s Set Up
+    t =     0.03s     Open org.callshield.Callshield
+    t =     0.03s         Launch org.callshield.Callshield
+    t =     0.03s             Terminate org.callshield.Callshield:90526
+2026-10-21 09:33:20.395 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:33:20.395 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     1.81s             Wait for org.callshield.Callshield to idle
+    t =     3.05s Terminate org.callshield.Callshield:90557
+    t =     4.10s Open org.callshield.Callshield
+    t =     4.10s     Launch org.callshield.Callshield
+2026-10-21 09:33:23.427 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-21 09:33:23.427 xcodebuild[88404:43631252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.31s         Setting up automation session
+    t =     4.81s         Wait for org.callshield.Callshield to idle
+    t =     6.02s Waiting 5.0s for "End call" Button to exist
+    t =     7.04s     Checking `Expect predicate `existsNoRetry == 1` for object "End call" Button`
+    t =     7.04s         Checking existence of `"End call" Button`
+    t =     7.07s Checking existence of `"alertGuardianButton" Button`
+    t =     7.08s Find the Target Application 'org.callshield.Callshield'
+    t =     7.20s Added attachment named 'Production-17-Below-Warning-Threshold'
+    t =     7.20s Tear Down
+Test Case '-[CallshieldUITests.ProductionUITests testScoresBelowThresholdDoNotShowSafetySteps]' passed (7.412 seconds).
+Test Suite 'ProductionUITests' failed at 2026-10-21 09:33:26.739.
+	 Executed 9 tests, with 1 failure (0 unexpected) in 113.210 (113.216) seconds
+Test Suite 'CallshieldUITests.xctest' failed at 2026-10-21 09:33:26.740.
+	 Executed 11 tests, with 2 failures (0 unexpected) in 140.366 (140.377) seconds
+Test Suite 'Selected tests' failed at 2026-10-21 09:33:26.741.
+	 Executed 11 tests, with 2 failures (0 unexpected) in 140.366 (140.378) seconds
+2026-10-21 09:33:36.430 xcodebuild[88404:43631252] [MT] IDETestOperationsObserverDebug: 156.321 elapsed -- Testing started completed.
+2026-10-21 09:33:36.430 xcodebuild[88404:43631252] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 09:33:36.430 xcodebuild[88404:43631252] [MT] IDETestOperationsObserverDebug: 156.321 sec, +156.321 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/callma-ui-rollback-20261021.xcresult
+
+Failing tests:
+	CallshieldUITests.testVoiceHelpAppearsAtTheResult()
+	ProductionUITests.testHighSignalReminderAppearsOnceOnReturn()
+
+** TEST FAILED **
+
+Testing started
