@@ -92,16 +92,18 @@ final class ProductionStore: ObservableObject {
         let arguments = ProcessInfo.processInfo.arguments
         guard arguments.contains("--ui-test-production"), arguments.contains("--ui-test-analysis") else { return }
         let now = Date()
+        let deadline = arguments.contains("--ui-test-analysis-deadline")
+        let connectedAt = deadline ? now.addingTimeInterval(-DeepfakeAssessment.initialDeadline) : now
         let voiceWarning = arguments.contains("--ui-test-voice-warning")
         let transcriptWarning = arguments.contains("--ui-test-transcript-warning")
         let lowScores = arguments.contains("--ui-test-low-scores")
-        let voice: DeepfakeAssessment.State = voiceWarning ? .ai : lowScores ? .uncertain : .human
+        let voice: DeepfakeAssessment.State = deadline ? .analyzing : voiceWarning ? .ai : lowScores ? .uncertain : .human
         let transcriptScore = transcriptWarning ? 0.75 : (voiceWarning || lowScores) ? 0.74 : 0.94
         active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
-            direction: .incoming, createdAt: now, connectedAt: now, stage: .connected,
-            voice: voiceWarning ? .ai : lowScores ? .unknown : .human,
-            deepfake: DeepfakeAssessment(state: voice, updatedAt: now, windows: 3,
-                                        aiScore: voiceWarning ? 0.75 : lowScores ? 0.74 : 0.12),
+            direction: .incoming, createdAt: connectedAt, connectedAt: connectedAt, stage: .connected,
+            voice: deadline ? .analyzing : voiceWarning ? .ai : lowScores ? .unknown : .human,
+            deepfake: DeepfakeAssessment(state: voice, updatedAt: now, windows: deadline ? 0 : 3,
+                                        aiScore: deadline ? nil : voiceWarning ? 0.75 : lowScores ? 0.74 : 0.12),
             transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: transcriptScore, scoredRevision: 8))
     }
     #endif
