@@ -1,0 +1,16 @@
+{
+  "passed": false,
+  "threshold": null,
+  "reason": "No validation cutoff meets recall and per-domain false-alert requirements",
+  "maximum_recall_within_false_alert_budgets": 0.65,
+  "minimum_worst_domain_fpr_for_required_recall": 0.59375,
+  "min_recall": 0.9,
+  "max_fpr_each_benign_domain": 0.05,
+  "checkpoint_sha256": "56a6aa9cd4da7ef08cf128079007c1f3ab9deab08731e178b3fde6d38a4abc8e",
+  "tokenizer_sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+  "temperature": 2.2782395705988754,
+  "context_mode": "windows",
+  "checkpoint": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/runs/call-v5-balanced",
+  "protocol_sha256": "c511650e00503ab4bfb79e3353080d1b23ac35992905b01d01a1fc08979a177c",
+  "research_only": true
+}

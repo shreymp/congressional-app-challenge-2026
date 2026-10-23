@@ -1,0 +1,304 @@
+{
+  "protocol": {
+    "seed": "jev-repair-v7-20261022:",
+    "dataset_sha256": {
+      "calibration": "2a3e8f33662a335afc1a62d9c27467139fd48e1f7ca6b1c9af67b0c30a18c378",
+      "test": "52e1785b2951dfce8bec1a147ecb4beaf67a22f5417ed26c30fdaa0b2a86bf85"
+    },
+    "input_sha256": {
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/train.jsonl": "06772b1d60abcc90fe16cae20a6b6dabefe9b6818dd49877134fcaffcc3ad0e0",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/validation.jsonl": "575db0c3a445bc0ea1454f7b4f5fdadc9187656519c5553bcf3c363584bb4b06",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/test.jsonl": "db89b9d2684724df4dc67d6b251b3e91f6e90c97583df67d942d94742a60083c",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/train.jsonl": "134464769f6c0a0435b1d026ccc7db015f141035250aa011114ab3d0bddb5610",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/human100/test.jsonl": "134ed53d825ca25f6ac65bb03b8a091d7a56e21b4fc5341a7263702eda961476",
+      "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/hvb/probes.jsonl": "ed870ffb8737df104dad3ef70e0fd39a805a5203ca01e2397c67ce7f837d2437",
+      "/tmp/jev-youtube-scam-transcripts.zip": "3f67497736e9421c2f6e59efc46c129006419d40fc752cbb981042940384cedd",
+      "/tmp/callshield-swda.zip": "a5fe9b1f0a6c1aca42904ac1fecd65538125b71fb1490716408bc087a7f6c529",
+      "/tmp/jev-sbcorpus.zip": "1c8eab15fa3bbf8a704086c5868ae22b465fdcb09d0ac5425c98f46a1d4f60ab"
+    },
+    "calibration": {
+      "human_excerpts": 40,
+      "new_human_excerpts": 22,
+      "previously_seen_validation_normals": 18,
+      "scams": 20,
+      "normal": 20,
+      "banking_roleplay_validation": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl",
+      "banking_sha256": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0"
+    },
+    "fresh_test": {
+      "n": 60,
+      "scams": 30,
+      "normal": 30
+    },
+    "source_split": "New calibration scams: ModderPaulScambaits. New test scams: other named creators. Creators overlap the previously inspected human100 development sample.",
+    "operating_requirements": {
+      "min_recall": 0.9,
+      "max_fpr_each_benign_domain": 0.05
+    },
+    "fresh_acceptance": {
+      "min_accuracy": 0.9,
+      "min_recall": 0.9,
+      "max_fpr": 0.05,
+      "no_additional_fn_or_fp_vs_baseline_fixed_0_75": true
+    },
+    "context_mode": "windows",
+    "maximum_scam_similarity_to_prior_or_other_selected": {
+      "calibration": 0.6312519235384392,
+      "test": 0.6058798669049978
+    },
+    "forbidden": "Never fit weights, cutoff, temperature or select epochs with test labels. Failed policy fits remain failed. No retry on these test answers.",
+    "limits": [
+      "Transcript excerpts, not full audio calls; no ASR or audio performance measured.",
+      "Silver source-call labels can overstate visible excerpt evidence; each video was not independently listened to.",
+      "Scam and normal source confounding remains. No field accuracy guarantee or deployment approval.",
+      "28/30 test normals are new-source Santa Barbara conversations, mostly face-to-face. Some within-corpus speakers can recur; no independent-call confidence claim.",
+      "Santa Barbara corpus: Du Bois et al. 2000-2005, UCSB; CC BY-ND 3.0 US. Local evaluation only; raw/processed text is not redistributed or trained on.",
+      "Banking threshold constraints use previously seen human roleplay validation, not organic banking calls."
+    ]
+  },
+  "models": {
+    "v5": {
+      "policy": {
+        "passed": false,
+        "threshold": null,
+        "reason": "No validation cutoff meets recall and per-domain false-alert requirements",
+        "maximum_recall_within_false_alert_budgets": 0.65,
+        "minimum_worst_domain_fpr_for_required_recall": 0.59375,
+        "min_recall": 0.9,
+        "max_fpr_each_benign_domain": 0.05,
+        "checkpoint_sha256": "56a6aa9cd4da7ef08cf128079007c1f3ab9deab08731e178b3fde6d38a4abc8e",
+        "tokenizer_sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+        "temperature": 2.2782395705988754,
+        "context_mode": "windows",
+        "checkpoint": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/runs/call-v5-balanced",
+        "protocol_sha256": "c511650e00503ab4bfb79e3353080d1b23ac35992905b01d01a1fc08979a177c",
+        "research_only": true
+      },
+      "sets": {
+        "fresh_human60": {
+          "original_0_75": {
+            "n": 60,
+            "tp": 8,
+            "tn": 30,
+            "fp": 0,
+            "fn": 22,
+            "accuracy": 0.6333333333333333,
+            "recall": 0.26666666666666666,
+            "false_positive_rate": 0.0
+          },
+          "validation_selected_policy": null,
+          "by_source": {
+            "human_youtube_scambait_excerpt": {
+              "original_0_75": {
+                "n": 30,
+                "tp": 8,
+                "tn": 0,
+                "fp": 0,
+                "fn": 22,
+                "accuracy": 0.26666666666666666,
+                "recall": 0.26666666666666666,
+                "false_positive_rate": null
+              },
+              "validation_selected_policy": null
+            },
+            "natural_santa_barbara_excerpt": {
+              "original_0_75": {
+                "n": 28,
+                "tp": 0,
+                "tn": 28,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            },
+            "natural_switchboard_excerpt": {
+              "original_0_75": {
+                "n": 2,
+                "tp": 0,
+                "tn": 2,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            }
+          }
+        },
+        "inspected_human100_development": {
+          "original_0_75": {
+            "n": 100,
+            "tp": 17,
+            "tn": 50,
+            "fp": 0,
+            "fn": 33,
+            "accuracy": 0.67,
+            "recall": 0.34,
+            "false_positive_rate": 0.0
+          },
+          "validation_selected_policy": null,
+          "by_source": {
+            "human_youtube_scambait_excerpt": {
+              "original_0_75": {
+                "n": 50,
+                "tp": 17,
+                "tn": 0,
+                "fp": 0,
+                "fn": 33,
+                "accuracy": 0.34,
+                "recall": 0.34,
+                "false_positive_rate": null
+              },
+              "validation_selected_policy": null
+            },
+            "natural_switchboard_excerpt": {
+              "original_0_75": {
+                "n": 50,
+                "tp": 0,
+                "tn": 50,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            }
+          }
+        }
+      }
+    },
+    "v7": {
+      "policy": {
+        "passed": false,
+        "threshold": null,
+        "reason": "No validation cutoff meets recall and per-domain false-alert requirements",
+        "maximum_recall_within_false_alert_budgets": 0.65,
+        "minimum_worst_domain_fpr_for_required_recall": 0.59375,
+        "min_recall": 0.9,
+        "max_fpr_each_benign_domain": 0.05,
+        "checkpoint_sha256": "56a6aa9cd4da7ef08cf128079007c1f3ab9deab08731e178b3fde6d38a4abc8e",
+        "tokenizer_sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+        "temperature": 2.2782395705988754,
+        "context_mode": "windows",
+        "checkpoint": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/runs/call-v7-guarded",
+        "protocol_sha256": "c511650e00503ab4bfb79e3353080d1b23ac35992905b01d01a1fc08979a177c",
+        "research_only": true
+      },
+      "sets": {
+        "fresh_human60": {
+          "original_0_75": {
+            "n": 60,
+            "tp": 8,
+            "tn": 30,
+            "fp": 0,
+            "fn": 22,
+            "accuracy": 0.6333333333333333,
+            "recall": 0.26666666666666666,
+            "false_positive_rate": 0.0
+          },
+          "validation_selected_policy": null,
+          "by_source": {
+            "human_youtube_scambait_excerpt": {
+              "original_0_75": {
+                "n": 30,
+                "tp": 8,
+                "tn": 0,
+                "fp": 0,
+                "fn": 22,
+                "accuracy": 0.26666666666666666,
+                "recall": 0.26666666666666666,
+                "false_positive_rate": null
+              },
+              "validation_selected_policy": null
+            },
+            "natural_santa_barbara_excerpt": {
+              "original_0_75": {
+                "n": 28,
+                "tp": 0,
+                "tn": 28,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            },
+            "natural_switchboard_excerpt": {
+              "original_0_75": {
+                "n": 2,
+                "tp": 0,
+                "tn": 2,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            }
+          }
+        },
+        "inspected_human100_development": {
+          "original_0_75": {
+            "n": 100,
+            "tp": 17,
+            "tn": 50,
+            "fp": 0,
+            "fn": 33,
+            "accuracy": 0.67,
+            "recall": 0.34,
+            "false_positive_rate": 0.0
+          },
+          "validation_selected_policy": null,
+          "by_source": {
+            "human_youtube_scambait_excerpt": {
+              "original_0_75": {
+                "n": 50,
+                "tp": 17,
+                "tn": 0,
+                "fp": 0,
+                "fn": 33,
+                "accuracy": 0.34,
+                "recall": 0.34,
+                "false_positive_rate": null
+              },
+              "validation_selected_policy": null
+            },
+            "natural_switchboard_excerpt": {
+              "original_0_75": {
+                "n": 50,
+                "tp": 0,
+                "tn": 50,
+                "fp": 0,
+                "fn": 0,
+                "accuracy": 1.0,
+                "recall": null,
+                "false_positive_rate": 0.0
+              },
+              "validation_selected_policy": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "decision": {
+    "passed_this_research_gate": false,
+    "failures": [
+      "No validation operating point met the frozen recall/false-alert requirements"
+    ],
+    "deployment_approved": false,
+    "remaining_requirements": "Independent excerpt adjudication, legitimate business diversity, full-call ASR/caller-only evaluation and ONNX/native parity before deployment"
+  },
+  "training_selection": {
+    "selected_epoch": 0,
+    "improved_checkpoint": false
+  }
+}

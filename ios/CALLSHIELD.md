@@ -1,3 +1,19 @@
+For outgoing LiveKit setup and current validation limits, see [OUTBOUND_CALLING.md](../backend/AI%20Deepfake%20Pipeline/LiveKit%20Setup/OUTBOUND_CALLING.md). The outgoing HTTPS gateway integration now exists; it requires a separately configured outbound SIP trunk and gateway URL in Settings. Statements below saying the LiveKit backend never supports outgoing calls describe the earlier inbound-only setup. Without a gateway URL, the app retains cellular handoff.
+
+## Production installation (October 22 update)
+
+Normal launches now always show the production app on Simulator and iPhone, in both Debug and Release. `CALLSHIELD_DEMO` no longer selects a normal-launch demo; the Debug UI-test fixture arguments remain isolated for automated checks.
+
+In Settings → Calling connection → Configure Connection, enter the LiveKit project host (without `wss://`) and the service's lobby join token. The token is saved in this installation's Keychain; the host is saved in preferences. Saving rebuilds the app's service connection without rebuilding the binary. Existing xcconfig credentials still work as a fallback. Leaving the token field blank retains the existing credential. Saving validates format and secure storage, not service connectivity or token expiry.
+
+Configure each installation separately. Do not use the same lobby identity simultaneously on two installations: LiveKit disconnects the older participant. The existing minting tool and agent use a single `senior` identity; multi-device routing is not implemented.
+
+Both targets use the same real LiveKit backend and production screens. The simulator-only call banner has been removed. Simulator still requires its audio/CallKit adapter because it cannot provide physical iPhone call UI, cellular handoff, push provisioning or audio routes.
+
+This change makes foreground LiveKit setup available in the app. Outbound LiveKit calling, background incoming push, provider voicemail and full Phone replacement remain unimplemented. LiveKit-only inbound configuration does not supply an outbound SIP provider or Apple push credentials.
+
+---
+
 For the MacBook simulator handoff, start with [MACBOOK_TESTING.md](../MACBOOK_TESTING.md).
 
 # Callshield for iPhone

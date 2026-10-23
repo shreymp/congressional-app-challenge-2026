@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "swda:3968",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1484",
+      "1495"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1318_3968.utt.csv",
+    "source_sha256": "e0945dfdc7b7098a2aea4029af6441f5886d424c9aaaff17ed85e3510f9cd7b5",
+    "category": "RIGHT TO PRIVACY",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5740237426223661
+  },
+  {
+    "id": "youtube:xr-XeDmfflA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=xr-XeDmfflA",
+    "corpus_row": "132",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.5407212237120883
+  },
+  {
+    "id": "youtube:JEgBL6X4hno",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "FunGuyMediaScambaits",
+    "url": "https://www.youtube.com/watch?v=JEgBL6X4hno",
+    "corpus_row": "126",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.5399287495645609
+  },
+  {
+    "id": "swda:4150",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1447",
+      "1516"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw01utt/sw_0107_4150.utt.csv",
+    "source_sha256": "343ff08f1486a5419c504d2a5167f831e2213870b5b444405f1265663f0e8da3",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.45569185276057905
+  },
+  {
+    "id": "youtube:eq-rbjTvNm8",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=eq-rbjTvNm8",
+    "corpus_row": "155",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4891163244449648
+  },
+  {
+    "id": "youtube:Dd094k31qGw",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=Dd094k31qGw",
+    "corpus_row": "118",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3781093411894309
+  },
+  {
+    "id": "youtube:nhbKKxhV4Og",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=nhbKKxhV4Og",
+    "corpus_row": "81",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.41057710055766133
+  },
+  {
+    "id": "swda:3924",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1386",
+      "1504"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1315_3924.utt.csv",
+    "source_sha256": "72e7fcdbb470af28b471b05bd7a9fd14e01185c532557fa8b9327f52bda0d3df",
+    "category": "AIDS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.33746715592719245
+  },
+  {
+    "id": "swda:4325",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1519",
+      "1632"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0001_4325.utt.csv",
+    "source_sha256": "4b1395aa6a95e4ee590fedc9d5a8cb47882cbd976da4543ea5a17fa871f0b74a",
+    "category": "CHILD CARE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.46953821251528244
+  },
+  {
+    "id": "youtube:m1H4oJeJPFw",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=m1H4oJeJPFw",
+    "corpus_row": "12",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.5634909068911944
+  },
+  {
+    "id": "swda:2820",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1028",
+      "1074"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw11utt/sw_1102_2820.utt.csv",
+    "source_sha256": "b30f02ee39e9267da2f51a6f4892af5ab6a622947cf0c1bce2791260a74aa454",
+    "category": "DRUG TESTING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4855036354679114
+  },
+  {
+    "id": "youtube:mEr_TTR55b4",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=mEr_TTR55b4",
+    "corpus_row": "59",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.22381316068727858
+  },
+  {
+    "id": "swda:4102",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1556",
+      "1603"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1321_4102.utt.csv",
+    "source_sha256": "f4ef12820544878175152ca0d5e0b4ef39f03cba10dc139c2b58b8c6a83a4bb5",
+    "category": "CARE OF THE ELDERLY",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5497264588049667
+  },
+  {
+    "id": "youtube:1Qv1magyyZU",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=1Qv1magyyZU",
+    "corpus_row": "51",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.2970537455992318
+  },
+  {
+    "id": "youtube:avJho8y5lEA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=avJho8y5lEA",
+    "corpus_row": "15",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.26341206284163143
+  },
+  {
+    "id": "swda:4179",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1574",
+      "1583"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1324_4179.utt.csv",
+    "source_sha256": "5527b223e1a72d92b08ae74f85cf8cf2c6a86a22935838ea80e69d180f3dd5fe",
+    "category": "PETS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.43881152172267524
+  },
+  {
+    "id": "swda:3573",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1402",
+      "1463"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw06utt/sw_0625_3573.utt.csv",
+    "source_sha256": "0ba0c8d6aee421c61c513a4f3fbb2f818365611ee10bf3c9e5d55cb6fd4d6986",
+    "category": "BUYING A CAR",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.3453508535314905
+  },
+  {
+    "id": "youtube:6kYbHYcSsDk",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=6kYbHYcSsDk",
+    "corpus_row": "109",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.33501806501397885
+  },
+  {
+    "id": "youtube:0D57J5RsFC8",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=0D57J5RsFC8",
+    "corpus_row": "125",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.413350501584276
+  },
+  {
+    "id": "swda:2524",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1107",
+      "1120"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw10utt/sw_1003_2524.utt.csv",
+    "source_sha256": "1860e4e1a0a32180d1b2b5af217c70f7b69386c44ba78774804672a4c25f6bb3",
+    "category": "HOBBIES AND CRAFTS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4989195449486513
+  },
+  {
+    "id": "youtube:UgIyD8fGS2w",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=UgIyD8fGS2w",
+    "corpus_row": "106",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.44385126666498914
+  },
+  {
+    "id": "swda:3025",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1258",
+      "1266"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw09utt/sw_0942_3025.utt.csv",
+    "source_sha256": "49778c326bc95a33e2ef2416c01ba01e81576b1bf8095643fcb9f7c80182cf3d",
+    "category": "RECIPES/FOOD/COOKING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4358791391781959
+  },
+  {
+    "id": "swda:4157",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1518",
+      "1543"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1322_4157.utt.csv",
+    "source_sha256": "d6793a1c0e2c02dbed56cefeac1766e71f4bf8bd2db5ee770359d42796eb852d",
+    "category": "UNIVERSAL HEALTH INS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.35149725904075396
+  },
+  {
+    "id": "swda:4109",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1541",
+      "1561"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0020_4109.utt.csv",
+    "source_sha256": "e6a3b60ea03f43fed5add61dfb4fe3ba077397a1a2c71a65a66961fcf484ccc7",
+    "category": "JOB BENEFITS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4569092099503692
+  },
+  {
+    "id": "youtube:aO4qMAIkRPk",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=aO4qMAIkRPk",
+    "corpus_row": "62",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3717092426088864
+  },
+  {
+    "id": "swda:4615",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1352",
+      "1558"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw09utt/sw_0923_4615.utt.csv",
+    "source_sha256": "c9d88774edd4d88221ef12434b2877e722227ec1b8337d34c216a85c5b27c0f8",
+    "category": "FAMILY FINANCE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.41300778597735277
+  },
+  {
+    "id": "youtube:gFyDJQaDaSo",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=gFyDJQaDaSo",
+    "corpus_row": "48",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3662888275699822
+  },
+  {
+    "id": "swda:3035",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1070",
+      "1147"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1310_3035.utt.csv",
+    "source_sha256": "d59786a085eaeb47766e23796ed334cae7343129991c8637cee81f9fa4d64825",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.534879800680053
+  },
+  {
+    "id": "youtube:WXcAshytyPY",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=WXcAshytyPY",
+    "corpus_row": "32",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4390357199151137
+  },
+  {
+    "id": "youtube:4ZxT-LQzsiM",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=4ZxT-LQzsiM",
+    "corpus_row": "133",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4465665843356492
+  },
+  {
+    "id": "youtube:DrapTNkYiWg",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=DrapTNkYiWg",
+    "corpus_row": "145",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.46426342698264783
+  },
+  {
+    "id": "swda:4622",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1528",
+      "1671"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1326_4622.utt.csv",
+    "source_sha256": "6319d99e109ddeeca7e45def4f78f592d9759c79bf88655d3c6a36e141a8226f",
+    "category": "CLOTHING AND DRESS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.36375796713896175
+  },
+  {
+    "id": "swda:3360",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1360",
+      "1426"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw03utt/sw_0357_3360.utt.csv",
+    "source_sha256": "eb54822669d8f8ac9f0a507db2b343be1a5d9b01b2d9c65b453b4cb37f372191",
+    "category": "TAXES",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4093287460338656
+  },
+  {
+    "id": "swda:3185",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1253",
+      "1399"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw09utt/sw_0980_3185.utt.csv",
+    "source_sha256": "9e518ec62af664271270171c91b3a455f53372a0f914f4917384abc31ef72ff4",
+    "category": "WEATHER CLIMATE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.47038016170480895
+  },
+  {
+    "id": "swda:2552",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1092",
+      "1148"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw09utt/sw_0902_2552.utt.csv",
+    "source_sha256": "3346ab86708be5b836ca1ab3ad49afac9ca43f5a4bf035bdc35d23c0d560074e",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.570362705472684
+  },
+  {
+    "id": "swda:3528",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1342",
+      "1467"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1314_3528.utt.csv",
+    "source_sha256": "e931f2396df43aeab54510936d4c16bc766d3edd7263c1ab16b8d47543742384",
+    "category": "SPACE FLIGHT AND EXPLORATION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.37577567580336074
+  },
+  {
+    "id": "youtube:OwxrgENf954",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "DanGleeballsScambaiter",
+    "url": "https://www.youtube.com/watch?v=OwxrgENf954",
+    "corpus_row": "159",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3479084719750443
+  },
+  {
+    "id": "swda:4345",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1572",
+      "1630"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0034_4345.utt.csv",
+    "source_sha256": "371deee0b4567ede71237b593d605b8d0cb12c9d3bd756c645052fd19205bb7f",
+    "category": "NEWS MEDIA",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5028790176991477
+  },
+  {
+    "id": "youtube:oEjeClSV47A",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=oEjeClSV47A",
+    "corpus_row": "153",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3926072086509645
+  },
+  {
+    "id": "youtube:XQSh-wPpIDs",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=XQSh-wPpIDs",
+    "corpus_row": "150",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.38598379617757295
+  },
+  {
+    "id": "swda:4384",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1646",
+      "1653"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1325_4384.utt.csv",
+    "source_sha256": "8af52c69e2e39966b2c6d295e7de8f7e0103c8b723539a42a90bbd418b26762a",
+    "category": "CHILD CARE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.532713812772962
+  },
+  {
+    "id": "swda:4771",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1571",
+      "1676"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1328_4771.utt.csv",
+    "source_sha256": "0fac4ce25574582af353beffe0c19c6d032de0a0139e0a52f95ad50a7617e7cd",
+    "category": "AIR POLLUTION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.3324198613009112
+  },
+  {
+    "id": "youtube:9YdEdZE5UF0",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=9YdEdZE5UF0",
+    "corpus_row": "147",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.39658069041633043
+  },
+  {
+    "id": "youtube:Ocy_i8I9LcQ",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=Ocy_i8I9LcQ",
+    "corpus_row": "98",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4474010931387384
+  },
+  {
+    "id": "youtube:v4uaxqpFGIQ",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=v4uaxqpFGIQ",
+    "corpus_row": "142",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4770869282448402
+  },
+  {
+    "id": "swda:2185",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1071",
+      "1142"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw07utt/sw_0740_2185.utt.csv",
+    "source_sha256": "08892644386232bf7ae368fecb2c3966716d845016c7657b62683ae67eb2a846",
+    "category": "PAINTING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.3861955951891773
+  },
+  {
+    "id": "youtube:VY7EuzYDFk8",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=VY7EuzYDFk8",
+    "corpus_row": "30",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3385315163460505
+  },
+  {
+    "id": "swda:3520",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1382",
+      "1458"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1313_3520.utt.csv",
+    "source_sha256": "daa589157838914569b97e82123ed9dc77903da16ab3c56418eeee9a9905998a",
+    "category": "ELECTIONS AND VOTING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4657753306983156
+  },
+  {
+    "id": "swda:2838",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1181",
+      "1208"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1309_2838.utt.csv",
+    "source_sha256": "e16589283c670681372368dde29050fd66642c06ac0f984670c2cbb9cbb9f16e",
+    "category": "GUN CONTROL",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4385279744260664
+  },
+  {
+    "id": "swda:2702",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1116",
+      "1219"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1305_2702.utt.csv",
+    "source_sha256": "4912cf5bed1c98ef073405d1bc3870d6a0c3833716df84cc31be36dab80cffc2",
+    "category": "BUYING A CAR",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4583288155965997
+  },
+  {
+    "id": "youtube:695GlSKw0ow",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=695GlSKw0ow",
+    "corpus_row": "16",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.31527015892403926
+  },
+  {
+    "id": "youtube:wH-L9_DuyjI",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=wH-L9_DuyjI",
+    "corpus_row": "120",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4689971430520191
+  },
+  {
+    "id": "swda:4167",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1472",
+      "1576"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1323_4167.utt.csv",
+    "source_sha256": "b66700897a0687b5acf3c04ddaea2fb0848844ceb8a4209df92442822947e798",
+    "category": "NEWS MEDIA",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.34111391152707343
+  },
+  {
+    "id": "swda:3942",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1465",
+      "1487"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1317_3942.utt.csv",
+    "source_sha256": "bab3f06d7751528260b845dcc3f8d870b30150df757bdb974593ab9eba831cd2",
+    "category": "ETHICS IN GOVERNMENT",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4619802489308058
+  },
+  {
+    "id": "swda:2434",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1019",
+      "1033"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1204_2434.utt.csv",
+    "source_sha256": "cda53e3eb8183f772e3c8152dd9f85a7f249a7e2a1ccbb849240f9843e7e1728",
+    "category": "GUN CONTROL",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5521734308602673
+  },
+  {
+    "id": "swda:3756",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1479",
+      "1488"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1210_3756.utt.csv",
+    "source_sha256": "380492736b3f52d39a42d28cb3e729ffd293acfc420ab3126dc0feed0eeabeb0",
+    "category": "PAINTING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4346609494683027
+  },
+  {
+    "id": "swda:4927",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1423",
+      "1567"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw07utt/sw_0732_4927.utt.csv",
+    "source_sha256": "60c6f6860e5878f6f987f89c171cdb387948dcc53baef089f65024f448a84b75",
+    "category": "UNIVERSAL PBLIC SERV",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.47888357619451477
+  },
+  {
+    "id": "youtube:d9qXweoDr5k",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=d9qXweoDr5k",
+    "corpus_row": "58",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.43428729852182646
+  },
+  {
+    "id": "swda:2752",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1032",
+      "1212"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1307_2752.utt.csv",
+    "source_sha256": "32d7d7a9ba6b8a98e729b8aefd7520563b1518536ae6ca29de1ba10bcf4f50ac",
+    "category": "AIR POLLUTION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.3857330881204916
+  },
+  {
+    "id": "swda:4643",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1654",
+      "1680"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1327_4643.utt.csv",
+    "source_sha256": "ea2c311ce494cbd6d514219c0cfeb5eb380fab6aeab072e05311df2a9387fbab",
+    "category": "WOODWORKING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.493687740333033
+  },
+  {
+    "id": "swda:2441",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1146",
+      "1151"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1205_2441.utt.csv",
+    "source_sha256": "7093b5b62e0b224e45cc9e37b46e7f5ee72399a9cd74ba2f3d738d0d670e0a21",
+    "category": "UNIVERSAL PBLIC SERV",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4474533261313522
+  },
+  {
+    "id": "youtube:HJAaJdDMU04",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=HJAaJdDMU04",
+    "corpus_row": "154",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.5162518698387473
+  },
+  {
+    "id": "swda:2733",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1127",
+      "1178"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1306_2733.utt.csv",
+    "source_sha256": "8a4bedb6cde09423e0a26db405320b47797a56d8878f0cae92ff63b16e8d75f4",
+    "category": "BUYING A CAR",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.45916763966986096
+  },
+  {
+    "id": "swda:3469",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1297",
+      "1449"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1312_3469.utt.csv",
+    "source_sha256": "e14ec1793d26a05792adb622b020eff7183163a9f3e04e02e81699a3fbc29bac",
+    "category": "IMMIGRATION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5800284321156967
+  },
+  {
+    "id": "youtube:L98eH74uDfA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=L98eH74uDfA",
+    "corpus_row": "78",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3788985050015999
+  },
+  {
+    "id": "swda:2131",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1126",
+      "1128"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1201_2131.utt.csv",
+    "source_sha256": "1dfb05cdd95924d20d9381bdc1c706bbb6e0ee592891111e5750df58a9d02f0e",
+    "category": "MUSIC",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.48383657654399503
+  },
+  {
+    "id": "youtube:VlpxWbjnoQk",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=VlpxWbjnoQk",
+    "corpus_row": "151",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4598406481849128
+  },
+  {
+    "id": "youtube:aEPXqNOtsYA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=aEPXqNOtsYA",
+    "corpus_row": "55",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.43946819235682133
+  },
+  {
+    "id": "swda:4877",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1191",
+      "1697"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0015_4877.utt.csv",
+    "source_sha256": "a2ced74a91ef2475c8d5999e1c42e7cedba21463a08b8a0541fc6ecc1b0fb8e8",
+    "category": "CHILD CARE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.46498892346429843
+  },
+  {
+    "id": "youtube:jwJFw3FCBmA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=jwJFw3FCBmA",
+    "corpus_row": "52",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.34926686100866733
+  },
+  {
+    "id": "youtube:yoa3YlMeWL8",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=yoa3YlMeWL8",
+    "corpus_row": "33",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3732939544679573
+  },
+  {
+    "id": "youtube:DdMISalsfrk",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=DdMISalsfrk",
+    "corpus_row": "8",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.26184196948200666
+  },
+  {
+    "id": "swda:2121",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1087",
+      "1121"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1200_2121.utt.csv",
+    "source_sha256": "40d28c87ce6a9ea625fd04460f275869c48d4577147b10b327b9203b99f0cb27",
+    "category": "AIR POLLUTION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4427327546724129
+  },
+  {
+    "id": "swda:2632",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1007",
+      "1154"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1304_2632.utt.csv",
+    "source_sha256": "5be03ded6e47fba7923ef0555fc2797a7f6bd25df8a35de7fb201ba91a00a196",
+    "category": "PUBLIC EDUCATION",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.540656366250397
+  },
+  {
+    "id": "youtube:zE33nJqxKxU",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=zE33nJqxKxU",
+    "corpus_row": "18",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.22023337532903384
+  },
+  {
+    "id": "swda:2335",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1063",
+      "1175"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1300_2335.utt.csv",
+    "source_sha256": "7589249265a45db163b81b01896591fe7705adaf48b823d80c158637cf234e34",
+    "category": "CRIME",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.43858757344196486
+  },
+  {
+    "id": "youtube:UG-KjCSt14k",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "url": "https://www.youtube.com/watch?v=UG-KjCSt14k",
+    "corpus_row": "0",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3968523084134838
+  },
+  {
+    "id": "youtube:Wt_P-XFC8rs",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=Wt_P-XFC8rs",
+    "corpus_row": "73",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3915245119772431
+  },
+  {
+    "id": "youtube:cpryubbCp78",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ScammerAllergy",
+    "url": "https://www.youtube.com/watch?v=cpryubbCp78",
+    "corpus_row": "157",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4233536450008377
+  },
+  {
+    "id": "youtube:qwkmHofCOhY",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=qwkmHofCOhY",
+    "corpus_row": "86",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.2749018490432936
+  },
+  {
+    "id": "youtube:vh9TBIvhOI0",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=vh9TBIvhOI0",
+    "corpus_row": "139",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.6166140754826437
+  },
+  {
+    "id": "youtube:0QVOwahqwAw",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=0QVOwahqwAw",
+    "corpus_row": "9",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.34815381409679996
+  },
+  {
+    "id": "swda:3565",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1383",
+      "1455"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw02utt/sw_0245_3565.utt.csv",
+    "source_sha256": "75b0541b590da6abb28e4614abb65a9c1d01da80300a802d76b3205abeebced8",
+    "category": "HOME REPAIRS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.3205100183498243
+  },
+  {
+    "id": "swda:2557",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1016",
+      "1043"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw10utt/sw_1032_2557.utt.csv",
+    "source_sha256": "6945fed2dddc548ac75b22fb1db9efe5bf852f0371a9f03c8ff26e5615ae45b0",
+    "category": "RECYCLING",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4511630381499288
+  },
+  {
+    "id": "swda:3936",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1213",
+      "1497"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1316_3936.utt.csv",
+    "source_sha256": "595d9137aac9071058e4163005814ba7a0eaf6d0030579c828f80a2734538ea5",
+    "category": "WEATHER CLIMATE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.39325124372523423
+  },
+  {
+    "id": "youtube:Uysdt8eY3lM",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "url": "https://www.youtube.com/watch?v=Uysdt8eY3lM",
+    "corpus_row": "149",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4704929380360335
+  },
+  {
+    "id": "youtube:ctcQd_juP-Y",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=ctcQd_juP-Y",
+    "corpus_row": "64",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.40276433337695544
+  },
+  {
+    "id": "swda:2505",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1060",
+      "1153"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1302_2505.utt.csv",
+    "source_sha256": "c7644a7bc8e4a11cd50b979d201520ec971297e5fb527bb1a75e79b3ea63ead5",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.6124421759704092
+  },
+  {
+    "id": "swda:2753",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1245",
+      "1249"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1308_2753.utt.csv",
+    "source_sha256": "83a4ac9236b941131b34a3ce1d601dca49eec9bf82edb23570fa3bb6f1362094",
+    "category": "LATIN AMERICA",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.4301814221245653
+  },
+  {
+    "id": "swda:4177",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1536",
+      "1557"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0044_4177.utt.csv",
+    "source_sha256": "6e7d9f4742b5c198fb1b263befa2e45cfb3b7008511679e0dbd2122f33184fb9",
+    "category": "NEWS MEDIA",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5363296072301135
+  },
+  {
+    "id": "youtube:E2p9zDFT93g",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "FunGuyMediaScambaits",
+    "url": "https://www.youtube.com/watch?v=E2p9zDFT93g",
+    "corpus_row": "128",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3833769383670848
+  },
+  {
+    "id": "swda:2952",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1022",
+      "1098"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw07utt/sw_0709_2952.utt.csv",
+    "source_sha256": "9ec8967d7c3ddb138836722669729c25bc96a6188002dd4010bc5de5e6a84da3",
+    "category": "HOBBIES AND CRAFTS",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.41146694967958347
+  },
+  {
+    "id": "youtube:lQDhlhUVWBA",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "url": "https://www.youtube.com/watch?v=lQDhlhUVWBA",
+    "corpus_row": "20",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.22108797562323645
+  },
+  {
+    "id": "swda:2567",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1145",
+      "1159"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1303_2567.utt.csv",
+    "source_sha256": "be4a9bb28b5d0049f5c5b41906d5d307c7c5597a7cb8a20a854ddd6a9dc447d7",
+    "category": "LATIN AMERICA",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.36568852391362816
+  },
+  {
+    "id": "youtube:OG1TTyCNF_U",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "url": "https://www.youtube.com/watch?v=OG1TTyCNF_U",
+    "corpus_row": "56",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.3295506617505966
+  },
+  {
+    "id": "youtube:jBlXcEvYZ1g",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=jBlXcEvYZ1g",
+    "corpus_row": "88",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.45025121056082695
+  },
+  {
+    "id": "youtube:GW3BXftyISI",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ScammerAllergy",
+    "url": "https://www.youtube.com/watch?v=GW3BXftyISI",
+    "corpus_row": "241",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4727337836029477
+  },
+  {
+    "id": "youtube:gCdc40xbNXY",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=gCdc40xbNXY",
+    "corpus_row": "89",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.6002267793463064
+  },
+  {
+    "id": "youtube:lOjVCJU_2Y0",
+    "label": 1,
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "url": "https://www.youtube.com/watch?v=lOjVCJU_2Y0",
+    "corpus_row": "84",
+    "label_quality": "source_attributed_scambait_not_independently_adjudicated",
+    "provenance": "recorded human scambait; source transcript excerpt, not full call; no speaker diarization",
+    "max_known_character_similarity": 0.4592479779774091
+  },
+  {
+    "id": "swda:4353",
+    "label": 0,
+    "source": "natural_switchboard_excerpt",
+    "speakers": [
+      "1291",
+      "1638"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0049_4353.utt.csv",
+    "source_sha256": "b07a2c8378b9420422a8fd4a65283aad1c009ac97114d8b02bd9ebe442a7cf82",
+    "category": "FAMILY FINANCE",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "provenance": "recorded human dialogue; first words length matched to corresponding scam excerpt",
+    "max_known_character_similarity": 0.5302397330963533
+  }
+]

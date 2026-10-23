@@ -31,9 +31,14 @@ struct ProductionRecentsView: View {
                                 }
                                 Spacer()
                                 Text(record.date, format: .dateTime.month(.abbreviated).day()).font(.caption2).foregroundStyle(Palette.secondary)
-                                Image(systemName: "info.circle").foregroundStyle(Color(hex: 0x528FCB))
-                            }.padding(.vertical, 5)
+                                Image(systemName: "info.circle").foregroundStyle(Palette.accent)
+                            }.padding(10)
+                                .background(Palette.surface, in: RoundedRectangle(cornerRadius: 13))
+                                .overlay(RoundedRectangle(cornerRadius: 13).stroke(Palette.line, lineWidth: 0.5))
                         }.buttonStyle(.plain)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 3, leading: 23, bottom: 4, trailing: 23))
                     }
                     .onDelete { offsets in
                         let ids = Set(offsets.map { store.visibleHistory[$0].id })
@@ -163,7 +168,7 @@ struct PhoneSearchField: View {
                 Button { text = "" } label: { Image(systemName: "xmark.circle.fill") }
                     .foregroundStyle(Palette.secondary).accessibilityLabel("Clear search")
             }
-        }.padding(10).background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 10))
+        }.padding(10).background(Palette.soft, in: RoundedRectangle(cornerRadius: 10))
     }
 }
 
@@ -187,11 +192,11 @@ struct ProductionKeypadView: View {
                     Spacer()
                     Button { editing = false; Task { await store.call() } } label: {
                         Group {
-                            if store.placingCall { ProgressView().tint(.white) }
+                            if store.placingCall { ProgressView().tint(Palette.actionInk) }
                             else { Image(systemName: "phone.fill").scaledFont(size: 29) }
                         }
-                        .foregroundStyle(.white).frame(width: 70, height: 70)
-                        .background(Palette.teal, in: Circle())
+                        .foregroundStyle(Palette.actionInk).frame(width: 70, height: 70)
+                        .background(Palette.action, in: Circle())
                     }
                     .buttonStyle(.plain).disabled(store.dialedNumber.isEmpty || store.placingCall)
                     .accessibilityLabel("Call").accessibilityIdentifier("productionCallButton")
@@ -321,6 +326,7 @@ struct ProductionPersonDetail: View {
 struct ProductionSettingsView: View {
     @EnvironmentObject private var store: ProductionStore
     @State private var showingBlockedNumbers = false
+    @State private var showingConnection = false
     /// An inbound-only backend (LiveKit) leaves outgoing calls to the mobile service, and no
     /// voice assessment reaches this phone for it, so only a full calling backend claims either.
     @MainActor private var callshieldPlacesCalls: Bool {
@@ -334,7 +340,17 @@ struct ProductionSettingsView: View {
                     Text(AppBrand.name).font(.title3.weight(.semibold))
                     Text(AppBrand.tagline).font(.caption).foregroundStyle(Palette.secondary)
                 }.frame(maxWidth: .infinity).padding(20)
-                    .background(LinearGradient(colors: [Palette.softAccent, Palette.lavender, Palette.sand], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 24))
+                    .background(Palette.surface, in: RoundedRectangle(cornerRadius: 24))
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Calling connection").font(.headline)
+                    Text(store.coordinator.backend.isConfigured ? "LiveKit configured" : "Set up LiveKit to receive calls")
+                        .font(.subheadline).foregroundStyle(Palette.secondary)
+                    Text(store.coordinator.backend.canPlaceOutgoingCalls ? "Incoming calls ring while this app is open. Outgoing calls use your LiveKit gateway." : "Incoming calls ring while this app is open. Configure an outgoing gateway to call through LiveKit.")
+                        .font(.footnote).foregroundStyle(Palette.secondary)
+                    Button("Configure Connection") { showingConnection = true }
+                        .frame(minHeight: 44).accessibilityIdentifier("configureConnection")
+                }.padding(16).background(Palette.surface, in: RoundedRectangle(cornerRadius: 14))
+                AppearancePicker()
                 VStack(spacing: 0) {
                     Toggle("Larger text", isOn: $store.largeText).tint(Palette.accent).padding(.vertical, 12)
                     Divider()
@@ -366,6 +382,7 @@ struct ProductionSettingsView: View {
                     .font(.caption).foregroundStyle(Palette.secondary)
             }.padding(.horizontal, 23).padding(.bottom, 24)
         }
+        .sheet(isPresented: $showingConnection) { CallingConnectionView() }
         .sheet(isPresented: $showingBlockedNumbers) {
             NavigationStack {
                 BlockedNumbersView(store: store)

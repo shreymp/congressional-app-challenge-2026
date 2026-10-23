@@ -7,6 +7,8 @@ struct CallshieldRootView: View {
     @Environment(\.dynamicTypeSize) private var systemTextSize
     private let clock = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
+    @AppStorage("callmaAppearance") private var appearance = "system"
+
     var body: some View {
         ZStack {
             if let call = store.active {
@@ -49,10 +51,10 @@ struct CallshieldRootView: View {
             if !store.notice.isEmpty {
                 Label(store.notice, systemImage: "checkmark")
                     .scaledFont(size: 11)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.actionInk)
                     .padding(12)
                     .frame(maxWidth: .infinity)
-                    .background(Color(hex: 0x284B3D), in: RoundedRectangle(cornerRadius: 12))
+                    .background(Palette.action, in: RoundedRectangle(cornerRadius: 12))
                     .padding(.horizontal, 15)
                     .padding(.bottom, 65)
                     .accessibilityIdentifier("callNotice")
@@ -64,13 +66,13 @@ struct CallshieldRootView: View {
                 .environmentObject(store)
                 .presentationDetents([.height(530), .large])
                 .presentationDragIndicator(.visible)
-                .preferredColorScheme(.light)
+
         }
         .alert("Calls unavailable in demo", isPresented: Binding(get: { store.errorMessage != nil }, set: { if !$0 { store.errorMessage = nil } })) {
             Button("OK", role: .cancel) { store.errorMessage = nil }
         } message: { Text(store.errorMessage ?? "") }
         .environment(\.dynamicTypeSize, store.largeText ? max(systemTextSize, .xxLarge) : systemTextSize)
-        .preferredColorScheme(store.active == nil ? nil : .dark)
+        .preferredColorScheme(appearance == "light" ? .light : appearance == "dark" ? .dark : nil)
         .onReceive(clock) { now in
             if scenePhase == .active { store.tick(now: now) }
         }
@@ -124,6 +126,6 @@ struct CallshieldRootView: View {
         .padding(.top, 9)
         .padding(.bottom, 8)
         .background(Palette.surface.ignoresSafeArea(edges: .bottom))
-        .overlay(alignment: .top) { Rectangle().fill(Color(hex: 0xEDEDEE)).frame(height: 1) }
+        .overlay(alignment: .top) { Rectangle().fill(Palette.line).frame(height: 1) }
     }
 }

@@ -14,7 +14,7 @@ struct RecentsScreen: View {
                         Text(filter.rawValue)
                             .scaledFont(size: 12, weight: .semibold)
                             .frame(maxWidth: .infinity, minHeight: 27)
-                            .background(store.filter == filter ? Color.white : .clear,
+                            .background(store.filter == filter ? Palette.surface : .clear,
                                         in: RoundedRectangle(cornerRadius: 7))
                             .shadow(color: .black.opacity(store.filter == filter ? 0.1 : 0), radius: 2, y: 1)
                             .contentShape(Rectangle())
@@ -51,8 +51,8 @@ struct RecentsScreen: View {
             .foregroundStyle(Palette.secondary)
             .padding(.leading, 10)
             .padding(.trailing, 4)
-            .frame(height: 37)
-            .background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 10))
+            .frame(minHeight: 42)
+            .background(Palette.soft, in: RoundedRectangle(cornerRadius: 10))
             .padding(.bottom, 24)
 
             HStack {
@@ -68,7 +68,7 @@ struct RecentsScreen: View {
                 VStack(spacing: 10) {
                     Image(systemName: "magnifyingglass").scaledFont(size: 30)
                     Text("No calls found").scaledFont(size: 16, weight: .semibold)
-                        .foregroundStyle(Color(hex: 0x34473C))
+                        .foregroundStyle(Palette.ink)
                     Text(store.search.isEmpty ? "Your missed calls will appear here." : "Try another name, number, or voice label.")
                         .scaledFont(size: 12).multilineTextAlignment(.center)
                 }
@@ -125,9 +125,12 @@ struct RecentsScreen: View {
             }
         }
         .padding(.vertical, 16)
+        .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
-        .overlay(alignment: .bottom) { Rectangle().fill(Palette.line).frame(height: 1) }
+        .background(Palette.surface, in: RoundedRectangle(cornerRadius: 13))
+        .overlay(RoundedRectangle(cornerRadius: 13).stroke(Palette.line, lineWidth: 0.5))
+        .padding(.bottom, 7)
     }
 
     @ViewBuilder private func rowEnd(_ call: CallEntry) -> some View {
@@ -137,6 +140,6 @@ struct RecentsScreen: View {
             .fixedSize()
         Image(systemName: "info.circle")
             .scaledFont(size: 17)
-            .foregroundStyle(Color(hex: 0x528FCB))
+            .foregroundStyle(Palette.accent)
     }
 }

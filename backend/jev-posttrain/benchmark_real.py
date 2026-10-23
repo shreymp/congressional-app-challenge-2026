@@ -83,8 +83,16 @@ def main():
     p.add_argument("--data", type=Path, default=HERE / "data/real_calls")
     p.add_argument("--candidate", type=Path, default=HERE / "runs/call-v3-real")
     p.add_argument("--candidate-name", default="v3")
+    p.add_argument("--baseline", type=Path, default=HERE / "runs/call-v2-caller")
+    p.add_argument("--baseline-name", default="v2")
+    p.add_argument("--fresh-probes", type=Path, help="Frozen evaluation-only benign roleplay JSONL")
+    p.add_argument("--fresh-audit", type=Path, help="Precomputed audit with lower_similarity_call_ids; requires fresh probes")
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
+    if args.baseline_name == args.candidate_name:
+        p.error("Baseline and candidate names must differ")
+    if args.fresh_audit and not args.fresh_probes:
+        p.error("Fresh audit requires fresh probes")
     torch.set_num_threads(4)
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     test = read_jsonl(args.data / "test.jsonl")
@@ -106,19 +114,36 @@ def main():
     sets = {"recorded_group_heldout": test, "banking_recorded_roleplay_external": hvb,
             "authored_development_probes": contrasts, "public_audio_vosk_probes": audio,
             "prior_synthetic_caller_test_exploratory": prior_rows}
+    if args.fresh_probes:
+        from benign_prefix_training import prefixes
+        fresh = read_jsonl(args.fresh_probes)
+        if not fresh or any(r["label"] != 0 for r in fresh):
+            raise ValueError("Fresh roleplay probes must be nonempty and benign")
+        sets["fresh_banking_roleplay"] = fresh
+        sets["fresh_banking_roleplay_prefixes"] = prefixes(fresh)
+        if args.fresh_audit:
+            selected_ids = set(json.loads(args.fresh_audit.read_text())["lower_similarity_call_ids"])
+            selected = [r for r in fresh if r["id"] in selected_ids]
+            if not selected or {r["id"] for r in selected} != selected_ids:
+                raise ValueError("Audit IDs must identify a nonempty subset of fresh probes")
+            sets["fresh_banking_lower_similarity"] = selected
     report = {"thresholds": {"binary": .5, "in_call_warning": .75, "selective_low": .2, "selective_high": .8},
               "data_manifest": json.loads((args.data / "manifest.json").read_text()), "models": {},
               "limits": ["Not a 99% claim. Only a small, selected English benchmark.", "FTC YouTube scripts can overlap NCSU training; audio probes are exploratory, not independent calls.",
                          "Banking audio is human roleplay; Switchboard is natural conversation.", "No real-world probability calibration, blinded human adjudication, or field deployment established.",
                          "These probes were repeatedly inspected and informed V4/V5 development. Held out from gradient training does not mean a fresh blind test.",
                          "Per-call Wilson intervals assume iid samples; positive recorded tests cover only four script groups and negative conversations share speakers. Intervals are descriptive, not confidence in field accuracy."]}
+    if args.fresh_probes:
+        report["fresh_probes"] = {"path": str(args.fresh_probes),
+            "sha256": hashlib.sha256(args.fresh_probes.read_bytes()).hexdigest(),
+            "limits": "New calls from an already-used roleplay source, not organic traffic. Prefixes share parent calls; do not count them as independent samples. No scam recall measurable on this collection."}
     per_item = []
-    for name, directory in (("v2", HERE / "runs/call-v2-caller"), (args.candidate_name, args.candidate)):
+    for name, directory in ((args.baseline_name, args.baseline), (args.candidate_name, args.candidate)):
         print(f"Loading {name}", flush=True)
         tokenizer = AutoTokenizer.from_pretrained(directory, local_files_only=True)
         model = GLiClassModel.from_pretrained(directory, local_files_only=True).to(device)
         calibration = directory / "calibration.json"
-        if name == "v2":
+        if directory.resolve() == (HERE / "runs/call-v2-caller").resolve():
             calibration = HERE.parents[1] / "ios/ScamTranscript/Resources/JevCallV2/calibration.json"
         temperature = json.loads(calibration.read_text())["temperature"]
         scores = {"temperature": temperature, "checkpoint": str(directory),
