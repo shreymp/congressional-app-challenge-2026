@@ -1,0 +1,209 @@
+[
+  {
+    "source": "/tmp/cac-deepfake-eval/baseline/audio_window.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "e9631daa53c1944c7891ba8aa53ce38113cc0aa95ea5f68cb0a77b55e12c7b31",
+    "reference_sha256": "1d60e54e8fc8540b0f5594810e5823a9262ea122de161825b201189a039c321b"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/baseline/audio_window.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "e9631daa53c1944c7891ba8aa53ce38113cc0aa95ea5f68cb0a77b55e12c7b31",
+    "reference_sha256": "1d60e54e8fc8540b0f5594810e5823a9262ea122de161825b201189a039c321b"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/baseline/risk.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "5012de717641284bbe760fb734e20dc9447c84747fa9985dd21eb81440b3ccaf",
+    "reference_sha256": "62208697d1ea7231aba9e05b08c0403c3f6fb96ebaa11971c1445816261b458b"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/baseline/risk.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "5012de717641284bbe760fb734e20dc9447c84747fa9985dd21eb81440b3ccaf",
+    "reference_sha256": "62208697d1ea7231aba9e05b08c0403c3f6fb96ebaa11971c1445816261b458b"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/baseline/scoring.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "d10ca31b59bfbc3a11af171315592a46c2f328e9f4decf93f73def06037ae6bf",
+    "reference_sha256": "33bd5c87283cc77325d9c14f0aac5153b6dc5c4b466d56ef3f719092a3d832ef"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/baseline/scoring.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "d10ca31b59bfbc3a11af171315592a46c2f328e9f4decf93f73def06037ae6bf",
+    "reference_sha256": "33bd5c87283cc77325d9c14f0aac5153b6dc5c4b466d56ef3f719092a3d832ef"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/model/detector_config.json",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/detector_config.json",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "68b1e01152127a8f9e730b9812e2546697448894cc393b63fca8184ec2a6f193",
+    "reference_sha256": "ecae297c0ff44f11f250df0a00bbf71dd9c8a955ac00165de2aa88104e9b40b2"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/model/inference.py",
+    "remote_revision": "dca989c3126be4778638a002d3355a463f8789eb",
+    "repository_path": "backend/AI Deepfake Pipeline/inference.py",
+    "exact_match": true,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78",
+    "reference_sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/audio_window.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "4bfba0c5ee2ad0a335eb94cd5b7d435cd9c9fe6459015589a4c14b0f282a39f3",
+    "reference_sha256": "8c74c87d9e33bea48c43d025c11a8292a6617f7f40c6cc598b28c5959526f2c6"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/current/audio_window.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "4bfba0c5ee2ad0a335eb94cd5b7d435cd9c9fe6459015589a4c14b0f282a39f3",
+    "reference_sha256": "8c74c87d9e33bea48c43d025c11a8292a6617f7f40c6cc598b28c5959526f2c6"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/detector_adapter.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/detector_adapter.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "81dc8a1f7629ecec292e65cc7756421b4f67be1b7ef8ee86f5c3095a9c84496d",
+    "reference_sha256": "001ce2cbb4b6892c514b42134c1bbcd6732dcacbefcb0677452a6a260d578845"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/current/detector_adapter.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/detector_adapter.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "81dc8a1f7629ecec292e65cc7756421b4f67be1b7ef8ee86f5c3095a9c84496d",
+    "reference_sha256": "001ce2cbb4b6892c514b42134c1bbcd6732dcacbefcb0677452a6a260d578845"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/risk.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "337f53009b28de825a5fc0b2351efdcce459ed9e8d2201800276c27933e02660",
+    "reference_sha256": "9fac3bf8fac51517d33039738372116a735a425d6edd13811e878dbdcadedddc"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/current/risk.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "337f53009b28de825a5fc0b2351efdcce459ed9e8d2201800276c27933e02660",
+    "reference_sha256": "9fac3bf8fac51517d33039738372116a735a425d6edd13811e878dbdcadedddc"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/risk_protocol.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk_protocol.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "e347108ea6beed3541319d2bcc70b718a0fe3c59b579984967550b2eb68a6fd3",
+    "reference_sha256": "6d56237f4299c7553d18278e6d5192bc6078d08836f3af5095fc01f66b9effbc"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/scoring.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "31ac41f4b696141e1dbec2e387127dadcea6eb942cf6bea57b1b5616571316b7",
+    "reference_sha256": "485f7463390cb84469e75050465741848c6298b2108dfa96901f1f4fc12e6cb8"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/current/scoring.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "31ac41f4b696141e1dbec2e387127dadcea6eb942cf6bea57b1b5616571316b7",
+    "reference_sha256": "485f7463390cb84469e75050465741848c6298b2108dfa96901f1f4fc12e6cb8"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/test_cumulative.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_cumulative.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "4898fa3406fc95997cf33ffac4f8cbcdd8276ab0856e6f750ddedb617f8c26a5",
+    "reference_sha256": "e1fedcbbdbdc1a26f3087456247ad2e4c9ad0d95b79a7b81ecdea67e26829ab0"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/test_integration.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_integration.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "629f474d7cf27837adb5de84f221e05b803cefd8e03f6296ff0f005c619a9255",
+    "reference_sha256": "26e26b2789e68de3e639e1e7fea70d4e6acaa2f93ef1cdd26211d270e8187703"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/test_transcript_pipeline.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_transcript_pipeline.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "ade60d4c368e711d31e0584f5d4f26fd046d9132548b18c134536620bc443ace",
+    "reference_sha256": "d8b97dd2803fdbc1ba6132f411557a3f102383f96ddfa50c37b3b2e562392942"
+  },
+  {
+    "source": "/tmp/cac-deepfake-eval/current/transcript_pipeline.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/LiveKit Setup/transcript_pipeline.py",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "f01964fe5c83a24acb0279ae48d7d5a98b1663778b50c1d40b98d8a0e5cae4af",
+    "reference_sha256": "a7bcaa372df4bb9e4a607db04ccc98e0def52b95d721dcdeea484f0939cc2def"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/model/detector_config.json",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/detector_config.json",
+    "exact_match": false,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "68b1e01152127a8f9e730b9812e2546697448894cc393b63fca8184ec2a6f193",
+    "reference_sha256": "ecae297c0ff44f11f250df0a00bbf71dd9c8a955ac00165de2aa88104e9b40b2"
+  },
+  {
+    "source": "/Users/spatel7/Documents/ChatGPT/CAC/real-audio-test/model/inference.py",
+    "remote_revision": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "repository_path": "backend/AI Deepfake Pipeline/inference.py",
+    "exact_match": true,
+    "match_ignoring_trailing_newlines": true,
+    "source_sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78",
+    "reference_sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78"
+  }
+]

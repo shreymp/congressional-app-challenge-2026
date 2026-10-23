@@ -1,0 +1,18 @@
+Command: ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/.venv/bin/python', '-c', "import pathlib,sys,unittest;sys.path.insert(0,'/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline');import test_integration as m;m.FIXTURE=pathlib.Path('/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/CallshieldTests/Fixtures/deepfake-wire.json');r=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(m));sys.exit(not r.wasSuccessful())"]
+
+test_human_requires_multiple_distinct_windows_and_no_rescoring_silence (test_integration.IntegrationTests.test_human_requires_multiple_distinct_windows_and_no_rescoring_silence) ... ok
+test_invalid_thresholds_or_scores_do_not_produce_labels (test_integration.IntegrationTests.test_invalid_thresholds_or_scores_do_not_produce_labels) ... ok
+test_nonfinite_scores_fail_and_later_inference_recovers (test_integration.IntegrationTests.test_nonfinite_scores_fail_and_later_inference_recovers) ... ok
+test_pause_discards_old_speech_and_old_inflight_result (test_integration.IntegrationTests.test_pause_discards_old_speech_and_old_inflight_result) ... ok
+test_protocol_sequence_stream_and_caller_scope (test_integration.IntegrationTests.test_protocol_sequence_stream_and_caller_scope) ... ok
+test_risk_escalates_and_deescalates_with_hysteresis (test_integration.IntegrationTests.test_risk_escalates_and_deescalates_with_hysteresis) ... ok
+test_silence_never_reaches_model_and_waits_for_three_seconds (test_integration.IntegrationTests.test_silence_never_reaches_model_and_waits_for_three_seconds) ... ok
+test_slow_inference_becomes_unavailable_without_queuing_more_work (test_integration.IntegrationTests.test_slow_inference_becomes_unavailable_without_queuing_more_work) ... ok
+test_swift_fixtures_match_production_risk_engine (test_integration.IntegrationTests.test_swift_fixtures_match_production_risk_engine) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.035s
+
+OK
+
+Exit code: 0

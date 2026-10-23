@@ -1,0 +1,84 @@
+--- baseline/risk.py
++++ current/risk.py
+@@ -19,6 +19,7 @@
+ from __future__ import annotations
+ 
+ import math
++from collections import deque
+ from dataclasses import dataclass, field
+ 
+ LEVELS = ("listening", "elevated", "high")
+@@ -96,6 +97,73 @@
+         }
+ 
+ 
++class CallEvidenceEngine:
++    """Bounded, speech-weighted call evidence. AI score is NOT a probability.
++
++    RiskEngine remains above for legacy wire replays. Threshold-relative logits
++    retain precision for saturated model outputs. This mapping is a documented
++    heuristic until representative phone-call calibration data is available.
++    """
++    METHOD = "call-evidence-v1"
++    MIN_SEGMENTS = 2
++    HUMAN_SCORE = 35.0
++    AI_SCORE = 65.0
++
++    def __init__(self, elevated_threshold, high_threshold):
++        RiskEngine(elevated_threshold, high_threshold)
++        low, high = logit(elevated_threshold), logit(high_threshold)
++        self.center = (low + high) / 2
++        self.scale = max((high - low) / (2 * logit(.65)), .25)
++        self.weighted = self.weight = 0.0
++        self.n_updates = self.human_steps = 0
++        self.state = "analyzing"
++        self.candidate = None
++        self.candidate_steps = 0
++        self.recent = deque(maxlen=5)
++        self.ai_run = self.max_ai_run = 0
++
++    def update(self, p_fake, z=None, weight=1.0):
++        if (not math.isfinite(p_fake) or not 0 <= p_fake <= 1
++                or (z is not None and not math.isfinite(z))
++                or not math.isfinite(weight) or not 0 < weight <= 1):
++            raise ValueError("Invalid caller evidence")
++        z = logit(p_fake) if z is None else z
++        bounded = max(-4.0, min(4.0, (z - self.center) / self.scale))
++        self.weighted += weight * bounded
++        self.weight += weight
++        self.n_updates += 1
++        self.recent.append((bounded, weight))
++        mean = self.weighted / self.weight
++        score = 100 * sigmoid(mean)
++        segment_score = 100 * sigmoid(bounded)
++        self.human_steps = self.human_steps + 1 if segment_score <= self.HUMAN_SCORE else 0
++        self.ai_run = self.ai_run + 1 if segment_score >= self.AI_SCORE else 0
++        self.max_ai_run = max(self.max_ai_run, self.ai_run)
++        target = "human" if score <= self.HUMAN_SCORE else "ai" if score >= self.AI_SCORE else "uncertain"
++        if self.n_updates >= self.MIN_SEGMENTS:
++            if self.state == "analyzing":
++                self.state = target
++            elif target != self.state:
++                self.candidate_steps = self.candidate_steps + 1 if self.candidate == target else 1
++                self.candidate = target
++                if self.candidate_steps >= 2:
++                    self.state = target
++                    self.candidate_steps = 0
++            else:
++                self.candidate = None
++                self.candidate_steps = 0
++        recent_mean = sum(z * w for z, w in self.recent) / sum(w for _, w in self.recent)
++        recent_ai = (len(self.recent) >= 3 and 100 * sigmoid(recent_mean) >= self.AI_SCORE
++                     and sum(100 * sigmoid(z) >= self.AI_SCORE for z, _ in self.recent) >= 3)
++        aggregate_logit = self.center + self.scale * mean
++        return {"method": self.METHOD, "state": self.state, "score": round(score, 1),
++                "score_kind": "heuristic", "recent_ai": recent_ai, "max_ai_run": self.max_ai_run,
++                "level": "high" if self.state == "ai" else "elevated" if self.state == "uncertain" else "listening",
++                "updates": self.n_updates, "human_steps": self.human_steps,
++                "p_last": p_fake, "logit_last": round(z, 3),
++                "p_smoothed": sigmoid(aggregate_logit), "logit_smoothed": round(aggregate_logit, 3)}
++
++
+ def combine(deepfake_level: str, transcript_probability: float | None) -> str:
+     """Placeholder fusion rule. Returns the overall call level.
+ 

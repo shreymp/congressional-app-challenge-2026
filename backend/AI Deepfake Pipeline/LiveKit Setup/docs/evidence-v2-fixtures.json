@@ -1,0 +1,714 @@
+{
+  "kind": "actual_python_session_packets",
+  "cases": [
+    {
+      "name": "v2_actual_no_evidence",
+      "payload": {
+        "type": "status",
+        "state": "analyzing",
+        "window_id": 0,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "analyzing",
+          "current_score": null,
+          "whole_call_score": null,
+          "evidence_start_sec": null,
+          "evidence_end_sec": null,
+          "evidence_age_sec": null,
+          "freshness": "none",
+          "analysis_status": "analyzing",
+          "quality_reason": "insufficient_speech",
+          "status_reason": "insufficient_speech",
+          "current_warning": false,
+          "historical_warning_events": [],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.0,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": false,
+          "eligible_speech_sec_estimate": 0.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": "window_filling",
+          "rejection_reason": "insufficient_speech"
+        },
+        "timing": {},
+        "counters": {
+          "submissions": 0,
+          "completions": 0,
+          "failures": 0,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 0,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 1
+      }
+    },
+    {
+      "name": "v2_actual_fresh_warning",
+      "payload": {
+        "type": "risk",
+        "level": "high",
+        "deepfake": {
+          "method": "call-evidence-v2",
+          "state": "ai",
+          "score": 98.2,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999999999999065,
+          "logit_last": 30.0,
+          "p_smoothed": 0.9999999999992426,
+          "logit_smoothed": 27.909,
+          "pending_state": null,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 0.019999999999999574,
+          "freshness": "fresh",
+          "usable_sec": 12.0,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ]
+        },
+        "transcript": null,
+        "infer_ms": 20.0,
+        "voiced_sec": 12.0,
+        "voiced_sec_kind": "gate_estimate",
+        "window_id": 3,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "ai",
+          "current_score": 98.2,
+          "whole_call_score": 98.2,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 0.019999999999999574,
+          "freshness": "fresh",
+          "analysis_status": "available",
+          "quality_reason": null,
+          "status_reason": null,
+          "current_warning": true,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 4.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": null,
+          "rejection_reason": null
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 12.0,
+          "completion_sec": 12.02
+        },
+        "counters": {
+          "submissions": 3,
+          "completions": 3,
+          "failures": 0,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 12.02,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 2
+      }
+    },
+    {
+      "name": "v2_actual_pending",
+      "payload": {
+        "type": "risk",
+        "level": "high",
+        "deepfake": {
+          "method": "call-evidence-v2",
+          "state": "ai",
+          "score": 98.2,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999999999999065,
+          "logit_last": 30.0,
+          "p_smoothed": 0.9999999999992426,
+          "logit_smoothed": 27.909,
+          "pending_state": null,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 4.010000000000002,
+          "freshness": "fresh",
+          "usable_sec": 12.0,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ]
+        },
+        "transcript": null,
+        "infer_ms": 20.0,
+        "voiced_sec": 12.0,
+        "voiced_sec_kind": "gate_estimate",
+        "window_id": 4,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "ai",
+          "current_score": 98.2,
+          "whole_call_score": 98.2,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 4.010000000000002,
+          "freshness": "fresh",
+          "analysis_status": "available",
+          "quality_reason": null,
+          "status_reason": "inference_pending",
+          "current_warning": true,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 4.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": null,
+          "rejection_reason": null
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 16.0,
+          "completion_sec": 12.02
+        },
+        "counters": {
+          "submissions": 4,
+          "completions": 3,
+          "failures": 0,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 16.01,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 3
+      }
+    },
+    {
+      "name": "v2_actual_timeout",
+      "payload": {
+        "type": "status",
+        "state": "unavailable",
+        "reason": "inference_timeout",
+        "previous_deepfake": {
+          "method": "call-evidence-v1",
+          "state": "ai",
+          "score": 98.2,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999999999999065,
+          "logit_last": 30.0,
+          "p_smoothed": 0.9999999999992426,
+          "logit_smoothed": 27.909
+        },
+        "window_id": 4,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "ai",
+          "current_score": 98.2,
+          "whole_call_score": 98.2,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 14.010000000000002,
+          "freshness": "fresh",
+          "analysis_status": "unavailable",
+          "quality_reason": "insufficient_speech",
+          "status_reason": "inference_timeout",
+          "current_warning": true,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 0.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": "window_filling",
+          "rejection_reason": "insufficient_speech"
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 16.0,
+          "completion_sec": 12.02
+        },
+        "counters": {
+          "submissions": 4,
+          "completions": 3,
+          "failures": 0,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 26.01,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 4
+      }
+    },
+    {
+      "name": "v2_actual_failed",
+      "payload": {
+        "type": "status",
+        "state": "unavailable",
+        "reason": "inference_failed",
+        "previous_deepfake": {
+          "method": "call-evidence-v1",
+          "state": "ai",
+          "score": 98.2,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 3,
+          "human_steps": 0,
+          "p_last": 0.9999999999999065,
+          "logit_last": 30.0,
+          "p_smoothed": 0.9999999999992426,
+          "logit_smoothed": 27.909
+        },
+        "window_id": 5,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "ai",
+          "current_score": 98.2,
+          "whole_call_score": 98.2,
+          "evidence_start_sec": 0.0,
+          "evidence_end_sec": 12.0,
+          "evidence_age_sec": 14.02,
+          "freshness": "fresh",
+          "analysis_status": "unavailable",
+          "quality_reason": "insufficient_speech",
+          "status_reason": "inference_failed",
+          "current_warning": true,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": true
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 0.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": "window_filling",
+          "rejection_reason": "insufficient_speech"
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 16.0,
+          "completion_sec": 12.02
+        },
+        "counters": {
+          "submissions": 4,
+          "completions": 3,
+          "failures": 1,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 26.02,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 5
+      }
+    },
+    {
+      "name": "v2_actual_recovered",
+      "payload": {
+        "type": "risk",
+        "level": "listening",
+        "deepfake": {
+          "method": "call-evidence-v2",
+          "state": "human",
+          "score": 1.8,
+          "score_kind": "heuristic",
+          "recent_ai": false,
+          "max_ai_run": 3,
+          "level": "listening",
+          "updates": 2,
+          "human_steps": 2,
+          "p_last": 0.11920292202211755,
+          "logit_last": -2.0,
+          "p_smoothed": 0.9999999371726276,
+          "logit_smoothed": 16.583,
+          "pending_state": null,
+          "evidence_start_sec": 26.0,
+          "evidence_end_sec": 34.0,
+          "evidence_age_sec": 0.020000000000003126,
+          "freshness": "fresh",
+          "usable_sec": 8.0,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": false
+            }
+          ]
+        },
+        "transcript": null,
+        "infer_ms": 20.0,
+        "voiced_sec": 24.0,
+        "voiced_sec_kind": "gate_estimate",
+        "window_id": 7,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "human",
+          "current_score": 1.8,
+          "whole_call_score": 69.0,
+          "evidence_start_sec": 26.0,
+          "evidence_end_sec": 34.0,
+          "evidence_age_sec": 0.020000000000003126,
+          "freshness": "fresh",
+          "analysis_status": "available",
+          "quality_reason": null,
+          "status_reason": null,
+          "current_warning": false,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": false
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 4.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": null,
+          "rejection_reason": null
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 34.0,
+          "completion_sec": 34.02
+        },
+        "counters": {
+          "submissions": 6,
+          "completions": 5,
+          "failures": 1,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 34.02,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 6
+      }
+    },
+    {
+      "name": "v2_actual_stale",
+      "payload": {
+        "type": "status",
+        "state": "analyzing",
+        "reason": "evidence_stale",
+        "previous_deepfake": {
+          "method": "call-evidence-v1",
+          "state": "ai",
+          "score": 69.0,
+          "score_kind": "heuristic",
+          "recent_ai": true,
+          "max_ai_run": 3,
+          "level": "high",
+          "updates": 5,
+          "human_steps": 2,
+          "p_last": 0.11920292202211755,
+          "logit_last": -2.0,
+          "p_smoothed": 0.9999999371726276,
+          "logit_smoothed": 16.583
+        },
+        "window_id": 7,
+        "evidence_version": "call-evidence-v2",
+        "scoring_method": "call-evidence-v2",
+        "assessment": {
+          "current_state": "analyzing",
+          "current_score": null,
+          "whole_call_score": 69.0,
+          "evidence_start_sec": 30.0,
+          "evidence_end_sec": 34.0,
+          "evidence_age_sec": 20.0,
+          "freshness": "stale",
+          "analysis_status": "stale",
+          "quality_reason": "insufficient_speech",
+          "status_reason": "evidence_stale",
+          "current_warning": false,
+          "historical_warning_events": [
+            {
+              "id": "1",
+              "start_sec": 0.0,
+              "end_sec": 12.0,
+              "current": false
+            }
+          ],
+          "pending_state": null,
+          "score_kind": "heuristic"
+        },
+        "quality": {
+          "gate": "fixed",
+          "frame_rms": 0.1525879,
+          "noise_floor_estimate": 0.0,
+          "spectral_flatness": 0.0,
+          "speech_decision": true,
+          "eligible_speech_sec_estimate": 0.0,
+          "clipping_fraction": 0.0,
+          "digital_silence_max_run_sec": 0.0,
+          "vad_probability": null,
+          "quality_detail": "window_filling",
+          "rejection_reason": "insufficient_speech"
+        },
+        "timing": {
+          "first_caller_audio_sec": 4.0,
+          "sufficient_speech_sec": 4.0,
+          "submission_sec": 34.0,
+          "completion_sec": 34.02
+        },
+        "counters": {
+          "submissions": 6,
+          "completions": 5,
+          "failures": 1,
+          "timeouts": 0,
+          "ignored_completions": 0,
+          "publications": 0
+        },
+        "configuration": {
+          "current_enabled": true,
+          "quiet_enabled": false,
+          "horizon_sec": 16.0,
+          "current_mode": "mean",
+          "min_usable_sec": 3.0,
+          "entry_usable_sec": 3.0,
+          "recovery_usable_sec": 3.0,
+          "warning_usable_sec": 6.0,
+          "half_life_sec": 8.0,
+          "wire_version": "call-evidence-v2",
+          "speech_gate": "fixed",
+          "digital_silence_max_sec": 0.2,
+          "effective_gate": "fixed"
+        },
+        "t": 54,
+        "schema": 1,
+        "room": "call-contract",
+        "callerIdentity": "caller-contract",
+        "model": "real",
+        "streamID": "00000000-0000-4000-8000-000000000002",
+        "sequence": 7
+      }
+    }
+  ]
+}

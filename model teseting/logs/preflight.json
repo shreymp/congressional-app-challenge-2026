@@ -1,0 +1,11 @@
+{
+  "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "python": "3.14.8",
+  "torch": "2.14.1",
+  "mps_built": true,
+  "mps_available": false,
+  "audio": "/Users/spatel7/Downloads/ElevenLabs_2026-10-23T01_11_44_shrey_ivc_sp100_s50_sb75_v4.mp3\nsamplerate: 44100 Hz\nchannels: 1\nduration: 39.497 s\nformat: MPEG-1/2 Audio [MP3]\nsubtype: MPEG Layer III [MPEG_LAYER_III]",
+  "audio_sha256": "86e4df799bad88b6c3df61bdf459b7bd698345ee78c4989d4a0ac13bf3893198",
+  "checkpoint_sha256": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0"
+}

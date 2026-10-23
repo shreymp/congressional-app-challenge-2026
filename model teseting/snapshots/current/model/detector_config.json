@@ -1,0 +1,44 @@
+{
+  "base_model": "facebook/wav2vec2-xls-r-300m",
+  "keep_layers": 12,
+  "sample_rate": 16000,
+  "window_sec": 4.0,
+  "threshold_1pct_fpr": 0.9999998807907104,
+  "threshold_eer": 0.9999904632568359,
+  "val_eer": 0.10812107002024937,
+  "test": {
+    "clean": {
+      "eer": 0.005884252081979182,
+      "auc": 0.9991767059730616
+    },
+    "phone": {
+      "eer": 0.017199309705965456,
+      "auc": 0.9981098699317456
+    }
+  },
+  "unseen_test_systems": [
+    "Inworld-TTS-2",
+    "Llasa-1B",
+    "Llasa-1B-Multilingual",
+    "Llasa-8B",
+    "LongCat-AudioDiT",
+    "MegaTTS3",
+    "MisoTTS",
+    "NeuTTS-Nano",
+    "OpenAI TTS-1 HD",
+    "OpenVoiceV2",
+    "Qwen2.5-Omni",
+    "Resemble.ai (April 12th, 2025)",
+    "Spark-TTS-0.5B",
+    "VoXtream2",
+    "facebook_mms-tts-eng",
+    "parler_tts_large_v1",
+    "tts_models_en_ljspeech_glow-tts",
+    "tts_models_en_ljspeech_neural_hmm",
+    "tts_models_en_ljspeech_tacotron2-DCA",
+    "tts_models_en_ljspeech_vits--neon",
+    "tts_models_multilingual_multi-dataset_xtts_v1.1"
+  ],
+  "score_meaning": "sigmoid(logit) = probability the audio is AI-generated",
+  "trained": "2026-10-09"
+}

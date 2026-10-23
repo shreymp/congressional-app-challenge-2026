@@ -1,0 +1,4 @@
+Command: ['swiftc', '-module-cache-path', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/cache/swift', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Core/CallModels.swift', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/DeepfakeAssessment.swift', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/check_wire_fixtures.swift', '-o', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/cache/wire_baseline']
+
+
+Exit code: 0

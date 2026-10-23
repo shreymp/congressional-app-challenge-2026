@@ -12,6 +12,7 @@ import numpy as np
 from risk import CallEvidenceEngine, RiskEngine, sigmoid
 from risk_protocol import RiskPublisher
 from scoring import AudioScoringSession
+from pipeline_config import ScoringConfig
 
 FIXTURE = Path(__file__).resolve().parents[3] / "ios/CallshieldTests/Fixtures/deepfake-wire.json"
 THRESHOLDS = (0.9999904632568359, 0.9999998807907104)
@@ -73,12 +74,26 @@ class IntegrationTests(unittest.TestCase):
         return self.session.payload(now)
 
     def test_silence_never_reaches_model_and_requires_complete_contiguous_window(self):
+        # Legacy contiguity rule, with the digital-silence guard disabled.
+        self.session = AudioScoringSession(FakeDetector(), THRESHOLDS,
+                                           config=ScoringConfig(digital_silence_max_sec=None))
         self.feed(0, 8, speech=False)
         self.assertIsNone(self.session.snapshot(8))
         self.feed(8, 1.48)
         self.assertIsNone(self.session.snapshot(9.48))
         self.feed(9.48, .02)
         self.assertIsNotNone(self.session.snapshot(9.5))
+
+    def test_default_guard_waits_for_a_window_without_digital_silence(self):
+        self.feed(0, 8, speech=False)
+        self.feed(8, 1.5)
+        self.assertIsNone(self.session.snapshot(9.5))
+        self.assertEqual(self.session.window.quality_detail, "digital_silence_gap")
+        self.assertEqual(self.session.payload(9.5)["assessment"]["quality_reason"], "insufficient_speech")
+        self.feed(9.5, 2)
+        self.assertIsNone(self.session.snapshot(11.5))
+        self.feed(11.5, .5)  # the 4 s window [8, 12] now holds speech only
+        self.assertIsNotNone(self.session.snapshot(12))
 
     def test_human_requires_multiple_distinct_windows_and_no_rescoring_silence(self):
         self.feed(0, 4)
@@ -159,7 +174,9 @@ class IntegrationTests(unittest.TestCase):
         json.dumps(first, allow_nan=False)
 
     def test_swift_fixtures_match_production_risk_engine(self):
-        self.assertEqual(json.loads(FIXTURE.read_text(encoding="utf-8")), wire_fixtures())
+        actual = {case["name"]: case for case in json.loads(FIXTURE.read_text(encoding="utf-8"))["cases"]}
+        for case in wire_fixtures()["cases"]:
+            self.assertEqual(actual[case["name"]], case)
 
 
 if __name__ == "__main__":

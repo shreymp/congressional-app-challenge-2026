@@ -1,0 +1,884 @@
+{
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 49,
+      "sha256": "749a5f150423ebbbf027dc6cbec794d292f2a3222606cc5b41f870877888523f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 23523,
+      "sha256": "a76aaec292ff1c3eac50565949843f89da06f85f170958d1b81c608befa6eef2"
+    },
+    {
+      "path": "check_harness.py",
+      "bytes": 2163,
+      "sha256": "ac551a41311befdd37a0b5fce792e46c8b7e9417a6577c1c7ed515fcc822e45e"
+    },
+    {
+      "path": "check_wire_fixtures.swift",
+      "bytes": 1033,
+      "sha256": "dd6a24f190c8a7ff43206356817392d5bded72fc302b4614263b4bd78f468247"
+    },
+    {
+      "path": "compare_after_feature.json",
+      "bytes": 4707,
+      "sha256": "370a84d4597ef02e4a2db4a540e16dcb460bde2ff3d7f385118da2536d854334"
+    },
+    {
+      "path": "compare_full.json",
+      "bytes": 338318,
+      "sha256": "d5bd4237cbb19d2e455a529f767337b74b7d624bc65571eb011ca88a20e35222"
+    },
+    {
+      "path": "compare_metadata.json",
+      "bytes": 8038,
+      "sha256": "ee4967e5a2a6cf594d8141f743875c156fd7875c66b671af2a59467545a05a37"
+    },
+    {
+      "path": "dependencies.txt",
+      "bytes": 1958,
+      "sha256": "9d1bac2b013473b11ca21db1c7f4f529b8779e0a7fa6f38876a6b216a10f228d"
+    },
+    {
+      "path": "diff_agent.py.patch",
+      "bytes": 3941,
+      "sha256": "a2aab7ecd38dd370f0f6cd991dbc68913e3086c3f454a0d19aa36cc0628d5576"
+    },
+    {
+      "path": "diff_audio_window.py.patch",
+      "bytes": 3328,
+      "sha256": "91542d82773e1ea71d5abdd7b7b3cbf126fb3bf43943c614e5f48d77644a47d2"
+    },
+    {
+      "path": "diff_detector_adapter.py.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diff_model_detector_config.json.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diff_model_inference.py.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diff_risk.py.patch",
+      "bytes": 3904,
+      "sha256": "5eaab2207d467f390c246d4f22e493260f28641c2400af1f5c064427c51e5583"
+    },
+    {
+      "path": "diff_scoring.py.patch",
+      "bytes": 3014,
+      "sha256": "e378fd2df953a9a6ce00dc8e3d77348461144150ef9a913f9b4cad8205533c2a"
+    },
+    {
+      "path": "evaluate.py",
+      "bytes": 16989,
+      "sha256": "939077e3ff08d7cff2bd4d1f95b9282153efa6898af4e8d850265b796e738084"
+    },
+    {
+      "path": "fallback_regressions.py",
+      "bytes": 2957,
+      "sha256": "44ea2b8240049f4a23f4440e7389315ea7fa6062e19100bae282a58f2ca4be92"
+    },
+    {
+      "path": "fetch_human_controls.py",
+      "bytes": 5116,
+      "sha256": "80bf94cafab79ce4ac503455839af1a7a0a0622df597f287fa32e1353cbe1f09"
+    },
+    {
+      "path": "human_control_provenance.json",
+      "bytes": 6784,
+      "sha256": "1e2671ae74bd91c847cfa9f33dccf5a25af1619ba938515bc97c739217f4b239"
+    },
+    {
+      "path": "logs/agent_integration_initial.txt",
+      "bytes": 1321,
+      "sha256": "e44c4b4349befa350155591d7f144f29334f917041b9334f31110e66afd7596b"
+    },
+    {
+      "path": "logs/apple_audio_info.txt",
+      "bytes": 508,
+      "sha256": "23b93c3d425b882c9ac02b9a43abc650942535ad12e8358218962d66fb381a2e"
+    },
+    {
+      "path": "logs/architecture_headers.txt",
+      "bytes": 3265,
+      "sha256": "a74a1d6ff3a5a4c1dba21f38dfc9f56736897beb06135b2b4fb915a7a0de941d"
+    },
+    {
+      "path": "logs/baseline_test_agent_integration.txt",
+      "bytes": 1541,
+      "sha256": "b12e318866e7f7c07e097df13b07c43b81f6a07876d244d17cceac25989b0cad"
+    },
+    {
+      "path": "logs/current_test_agent_integration.txt",
+      "bytes": 2233,
+      "sha256": "0fbb2c9eabeda0e385c485deeea266d4d49606954c0bf985c2cec25980c8d5b4"
+    },
+    {
+      "path": "logs/current_test_recording_notice.txt",
+      "bytes": 1324,
+      "sha256": "e09745bbe206eb62340fdc5e4ecbb2977a50b3b8b48f5a5c21b930f28d233351"
+    },
+    {
+      "path": "logs/current_test_recording_notice_independent.txt",
+      "bytes": 913,
+      "sha256": "7cce7402534d47e35a1af297cb0020f83d3e4a0d5e9d6bce96ce6aad394d324f"
+    },
+    {
+      "path": "logs/evaluation.log",
+      "bytes": 61557,
+      "sha256": "a361e888c86ac493b4907a418a2e202d908632b6f3f3b24bb38ca57d0565e27c"
+    },
+    {
+      "path": "logs/fallback_baseline_test_integration.txt",
+      "bytes": 2100,
+      "sha256": "62917f85ae3807dc4a4308b4146e2f869376718640e88bb8e888c0099746a2cd"
+    },
+    {
+      "path": "logs/fallback_baseline_test_offline_stub.txt",
+      "bytes": 4560,
+      "sha256": "ae4dcdda42754a47d240d83d8b792425b67aa4ee7b80f86930ebe26c4b5e0fb3"
+    },
+    {
+      "path": "logs/fallback_current_test_cumulative.txt",
+      "bytes": 1738,
+      "sha256": "f1febc1154d69459d546fdb986626b03d0e48edd7928f05a8c277ddbc6f6ca3e"
+    },
+    {
+      "path": "logs/fallback_current_test_integration.txt",
+      "bytes": 2148,
+      "sha256": "aa14b2186f2a18ae75b8a68e019708c9df1c2616b8536c4ddcc540716bdc4573"
+    },
+    {
+      "path": "logs/fallback_current_test_offline_stub.txt",
+      "bytes": 2255,
+      "sha256": "245e23669f896b195045f98c868a401548ff3d6ca8ff228949aec7fd3398d2ef"
+    },
+    {
+      "path": "logs/final_model_imports.txt",
+      "bytes": 34,
+      "sha256": "6f6719699654534e9485d68bd1806c35cb5ee2189cd563ab04980cb3176fc7d8"
+    },
+    {
+      "path": "logs/harness_checks.json",
+      "bytes": 1933,
+      "sha256": "673b35541ec5aab84d89b126138dd82159fa8f4b6db850d7851c75fde9225292"
+    },
+    {
+      "path": "logs/livekit_install.txt",
+      "bytes": 17676,
+      "sha256": "1d3aaa5cbe413ab47295645b8a3506cd03b096b4e757b02f388e2ead922e2e6b"
+    },
+    {
+      "path": "logs/model_probe.log",
+      "bytes": 974,
+      "sha256": "2f10722c3af5cd08d2a8258989eb6a99e4a15b355c6f8e842ee8abe0b629d492"
+    },
+    {
+      "path": "logs/original.log",
+      "bytes": 1780,
+      "sha256": "63208b8c086fa7a8c5948be01f0fcbd0d29ebfea20d0347a2ddcdf2d4c7d9ed9"
+    },
+    {
+      "path": "logs/pip_check.txt",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "logs/preflight.json",
+      "bytes": 574,
+      "sha256": "f045d3652e56ad2de29285fefcf34e972d5eb3daa4d09b1e05b696321855f13a"
+    },
+    {
+      "path": "logs/setup_notes.txt",
+      "bytes": 1033,
+      "sha256": "756ff6419c3a0a6bdc9b972228685801b0674c79e9873cee986b6d8a7e077adf"
+    },
+    {
+      "path": "logs/swift_compile.txt",
+      "bytes": 986,
+      "sha256": "da417fb37d9c5cff67dce831ce010f9acd839add97bf455f30cd97d80d921e72"
+    },
+    {
+      "path": "logs/swift_contract.txt",
+      "bytes": 382,
+      "sha256": "d1a77b06e4c63c1767edd54673ec5af7de741533a4d283c7b32920c28b2e76bf"
+    },
+    {
+      "path": "logs/swift_version.txt",
+      "bytes": 174,
+      "sha256": "ec77e08b78c9a9caa5bc6db800a248b183d839d64b40ccf897c45dbaf51e2c98"
+    },
+    {
+      "path": "logs/swift_wire_baseline.txt",
+      "bytes": 344,
+      "sha256": "872a75d72f528088cc9eea045b57f1b702bda849c5906f96370e7bf5d6c8685d"
+    },
+    {
+      "path": "logs/swift_wire_compile_baseline.txt",
+      "bytes": 652,
+      "sha256": "6a821fe387af7cd086db081eaf762d55e40510d396a2b68d30e44c21506d1cd0"
+    },
+    {
+      "path": "logs/swift_wire_compile_current.txt",
+      "bytes": 649,
+      "sha256": "43332efe6a096c7cecadc47f9f4b8875cd50c9c7a9234e4175415423cea3d38f"
+    },
+    {
+      "path": "logs/swift_wire_current.txt",
+      "bytes": 343,
+      "sha256": "fa89ff6176b47f8dfd108dfa87e85c0980dec787fcf120fe46702631ad74d1e4"
+    },
+    {
+      "path": "logs/verify_snapshots.txt",
+      "bytes": 57,
+      "sha256": "84acf6b55872164fbf4d39b954a5fcb34f86d2c54893c38d14c0969fbbed5eda"
+    },
+    {
+      "path": "logs/xcode_version.txt",
+      "bytes": 84,
+      "sha256": "52647f9d05bff81e8bc659197cd56de935cb80e751c2657c742e585db0057e88"
+    },
+    {
+      "path": "previous_snapshot_validation.json",
+      "bytes": 11217,
+      "sha256": "28a33549d488940bb0e2758ad5002b8bd634e9037e4647690003f97aca53af4a"
+    },
+    {
+      "path": "probe_model.py",
+      "bytes": 1746,
+      "sha256": "7e578849171dc841dd5cfc281739e158800508676cc90f78827f37fb52ed69ae"
+    },
+    {
+      "path": "provenance/HUMAN_CONTROLS.md",
+      "bytes": 2085,
+      "sha256": "ce0c49692ed82fbb9bca6a51beb82b02ed06e163ae002b388544da72195f60b2"
+    },
+    {
+      "path": "provenance/LICENSE.TXT",
+      "bytes": 193,
+      "sha256": "908b0b565ae9bf61b7b41447cb0b83564f320375723bcc884ec30e5537a0d5dc"
+    },
+    {
+      "path": "provenance/README.TXT",
+      "bytes": 8039,
+      "sha256": "596ea41ecf75d10a0393f086d863d46d1a0b0afd6670717c352b8a46f42650bf"
+    },
+    {
+      "path": "provenance/SPEAKERS.TXT",
+      "bytes": 125034,
+      "sha256": "3350f093382f8baa1d589c9f5a5cee8ec3705e656f521d6eafbaa31a5fcd8f76"
+    },
+    {
+      "path": "provenance/openslr_12.html",
+      "bytes": 8245,
+      "sha256": "9b012c60f8fe6a5435f96cf034c042ffe4222e7936c88cb835671413e74a5301"
+    },
+    {
+      "path": "provenance/openslr_about.html",
+      "bytes": 841,
+      "sha256": "62e4996d9f811527b834e4f422ff8941c0bc5c66bb384a60b73dd6992d1471b1"
+    },
+    {
+      "path": "regression_report.md",
+      "bytes": 5662,
+      "sha256": "3059a3ef764f6378954e523562281345710ce03daffc5f2f55cb84480fde19c8"
+    },
+    {
+      "path": "report.py",
+      "bytes": 29542,
+      "sha256": "b668826f7d2f0f4946af87f06ed49ac393e0c1cc0be771627c7963dfe77a07a4"
+    },
+    {
+      "path": "results/agent_checks.json",
+      "bytes": 4292,
+      "sha256": "944353572b468e9d546a838f126810cfc82b596d9d0d0821336c963c0737c756"
+    },
+    {
+      "path": "results/audio_properties.json",
+      "bytes": 565,
+      "sha256": "e33018591e0a912b170fb6e51eb74db2badd46ae55057aa95c68a73112c961ef"
+    },
+    {
+      "path": "results/fallback_baseline_offline_stub_wire.json",
+      "bytes": 20845,
+      "sha256": "5cab0b732c69d20ba73a49acd9d9b2059c75a22530ee813877ecab28d145ce23"
+    },
+    {
+      "path": "results/fallback_current_offline_stub_wire.json",
+      "bytes": 27407,
+      "sha256": "0053a490998c37ab40cff963e11c5a5808a20c609808bb3b48f6a1a140ee7f88"
+    },
+    {
+      "path": "results/fallback_regressions.json",
+      "bytes": 925,
+      "sha256": "524ffd6ee91de9482914b410a8fa420c925e296c882c19987d8a34f03921e640"
+    },
+    {
+      "path": "results/inference_cache.json",
+      "bytes": 95804,
+      "sha256": "0a0bfee855d499da151c4cff329695691b06e22e91642e93fe91ab9a658318b3"
+    },
+    {
+      "path": "results/milestones.csv",
+      "bytes": 15695,
+      "sha256": "afe0dfb524390fcf3be064ad4404ee043c70af14c3e728fd2a81cf112576f44c"
+    },
+    {
+      "path": "results/model_probe.json",
+      "bytes": 756,
+      "sha256": "0285d6bec0ce42d102c4fb54ede3175cafe51f4f0211f2f6f122417499dd9718"
+    },
+    {
+      "path": "results/original_first_run.csv",
+      "bytes": 466,
+      "sha256": "c2df82fe264117bf88f751ff030ac8cc85d6d3af48d3df556c502b4f9f015076"
+    },
+    {
+      "path": "results/original_first_run.json",
+      "bytes": 1247047,
+      "sha256": "a3365194ebecbadf2d29976c03ab9b9831d88519f94ee32b443003b87fb218b0"
+    },
+    {
+      "path": "results/per_window.csv",
+      "bytes": 439238,
+      "sha256": "24dc50bc074b53bec0c0ba96abb60bc4041059759ba9abc8571ad539a4abeb6c"
+    },
+    {
+      "path": "results/real_audio_results.json",
+      "bytes": 4038500,
+      "sha256": "259cf96906037ea635135e4392a5c1093c140e2b37b90107b33d565d5a7929fa"
+    },
+    {
+      "path": "results/repeatability.json",
+      "bytes": 427,
+      "sha256": "e14ec65ce2796275b4af26b4e4008773f9daac96a8a478d6157003e7041245e0"
+    },
+    {
+      "path": "results/score_over_time.png",
+      "bytes": 182487,
+      "sha256": "12650ead02208d332b21f29e07f3e5b8896a1256d90d0a80d9214a539d1ad683"
+    },
+    {
+      "path": "results/score_over_time.svg",
+      "bytes": 109464,
+      "sha256": "2030683fe0e18a7318ec54e8e10a4d460708b64a0c87e1f216e94f3f7b5c7a68"
+    },
+    {
+      "path": "results/summary.csv",
+      "bytes": 7426,
+      "sha256": "94b7176ba5822fdabf109ae15a7cfa0c90aeefab1f2db1e0472948a19833455e"
+    },
+    {
+      "path": "results/swift_checks.json",
+      "bytes": 1200,
+      "sha256": "71be9ae77e8d3a0cc8cbb3ebcf8477207081bca7c7907c8d63fa0689c5f575dd"
+    },
+    {
+      "path": "run_agent_checks.py",
+      "bytes": 1709,
+      "sha256": "6f3690a2cdbaf13e1ff6543f77857003e4d9de80d253d297fba4bcda5ea34aa1"
+    },
+    {
+      "path": "run_swift_checks.py",
+      "bytes": 1899,
+      "sha256": "55d9ed97a934822e66c9528441426f4a05e2c22e42536d8afda5f871305f98e6"
+    },
+    {
+      "path": "run_swift_checks.sh",
+      "bytes": 101,
+      "sha256": "62e7355315b3ba5ebd5f1560f4d5610985711a8bf7b9c3a0483db26107f38236"
+    },
+    {
+      "path": "snapshots/architecture/config.json",
+      "bytes": 1568,
+      "sha256": "0bffa0d0e98153e883b828d86491f3c6062cb563dc9d7a9cfd1790da30c286ac"
+    },
+    {
+      "path": "snapshots/baseline/INCOMING_CALL_SETUP.md",
+      "bytes": 9148,
+      "sha256": "0a9553086689cef22ecfa210a51f1ae39eb06f42316f652ed3acf0bf5ed31c08"
+    },
+    {
+      "path": "snapshots/baseline/README.md",
+      "bytes": 15773,
+      "sha256": "84c445fbd04e795c38a2517eecc79705e9d50109f825e076405f0347d3c3d9a8"
+    },
+    {
+      "path": "snapshots/baseline/agent.py",
+      "bytes": 11703,
+      "sha256": "03eb7d9196d87cce5cf2c6068c41ba155e363f22b783f49fedc154eb5ce9b270"
+    },
+    {
+      "path": "snapshots/baseline/audio_window.py",
+      "bytes": 1973,
+      "sha256": "1d60e54e8fc8540b0f5594810e5823a9262ea122de161825b201189a039c321b"
+    },
+    {
+      "path": "snapshots/baseline/detector_adapter.py",
+      "bytes": 5193,
+      "sha256": "001ce2cbb4b6892c514b42134c1bbcd6732dcacbefcb0677452a6a260d578845"
+    },
+    {
+      "path": "snapshots/baseline/dispatch-rule.json",
+      "bytes": 192,
+      "sha256": "8b4185133e824f595325e61be41b4b4b52430e6622e98d5c00513f00a0e239ea"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Core/CallModels.swift",
+      "bytes": 3630,
+      "sha256": "d234a432181b98bcc6ac24e1b3b1ce317c1504722ef4bd91e7e0d418ea23e2c1"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/BackendContracts.swift",
+      "bytes": 6457,
+      "sha256": "bd0134d1a34a1d62d7e3470c91746ac44ed809c9fb3f4d3daa49f2e12af3684d"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ContactsService.swift",
+      "bytes": 2134,
+      "sha256": "0c3f3f4e096f41ac638dd1ee8e962cdbad0b79655deb6d9c952821f3733917bd"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/DeepfakeAssessment.swift",
+      "bytes": 9987,
+      "sha256": "d0c91d502b7c7b4f9aa65c7d613fab50a286d5b1e6898254c6776405e68654fb"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/LiveKitCallingBackend.swift",
+      "bytes": 28910,
+      "sha256": "92bffbfa666a251beea81a280db6aebd7860d1f91f7adeb4b66fab38ab94cbb0"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/PhoneCallCoordinator.swift",
+      "bytes": 20991,
+      "sha256": "6a6e73d759e1eaede287718c9d172a926a5b3deacea6e704c0e5e703189600d0"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/PhoneModels.swift",
+      "bytes": 3925,
+      "sha256": "8b404171b7962a576e7d7a29fa2cb82372964905a58491429d122c488cd87c01"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/PhoneRepository.swift",
+      "bytes": 1304,
+      "sha256": "f0dd33e2ccbc0d3d85877fbc471b53fb426ede52136ef9bf51368b17ed9cdfa7"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/PhoneSessionState.swift",
+      "bytes": 2909,
+      "sha256": "37f57abd3038132b97d66af02a61acbceaa311f0ac19ce09818a4732ad403311"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ProductionCallView.swift",
+      "bytes": 7751,
+      "sha256": "29b823d9a10f467a396fd0b3510fee906d6354445707152e57b490a5510e5595"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ProductionPhoneScreens.swift",
+      "bytes": 17058,
+      "sha256": "61941d1f488463cb29b08a1d8f2dfd0a0662318047af15409bb7953eae733f45"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ProductionRootView.swift",
+      "bytes": 5926,
+      "sha256": "0421d6927db5077bc83126edb7ba19c5f57d0c417469799501d5d33ab53c4b38"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ProductionStore.swift",
+      "bytes": 11038,
+      "sha256": "fdf2e00e0f14e724efc80e3dcc243dbf3116b520ab8d26b273327164357db3ba"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/ProductionVoicemailView.swift",
+      "bytes": 6757,
+      "sha256": "c095711684a446ff0dd77ab34c898d0fc64782da8ff83318d1e0875f56adddb6"
+    },
+    {
+      "path": "snapshots/baseline/ios/Callshield/Production/SystemPhoneService.swift",
+      "bytes": 2681,
+      "sha256": "49fc309d60adf10aba92fba8147047c9cb0b51482de42eb84092d6cab2e794b7"
+    },
+    {
+      "path": "snapshots/baseline/ios/CallshieldTests/DeepfakeIntegrationTests.swift",
+      "bytes": 13569,
+      "sha256": "35c70d791c8c61cbdade50f2f593ebba73c2adbf334fd776511b654cd5cffba9"
+    },
+    {
+      "path": "snapshots/baseline/ios/CallshieldTests/Fixtures/deepfake-wire.json",
+      "bytes": 4205,
+      "sha256": "5ceecb7c4177a14c7b902a1c0c1c35a6c45db5f2a3e6b638731147cfe24f7f96"
+    },
+    {
+      "path": "snapshots/baseline/ios/DEEPFAKE_VALIDATION.md",
+      "bytes": 4317,
+      "sha256": "897bfa9a6dd6d90800a73a448ac566f16644ab83466bae0a58ba091673d9bf29"
+    },
+    {
+      "path": "snapshots/baseline/model/detector_config.json",
+      "bytes": 1132,
+      "sha256": "ecae297c0ff44f11f250df0a00bbf71dd9c8a955ac00165de2aa88104e9b40b2"
+    },
+    {
+      "path": "snapshots/baseline/model/inference.py",
+      "bytes": 3754,
+      "sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78"
+    },
+    {
+      "path": "snapshots/baseline/model/test_detector.py",
+      "bytes": 4027,
+      "sha256": "705c43c31bd1099831f9eea0d945b0b4a411aefa76165a157087241b898398e2"
+    },
+    {
+      "path": "snapshots/baseline/requirements.txt",
+      "bytes": 406,
+      "sha256": "6e722b2fa1e5ad422d39a2cd9fe72a494c3c4645c1e58bb9276323120286c2d2"
+    },
+    {
+      "path": "snapshots/baseline/risk.py",
+      "bytes": 4740,
+      "sha256": "62208697d1ea7231aba9e05b08c0403c3f6fb96ebaa11971c1445816261b458b"
+    },
+    {
+      "path": "snapshots/baseline/risk_protocol.py",
+      "bytes": 788,
+      "sha256": "6d56237f4299c7553d18278e6d5192bc6078d08836f3af5095fc01f66b9effbc"
+    },
+    {
+      "path": "snapshots/baseline/scoring.py",
+      "bytes": 3015,
+      "sha256": "33bd5c87283cc77325d9c14f0aac5153b6dc5c4b466d56ef3f719092a3d832ef"
+    },
+    {
+      "path": "snapshots/baseline/senior_ring.py",
+      "bytes": 21826,
+      "sha256": "ec22c3f259737dd2b15e7b6b755afa3b8e3bb3768f4a8da73685485b66539236"
+    },
+    {
+      "path": "snapshots/baseline/test_agent_integration.py",
+      "bytes": 7509,
+      "sha256": "cbd186ed56c4a75d85fde6d4f9eac35a9d33bb688e8fa8853acd6e86261b5fec"
+    },
+    {
+      "path": "snapshots/baseline/test_integration.py",
+      "bytes": 6950,
+      "sha256": "ffdbe1e0308db69b80a8b110a682f087f95bb5154be798ab6d411eb72f0af080"
+    },
+    {
+      "path": "snapshots/baseline/test_offline.py",
+      "bytes": 4006,
+      "sha256": "ce4782143dd403a80db54a6e8020cac9eab10de13afc5c74c23149672f8a87e8"
+    },
+    {
+      "path": "snapshots/baseline/test_senior_ring.py",
+      "bytes": 29976,
+      "sha256": "e11baf225726b873fa2df4f2007af27f934d97958c7011af2b3bbeac3251507e"
+    },
+    {
+      "path": "snapshots/baseline/test_transcript_pipeline.py",
+      "bytes": 8590,
+      "sha256": "d8b97dd2803fdbc1ba6132f411557a3f102383f96ddfa50c37b3b2e562392942"
+    },
+    {
+      "path": "snapshots/baseline/tools/mint_lobby_token.py",
+      "bytes": 2506,
+      "sha256": "e42a86260265827b762abd50eae3c5e0aeffa4a36443711f885797bbf47bca17"
+    },
+    {
+      "path": "snapshots/baseline/tools/test_ring.py",
+      "bytes": 7291,
+      "sha256": "058d7041f64ef56355fc8e6662567d962e3f7f41137927fa4fde750ae301a464"
+    },
+    {
+      "path": "snapshots/baseline/tools/watch_risk.py",
+      "bytes": 2715,
+      "sha256": "9c32814c623ad4416cb3f2e02f49f5998f9683a5e18bfb6ff305cd2f9faf77e7"
+    },
+    {
+      "path": "snapshots/baseline/transcript_pipeline.py",
+      "bytes": 9401,
+      "sha256": "a7bcaa372df4bb9e4a607db04ccc98e0def52b95d721dcdeea484f0939cc2def"
+    },
+    {
+      "path": "snapshots/current/INCOMING_CALL_SETUP.md",
+      "bytes": 9148,
+      "sha256": "0a9553086689cef22ecfa210a51f1ae39eb06f42316f652ed3acf0bf5ed31c08"
+    },
+    {
+      "path": "snapshots/current/README.md",
+      "bytes": 17360,
+      "sha256": "671435959f08e6e2a64a0c9f6fab81afc4ab6c49f34859599c68ce77669ba753"
+    },
+    {
+      "path": "snapshots/current/agent.py",
+      "bytes": 13209,
+      "sha256": "1b3f5b9a082b86f21233828078150b6c20589648da1cf35ccd4b98b5ee63203f"
+    },
+    {
+      "path": "snapshots/current/audio_window.py",
+      "bytes": 1692,
+      "sha256": "8c74c87d9e33bea48c43d025c11a8292a6617f7f40c6cc598b28c5959526f2c6"
+    },
+    {
+      "path": "snapshots/current/detector_adapter.py",
+      "bytes": 5193,
+      "sha256": "001ce2cbb4b6892c514b42134c1bbcd6732dcacbefcb0677452a6a260d578845"
+    },
+    {
+      "path": "snapshots/current/dispatch-rule.json",
+      "bytes": 192,
+      "sha256": "8b4185133e824f595325e61be41b4b4b52430e6622e98d5c00513f00a0e239ea"
+    },
+    {
+      "path": "snapshots/current/docs/CUMULATIVE_VOICE_ANALYSIS.md",
+      "bytes": 9730,
+      "sha256": "3e506416219d06ab0651d73f5a463102bbcce149591ca31f2f07af0025635d0f"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Core/CallModels.swift",
+      "bytes": 3630,
+      "sha256": "d234a432181b98bcc6ac24e1b3b1ce317c1504722ef4bd91e7e0d418ea23e2c1"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/BackendContracts.swift",
+      "bytes": 6457,
+      "sha256": "bd0134d1a34a1d62d7e3470c91746ac44ed809c9fb3f4d3daa49f2e12af3684d"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ContactsService.swift",
+      "bytes": 2134,
+      "sha256": "0c3f3f4e096f41ac638dd1ee8e962cdbad0b79655deb6d9c952821f3733917bd"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/DeepfakeAssessment.swift",
+      "bytes": 12052,
+      "sha256": "e96264f27aa73c52364ca2fe01cb097ff1e45df4fbdcc838794cee57e714256b"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/LiveKitCallingBackend.swift",
+      "bytes": 28910,
+      "sha256": "9a3e98c85153eb613b6897cd1acb03bd6193f5db3122708bd7af8584562ea2f2"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/PhoneCallCoordinator.swift",
+      "bytes": 21909,
+      "sha256": "d250337cf4fbac95f7462f3ff7235e1d3c64c0790610d185aa33fa8123b0ab8b"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/PhoneModels.swift",
+      "bytes": 3925,
+      "sha256": "8b404171b7962a576e7d7a29fa2cb82372964905a58491429d122c488cd87c01"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/PhoneRepository.swift",
+      "bytes": 1304,
+      "sha256": "f0dd33e2ccbc0d3d85877fbc471b53fb426ede52136ef9bf51368b17ed9cdfa7"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/PhoneSessionState.swift",
+      "bytes": 4242,
+      "sha256": "aebb244a396d510b1714b831b4f5a9609ca517afdbba65b2f30a3a98c5c71384"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ProductionCallView.swift",
+      "bytes": 8947,
+      "sha256": "ca9e064915a94c889f9fc82eb91301fe31c65d0f80fdf4a605a202d2fd4d06f6"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ProductionPhoneScreens.swift",
+      "bytes": 17058,
+      "sha256": "61941d1f488463cb29b08a1d8f2dfd0a0662318047af15409bb7953eae733f45"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ProductionRootView.swift",
+      "bytes": 5926,
+      "sha256": "0421d6927db5077bc83126edb7ba19c5f57d0c417469799501d5d33ab53c4b38"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ProductionStore.swift",
+      "bytes": 11309,
+      "sha256": "44c6613f4a5e72830028f9ad9e7f2dacf48454a1de7d38449149eb06a0a4e42a"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/ProductionVoicemailView.swift",
+      "bytes": 6757,
+      "sha256": "c095711684a446ff0dd77ab34c898d0fc64782da8ff83318d1e0875f56adddb6"
+    },
+    {
+      "path": "snapshots/current/ios/Callshield/Production/SystemPhoneService.swift",
+      "bytes": 2681,
+      "sha256": "49fc309d60adf10aba92fba8147047c9cb0b51482de42eb84092d6cab2e794b7"
+    },
+    {
+      "path": "snapshots/current/ios/CallshieldTests/DeepfakeIntegrationTests.swift",
+      "bytes": 18445,
+      "sha256": "6f1e12a76828a120b5be107751334a746ccc6e371c40fd4c16935bd1e1253102"
+    },
+    {
+      "path": "snapshots/current/ios/CallshieldTests/Fixtures/deepfake-wire.json",
+      "bytes": 6513,
+      "sha256": "5f5c38252d7040ed618a84bfd553b33a423efb8031ebcd1d7dfa749aa162ceb6"
+    },
+    {
+      "path": "snapshots/current/ios/DEEPFAKE_VALIDATION.md",
+      "bytes": 4660,
+      "sha256": "28eeb9d146892a37c996214f769380d4e084e06e6914ce612a0d9d87099d3a22"
+    },
+    {
+      "path": "snapshots/current/ios/scripts/check_deepfake_contract.swift",
+      "bytes": 2342,
+      "sha256": "e84f671b9a9eb9dbf26e92a17c8d40cff318cec32203a716d5da36351bc357d6"
+    },
+    {
+      "path": "snapshots/current/model/detector_config.json",
+      "bytes": 1132,
+      "sha256": "ecae297c0ff44f11f250df0a00bbf71dd9c8a955ac00165de2aa88104e9b40b2"
+    },
+    {
+      "path": "snapshots/current/model/inference.py",
+      "bytes": 3754,
+      "sha256": "94335a53c4dbf56ddefe84a18d38def91c88f3f192441fd652a580f8d2717d78"
+    },
+    {
+      "path": "snapshots/current/model/test_detector.py",
+      "bytes": 4027,
+      "sha256": "705c43c31bd1099831f9eea0d945b0b4a411aefa76165a157087241b898398e2"
+    },
+    {
+      "path": "snapshots/current/recording_notice.py",
+      "bytes": 3358,
+      "sha256": "2a530c061f35482ac737a934019bd6261d4fa052fc28470d2c2017a04ae4a03a"
+    },
+    {
+      "path": "snapshots/current/requirements.txt",
+      "bytes": 406,
+      "sha256": "6e722b2fa1e5ad422d39a2cd9fe72a494c3c4645c1e58bb9276323120286c2d2"
+    },
+    {
+      "path": "snapshots/current/risk.py",
+      "bytes": 8197,
+      "sha256": "9fac3bf8fac51517d33039738372116a735a425d6edd13811e878dbdcadedddc"
+    },
+    {
+      "path": "snapshots/current/risk_protocol.py",
+      "bytes": 788,
+      "sha256": "6d56237f4299c7553d18278e6d5192bc6078d08836f3af5095fc01f66b9effbc"
+    },
+    {
+      "path": "snapshots/current/scoring.py",
+      "bytes": 3062,
+      "sha256": "485f7463390cb84469e75050465741848c6298b2108dfa96901f1f4fc12e6cb8"
+    },
+    {
+      "path": "snapshots/current/senior_ring.py",
+      "bytes": 21917,
+      "sha256": "e29ce45ba26678dc13eb44c8fa76dad9d89801faf7145244b77a1aab5aa1a2d1"
+    },
+    {
+      "path": "snapshots/current/test_agent_integration.py",
+      "bytes": 11593,
+      "sha256": "d7eee3bdd0cfb7c39595ba1f5286e4d65f0e68011327e9ffafdd4379d3907a36"
+    },
+    {
+      "path": "snapshots/current/test_cumulative.py",
+      "bytes": 4339,
+      "sha256": "e1fedcbbdbdc1a26f3087456247ad2e4c9ad0d95b79a7b81ecdea67e26829ab0"
+    },
+    {
+      "path": "snapshots/current/test_integration.py",
+      "bytes": 7688,
+      "sha256": "26e26b2789e68de3e639e1e7fea70d4e6acaa2f93ef1cdd26211d270e8187703"
+    },
+    {
+      "path": "snapshots/current/test_offline.py",
+      "bytes": 4020,
+      "sha256": "30ae930f0374025e744340464b0d5a588ab504d021f54698f9de9006b5e697b2"
+    },
+    {
+      "path": "snapshots/current/test_recording_notice.py",
+      "bytes": 5327,
+      "sha256": "bdefa0979b0ba86fc83d12ea87de8a0b80a5c8901609810ece867a3fab3f17c3"
+    },
+    {
+      "path": "snapshots/current/test_senior_ring.py",
+      "bytes": 29976,
+      "sha256": "e11baf225726b873fa2df4f2007af27f934d97958c7011af2b3bbeac3251507e"
+    },
+    {
+      "path": "snapshots/current/test_transcript_pipeline.py",
+      "bytes": 8590,
+      "sha256": "d8b97dd2803fdbc1ba6132f411557a3f102383f96ddfa50c37b3b2e562392942"
+    },
+    {
+      "path": "snapshots/current/tools/mint_lobby_token.py",
+      "bytes": 2506,
+      "sha256": "e42a86260265827b762abd50eae3c5e0aeffa4a36443711f885797bbf47bca17"
+    },
+    {
+      "path": "snapshots/current/tools/test_ring.py",
+      "bytes": 7291,
+      "sha256": "058d7041f64ef56355fc8e6662567d962e3f7f41137927fa4fde750ae301a464"
+    },
+    {
+      "path": "snapshots/current/tools/watch_risk.py",
+      "bytes": 2715,
+      "sha256": "9c32814c623ad4416cb3f2e02f49f5998f9683a5e18bfb6ff305cd2f9faf77e7"
+    },
+    {
+      "path": "snapshots/current/transcript_pipeline.py",
+      "bytes": 9401,
+      "sha256": "a7bcaa372df4bb9e4a607db04ccc98e0def52b95d721dcdeea484f0939cc2def"
+    },
+    {
+      "path": "source_audit.md",
+      "bytes": 8162,
+      "sha256": "b30a2e9962ed6ba19f2b42abf0edd6207447a2ecccf3ca416c45db635b8c2155"
+    },
+    {
+      "path": "source_checkout_status.txt",
+      "bytes": 191,
+      "sha256": "2eeb264b02fb5b1e2c85b28fc1ee6129316c69f5a8f88b0c465a6712839bdc95"
+    },
+    {
+      "path": "source_connector_raw.json",
+      "bytes": 1730706,
+      "sha256": "c44e1da86b6a26707b47cf57d4ac616ae2bf89d42ba4a9aad3afdf81b30bc29f"
+    },
+    {
+      "path": "source_core_callmodels_connector.json",
+      "bytes": 4271,
+      "sha256": "44e46b1e47050f09c267eed40fa32aae942c0d0f71842eafccb2fad10ecbce69"
+    },
+    {
+      "path": "source_manifest.json",
+      "bytes": 62899,
+      "sha256": "234120af8de784dd0cc96a976cedf9f79a622babd80331362cc8c6a0a0dece69"
+    },
+    {
+      "path": "source_missing.json",
+      "bytes": 15928,
+      "sha256": "c8599cafe9da4fc43d7240d5f8f0ffa2c202d6add5391566cbebab483fa616a0"
+    },
+    {
+      "path": "source_trees.json",
+      "bytes": 192901,
+      "sha256": "4c7d58d33943c2c62be2f8125f784722529a5326a8fe39b13ce96e46f156f32f"
+    },
+    {
+      "path": "source_trees_local_validation.json",
+      "bytes": 231135,
+      "sha256": "347350511ca6ffec3e472e2725db39496423022abae56a35071795c676efe7ef"
+    },
+    {
+      "path": "verify_snapshots.py",
+      "bytes": 617,
+      "sha256": "2f98a1a209171c27f22620850f2218acdfd5b20b99367a94915aa482d7f66dad"
+    }
+  ]
+}

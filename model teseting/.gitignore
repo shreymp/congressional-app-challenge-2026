@@ -1,0 +1,10 @@
+.venv*/
+cache/
+audio/
+weights/
+*.pt
+__pycache__/
+
+# Large per-run replay dumps (summary.csv, per_window.csv and report.md are kept)
+benchmark/runs/*/results.json
+benchmark/runs/*/quality/

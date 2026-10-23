@@ -1,0 +1,9 @@
+{
+  "architecture_source": "facebook/wav2vec2-xls-r-300m",
+  "architecture_revision": "1a640f32ac3e39899438a2931f9924c02f080a54",
+  "sha256": {
+    "architecture": "0bffa0d0e98153e883b828d86491f3c6062cb563dc9d7a9cfd1790da30c286ac",
+    "detector_config": "ecae297c0ff44f11f250df0a00bbf71dd9c8a955ac00165de2aa88104e9b40b2",
+    "checkpoint": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0"
+  }
+}
