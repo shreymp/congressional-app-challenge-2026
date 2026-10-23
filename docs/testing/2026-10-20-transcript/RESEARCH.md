@@ -1,0 +1,33 @@
+# Transcript scoring research and evaluation design
+
+The objective is an early warning from caller text. It cannot establish identity, whether a story is true, or whether an otherwise ordinary payment is authorized. Identical words can occur in legitimate and fraudulent calls. A score of 0.99 from the classifier is not evidence of 99% correctness.
+
+## Method chosen
+
+- Continue supervised training of the existing Jev whole-call classifier on recorded-call transcripts, with earlier training examples retained to reduce forgetting. Keep the ten independent behavior questions separate; these new weights do not train those labels.
+- Include legitimate natural conversation, recorded banking roleplay, and paired authored examples where context changes the meaning of codes, money, secrecy, and remote assistance. Authored examples and augmentation remain explicitly synthetic.
+- Separate complete scripts/ASR variants across splits using connected components of character-ngram similarity. Assign each Switchboard speaker globally so no selected speaker occurs in multiple splits. Audit normalized exact text, IDs, script groups, and speakers.
+- Fit temperature on validation only and report NLL, binary Brier score, and calibration error alongside recall, precision, specificity, and raw error counts. [Guo et al. (ICML 2017)](https://proceedings.mlr.press/v70/guo17a.html) supports temperature scaling as a simple postprocessing baseline. It changes confidence, not the class ranking; it cannot correct missing fraud evidence or misleading labels.
+- Treat source shift as an explicit limitation. [Ovadia et al. (NeurIPS 2019)](https://proceedings.neurips.cc/paper_files/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html) found post-hoc calibration can fall short under distribution shift. Calibration on this small mixed sample does not validate confidence on real inbound traffic.
+- Report precision/recall and false alarms rather than relying on accuracy alone. [Saito and Rehmsmeier (PLOS ONE 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432) explains why precision-recall evaluation matters for imbalanced datasets. A balanced benchmark's precision does not transfer to a population with a different scam prevalence.
+- Abstain on very short greetings. Also report the coverage and accuracy of a proposed uncertain band (0.2–0.8), always including the number of excluded calls. [Geifman and El-Yaniv (NeurIPS 2017)](https://proceedings.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html) motivates the risk-versus-coverage tradeoff. These thresholds are experimental policy settings, not statistically certified bounds.
+- Test an optional bounded overlapping-window mode to retain early evidence. Max pooling prevents an obvious earlier request from being erased by a long neutral tail, but increases false-positive opportunities. It has a different score distribution and is not enabled as the default without evidence.
+
+No single paper establishes a universally best scam detector. These are practical choices for this app's small local model, with measured tradeoffs.
+
+## Sources and provenance
+
+- [NC State Robocall Audio Dataset](https://github.com/wspr-ncsu/robocall-audio-dataset): actual telephone recordings from FTC enforcement material, public-domain data, with Whisper transcripts. Enforcement means suspected illegal calls, not a gold fraud label for every recording. The builder excludes ambiguous marketing and selects three explicit impersonation/threat categories; the labels are **silver**, not independently human-adjudicated.
+- [Switchboard Dialog Act corpus](https://github.com/cgpotts/swda): natural recorded English conversations, used as context-derived benign examples. Cite Jurafsky, Shriberg, and Biasca (1997), *Switchboard SWBD-DAMSL*, and Stolcke et al. (2000). These casual calls do not cover legitimate healthcare/banking traffic. Corpus terms differ from the repository's code license; raw data stays local for research.
+- [Harper Valley Bank](https://github.com/cricketclub/gridspace-stanford-harper-valley): CC BY 4.0 recorded human banking **roleplay**, not organic bank traffic. Forty bank-agent transcripts and three audio tracks are external development probes, excluded from training. V5 separately adds 160 call-disjoint bank-agent transcripts for training and 32 for validation; speakers/scenarios can overlap, and earlier probe failures motivated the source addition.
+- [FTC robocall scam examples](https://consumer.ftc.gov/features/robocall-scam-examples): three identified scam recordings downloaded from the FTC's YouTube uploads: [Amazon suspicious charge](https://www.youtube.com/watch?v=HlTpousFPsM), [auto warranty](https://www.youtube.com/watch?v=8sT121uUFOo), and [Social Security legal threat](https://www.youtube.com/watch?v=IQyu_yFqWGA). Their related scripts can occur in NCSU training, so these are audio probes, not independent blind-call evidence.
+
+Six public recordings were resampled to 16 kHz mono PCM and transcribed with the app's `vosk-model-small-en-us-0.15`. This validates recorded-audio-to-text scoring, not microphone routing, live telephone calls, guardian delivery, or general ASR accuracy. The three FTC examples are robocalls, not sustained human scam conversations.
+
+## Why the results cannot establish 99–100%
+
+The selected held-out recorded-text set has 31 calls, only 10 scam examples, a narrow fraud taxonomy, and imperfect annotations. Even an iid approximation for 31/31 yields a Wilson 95% accuracy interval of approximately 89–100% before considering sampling bias or label error. The ten scam recordings cover only four script groups, and benign conversations share speakers within the test set, so that interval is descriptive rather than a justified independent-sample guarantee. The sources strongly differ by class, so learning source style remains a concern.
+
+Stage V3 was evaluated on these held-out examples before stage V4 was motivated by observed hard-negative failures. V5 subsequently added separate banking calls after V4's banking regression. V4 and V5 results on the same collections are therefore exploratory. Further test reuse cannot turn these scores into a fresh blinded benchmark. Independent human-reviewed, source-diverse legitimate and fraudulent calls, streaming prefixes, realistic ASR errors, and prospectively frozen decision thresholds are still needed.
+
+The app's 0.75 guidance threshold is a product policy, not an empirically proven 75% chance of fraud. No model score creates a block or automatically sends a guardian message.

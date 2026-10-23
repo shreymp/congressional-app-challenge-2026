@@ -24,6 +24,13 @@ final class ProductionStore: ObservableObject {
     @Published private(set) var voicemail: [VoicemailMessage] = []
     @Published private(set) var loadingVoicemail = false
     @Published var voicemailError: String?
+    @Published private(set) var safety = SafetySnapshot()
+    @Published private(set) var sharedBlocks: [ServerBlock] = []
+    @Published var safetyStatus: String?
+    @Published private(set) var syncingSafety = false
+    let safetyBackend: SafetyBackend
+    private let safetyRepository: SafetyRepository
+    private var canPersistSafety = true
     let voicemailBackend: VoicemailBackend
     let coordinator: PhoneCallCoordinator
     let systemPhone: SystemPhoneService
@@ -36,12 +43,17 @@ final class ProductionStore: ObservableObject {
     private var historyObserver: NSObjectProtocol?
 
     init(repository: PhoneRepository = LocalPhoneRepository(), contactsService: PhoneContactsService = DeviceContactsService(),
-         systemPhone: SystemPhoneService? = nil, backend: CallingBackend? = nil, voicemailBackend: VoicemailBackend? = nil) {
+         systemPhone: SystemPhoneService? = nil, backend: CallingBackend? = nil, voicemailBackend: VoicemailBackend? = nil,
+         safetyRepository: SafetyRepository? = nil, safetyBackend: SafetyBackend? = nil) {
         self.repository = repository
         self.contactsService = contactsService
         self.systemPhone = systemPhone ?? AppleSystemPhoneService()
+        self.safetyRepository = safetyRepository ?? (repository is MemoryPhoneRepository ? MemorySafetyRepository() : LocalSafetyRepository())
+        self.safetyBackend = safetyBackend ?? HTTPSafetyBackend.configured()
         coordinator = PhoneCallCoordinator(backend: backend ?? AppServices.makeCallingBackend())
         self.voicemailBackend = voicemailBackend ?? AppServices.makeVoicemailBackend()
+        do { safety = try self.safetyRepository.load() }
+        catch { canPersistSafety = false; safetyStatus = "Your guardians and blocked numbers couldn’t be loaded. Existing saved data has been preserved." }
         do {
             let snapshot = try repository.load()
             history = snapshot.history
@@ -53,12 +65,17 @@ final class ProductionStore: ObservableObject {
             errorMessage = "Your saved call information couldn’t be loaded. \(error.localizedDescription)"
         }
         coordinator.onCallChanged = { [weak self] call in
-            self?.active = call
+            var resolved = call
+            if let call, let contact = self?.contacts.first(where: { PhoneNumber.matches($0.number, call.person.number) }) {
+                resolved?.person = contact
+            }
+            self?.active = resolved
             if call != nil { self?.detail = nil; self?.recordDetail = nil; self?.showVoicemail = false }
             else { self?.tab = .recents }
         }
         coordinator.onRecord = { [weak self] record in self?.mergeHistory([record]) }
         coordinator.onError = { [weak self] message in self?.errorMessage = message }
+        coordinator.shouldBlockIncoming = { [weak self] number in self?.isBlocked(number) ?? false }
         if #available(iOS 26, *), AppConfiguration.defaultDialerEnabled {
             historyObserver = NotificationCenter.default.addObserver(
                 forName: ConversationHistoryManager.ConversationHistoryDidUpdate.name, object: nil, queue: .main
@@ -75,13 +92,17 @@ final class ProductionStore: ObservableObject {
         let arguments = ProcessInfo.processInfo.arguments
         guard arguments.contains("--ui-test-production"), arguments.contains("--ui-test-analysis") else { return }
         let now = Date()
-        let deadlineFixture = arguments.contains("--ui-test-analysis-deadline")
+        let voiceWarning = arguments.contains("--ui-test-voice-warning")
+        let transcriptWarning = arguments.contains("--ui-test-transcript-warning")
+        let lowScores = arguments.contains("--ui-test-low-scores")
+        let voice: DeepfakeAssessment.State = voiceWarning ? .ai : lowScores ? .uncertain : .human
+        let transcriptScore = transcriptWarning ? 0.75 : (voiceWarning || lowScores) ? 0.74 : 0.94
         active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
-            direction: .incoming, createdAt: now, connectedAt: deadlineFixture ? now.addingTimeInterval(-15) : now,
-            stage: .connected, voice: deadlineFixture ? .analyzing : .human,
-            deepfake: deadlineFixture ? DeepfakeAssessment(state: .analyzing, updatedAt: now)
-                : DeepfakeAssessment(state: .human, updatedAt: now, windows: 3, score: 12),
-            transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.94, scoredRevision: 8))
+            direction: .incoming, createdAt: now, connectedAt: now, stage: .connected,
+            voice: voiceWarning ? .ai : lowScores ? .unknown : .human,
+            deepfake: DeepfakeAssessment(state: voice, updatedAt: now, windows: 3,
+                                        aiScore: voiceWarning ? 0.75 : lowScores ? 0.74 : 0.12),
+            transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: transcriptScore, scoredRevision: 8))
     }
     #endif
 
@@ -96,11 +117,105 @@ final class ProductionStore: ObservableObject {
         let query = contactSearch.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         return contacts.filter { query.isEmpty || "\($0.name) \($0.number)".lowercased().contains(query) }
     }
+    var guardians: [TrustedGuardian] { safety.guardians }
+    var blockedNumbers: [ManualBlock] { safety.blocks.filter { !$0.removalPending } }
+
+    func addGuardian(name: String, number: String) throws {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !name.isEmpty else { throw SafetyError.noName }
+        let number = try SafetyNumber.canonical(number)
+        if let index = safety.guardians.firstIndex(where: { SafetyNumber.matches($0.number, number) }) {
+            safety.guardians[index].name = String(name.prefix(100))
+        } else { safety.guardians.append(TrustedGuardian(name: String(name.prefix(100)), number: number)) }
+        persistSafety()
+    }
+    func removeGuardian(_ guardian: TrustedGuardian) {
+        safety.guardians.removeAll { $0.id == guardian.id }; persistSafety()
+    }
+    func isGuardian(_ person: Person) -> Bool { guardians.contains { SafetyNumber.matches($0.number, person.number) } }
+    func isBlocked(_ number: String) -> Bool {
+        blockedNumbers.contains { SafetyNumber.matches($0.number, number) }
+            || sharedBlocks.contains { SafetyNumber.matches($0.number, number) }
+    }
+    func blockAfterCall(_ person: Person, report: Bool) async {
+        guard active == nil else { safetyStatus = "End the call before blocking this number."; return }
+        guard !syncingSafety else { safetyStatus = "Wait for the current blocking or reporting change to finish."; return }
+        syncingSafety = true
+        defer { syncingSafety = false }
+        do {
+            let number = try SafetyNumber.canonical(person.number)
+            if let index = safety.blocks.firstIndex(where: { $0.number == number }) {
+                safety.blocks[index].removalPending = false
+                safety.blocks[index].serverSynced = false
+                safety.blocks[index].reportPending = report
+            } else { safety.blocks.append(ManualBlock(number: number, name: person.name, reportPending: report)) }
+            persistSafety()
+            guard safetyBackend.isConfigured else {
+                safetyStatus = "This number is blocked in this app on this iPhone. Server sync" + (report ? " and your report are pending." : " is pending.")
+                return
+            }
+            try await safetyBackend.block(number: number, report: report)
+            if let index = safety.blocks.firstIndex(where: { $0.number == number }) {
+                safety.blocks[index].serverSynced = true; safety.blocks[index].reportPending = false
+            }
+            persistSafety()
+            safetyStatus = report ? "Number blocked for your callma. calls. Your report is awaiting review for the shared blocklist." : "Number blocked for your callma. calls."
+        } catch { safetyStatus = error.localizedDescription }
+    }
+    func unblock(_ block: ManualBlock) async {
+        guard !syncingSafety else { safetyStatus = "Wait for the current blocking or reporting change to finish."; return }
+        syncingSafety = true
+        defer { syncingSafety = false }
+        do {
+            if block.serverSynced {
+                try await safetyBackend.unblock(number: block.number)
+            }
+            safety.blocks.removeAll { $0.number == block.number }
+            persistSafety()
+            safetyStatus = "Personal block removed. A reviewed community block may still apply."
+        } catch { safetyStatus = "The server block is still active. " + error.localizedDescription }
+    }
+    func reportAfterCall(_ person: Person) async {
+        guard active == nil else { safetyStatus = "End the call before reporting this number."; return }
+        guard !syncingSafety else { safetyStatus = "Wait for the current blocking or reporting change to finish."; return }
+        syncingSafety = true
+        defer { syncingSafety = false }
+        do {
+            try await safetyBackend.report(number: SafetyNumber.canonical(person.number), category: "scam")
+            safetyStatus = "Report submitted for review. It does not automatically block anyone."
+        } catch { safetyStatus = error.localizedDescription }
+    }
+    func refreshSafety() async {
+        guard safetyBackend.isConfigured, !syncingSafety else { return }
+        syncingSafety = true
+        defer { syncingSafety = false }
+        do {
+            // Retry explicit manual changes only. Detection scores never enter this path.
+            for block in safety.blocks where !block.serverSynced {
+                try await safetyBackend.block(number: block.number, report: block.reportPending)
+                if let index = safety.blocks.firstIndex(where: { $0.number == block.number }) {
+                    safety.blocks[index].serverSynced = true; safety.blocks[index].reportPending = false
+                }
+            }
+            let remote = try await safetyBackend.blocks()
+            sharedBlocks = remote.filter { $0.scope == "shared" }
+            for block in remote where block.scope == "personal" && !safety.blocks.contains(where: { $0.number == block.number }) {
+                safety.blocks.append(ManualBlock(number: block.number, name: block.number, serverSynced: true))
+            }
+            persistSafety()
+        } catch { safetyStatus = "Blocked numbers couldn’t sync. " + error.localizedDescription }
+    }
+    private func persistSafety() {
+        guard canPersistSafety else { safetyStatus = "These changes are temporary because saved safety settings couldn’t be loaded."; return }
+        do { try safetyRepository.save(safety) }
+        catch { safetyStatus = "Your safety settings couldn’t be saved. " + error.localizedDescription }
+    }
 
     func refresh() async {
         coordinator.registerIncomingCallsIfConfigured()
         await refreshContacts()
         await refreshHistory()
+        await refreshSafety()
     }
     func refreshHistory() async {
         do { mergeHistory(try await systemPhone.recentCalls()) }
@@ -124,6 +239,16 @@ final class ProductionStore: ObservableObject {
             guard contactEpoch == epoch else { return }
             contactsAccess = contactsService.access
             contacts = contactsAccess == .available || contactsAccess == .limited ? people : []
+            if var call = active, let contact = contacts.first(where: { PhoneNumber.matches($0.number, call.person.number) }) {
+                call.person = contact
+                active = call
+            }
+            let existingHistory = history
+            mergeHistory(existingHistory)
+            favorites = favorites.map { favorite in
+                contacts.first(where: { PhoneNumber.matches($0.number, favorite.number) }) ?? favorite
+            }
+            persist()
         } catch {
             guard contactEpoch == epoch else { return }
             contacts = []
@@ -172,7 +297,7 @@ final class ProductionStore: ObservableObject {
         defer { placingCall = false }
         do {
             let number = try PhoneNumber.normalized(person?.number ?? dialedNumber)
-            let resolved = person ?? contacts.first(where: { $0.number == number }) ?? PhoneNumber.person(number)
+            let resolved = person ?? contacts.first(where: { PhoneNumber.matches($0.number, number) }) ?? PhoneNumber.person(number)
             // An inbound-only calling service leaves outgoing calls to the mobile service.
             if coordinator.backend.isConfigured && coordinator.backend.canPlaceOutgoingCalls { try await coordinator.start(resolved) }
             else { try await systemPhone.dial(number) }
@@ -195,7 +320,7 @@ final class ProductionStore: ObservableObject {
             guard !hiddenHistoryIDs.contains(entry.id) else { continue }
             // Preserve an app assessment if a later system row has only Unknown.
             let prior = merged[entry.id]
-            let person = contacts.first(where: { $0.number == entry.person.number }) ?? entry.person
+            let person = contacts.first(where: { PhoneNumber.matches($0.number, entry.person.number) }) ?? entry.person
             merged[entry.id] = PhoneCallRecord(id: entry.id, person: person, date: entry.date,
                 duration: entry.duration, direction: entry.direction, outcome: entry.outcome,
                 voice: entry.deepfake != nil ? entry.voice : (entry.voice == .unknown ? (prior?.voice ?? .unknown) : entry.voice),

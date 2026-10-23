@@ -175,6 +175,22 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(all(m["transcript"]["probability"] == .95 for m in risks))
         self.assertTrue(all(m["level"] == agent.combine(m["deepfake"]["level"], .95) for m in risks))
 
+    async def test_saved_excerpt_is_sent_only_to_senior(self):
+        class TextPipeline:
+            def start(self): pass
+            def push(self, data): pass
+            def snapshot(self):
+                return {"state": "monitoring", "probability": .95, "saved_excerpt": "read me the code"}
+            async def aclose(self): pass
+        ctx, stream = self.context(FakeDetector()), FakeStream()
+        ctx.proc.userdata["stt_model"] = object()
+        with patch.object(agent.transcript_pipeline, "for_call", return_value=TextPipeline()), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream):
+            await asyncio.wait_for(agent._score_call(ctx), 3)
+        self.assertTrue(ctx.room.messages)
+        for message, options in ctx.room.messages:
+            self.assertEqual(message["transcript"]["saved_excerpt"], "read me the code")
+            self.assertEqual(options["destination_identities"], [agent.senior_ring.SENIOR_IDENTITY])
+
     async def test_transcription_continues_when_voice_model_is_missing(self):
         class TextPipeline:
             frames = 0

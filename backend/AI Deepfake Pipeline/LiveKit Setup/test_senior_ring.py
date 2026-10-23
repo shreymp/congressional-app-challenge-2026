@@ -20,7 +20,7 @@ from livekit import api, rtc
 from livekit.agents import JobContext
 
 import senior_ring
-from senior_ring import CALLER_LEFT, CRASHED, SENIOR_HUNG_UP
+from senior_ring import BLOCKED, CALLER_LEFT, CLEANUP_FAILED, CRASHED, SENIOR_HUNG_UP, UNANSWERED
 
 KEY, SECRET = "APIdevkey", "dev-secret-only-used-by-this-offline-test"   # dummy, never sent anywhere
 SENIOR, LOBBY = senior_ring.SENIOR_IDENTITY, senior_ring.SENIOR_LOBBY_ROOM
@@ -243,53 +243,47 @@ async def test_no_invite_while_the_app_is_not_in_the_lobby():
     await call.close()
 
 
-async def test_timeout_fires_the_stub_exactly_once():
+async def test_timeout_disconnects_the_caller_exactly_once():
     t0 = time.monotonic()
     call = Call()
-    await until(lambda: call.fallbacks, "no-answer stub")
+    await until(lambda: call.fallbacks, "no-answer callback")
     assert time.monotonic() - t0 >= 0.9 * FAST["ring_timeout"], "fired before the ring window ended"
     assert call.fallbacks[0] == {"room_name": call.room.name, "call_uuid": call.ring.call_uuid,
                                  "handle": NUMBER, "reason": "timeout"}, call.fallbacks
-    await asyncio.sleep(SETTLE)
+    assert await call.finish() == UNANSWERED
     n = len(call.sent)
     await asyncio.sleep(6 * FAST["resend_every"])
     assert len(call.sent) == n, "no invites after the ring window"
-    assert len(call.fallbacks) == 1 and call.deletes == 0
-    assert not call.task.done(), "the caller is still there: the ring must keep supervising"
-    call.room.leave(CALLER)
-    assert await call.finish() == CALLER_LEFT
-    assert len(call.fallbacks) == 1 and call.deletes == 0
+    assert len(call.fallbacks) == 1 and call.deletes == 1
+    assert not call.room.isconnected()
 
 
-async def test_ringing_out_with_the_senior_in_the_room_fires_once():
+async def test_ringing_out_with_the_senior_in_the_room_disconnects():
     call = Call()
     await until(lambda: call.sent, "first invite")
-    call.senior_joins()                    # CallKit is ringing; the caller's mic is published
-    await until(lambda: call.fallbacks, "no-answer stub")
+    call.senior_joins()                    # CallKit is ringing; only the caller's mic is published
+    assert await call.finish() == UNANSWERED
     assert call.fallbacks[0]["reason"] == "timeout"
     assert not call.ring.answered, "the CALLER's microphone must not count as an answer"
-    call.room.leave(SENIOR)                # the phone's own ring timeout ends the CallKit call
-    await asyncio.sleep(3 * FAST["left_grace"])
-    assert len(call.fallbacks) == 1 and call.deletes == 0
-    await call.close()
+    assert len(call.fallbacks) == 1 and call.deletes == 1
+    assert not call.room.isconnected()
 
 
-async def test_decline_fires_the_stub_exactly_once():
+async def test_decline_disconnects_the_caller_after_grace():
     call = Call(ring_timeout=1.2)
     await until(lambda: call.sent, "first invite")
     call.senior_joins()
     await asyncio.sleep(SETTLE)
     t_left = time.monotonic()
     call.room.leave(SENIOR)                # declined: the app leaves without publishing
-    await until(lambda: call.fallbacks, "no-answer stub")
-    assert time.monotonic() - t_left >= 0.9 * FAST["left_grace"], "fired before the grace period"
-    assert time.monotonic() - t_left < 1.0, "should not have waited for the ring window"
+    assert await call.finish() == UNANSWERED
+    elapsed = time.monotonic() - t_left
+    assert elapsed >= 0.9 * FAST["left_grace"], "deleted before the grace period"
+    assert elapsed < 1.0, "should not have waited for the ring window"
     assert call.fallbacks[0]["reason"] == "declined"
     await asyncio.sleep(1.4)               # past the ring window: must not fire a second time
-    assert len(call.fallbacks) == 1 and call.deletes == 0 and not call.task.done()
-    call.room.leave(CALLER)
-    assert await call.finish() == CALLER_LEFT
-    assert len(call.fallbacks) == 1 and call.deletes == 0
+    assert len(call.fallbacks) == 1 and call.deletes == 1
+    assert not call.room.isconnected()
 
 
 async def test_blip_before_answering_is_not_a_decline():
@@ -339,16 +333,48 @@ async def test_rejoin_within_grace_keeps_the_room():
     assert call.deletes == 1 and not call.fallbacks and not call.sent
 
 
-async def test_late_answer_after_the_ring_window_is_still_supervised():
+async def test_late_answer_cannot_cancel_unanswered_cleanup():
     call = Call()
+    call.delete_fails = True
     call.senior_joins()
-    await until(lambda: call.fallbacks, "no-answer stub")
-    call.senior_answers()                  # CallKit can ring longer than our window
-    await until(lambda: call.ring.answered, "answered")
-    call.room.leave(SENIOR)
-    await until(lambda: call.deletes, "delete_room")
-    assert await call.finish() == SENIOR_HUNG_UP
-    assert call.deletes == 1 and len(call.fallbacks) == 1
+    await until(lambda: call.deletes, "first cleanup attempt")
+    call.senior_answers()                  # timeout already committed, deletion needs a retry
+    await asyncio.sleep(2 * FAST["poll_every"])
+    assert not call.ring.answered, "late microphone must not revive a timed-out call"
+    call.delete_fails = False
+    assert await call.finish() == UNANSWERED
+    assert call.deletes >= 2 and len(call.fallbacks) == 1
+    assert not call.room.isconnected()
+
+
+async def test_unanswered_cleanup_failure_is_reported():
+    for decline in (False, True):
+        call = Call()
+        call.delete_fails = True
+        if decline:
+            call.senior_joins()
+            await asyncio.sleep(SETTLE)
+            call.room.leave(SENIOR)
+        assert await call.finish() == CLEANUP_FAILED
+        assert call.deletes == senior_ring.DELETE_ATTEMPTS
+        assert len(call.fallbacks) == 1
+        assert call.fallbacks[0]["reason"] == ("declined" if decline else "timeout")
+        assert call.room.isconnected(), "failed cleanup must not be claimed as disconnected"
+
+
+async def test_unanswered_cleanup_timeout_and_exception_are_bounded():
+    for failure in ("timeout", "exception"):
+        call = Call(api_timeout=0.05)
+        if failure == "timeout":
+            call.delete_hangs = True
+        else:
+            async def failing_delete():
+                call.deletes += 1
+                raise RuntimeError("delete unavailable")
+            call.ring._delete_room = failing_delete
+        assert await call.finish() == CLEANUP_FAILED
+        assert call.deletes == senior_ring.DELETE_ATTEMPTS
+        assert len(call.fallbacks) == 1 and call.room.isconnected()
 
 
 async def test_caller_leaving_stops_quietly():
@@ -379,39 +405,39 @@ async def test_nothing_raises_when_the_api_throws():
     for failure in ("list", "send"):
         call = Call()
         call.lk.room.fail = failure
-        await until(lambda: call.fallbacks, f"stub although {failure} fails")
+        await until(lambda: call.fallbacks, f"callback although {failure} fails")
         assert not call.sent and call.fallbacks[0]["reason"] == "timeout"
-        call.room.leave(CALLER)
-        assert await call.finish() == CALLER_LEFT
+        assert await call.finish() == UNANSWERED
+        assert call.deletes == 1
 
     hung = Call(api_timeout=0.05)          # a request that never returns must not stall the ring
     hung.lk.room.hang = True
     t0 = time.monotonic()
-    await until(lambda: hung.fallbacks, "stub although the API hangs")
+    await until(lambda: hung.fallbacks, "callback although the API hangs")
     assert time.monotonic() - t0 < 3 * FAST["ring_timeout"]
-    await hung.close()
+    assert await hung.finish() == UNANSWERED
+    assert hung.deletes == 1
 
     def bad_mint(room_name):
         raise ValueError("api_key and api_secret must be set")
     no_token = Call(mint_token=bad_mint)
-    await until(lambda: no_token.fallbacks, "stub although the token cannot be minted")
+    await until(lambda: no_token.fallbacks, "callback although the token cannot be minted")
     assert not no_token.sent
-    await no_token.close()
+    assert await no_token.finish() == UNANSWERED
+    assert no_token.deletes == 1
 
-    def bad_stub(**kw):
+    def bad_hook(**kw):
         raise RuntimeError("fallback boom")
-    bad = Call(no_answer=bad_stub)
-    await asyncio.sleep(FAST["ring_timeout"] + 0.2)
-    assert not bad.task.done()
-    bad.room.leave(CALLER)
-    assert await bad.finish() == CALLER_LEFT
+    bad = Call(no_answer=bad_hook)
+    assert await bad.finish() == UNANSWERED
+    assert bad.deletes == 1
 
     undeletable = Call()
     undeletable.delete_fails = True        # swallowed error, room stays connected: retried, then given up
     undeletable.senior_joins(mic=True)
     await until(lambda: undeletable.ring.answered, "answered")
     undeletable.room.leave(SENIOR)
-    assert await undeletable.finish() == SENIOR_HUNG_UP
+    assert await undeletable.finish() == CLEANUP_FAILED
     assert undeletable.deletes == senior_ring.DELETE_ATTEMPTS, undeletable.deletes
 
     stuck = Call(api_timeout=0.05)
@@ -419,7 +445,7 @@ async def test_nothing_raises_when_the_api_throws():
     stuck.senior_joins(mic=True)
     await until(lambda: stuck.ring.answered, "answered")
     stuck.room.leave(SENIOR)
-    assert await stuck.finish() == SENIOR_HUNG_UP
+    assert await stuck.finish() == CLEANUP_FAILED
     assert stuck.deletes == senior_ring.DELETE_ATTEMPTS, stuck.deletes
 
     broken = Call()
@@ -551,6 +577,15 @@ async def test_start_for_job_rings_once_for_a_real_sip_caller():
     await ctx2.shutdown()
     assert len(ring_tasks()) == before
 
+    # The actual job wiring must also delete an unanswered call, even with no app online.
+    room4 = FakeRoom([Person(CALLER, SIP, {"sip.callStatus": "ringing"})])
+    ctx4 = FakeCtx(room4, FakeLK([]))
+    senior_ring.start_for_job(ctx4, **dict(opts, ring_timeout=FAST["ring_timeout"]))
+    await until(lambda: ctx4.deleted, "unanswered call deleted through ctx.delete_room")
+    assert not room4.isconnected()
+    await ctx4.shutdown()
+    assert len(ring_tasks()) == before
+
     class NoApi(FakeCtx):
         @property
         def api(self):
@@ -659,6 +694,54 @@ async def test_scoring_trouble_never_takes_the_ring_down():
 
 
 # ---------------------------------------------------------------- runner
+
+async def test_manual_block_prevents_invite_and_disconnects():
+    checked = []
+    def blocked(user, number):
+        checked.append((user, number))
+        return True
+    call = Call(block_check=blocked)
+    assert await call.finish() == BLOCKED
+    assert checked == [(SENIOR, NUMBER)]
+    assert call.deletes == 1 and not call.sent and not call.fallbacks
+
+
+async def test_block_lookup_failure_does_not_drop_unblocked_call():
+    def unavailable(user, number):
+        raise RuntimeError("database unavailable")
+    call = Call(block_check=unavailable)
+    await until(lambda: call.sent, "ring after block lookup failure")
+    call.room.leave(CALLER)
+    assert await call.finish() == CALLER_LEFT
+
+
+async def test_block_disconnect_retries_without_ringing():
+    call = Call(block_check=lambda user, number: True)
+    call.delete_fails = True
+    assert await call.finish() == CLEANUP_FAILED
+    assert call.deletes == senior_ring.DELETE_ATTEMPTS and not call.sent
+
+
+async def test_persistent_blocks_feed_the_real_ring_decision():
+    import tempfile
+    from pathlib import Path
+    from safety_store import SafetyStore
+    with tempfile.TemporaryDirectory() as directory:
+        store = SafetyStore(Path(directory) / "safety.sqlite3")
+        report = store.report(SENIOR, NUMBER)["report"]
+        assert not store.is_blocked(SENIOR, NUMBER), "report alone must not block"
+        store.block(SENIOR, NUMBER)
+        personal = Call(block_check=store.is_blocked)
+        assert await personal.finish() == BLOCKED and not personal.sent
+        store.unblock(SENIOR, NUMBER)
+        store.review_shared(NUMBER, "Reviewed test evidence", report["id"])
+        shared = Call(block_check=store.is_blocked)
+        assert await shared.finish() == BLOCKED and not shared.sent
+        store.remove_shared(NUMBER)
+        restored = Call(block_check=store.is_blocked)
+        await until(lambda: restored.sent, "unblocked call rings")
+        restored.room.leave(CALLER)
+        assert await restored.finish() == CALLER_LEFT
 
 async def main() -> int:
     tests = [(name, fn) for name, fn in globals().items() if name.startswith("test_")]

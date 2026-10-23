@@ -1,0 +1,39 @@
+{
+  "version": "V3",
+  "bundle": [
+    {
+      "version": "V3",
+      "files": {
+        "model.onnx": {
+          "sha256": "463a200b03eccfbe28c1d185ed189b59ff4e7a1411d4daf28bd0c61f9fc44b45",
+          "bytes": 606323152
+        },
+        "tokenizer.json": {
+          "sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+          "bytes": 3583596
+        },
+        "calibration.json": {
+          "sha256": "017b833b720d71c59762d55324ce0804f40616ef665e819678ee9f3fdf31b45c",
+          "bytes": 173
+        }
+      }
+    }
+  ],
+  "modes": {
+    "tail": {
+      "n": 17,
+      "max_probability_difference": 1.1893609397906069e-06,
+      "mean_cpu_service_ms": 88.08407353182487,
+      "max_windows": 1,
+      "parity_passed": true
+    },
+    "windows": {
+      "n": 17,
+      "max_probability_difference": 1.1893609397906069e-06,
+      "mean_cpu_service_ms": 185.2979730568169,
+      "max_windows": 3,
+      "parity_passed": true
+    }
+  },
+  "short_greeting_abstains": true
+}

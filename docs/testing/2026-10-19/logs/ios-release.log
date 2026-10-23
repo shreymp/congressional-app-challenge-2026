@@ -1,0 +1,11 @@
+Writing result bundle at path:
+	/private/tmp/callshield-oct19-release.xcresult
+
+2026-10-19 01:30:48.402 xcodebuild[48406:37286464] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:30:48.402 xcodebuild[48406:37286464] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:30:58.265 xcodebuild[48406:37286464] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:30:58.265 xcodebuild[48406:37286464] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:31:07.241 xcodebuild[48406:37286464] [MT] IDETestOperationsObserverDebug: 42.499 elapsed -- Testing started completed.
+2026-10-19 01:31:07.241 xcodebuild[48406:37286464] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-19 01:31:07.241 xcodebuild[48406:37286464] [MT] IDETestOperationsObserverDebug: 42.499 sec, +42.499 sec -- end
+Testing started

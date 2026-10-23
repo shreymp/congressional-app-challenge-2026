@@ -1,0 +1,26 @@
+2026-10-19T06:30:44.687Z
+Window: "Callshield Oct 19 Automated", App: Simulator.
+0 standard window Callshield Oct 19 Automated – iOS 26.5, Secondary Actions: Raise
+	1 button Action
+	2 button Volume Up
+	3 button Volume Down
+	4 button Sleep/Wake
+	5 toolbar
+		6 button Description: Home, Secondary Actions: Move previous, Move next, Remove from toolbar
+		7 button Description: Save Screen, Secondary Actions: Move previous, Move next, Remove from toolbar
+		8 button Description: Rotate, Secondary Actions: Move previous, Move next, Remove from toolbar
+	9 close button
+	10 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	11 minimize button
+	12 text Callshield Oct 19 Automated – iOS 26.5
+13 menu bar
+	14 Simulator
+	15 File
+	16 Edit
+	17 Device
+	18 I/O
+	19 Features
+	20 Window
+	21 Help
+
+The focused UI element is 0 standard window Callshield Oct 19 Automated – iOS 26.5, Secondary Actions: Raise

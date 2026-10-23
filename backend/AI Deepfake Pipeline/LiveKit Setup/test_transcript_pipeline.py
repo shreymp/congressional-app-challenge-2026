@@ -25,6 +25,17 @@ async def eventually(predicate):
 
 
 class PipelineTests(unittest.IsolatedAsyncioTestCase):
+    async def test_excerpt_warning_boundary_matches_in_call_guidance(self):
+        for score in (0.749, 0.75):
+            pipe = TranscriptPipeline(Recognizer(), score=lambda _: score, every=0.01, save_excerpt=True)
+            pipe.start()
+            try:
+                pipe.update("please read me your code", True)
+                await eventually(lambda: pipe.snapshot()["probability"] is not None)
+                self.assertEqual("saved_excerpt" in pipe.snapshot(), score >= 0.75)
+            finally:
+                await pipe.aclose()
+
     async def test_partial_revisions_and_final_do_not_duplicate_words(self):
         pipe = TranscriptPipeline(Recognizer(), score=lambda _: 0.9)
         pipe.update("read", False)
@@ -37,6 +48,29 @@ class PipelineTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(pipe.text), MAX_CONTEXT_CHARS)
         await pipe.aclose()
         self.assertEqual(pipe.text, "")
+
+    async def test_excerpt_requires_opt_in_flagged_call_and_final_words(self):
+        for enabled in [False, True]:
+            pipe = TranscriptPipeline(Recognizer(), score=lambda _: 0.91, every=0.01, save_excerpt=enabled)
+            pipe.start()
+            try:
+                pipe.update("read me the code", False)
+                await eventually(lambda: pipe.snapshot()["probability"] is not None)
+                self.assertNotIn("saved_excerpt", pipe.snapshot())
+                pipe.update("read me the code", True)
+                await eventually(lambda: pipe.snapshot()["scored_revision"] == pipe._revision)
+                self.assertEqual(pipe.snapshot().get("saved_excerpt"), "read me the code" if enabled else None)
+            finally:
+                await pipe.aclose()
+            self.assertNotIn("saved_excerpt", pipe.snapshot())
+        safe = TranscriptPipeline(Recognizer(), score=lambda _: 0.08, save_excerpt=True)
+        safe.start()
+        try:
+            safe.update("see you at dinner", True)
+            await eventually(lambda: safe.snapshot()["probability"] is not None)
+            self.assertNotIn("saved_excerpt", safe.snapshot())
+        finally:
+            await safe.aclose()
 
     async def test_silence_preserved_audio_and_fused_risk(self):
         recognizer, received = Recognizer(), []

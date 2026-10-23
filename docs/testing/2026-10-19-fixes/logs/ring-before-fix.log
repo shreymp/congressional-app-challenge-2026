@@ -1,0 +1,209 @@
+PASS  test_invite_has_exactly_the_contract_keys  (0.00s)
+PASS  test_call_token_grants  (0.00s)
+PASS  test_lobby_token_grants  (0.00s)
+PASS  test_invite_is_resent_until_the_senior_joins  (0.49s)
+PASS  test_no_invite_while_the_app_is_not_in_the_lobby  (0.31s)
+FAIL  test_timeout_disconnects_the_caller_exactly_once  (3.61s)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 226, in run
+    return await self._run()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 338, in _run
+    await asyncio.sleep(self._poll_every)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 712, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 253, in test_timeout_disconnects_the_caller_exactly_once
+    assert await call.finish() == "unanswered"
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 151, in finish
+    return await asyncio.wait_for(self.task, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+FAIL  test_ringing_out_with_the_senior_in_the_room_disconnects  (3.01s)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 226, in run
+    return await self._run()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 338, in _run
+    await asyncio.sleep(self._poll_every)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 712, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 265, in test_ringing_out_with_the_senior_in_the_room_disconnects
+    assert await call.finish() == "unanswered"
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 151, in finish
+    return await asyncio.wait_for(self.task, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+FAIL  test_decline_disconnects_the_caller_after_grace  (3.09s)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 226, in run
+    return await self._run()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 338, in _run
+    await asyncio.sleep(self._poll_every)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 712, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 279, in test_decline_disconnects_the_caller_after_grace
+    assert await call.finish() == "unanswered"
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 151, in finish
+    return await asyncio.wait_for(self.task, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+PASS  test_blip_before_answering_is_not_a_decline  (0.74s)
+PASS  test_hangup_after_answering_deletes_the_room  (0.92s)
+PASS  test_rejoin_within_grace_keeps_the_room  (0.89s)
+FAIL  test_late_answer_cannot_cancel_unanswered_cleanup  (3.01s)
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 340, in test_late_answer_cannot_cancel_unanswered_cleanup
+    await until(lambda: call.deletes, "first cleanup attempt")
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 161, in until
+    assert time.monotonic() < end, f"timed out waiting for: {what}"
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: timed out waiting for: first cleanup attempt
+
+FAIL  test_unanswered_cleanup_failure_is_reported  (3.01s)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 226, in run
+    return await self._run()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 338, in _run
+    await asyncio.sleep(self._poll_every)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 712, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 358, in test_unanswered_cleanup_failure_is_reported
+    assert await call.finish() == "cleanup_failed"
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 151, in finish
+    return await asyncio.wait_for(self.task, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+PASS  test_caller_leaving_stops_quietly  (0.27s)
+FAIL  test_nothing_raises_when_the_api_throws  (3.61s)
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 226, in run
+    return await self._run()
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py", line 338, in _run
+    await asyncio.sleep(self._poll_every)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 712, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 681, in run_one
+    await asyncio.wait_for(fn(), timeout=30)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 486, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 395, in test_nothing_raises_when_the_api_throws
+    assert await call.finish() == "unanswered"
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py", line 151, in finish
+    return await asyncio.wait_for(self.task, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py", line 485, in wait_for
+    async with timeouts.timeout(timeout):
+               ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+PASS  test_bad_ring_timeout_setting_never_breaks_the_agent  (0.19s)
+PASS  test_start_for_job_rings_once_for_a_real_sip_caller  (0.78s)
+PASS  test_state_changes_are_logged_once  (0.54s)
+PASS  test_scoring_trouble_never_takes_the_ring_down  (0.33s)
+
+13 passed, 6 failed in 4.5s

@@ -10,7 +10,29 @@ struct DeepfakeAssessment: Codable, Equatable {
     var score: Double? = nil
     var recentAI: Bool? = nil
 
+    /// The initial voice result is finalized from the connection clock, not speech duration.
     static let initialDeadline: TimeInterval = 15
+
+    init(state: State, updatedAt: Date, windows: Int = 0,
+         score: Double? = nil, recentAI: Bool? = nil) {
+        self.state = state
+        self.updatedAt = updatedAt
+        self.windows = windows
+        self.score = score
+        self.recentAI = recentAI
+    }
+
+    /// Compatibility initializer for older local fixtures that express the score as 0...1.
+    init(state: State, updatedAt: Date, windows: Int = 0, aiScore: Double?) {
+        self.init(state: state, updatedAt: updatedAt, windows: windows,
+                  score: aiScore.map { $0 * 100 })
+    }
+
+    /// Compatibility view for the existing Call Shield warning UI, which uses 0...1.
+    var aiScore: Double? {
+        get { score.map { $0 / 100 } }
+        set { score = newValue.map { $0 * 100 } }
+    }
 
     var title: String {
         switch state {
@@ -21,10 +43,12 @@ struct DeepfakeAssessment: Codable, Equatable {
         case .unavailable: return "Analysis unavailable"
         }
     }
+
     var scoreText: String {
         if let score { return "AI score: \(Int(score.rounded()))/100" }
         return state == .waiting || state == .analyzing ? "Gathering voice evidence…" : "AI score unavailable"
     }
+
     func finalized(at date: Date) -> DeepfakeAssessment {
         guard state == .waiting || state == .analyzing else { return self }
         return DeepfakeAssessment(state: .uncertain, updatedAt: date, windows: windows,
@@ -89,7 +113,7 @@ struct DeepfakeUpdate: Decodable {
     }
 
     static func decode(_ data: Data) -> DeepfakeUpdate? {
-        guard data.count <= 16_384, let value = try? JSONDecoder().decode(Self.self, from: data),
+        guard data.count <= 32_768, let value = try? JSONDecoder().decode(Self.self, from: data),
               value.schema == 1, value.sequence > 0, !value.room.isEmpty, !value.callerIdentity.isEmpty,
               ["real", "stub"].contains(value.model) else { return nil }
         if value.type == "status" {
@@ -126,7 +150,8 @@ struct DeepfakeUpdate: Decodable {
         else if e.level == "elevated" { result = .uncertain }
         else if e.level == "listening", e.human_steps >= 3 { result = .human }
         else { result = .analyzing }
-        return DeepfakeAssessment(state: result, updatedAt: date, windows: e.updates)
+        return DeepfakeAssessment(state: result, updatedAt: date, windows: e.updates,
+                                  score: e.p_smoothed * 100)
     }
 }
 
@@ -138,6 +163,8 @@ struct DeepfakeMonitor {
     private var retiredStreams = Set<UUID>()
     private var sequence = 0
     private(set) var latest: DeepfakeAssessment?
+    private var analysisStartedAt: Date?
+    private var hasVoiceResult = false
 
     mutating func receive(_ update: DeepfakeUpdate, room: String, callerIdentity: String,
                           isAgent: Bool, at date: Date) -> DeepfakeAssessment? {
@@ -149,12 +176,25 @@ struct DeepfakeMonitor {
         }
         guard update.sequence > sequence else { return nil }
         sequence = update.sequence
-        let assessment = update.assessment(at: date)
+        if analysisStartedAt == nil { analysisStartedAt = date }
+        var assessment = update.assessment(at: date)
+        if !hasVoiceResult, [.waiting, .analyzing].contains(assessment.state),
+           date.timeIntervalSince(analysisStartedAt ?? date) >= 30 {
+            assessment = DeepfakeAssessment(state: .uncertain, updatedAt: date, windows: assessment.windows)
+        }
+        if [.human, .ai].contains(assessment.state) { hasVoiceResult = true }
         latest = assessment
         return assessment
     }
 
     mutating func expire(at date: Date, connectedAt: Date) -> DeepfakeAssessment? {
+        if !hasVoiceResult, date.timeIntervalSince(connectedAt) >= 30,
+           let latest, [.waiting, .analyzing].contains(latest.state),
+           date.timeIntervalSince(latest.updatedAt) < Self.timeout {
+            let result = DeepfakeAssessment(state: .uncertain, updatedAt: date, windows: latest.windows)
+            self.latest = result
+            return result
+        }
         guard date.timeIntervalSince(latest?.updatedAt ?? connectedAt) >= Self.timeout,
               latest?.state != .unavailable else { return nil }
         let assessment = DeepfakeAssessment(state: .unavailable, updatedAt: date)
@@ -166,12 +206,16 @@ struct DeepfakeMonitor {
 
 /// Caller-language evidence stays separate from the voice/deepfake result.
 struct TranscriptAssessment: Codable, Equatable {
-    enum State: String, Codable { case listening, monitoring, stale, unavailable, disabled }
+    enum State: String, Codable {
+        case listening, monitoring, stale, unavailable, disabled
+        case insufficientEvidence = "insufficient_evidence"
+    }
     let state: State
     let updatedAt: Date
     var probability: Double? = nil
     var scoredRevision: Int = 0
     var scoreAge: TimeInterval = 0
+    var savedExcerpt: String? = nil
 
     var title: String {
         guard state == .monitoring, let probability else {
@@ -179,18 +223,20 @@ struct TranscriptAssessment: Codable, Equatable {
             case .listening: return "Listening for caller speech…"
             case .stale: return "Waiting for a fresh transcript result"
             case .disabled: return "Transcript analysis is off"
+            case .insufficientEvidence: return "Not enough transcript evidence"
             default: return "Transcript analysis unavailable"
             }
         }
-        return probability >= 0.8 ? "Possible scam language" : "No strong scam-language signal"
+        return probability >= 0.75 ? "Possible scam language" : "No strong scam-language signal"
     }
     var message: String {
         guard state == .monitoring, let probability else {
+            if state == .insufficientEvidence { return "There isn’t enough caller context for a reliable result. Keep protecting your information and verify the caller independently." }
             return state == .listening ? "The caller’s words will be checked as they speak." : "Your call can continue."
         }
-        return "Scam risk score: \(Int((probability * 100).rounded()))% · update \(scoredRevision)"
+        return "Highest transcript risk score this call: \(Int((probability * 100).rounded())) out of 100. This experimental score is not a confirmed likelihood."
     }
-    var isWarning: Bool { state == .monitoring && (probability ?? 0) >= 0.8 }
+    var isWarning: Bool { state == .monitoring && (probability ?? 0) >= 0.75 }
 }
 
 struct TranscriptUpdate: Decodable {
@@ -208,12 +254,14 @@ struct TranscriptUpdate: Decodable {
         let probability: Double?
         let scored_revision: Int?
         let age_sec: Double?
+        let saved_excerpt: String?
     }
     static func decode(_ data: Data) -> TranscriptUpdate? {
-        guard data.count <= 16_384, let value = try? JSONDecoder().decode(Self.self, from: data),
+        guard data.count <= 32_768, let value = try? JSONDecoder().decode(Self.self, from: data),
               value.schema == 1, value.sequence > 0, !value.room.isEmpty, !value.callerIdentity.isEmpty,
               ["risk", "status"].contains(value.type), ["real", "stub"].contains(value.model),
-              ["listening", "monitoring", "stale", "disabled", "stt_unavailable", "jev_unavailable", "audio_overrun"].contains(value.transcript.state) else { return nil }
+              ["listening", "monitoring", "stale", "disabled", "insufficient_evidence", "stt_unavailable", "jev_unavailable", "audio_overrun"].contains(value.transcript.state) else { return nil }
+        guard (value.transcript.saved_excerpt?.count ?? 0) <= 6000 else { return nil }
         if value.transcript.state == "monitoring" {
             guard let p = value.transcript.probability, p.isFinite, (0...1).contains(p),
                   let revision = value.transcript.scored_revision, revision > 0,
@@ -229,10 +277,12 @@ struct TranscriptUpdate: Decodable {
         else if evidence.state == "listening" { state = .listening }
         else if evidence.state == "stale" { state = .stale }
         else if evidence.state == "disabled" { state = .disabled }
+        else if evidence.state == "insufficient_evidence" { state = .insufficientEvidence }
         else { state = .unavailable }
         return TranscriptAssessment(state: state, updatedAt: date,
                                     probability: state == .monitoring ? evidence.probability : nil,
-                                    scoredRevision: evidence.scored_revision ?? 0, scoreAge: evidence.age_sec ?? 0)
+                                    scoredRevision: evidence.scored_revision ?? 0, scoreAge: evidence.age_sec ?? 0,
+                                    savedExcerpt: state == .monitoring ? evidence.saved_excerpt : nil)
     }
 }
 

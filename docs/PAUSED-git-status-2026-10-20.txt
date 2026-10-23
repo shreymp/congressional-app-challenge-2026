@@ -1,0 +1,87 @@
+ M .gitignore
+ M MACBOOK_TESTING.md
+ M README.md
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/.env.example"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/INCOMING_CALL_SETUP.md"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/README.md"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/agent.py"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/test_agent_integration.py"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/test_senior_ring.py"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/test_transcript_pipeline.py"
+ M "backend/AI Deepfake Pipeline/LiveKit Setup/transcript_pipeline.py"
+ M "backend/Transcript-Based Detector/ARCHITECTURE.md"
+ M "backend/Transcript-Based Detector/model_service.py"
+ M "backend/Transcript-Based Detector/test_model_service.py"
+ M backend/jev-posttrain/README.md
+ M backend/jev-posttrain/requirements.txt
+ M frontend/App.js
+ M frontend/app.json
+ M frontend/assets/android-icon-background.png
+ M frontend/assets/android-icon-foreground.png
+ M frontend/assets/android-icon-monochrome.png
+ M frontend/assets/favicon.png
+ M frontend/assets/icon.png
+ M frontend/assets/splash-icon.png
+ M frontendscreens/App.tsx
+ M frontendscreens/CallScreen.tsx
+ M frontendscreens/ContactsScreen.tsx
+ M frontendscreens/DetailDialog.tsx
+ M frontendscreens/README.md
+ M frontendscreens/RecentsScreen.tsx
+ M frontendscreens/SettingsScreen.tsx
+ M frontendscreens/index.html
+ M frontendscreens/package.json
+ M frontendscreens/phone.css
+ M frontendscreens/shared.tsx
+ M ios/Callshield.xcodeproj/project.pbxproj
+ M ios/Callshield/App/Info.plist
+ M ios/Callshield/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+ M ios/Callshield/Core/CallModels.swift
+ M ios/Callshield/Core/CallshieldStore.swift
+ M ios/Callshield/Production/DeepfakeAssessment.swift
+ M ios/Callshield/Production/LiveKitCallingBackend.swift
+ M ios/Callshield/Production/PhoneCallCoordinator.swift
+ M ios/Callshield/Production/PhoneModels.swift
+ M ios/Callshield/Production/PhoneSessionState.swift
+ M ios/Callshield/Production/ProductionCallView.swift
+ M ios/Callshield/Production/ProductionPhoneScreens.swift
+ M ios/Callshield/Production/ProductionRootView.swift
+ M ios/Callshield/Production/ProductionStore.swift
+ M ios/Callshield/Production/ProductionVoicemailView.swift
+ M ios/Callshield/Views/CallScreen.swift
+ M ios/Callshield/Views/CallshieldRootView.swift
+ M ios/Callshield/Views/ContactsScreen.swift
+ M ios/Callshield/Views/DesignSystem.swift
+ M ios/Callshield/Views/DetailSheet.swift
+ M ios/Callshield/Views/RecentsScreen.swift
+ M ios/Callshield/Views/SettingsScreen.swift
+ M ios/CallshieldTests/CallshieldStoreTests.swift
+ M ios/CallshieldTests/DeepfakeIntegrationTests.swift
+ M ios/CallshieldTests/ProductionTests.swift
+ M ios/CallshieldUITests/CallshieldUITests.swift
+ M ios/CallshieldUITests/ProductionUITests.swift
+ M ios/Configuration/Callshield.xcconfig
+ M ios/Configuration/Local.xcconfig.example
+ M ios/scripts/draw_icon.swift
+?? "backend/AI Deepfake Pipeline/LiveKit Setup/SAFETY_SERVICE.md"
+?? "backend/AI Deepfake Pipeline/LiveKit Setup/safety_service.py"
+?? "backend/AI Deepfake Pipeline/LiveKit Setup/safety_store.py"
+?? "backend/AI Deepfake Pipeline/LiveKit Setup/test_safety_service.py"
+?? backend/jev-posttrain/audio_probes.py
+?? backend/jev-posttrain/audit_real_calls.py
+?? backend/jev-posttrain/banking_training.py
+?? backend/jev-posttrain/benchmark_real.py
+?? backend/jev-posttrain/contrast_probes.json
+?? backend/jev-posttrain/fetch_public_eval.py
+?? backend/jev-posttrain/finetune_real.py
+?? backend/jev-posttrain/hard_negative_training.py
+?? backend/jev-posttrain/package_candidate.py
+?? backend/jev-posttrain/real_calls.py
+?? backend/jev-posttrain/streaming_probe.py
+?? docs/
+?? frontendscreens/KeypadScreen.tsx
+?? frontendscreens/public/
+?? ios/Callshield.xcodeproj/project.xcworkspace/
+?? ios/Callshield/Production/SafetyFeatureViews.swift
+?? ios/Callshield/Production/SafetyFeatures.swift

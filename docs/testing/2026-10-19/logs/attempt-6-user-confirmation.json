@@ -1,0 +1,19 @@
+{
+  "record_id": "616B04B7-B945-49F0-8016-31E735939C9D",
+  "source": "Direct user reply to the sixth-call clarification question",
+  "answer": "Yes, I spoke during it",
+  "annotation_recorded_utc": "2026-10-19T10:49:36.300095+00:00",
+  "confirmed": "Keshav spoke during this 18-second live call.",
+  "not_established": [
+    "Specific spoken words",
+    "45\u201360 seconds of conversation",
+    "Independent confirmation of two-way audio"
+  ],
+  "saved_result": {
+    "voice": "Likely human",
+    "voice_windows": 10,
+    "transcript_display_percent": 8,
+    "transcript_probability": 0.07684115804206378,
+    "transcript_update": 23
+  }
+}

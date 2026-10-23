@@ -1,0 +1,1155 @@
+{
+  "thresholds": {
+    "binary": 0.5,
+    "in_call_warning": 0.75,
+    "selective_low": 0.2,
+    "selective_high": 0.8
+  },
+  "data_manifest": {
+    "sources": {
+      "ncsu": "https://github.com/wspr-ncsu/robocall-audio-dataset",
+      "switchboard": "https://github.com/cgpotts/swda",
+      "switchboard_citation": "Jurafsky, Shriberg, and Biasca (1997), Switchboard SWBD-DAMSL; Stolcke et al. (2000)",
+      "licensing": "NCSU data public domain; Switchboard corpus CC BY-NC-SA 3.0 per upstream corpus, code GPL2. Local research only; do not redistribute raw corpus in app."
+    },
+    "input_sha256": {
+      "callshield-robocall-metadata.csv": "8e253a4a652abfa92ac3766feff8da2bef16f45ab3f0f434f212a7aafc3effe5",
+      "callshield-swda.zip": "a5fe9b1f0a6c1aca42904ac1fecd65538125b71fb1490716408bc087a7f6c529"
+    },
+    "selection": "English, >=12 words; three explicit impersonation/threat categories only; excluded marketing and ambiguous recordings",
+    "ncsu_excluded": 1198,
+    "scam_script_groups": 28,
+    "similarity_group_threshold": 0.65,
+    "counts": {
+      "train": {
+        "0": 260,
+        "1": 219
+      },
+      "validation": {
+        "0": 26,
+        "1": 5
+      },
+      "test": {
+        "0": 21,
+        "1": 10
+      }
+    },
+    "limitations": [
+      "Silver scam annotations and context-derived normal labels are not a human-reviewed gold benchmark.",
+      "Scam and normal classes come from different sources: source/style confounding remains.",
+      "Only three fraud families and casual English conversations; no claim for all calls.",
+      "FTC videos may overlap training scripts; keep these audio probes and authored contrasts separate from independent evaluation."
+    ]
+  },
+  "models": {
+    "v5": {
+      "temperature": 2.2782395705988754,
+      "checkpoint": "backend/jev-posttrain/runs/call-v5-balanced",
+      "checkpoint_sha256": "56a6aa9cd4da7ef08cf128079007c1f3ab9deab08731e178b3fde6d38a4abc8e",
+      "sets": {
+        "recorded_group_heldout": {
+          "tail": {
+            "n": 31,
+            "positives": 10,
+            "negatives": 21,
+            "accuracy": 0.967741935483871,
+            "precision": 1.0,
+            "recall": 0.9,
+            "specificity": 1.0,
+            "f1": 0.9473684210526315,
+            "brier": 0.02040964688575297,
+            "nll": 0.057278526954785074,
+            "ece_10_bin": 0.03189365499307432,
+            "confusion": {
+              "tp": 9,
+              "tn": 21,
+              "fp": 0,
+              "fn": 1
+            },
+            "accuracy_wilson_95": [
+              0.838058948352751,
+              0.9942827784745831
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.967741935483871,
+              "abstentions": 1,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 1,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.8622824579942971
+          },
+          "windows": {
+            "n": 31,
+            "positives": 10,
+            "negatives": 21,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.0001517639829811162,
+            "nll": 0.008491647576270593,
+            "ece_10_bin": 0.008414193124119786,
+            "confusion": {
+              "tp": 10,
+              "tn": 21,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.889744604539564,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 3.4238447919487953
+          }
+        },
+        "banking_recorded_roleplay_external": {
+          "tail": {
+            "n": 40,
+            "positives": 0,
+            "negatives": 40,
+            "accuracy": 0.975,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 0.975,
+            "f1": 0.0,
+            "brier": 0.025415944747789576,
+            "nll": 0.10976148682396185,
+            "ece_10_bin": 0.05250959944096394,
+            "confusion": {
+              "tp": 0,
+              "tn": 39,
+              "fp": 1,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.8711863103652591,
+              0.9955731684973186
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.975,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.9743589743589743,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 1
+            },
+            "elapsed_sec": 0.7686976250261068
+          },
+          "windows": {
+            "n": 40,
+            "positives": 0,
+            "negatives": 40,
+            "accuracy": 0.975,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 0.975,
+            "f1": 0.0,
+            "brier": 0.025415944747789576,
+            "nll": 0.10976148682396185,
+            "ece_10_bin": 0.05250959944096394,
+            "confusion": {
+              "tp": 0,
+              "tn": 39,
+              "fp": 1,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.8711863103652591,
+              0.9955731684973186
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.975,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.9743589743589743,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 1
+            },
+            "elapsed_sec": 1.572392749832943
+          }
+        },
+        "authored_development_probes": {
+          "tail": {
+            "n": 25,
+            "positives": 12,
+            "negatives": 13,
+            "accuracy": 0.84,
+            "precision": 0.7857142857142857,
+            "recall": 0.9166666666666666,
+            "specificity": 0.7692307692307693,
+            "f1": 0.8461538461538461,
+            "brier": 0.14544355811985457,
+            "nll": 0.6019842725327235,
+            "ece_10_bin": 0.15315458946861327,
+            "confusion": {
+              "tp": 11,
+              "tn": 10,
+              "fp": 3,
+              "fn": 1
+            },
+            "accuracy_wilson_95": [
+              0.6534637839282114,
+              0.9359654854332355
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.96,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.8333333333333334,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 1,
+              "false_alerts": 3
+            },
+            "elapsed_sec": 0.4237029580399394
+          },
+          "windows": {
+            "n": 25,
+            "positives": 12,
+            "negatives": 13,
+            "accuracy": 0.88,
+            "precision": 0.8,
+            "recall": 1.0,
+            "specificity": 0.7692307692307693,
+            "f1": 0.8888888888888888,
+            "brier": 0.10611783278540945,
+            "nll": 0.3852685829305167,
+            "ece_10_bin": 0.1259424070734531,
+            "confusion": {
+              "tp": 12,
+              "tn": 10,
+              "fp": 3,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.7004420607907267,
+              0.9583318284955964
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.96,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.875,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 3
+            },
+            "elapsed_sec": 0.9461515001021326
+          }
+        },
+        "public_audio_vosk_probes": {
+          "tail": {
+            "n": 6,
+            "positives": 3,
+            "negatives": 3,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.00029837086392253025,
+            "nll": 0.01472183122965519,
+            "ece_10_bin": 0.014570019751166303,
+            "confusion": {
+              "tp": 3,
+              "tn": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.6096657120978346,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.1492330830078572
+          },
+          "windows": {
+            "n": 6,
+            "positives": 3,
+            "negatives": 3,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.00029837086392253025,
+            "nll": 0.01472183122965519,
+            "ece_10_bin": 0.014570019751166303,
+            "confusion": {
+              "tp": 3,
+              "tn": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.6096657120978346,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.2854794580489397
+          }
+        },
+        "prior_synthetic_caller_test_exploratory": {
+          "tail": {
+            "n": 1300,
+            "positives": 650,
+            "negatives": 650,
+            "accuracy": 0.9953846153846154,
+            "precision": 0.9984520123839009,
+            "recall": 0.9923076923076923,
+            "specificity": 0.9984615384615385,
+            "f1": 0.9953703703703703,
+            "brier": 0.0030522583286941114,
+            "nll": 0.017879312167066706,
+            "ece_10_bin": 0.012450021573369236,
+            "confusion": {
+              "tp": 645,
+              "tn": 649,
+              "fp": 1,
+              "fn": 5
+            },
+            "accuracy_wilson_95": [
+              0.989967101971016,
+              0.997883062852687
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.9876923076923076,
+              "abstentions": 16,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 7,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 26.76899129105732
+          }
+        },
+        "fresh_banking_roleplay": {
+          "tail": {
+            "n": 100,
+            "positives": 0,
+            "negatives": 100,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.0018604469198273547,
+            "nll": 0.024064735890792402,
+            "ece_10_bin": 0.023035277338931334,
+            "confusion": {
+              "tp": 0,
+              "tn": 100,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.99,
+              "abstentions": 1,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 2.056838416028768
+          },
+          "windows": {
+            "n": 100,
+            "positives": 0,
+            "negatives": 100,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.0018604469198273547,
+            "nll": 0.024064735890792402,
+            "ece_10_bin": 0.023035277338931334,
+            "confusion": {
+              "tp": 0,
+              "tn": 100,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.99,
+              "abstentions": 1,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 4.15189120802097
+          }
+        },
+        "fresh_banking_roleplay_prefixes": {
+          "tail": {
+            "n": 154,
+            "positives": 0,
+            "negatives": 154,
+            "accuracy": 0.961038961038961,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 0.961038961038961,
+            "f1": 0.0,
+            "brier": 0.028997015477510785,
+            "nll": 0.10342204817553187,
+            "ece_10_bin": 0.07097922877239234,
+            "confusion": {
+              "tp": 0,
+              "tn": 148,
+              "fp": 6,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9176133399821844,
+              0.9820235555517716
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.9285714285714286,
+              "abstentions": 11,
+              "accuracy_on_answered": 0.986013986013986,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 3
+            },
+            "elapsed_sec": 2.4138759169727564
+          },
+          "windows": {
+            "n": 154,
+            "positives": 0,
+            "negatives": 154,
+            "accuracy": 0.961038961038961,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 0.961038961038961,
+            "f1": 0.0,
+            "brier": 0.028997015477510785,
+            "nll": 0.10342204817553187,
+            "ece_10_bin": 0.07097922877239234,
+            "confusion": {
+              "tp": 0,
+              "tn": 148,
+              "fp": 6,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9176133399821844,
+              0.9820235555517716
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.9285714285714286,
+              "abstentions": 11,
+              "accuracy_on_answered": 0.986013986013986,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 3
+            },
+            "elapsed_sec": 4.742481959052384
+          }
+        },
+        "fresh_banking_lower_similarity": {
+          "tail": {
+            "n": 36,
+            "positives": 0,
+            "negatives": 36,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.001193363978542095,
+            "nll": 0.01607001777336233,
+            "ece_10_bin": 0.015407908614078123,
+            "confusion": {
+              "tp": 0,
+              "tn": 36,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9035813714055363,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.9146548339631408
+          },
+          "windows": {
+            "n": 36,
+            "positives": 0,
+            "negatives": 36,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.001193363978542095,
+            "nll": 0.01607001777336233,
+            "ece_10_bin": 0.015407908614078123,
+            "confusion": {
+              "tp": 0,
+              "tn": 36,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9035813714055363,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 1.8209966248832643
+          }
+        }
+      }
+    },
+    "v6": {
+      "temperature": 2.3318524603915844,
+      "checkpoint": "backend/jev-posttrain/runs/call-v6-prefix",
+      "checkpoint_sha256": "1bb839cb642845cbcba5ecd44062b0fa5d0efed04c149b690e60db6cd9513e0b",
+      "sets": {
+        "recorded_group_heldout": {
+          "tail": {
+            "n": 31,
+            "positives": 10,
+            "negatives": 21,
+            "accuracy": 0.967741935483871,
+            "precision": 1.0,
+            "recall": 0.9,
+            "specificity": 1.0,
+            "f1": 0.9473684210526315,
+            "brier": 0.029391566432756883,
+            "nll": 0.10442220106881518,
+            "ece_10_bin": 0.034163656325319834,
+            "confusion": {
+              "tp": 9,
+              "tn": 21,
+              "fp": 0,
+              "fn": 1
+            },
+            "accuracy_wilson_95": [
+              0.838058948352751,
+              0.9942827784745831
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 0.967741935483871,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 1,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.8939077500253916
+          },
+          "windows": {
+            "n": 31,
+            "positives": 10,
+            "negatives": 21,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.00033457427877472615,
+            "nll": 0.00892042620684633,
+            "ece_10_bin": 0.008744582794831991,
+            "confusion": {
+              "tp": 10,
+              "tn": 21,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.889744604539564,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 4.849050292046741
+          }
+        },
+        "banking_recorded_roleplay_external": {
+          "tail": {
+            "n": 40,
+            "positives": 0,
+            "negatives": 40,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.0003602673028528378,
+            "nll": 0.007409709567188322,
+            "ece_10_bin": 0.007215483285835943,
+            "confusion": {
+              "tp": 0,
+              "tn": 40,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9123783988027135,
+              1.0000000000000002
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.8273767079226673
+          },
+          "windows": {
+            "n": 40,
+            "positives": 0,
+            "negatives": 40,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.0003602673028528378,
+            "nll": 0.007409709567188322,
+            "ece_10_bin": 0.007215483285835943,
+            "confusion": {
+              "tp": 0,
+              "tn": 40,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9123783988027135,
+              1.0000000000000002
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 1.5788504160009325
+          }
+        },
+        "authored_development_probes": {
+          "tail": {
+            "n": 25,
+            "positives": 12,
+            "negatives": 13,
+            "accuracy": 0.88,
+            "precision": 0.8461538461538461,
+            "recall": 0.9166666666666666,
+            "specificity": 0.8461538461538461,
+            "f1": 0.88,
+            "brier": 0.10703623461539584,
+            "nll": 0.4582294612262812,
+            "ece_10_bin": 0.11276213230565191,
+            "confusion": {
+              "tp": 11,
+              "tn": 11,
+              "fp": 2,
+              "fn": 1
+            },
+            "accuracy_wilson_95": [
+              0.7004420607907267,
+              0.9583318284955964
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.96,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.875,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 1,
+              "false_alerts": 2
+            },
+            "elapsed_sec": 0.37634416692890227
+          },
+          "windows": {
+            "n": 25,
+            "positives": 12,
+            "negatives": 13,
+            "accuracy": 0.92,
+            "precision": 0.8571428571428571,
+            "recall": 1.0,
+            "specificity": 0.8461538461538461,
+            "f1": 0.9230769230769231,
+            "brier": 0.06858059555421661,
+            "nll": 0.22074273269232747,
+            "ece_10_bin": 0.07533274239860475,
+            "confusion": {
+              "tp": 12,
+              "tn": 11,
+              "fp": 2,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.7503389104960468,
+              0.9777795987151524
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.96,
+              "abstentions": 1,
+              "accuracy_on_answered": 0.9166666666666666,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 2
+            },
+            "elapsed_sec": 0.8106626670341939
+          }
+        },
+        "public_audio_vosk_probes": {
+          "tail": {
+            "n": 6,
+            "positives": 3,
+            "negatives": 3,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.0010800190700399274,
+            "nll": 0.019244078679349134,
+            "ece_10_bin": 0.018675471578414222,
+            "confusion": {
+              "tp": 3,
+              "tn": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.6096657120978346,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.12759575014933944
+          },
+          "windows": {
+            "n": 6,
+            "positives": 3,
+            "negatives": 3,
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "brier": 0.0010800190700399274,
+            "nll": 0.019244078679349134,
+            "ece_10_bin": 0.018675471578414222,
+            "confusion": {
+              "tp": 3,
+              "tn": 3,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.6096657120978346,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.25778837502002716
+          }
+        },
+        "prior_synthetic_caller_test_exploratory": {
+          "tail": {
+            "n": 1300,
+            "positives": 650,
+            "negatives": 650,
+            "accuracy": 0.9930769230769231,
+            "precision": 1.0,
+            "recall": 0.9861538461538462,
+            "specificity": 1.0,
+            "f1": 0.9930286599535244,
+            "brier": 0.005683134560190756,
+            "nll": 0.02465628880643224,
+            "ece_10_bin": 0.013934036167383285,
+            "confusion": {
+              "tp": 641,
+              "tn": 650,
+              "fp": 0,
+              "fn": 9
+            },
+            "accuracy_wilson_95": [
+              0.9868948737501742,
+              0.9963535045914307
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 0.9915384615384616,
+              "abstentions": 11,
+              "accuracy_on_answered": 0.9961210240496509,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 16,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 25.87271000002511
+          }
+        },
+        "fresh_banking_roleplay": {
+          "tail": {
+            "n": 100,
+            "positives": 0,
+            "negatives": 100,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 2.539950344341993e-05,
+            "nll": 0.003962289261675882,
+            "ece_10_bin": 0.0039495013054693115,
+            "confusion": {
+              "tp": 0,
+              "tn": 100,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 2.060409750090912
+          },
+          "windows": {
+            "n": 100,
+            "positives": 0,
+            "negatives": 100,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 2.539950344341993e-05,
+            "nll": 0.003962289261675882,
+            "ece_10_bin": 0.0039495013054693115,
+            "confusion": {
+              "tp": 0,
+              "tn": 100,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9630065017930143,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 4.0572171250823885
+          }
+        },
+        "fresh_banking_roleplay_prefixes": {
+          "tail": {
+            "n": 154,
+            "positives": 0,
+            "negatives": 154,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.00029026199123033104,
+            "nll": 0.007530168214671594,
+            "ece_10_bin": 0.007370864683701717,
+            "confusion": {
+              "tp": 0,
+              "tn": 154,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9756625486776705,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 2.22909720800817
+          },
+          "windows": {
+            "n": 154,
+            "positives": 0,
+            "negatives": 154,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 0.00029026199123033104,
+            "nll": 0.007530168214671594,
+            "ece_10_bin": 0.007370864683701717,
+            "confusion": {
+              "tp": 0,
+              "tn": 154,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9756625486776705,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 4.46870187507011
+          }
+        },
+        "fresh_banking_lower_similarity": {
+          "tail": {
+            "n": 36,
+            "positives": 0,
+            "negatives": 36,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 1.6064070974599218e-05,
+            "nll": 0.0029774421584797036,
+            "ece_10_bin": 0.0029693593597686333,
+            "confusion": {
+              "tp": 0,
+              "tn": 36,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9035813714055363,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 0.8424690421670675
+          },
+          "windows": {
+            "n": 36,
+            "positives": 0,
+            "negatives": 36,
+            "accuracy": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "specificity": 1.0,
+            "f1": 0.0,
+            "brier": 1.6064070974599218e-05,
+            "nll": 0.0029774421584797036,
+            "ece_10_bin": 0.0029693593597686333,
+            "confusion": {
+              "tp": 0,
+              "tn": 36,
+              "fp": 0,
+              "fn": 0
+            },
+            "accuracy_wilson_95": [
+              0.9035813714055363,
+              1.0
+            ],
+            "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+            "selective_0.2_0.8": {
+              "coverage": 1.0,
+              "abstentions": 0,
+              "accuracy_on_answered": 1.0,
+              "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+            },
+            "alert_at_0.75": {
+              "missed_scams": 0,
+              "false_alerts": 0
+            },
+            "elapsed_sec": 1.7241967089939862
+          }
+        }
+      }
+    }
+  },
+  "limits": [
+    "Not a 99% claim. Only a small, selected English benchmark.",
+    "FTC YouTube scripts can overlap NCSU training; audio probes are exploratory, not independent calls.",
+    "Banking audio is human roleplay; Switchboard is natural conversation.",
+    "No real-world probability calibration, blinded human adjudication, or field deployment established.",
+    "These probes were repeatedly inspected and informed V4/V5 development. Held out from gradient training does not mean a fresh blind test.",
+    "Per-call Wilson intervals assume iid samples; positive recorded tests cover only four script groups and negative conversations share speakers. Intervals are descriptive, not confidence in field accuracy."
+  ],
+  "fresh_probes": {
+    "path": "backend/jev-posttrain/data/real_calls/fresh_banking_20261022/probes.jsonl",
+    "sha256": "8217dc8313370459acb5865261921d8c43c5aa2d3e215359ce1d64daa5acfdf0",
+    "limits": "New calls from an already-used roleplay source, not organic traffic. Prefixes share parent calls; do not count them as independent samples. No scam recall measurable on this collection."
+  }
+}

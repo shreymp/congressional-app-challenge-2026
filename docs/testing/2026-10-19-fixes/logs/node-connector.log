@@ -1,0 +1,11 @@
+Started UTC: 2026-10-19T11:28:13.727482+00:00
+Exit: 0
+✔ API forwards each transcript to JEV and returns its probability (27.288166ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86.039125

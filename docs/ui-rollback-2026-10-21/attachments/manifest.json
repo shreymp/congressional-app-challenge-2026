@@ -1,0 +1,490 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "98FB7FC0-635B-4C0A-89D3-26C4FE807D76.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-11-Assessed-Fixture_0_84C4535F-8341-428A-91EB-D736D9F9FD74.png",
+        "timestamp" : 1792593064.998
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "56A642C1-3C11-449E-B5E9-1EE2FFACA092.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-10-Connected-Fixture_0_3E6C99F1-9EC4-4E5A-BB27-D75CD69BA90B.png",
+        "timestamp" : 1792593064.525
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "D67C894C-1888-47F5-B459-9F0368B39F46.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-09-Connecting-Fixture_0_0267884F-DE2E-4AB8-A7FB-47A388F31618.png",
+        "timestamp" : 1792593064.079
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "454E427B-4906-4C9F-BBA4-7204CEEB8BDB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-08-Incoming-Fixture_0_1A477EC0-CCA8-47D2-BA64-B5A641DD821B.png",
+        "timestamp" : 1792593063.613
+      }
+    ],
+    "testIdentifier" : "ProductionTests/testRenderProductionCallStatesForVisualReview()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testRenderProductionCallStatesForVisualReview"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "D61D6ACF-DFF4-48F4-963D-34462AA3B013.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "07-Recents-Larger-Text_0_CAE39BB3-D412-4CE6-9E13-6985237B2F2C.png",
+        "timestamp" : 1792593080.602
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "60ED992D-8844-4D05-A44C-A3EBB2E2CF5B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "06-Demo-Picker_0_5C77C0B9-467C-496D-A93A-7C117332780E.png",
+        "timestamp" : 1792593079.5
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "494AE233-9F21-48D1-9BCC-3AD287F38F86.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "05-Settings_0_C1540E9E-643B-423C-A1B4-EAAA690D193A.png",
+        "timestamp" : 1792593076.006
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "60DB7003-248F-4576-A5F2-22226A10AF3E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-Contact-Details_0_EFC2C1E8-0471-4E1C-9FF6-C6DA4E1B2077.png",
+        "timestamp" : 1792593074.865
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "D2D0C636-40B5-4BA5-8E9D-834BCE284FBA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-Contacts_0_89CF3F55-8A8D-4556-86DD-7F73FDD8890F.png",
+        "timestamp" : 1792593073.074
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "3AC99953-4A4D-44EB-984F-9B01D97933B0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-Call-Details_0_266ED86F-389C-4EA9-A695-BF84F27CB5A3.png",
+        "timestamp" : 1792593071.919
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "F9283896-2856-4084-9451-E7B2E8AAC1AA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-Recents_0_8E24EDB3-A33B-442A-A1A7-6FB68DDF2A56.png",
+        "timestamp" : 1792593069.839
+      }
+    ],
+    "testIdentifier" : "CallshieldUITests/testAllScreensAndNavigation()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/CallshieldUITests/testAllScreensAndNavigation"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "35F3BCCB-AFD0-4CAE-AE5B-F6C8D20596ED.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"This voice appears to be human.\" StaticText`_0_B7143FB5-235C-45A6-B646-71E014F643BA.txt",
+        "timestamp" : 1792593089.991
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "723F735B-9E9A-4913-AFDC-D2A2D6249704.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"This voice appears to be human.\" StaticText`_0_858E11C9-2EEC-45DE-92EE-8C7630BE232D.txt",
+        "timestamp" : 1792593088.934
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "980F7E4B-8D28-4989-ABE6-271A6BEB6B0D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-21 at 09.31.27 AM",
+        "timestamp" : 1792593087.876
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "9E433B75-45A1-42C1-B802-DA5DBE20ED2B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-21 at 09.31.26 AM",
+        "timestamp" : 1792593086.116
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "A66271D3-0237-476D-BBA2-91B46A903298",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-21 at 09.31.24 AM",
+        "timestamp" : 1792593084.277
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "200714BE-B69C-4E5B-BAA2-406BEA6CD7AA.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-10-21 at 09.31.20 AM.mp4",
+        "timestamp" : 1792593080.894
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "6EDF5C62-0D19-4EC2-B853-9F1D916DA2A2.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "FA7679FF-44DE-40BE-AD60-7FEBC6D8B986.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "App UI hierarchy for org.callshield_0_477FB602-4821-44E9-B98A-5E7BDC537627.Callshield",
+        "timestamp" : 1792593093.067
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "8ED1F21E-3CCA-4B1F-A49B-270A84B5E633",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.31.33 AM",
+        "timestamp" : 1792593093.067
+      }
+    ],
+    "testIdentifier" : "CallshieldUITests/testVoiceHelpAppearsAtTheResult()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/CallshieldUITests/testVoiceHelpAppearsAtTheResult"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "70207360-33ED-40B9-9695-1039DA3579D0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored-Call-Pipeline-Feedback_0_6B847D2A-40E6-49E6-AF21-85E5B7CC8F21.png",
+        "timestamp" : 1792593100.786
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testBothPipelineResultsAreVisibleOnTheCallScreen()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testBothPipelineResultsAreVisibleOnTheCallScreen"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "E7BF24C5-9217-4125-A846-7D3041288DAB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"End call\" Button`_0_1A4049B4-22D0-4ADD-98F9-6518E4384A2D.txt",
+        "timestamp" : 1792593130.802
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "9EC1C62A-62C4-4D93-AEBB-9D969EA05D99",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.10 AM",
+        "timestamp" : 1792593130.802
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "B21A79D1-E27B-4B5A-851E-41F35386A7EE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.10 AM",
+        "timestamp" : 1792593130.68
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "DE697AFF-C895-4F2A-AAF0-F498F1DB7316.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"End call\" Button`_0_4F88F448-A61D-427B-8ECB-0E6D489AE9DB.txt",
+        "timestamp" : 1792593129.782
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "BDDA4BE1-50C8-4BA1-87BB-5E359D226FD8",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.09 AM",
+        "timestamp" : 1792593129.782
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "E1010340-F68A-425B-AE93-789D1736949B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.09 AM",
+        "timestamp" : 1792593129.682
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "7E77DA95-46A6-43A0-94EA-25E1E15FB18E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"End call\" Button`_0_150B7756-5345-4744-98A2-92243AD80080.txt",
+        "timestamp" : 1792593128.816
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "91B5BD93-9941-4D75-865E-EE457AE21796",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.08 AM",
+        "timestamp" : 1792593128.816
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "932350A3-4A46-4B38-98B1-B1BB5BA28944",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.08 AM",
+        "timestamp" : 1792593128.725
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "C9D8825B-CEB4-493A-B849-B509481EDE4B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-10-21 at 09.32.05 AM",
+        "timestamp" : 1792593125.018
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "06E2C915-A90F-4B9D-B097-A3773047F7FB",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-10-21 at 09.32.05 AM",
+        "timestamp" : 1792593125.31
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "2684B332-34F0-479C-9241-13C157723899.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-15-Return-Reminder_0_9DD65A69-0158-405D-8C17-8FE94BB794C6.png",
+        "timestamp" : 1792593124.977
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "AED36398-DC77-4AB5-8AB8-64C226E46C03.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-10-21 at 09.31.55 AM.mp4",
+        "timestamp" : 1792593115.718
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testHighSignalReminderAppearsOnceOnReturn()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testHighSignalReminderAppearsOnceOnReturn"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "D2A30202-0A8B-4912-8E3B-219223DC93CA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-07-Simulator-Call_0_0B1E4856-02D2-4C64-B1C8-2E2BC06C84B5.png",
+        "timestamp" : 1792593139.167
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "373D3D4C-6401-4F26-9C41-F92622CA8B38.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-06-Keypad_0_DAEA54A3-C848-48A7-B90A-EEA38E19BBDA.png",
+        "timestamp" : 1792593135.582
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testKeypadAndSimulatorCallError()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testKeypadAndSimulatorCallError"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "84017A55-C662-4E43-9C35-1F3E59B7C983.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored-Accessibility-Call-Controls_0_4F497FDE-42E7-4E39-BD60-B12EF0994E0C.png",
+        "timestamp" : 1792593156.617
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testLargestSystemTextKeepsCallControlsReachable()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testLargestSystemTextKeepsCallControlsReachable"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "EB3BD55E-988D-4FA1-B829-173C7C4FE956.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-05-Voicemail_0_7279079D-5B4B-4C8C-8B8D-5F181BD8E2E4.png",
+        "timestamp" : 1792593168.831
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "17CC03E0-E462-4F46-B80D-30E56B51D5FA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-04-Settings_0_4A52F4ED-964B-4714-84E8-32434E4C7C04.png",
+        "timestamp" : 1792593165.575
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "DABF3E6E-2371-4D89-A392-E3DAF3578B76.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-03-Contacts_0_38F21154-4F59-4AE7-AB0A-326F0A48619C.png",
+        "timestamp" : 1792593164.035
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "B3A01E50-6C29-47F9-AAAB-F37C1452870E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-02-Favorites_0_DCC70175-C7FF-4137-A07A-AC1D60036709.png",
+        "timestamp" : 1792593162.57
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "5C9E9F85-599A-4928-BDD0-B585B6C45D56.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-01-Recents_0_9767F175-1C80-43C0-9CB9-BCED13D95C68.png",
+        "timestamp" : 1792593161.112
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testProductionNavigationWithoutSampleCallers()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testProductionNavigationWithoutSampleCallers"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "D5C6E1C6-0F5A-44FD-8CFE-8B74E6878AC0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored-Blocked-Numbers_0_04609BD6-F85F-443E-B0B7-DB1FF0786092.png",
+        "timestamp" : 1792593182.743
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "EDB2508C-5D36-4EAF-B3F8-70A97D7DEFCC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored-Contacts-Guardians_0_764EBA74-7D22-44D7-A611-3B3B7149318F.png",
+        "timestamp" : 1792593179.211
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testRestoredContactsAndSettingsKeepSafetyEntryPoints()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testRestoredContactsAndSettingsKeepSafetyEntryPoints"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "EB081657-090D-4B7B-BA31-32AC086DD44B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-14-Guardian-Draft_0_A6811649-DFAF-4F4E-86AC-096C6F3F9126.png",
+        "timestamp" : 1792593193.629
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "EAA42EE0-C091-4E2E-8CA8-7DB733B438AA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored-Call-Safety-Steps_0_9BAABC08-3A07-49E0-ACC1-B71B24D7BE9F.png",
+        "timestamp" : 1792593191.382
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testSafetyStepsOpenAReviewedGuardianDraftWithoutSending()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testSafetyStepsOpenAReviewedGuardianDraftWithoutSending"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+        "deviceName" : "Callshield Oct 19 Automated",
+        "exportedFileName" : "B36D602B-02F9-44DA-ACD2-22F15A373321.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Production-17-Below-Warning-Threshold_0_8845F324-50A5-467F-9C57-1B8BA45BA851.png",
+        "timestamp" : 1792593206.526
+      }
+    ],
+    "testIdentifier" : "ProductionUITests/testScoresBelowThresholdDoNotShowSafetySteps()",
+    "testIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testScoresBelowThresholdDoNotShowSafetySteps"
+  }
+]

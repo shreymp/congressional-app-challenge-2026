@@ -7,7 +7,7 @@ import UIKit
 /// its caller until WebRTC has applied it, so it must never run on the main thread.
 private let liveKitAudioQueue = DispatchQueue(label: "org.callshield.livekit.audio")
 
-private func callshieldLog(_ message: String) { print("[Callshield] \(message)") }
+private func callshieldLog(_ message: String) { print("[callma.] \(message)") }
 
 /// For the log only. The SDK's own description of an error can read just "Unknown", so its
 /// code goes with it; the person on the call is never shown this text.
@@ -68,11 +68,15 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
 
     let isConfigured: Bool
     var usesVoIPPush: Bool { false }
-    var canPlaceOutgoingCalls: Bool { false }
+    var canPlaceOutgoingCalls: Bool { outboundURL != nil }
     /// The call-room token has no data grant, so keypad tones would be dropped, and a phone call has no hold.
     var supportsHoldAndKeypad: Bool { false }
     var onEvent: ((CallingEvent) -> Void)?
 
+    private let outboundURL = AppConfiguration.outboundServiceURL
+    private var systemAudioActive = false
+    private var outboundID: UUID?
+    private var outboundRequest: Task<Data, Error>?
     private let serverURL: String
     private let lobbyToken: String
     private var listening = false
@@ -162,7 +166,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     // MARK: - Lobby
 
     private var wantsLobby: Bool {
-        listening && !lobbyRejected && call == nil && invites.isEmpty && UIApplication.shared.applicationState != .background
+        listening && !lobbyRejected && outboundID == nil && call == nil && invites.isEmpty && UIApplication.shared.applicationState != .background
     }
 
     private func connectLobbyIfNeeded() {
@@ -194,7 +198,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
                 callshieldLog("lobby token refused: \(callshieldDetail(error))")
                 if !announcedRejection { // Once, not on every foreground; a later successful connection re-arms it.
                     announcedRejection = true
-                    onEvent?(.incomingCallsUnavailable("Callshield can’t take incoming calls right now: its access to the calling service was refused or has expired. It needs to be set up again."))
+                    onEvent?(.incomingCallsUnavailable("callma. can’t take incoming calls right now: its access to the calling service was refused or has expired. It needs to be set up again."))
                 }
                 return
             }
@@ -300,8 +304,46 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     // MARK: - CallingBackend
 
     func start(callID: UUID, number: String) async throws {
-        // LiveKit-rented numbers are inbound-only; outgoing calls stay with the system dialer.
-        throw PhoneError.serviceUnavailable
+        guard canPlaceOutgoingCalls, call == nil, outboundID == nil else { throw PhoneError.serviceUnavailable }
+        outboundID = callID
+        await stopLobby()
+        let request = Task { try await self.outboundAPI(callID: callID, method: "POST", number: number) }
+        outboundRequest = request
+        do {
+            let data = try await request.value
+            guard outboundID == callID, let invite = IncomingCallInvite.decode(data), invite.callID == callID else {
+                throw PhoneError.actionUnavailable
+            }
+            invites[callID] = invite
+            try await answer(callID: callID)
+            if systemAudioActive { activateAudio(AVAudioSession.sharedInstance()) }
+            outboundRequest = nil
+        } catch {
+            if outboundID == callID {
+                outboundID = nil
+                outboundRequest = nil
+                closeCall()
+                _ = try? await outboundAPI(callID: callID, method: "DELETE")
+            }
+            throw error
+        }
+    }
+
+    private func outboundAPI(callID: UUID, method: String, number: String? = nil) async throws -> Data {
+        guard let outboundURL else { throw PhoneError.serviceUnavailable }
+        var request = URLRequest(url: outboundURL.appendingPathComponent("calls").appendingPathComponent(callID.uuidString))
+        request.httpMethod = method
+        request.timeoutInterval = method == "DELETE" ? 10 : 75
+        request.setValue("Bearer " + lobbyToken, forHTTPHeaderField: "Authorization")
+        if let number {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONSerialization.data(withJSONObject: ["number": number])
+        }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode) else {
+            throw CallConnectionError()
+        }
+        return data
     }
 
     func prepareIncoming(callID: UUID, number: String) async throws {
@@ -325,6 +367,12 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     }
 
     func end(callID: UUID) async throws {
+        if outboundID == callID {
+            outboundID = nil
+            outboundRequest?.cancel(); outboundRequest = nil
+            closeCall()
+            _ = try? await outboundAPI(callID: callID, method: "DELETE")
+        }
         invites[callID] = nil // Announced but never rung: CallKit refused it or another call was active.
         guard call?.invite.callID == callID else { connectLobbyIfNeeded(); return }
         closeCall()
@@ -362,6 +410,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     func registerVoIPToken(_ token: Data?) async throws {} // No PushKit in this build.
 
     func activateAudio(_ session: AVAudioSession) {
+        systemAudioActive = true
         guard let callID = call?.invite.callID else { return }
         liveKitAudioQueue.async {
             do {
@@ -381,6 +430,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     }
 
     func deactivateAudio(_ session: AVAudioSession) {
+        systemAudioActive = false
         call?.audioActive = false
         liveKitAudioQueue.async {
             try? AudioManager.shared.setEngineAvailability(.none)
@@ -390,7 +440,24 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         }
     }
 
+    /// Release this installation's connection before replacing its configuration.
+    func shutDown() async {
+        listening = false
+        for observer in observers { NotificationCenter.default.removeObserver(observer) }
+        observers.removeAll()
+        onEvent = nil
+        invites.removeAll()
+        _ = closeCall()
+        await stopLobby()
+        await callTeardown?.value
+    }
+
     func reset() {
+        if let id = outboundID, call == nil {
+            outboundID = nil
+            outboundRequest?.cancel(); outboundRequest = nil
+            Task { _ = try? await self.outboundAPI(callID: id, method: "DELETE") }
+        }
         invites.removeAll()
         if closeCall() != nil { callshieldLog("call reset") } else { connectLobbyIfNeeded() }
     }
@@ -427,6 +494,11 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
     /// both the caller leaving and the room disconnecting, and the second finds no call.
     @discardableResult
     private func closeCall() -> LiveCall? {
+        if let id = outboundID {
+            outboundID = nil
+            outboundRequest?.cancel(); outboundRequest = nil
+            Task { _ = try? await self.outboundAPI(callID: id, method: "DELETE") }
+        }
         guard let closed = call else { return nil }
         call = nil
         assessmentWatchdog?.cancel(); assessmentWatchdog = nil
