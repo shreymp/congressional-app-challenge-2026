@@ -1,0 +1,47 @@
+2026-10-19T06:25:10.921Z
+Window: "Callshield Oct 17 Validation", App: Simulator.
+0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise
+	1 button Action
+	2 button Volume Up
+	3 button Volume Down
+	4 button Sleep/Wake
+	5 container
+		6 button Description: Done, Secondary Actions: Cancel
+		7 text Description: [test caller], Secondary Actions: Cancel
+		8 text Description: [test caller], Secondary Actions: Cancel
+		9 button Description: Call, Secondary Actions: Cancel
+		10 button Description: Add to Favorites, Secondary Actions: Cancel
+		11 element Description: Likely AI, Secondary Actions: Cancel
+		12 text Description: This voice may be AI-generated. Verify the caller before sharing information., Secondary Actions: Cancel
+		13 text Description: Last voice update Oct 19, 2026 at 1:24 AM, Secondary Actions: Cancel
+		14 text Description: Transcript analysis, Secondary Actions: Cancel
+		15 text Description: No strong scam-language signal, Secondary Actions: Cancel
+		16 text Description: Scam risk score: 3% · update 156, Secondary Actions: Cancel
+		17 text Description: Call type, Secondary Actions: Cancel
+		18 text Description: Incoming, Secondary Actions: Cancel
+		19 text Description: Status, Secondary Actions: Cancel
+		20 text Description: Completed, Secondary Actions: Cancel
+		21 text Description: Time, Secondary Actions: Cancel
+		22 text Description: 10/19/2026, 1:22 AM, Secondary Actions: Cancel
+		23 text Description: Duration, Secondary Actions: Cancel
+		24 text Description: 02:06, Secondary Actions: Cancel
+		25 text Description: Voice labels do not verify caller identity or safety., Secondary Actions: Cancel
+	26 toolbar
+		27 button Description: Home, Secondary Actions: Move previous, Move next, Remove from toolbar
+		28 button Description: Save Screen, Secondary Actions: Move previous, Move next, Remove from toolbar
+		29 button Description: Rotate, Secondary Actions: Move previous, Move next, Remove from toolbar
+	30 close button
+	31 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	32 minimize button
+	33 text Callshield Oct 17 Validation – iOS 26.5
+34 menu bar
+	35 Simulator
+	36 File
+	37 Edit
+	38 Device
+	39 I/O
+	40 Features
+	41 Window
+	42 Help
+
+The focused UI element is 0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise

@@ -10,7 +10,7 @@ struct ProductionVoicemailView: View {
         NavigationStack {
             Group {
                 if !store.voicemailBackend.isConfigured {
-                    PhoneEmptyView(symbol: "recordingtape", title: "Voicemail unavailable", message: "Voicemail is not available in Callshield yet.")
+                    PhoneEmptyView(symbol: "recordingtape", title: "Voicemail unavailable", message: "Voicemail is not available in callma. yet.")
                         .frame(maxHeight: .infinity, alignment: .top)
                 } else if store.loadingVoicemail && store.voicemail.isEmpty { ProgressView("Loading voicemail…") }
                 else {
@@ -26,7 +26,7 @@ struct ProductionVoicemailView: View {
                         ForEach(store.voicemail) { message in
                             Button { selected = message } label: {
                                 HStack(spacing: 12) {
-                                    Circle().fill(message.isRead ? .clear : Palette.green).frame(width: 8, height: 8)
+                                    Circle().fill(message.isRead ? .clear : Palette.accent).frame(width: 8, height: 8)
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(message.caller.name).font(.headline).foregroundStyle(Palette.ink)
                                         Text(message.date.formatted()).font(.caption).foregroundStyle(.secondary)
@@ -45,7 +45,7 @@ struct ProductionVoicemailView: View {
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .task { await store.refreshVoicemail() }
             .sheet(item: $selected) { message in VoicemailPlaybackView(message: message).environmentObject(store) }
-        }.preferredColorScheme(.light).tint(Palette.green)
+        }.preferredColorScheme(.light).tint(Palette.accent)
     }
 }
 
@@ -82,7 +82,7 @@ struct VoicemailPlaybackView: View {
                 allowsPlayback = phase == .active
                 if phase != .active { player?.pause(); playing = false }
             }
-        }.tint(Palette.green)
+        }.tint(Palette.accent)
     }
     @MainActor private func togglePlayback() async {
         guard !busy else { return }

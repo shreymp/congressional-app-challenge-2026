@@ -24,12 +24,14 @@ struct PhoneCallRecord: Identifiable, Codable, Equatable {
     let direction: CallDirection
     let outcome: PhoneCallOutcome
     let voice: Voice
+    var deepfake: DeepfakeAssessment? = nil
+    var transcript: TranscriptAssessment? = nil
 }
 
 struct PhoneCall: Identifiable, Equatable {
     enum Stage: String { case incoming, connecting, connected, held }
     let id: UUID
-    let person: Person
+    var person: Person
     let direction: CallDirection
     let createdAt: Date
     var connectedAt: Date?
@@ -37,6 +39,10 @@ struct PhoneCall: Identifiable, Equatable {
     var voice: Voice = .unknown
     var muted = false
     var speaker = false
+    var deepfake: DeepfakeAssessment? = nil
+    var transcript: TranscriptAssessment? = nil
+    var lastDeepfakeResult: DeepfakeAssessment? = nil
+    var lastTranscriptResult: TranscriptAssessment? = nil
 }
 
 struct PhoneSnapshot: Codable {
@@ -51,9 +57,9 @@ enum PhoneError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidNumber: return "Enter a valid phone number."
-        case .serviceUnavailable: return "Calling through Callshield isn’t available yet. You can call using your mobile service."
+        case .serviceUnavailable: return "Calling through callma. isn’t available yet. You can call using your mobile service."
         case .simulatorUnavailable: return "Phone calls require an iPhone. They aren’t available in the simulator."
-        case .microphoneDenied: return "Allow microphone access in Settings to make a Callshield call."
+        case .microphoneDenied: return "Allow microphone access in Settings to make a callma. call."
         case .actionUnavailable: return "That action isn’t available for this call."
         }
     }
@@ -78,6 +84,19 @@ enum PhoneNumber {
         return try normalized(components.path)
     }
 
+    /// Match common US local and country-code forms without changing the dialed number.
+    static func matches(_ first: String, _ second: String) -> Bool {
+        func key(_ value: String) -> String? {
+            guard let normalized = try? normalized(value),
+                  !normalized.contains("*"), !normalized.contains("#") else { return nil }
+            let digits = normalized.filter { $0.isNumber }
+            if digits.count == 10 { return "1" + digits }
+            return digits.isEmpty ? nil : digits
+        }
+        guard let left = key(first), let right = key(second) else { return false }
+        return left == right
+    }
+
     static func person(_ number: String, name: String? = nil) -> Person {
         let name = name?.trimmingCharacters(in: .whitespacesAndNewlines)
         let display = name?.isEmpty == false ? name! : number
@@ -85,3 +104,4 @@ enum PhoneNumber {
         return Person(name: display, number: number, initials: initials, color: .slate, voice: .unknown)
     }
 }
+

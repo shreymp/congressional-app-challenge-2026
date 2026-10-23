@@ -1,0 +1,22 @@
+Started UTC: 2026-10-19T06:11:49.888730+00:00
+Exit: 0
+test_cancellation_stops_inflight_inference_from_publishing (test_agent_integration.AgentIntegrationTests.test_cancellation_stops_inflight_inference_from_publishing) ... ok
+test_failed_inference_does_not_fail_call_or_leak_stream (test_agent_integration.AgentIntegrationTests.test_failed_inference_does_not_fail_call_or_leak_stream) ... ok
+test_failed_model_load_reports_unavailable_and_can_be_cancelled (test_agent_integration.AgentIntegrationTests.test_failed_model_load_reports_unavailable_and_can_be_cancelled) ... ok
+test_scores_and_publishes_versioned_caller_evidence_then_closes (test_agent_integration.AgentIntegrationTests.test_scores_and_publishes_versioned_caller_evidence_then_closes) ... ok
+test_transcript_is_fused_into_versioned_risk_updates (test_agent_integration.AgentIntegrationTests.test_transcript_is_fused_into_versioned_risk_updates) ... ok
+test_transcription_continues_when_voice_model_is_missing (test_agent_integration.AgentIntegrationTests.test_transcription_continues_when_voice_model_is_missing) ... ok
+test_human_requires_multiple_distinct_windows_and_no_rescoring_silence (test_integration.IntegrationTests.test_human_requires_multiple_distinct_windows_and_no_rescoring_silence) ... ok
+test_invalid_thresholds_or_scores_do_not_produce_labels (test_integration.IntegrationTests.test_invalid_thresholds_or_scores_do_not_produce_labels) ... ok
+test_nonfinite_scores_fail_and_later_inference_recovers (test_integration.IntegrationTests.test_nonfinite_scores_fail_and_later_inference_recovers) ... ok
+test_pause_discards_old_speech_and_old_inflight_result (test_integration.IntegrationTests.test_pause_discards_old_speech_and_old_inflight_result) ... ok
+test_protocol_sequence_stream_and_caller_scope (test_integration.IntegrationTests.test_protocol_sequence_stream_and_caller_scope) ... ok
+test_risk_escalates_and_deescalates_with_hysteresis (test_integration.IntegrationTests.test_risk_escalates_and_deescalates_with_hysteresis) ... ok
+test_silence_never_reaches_model_and_waits_for_three_seconds (test_integration.IntegrationTests.test_silence_never_reaches_model_and_waits_for_three_seconds) ... ok
+test_slow_inference_becomes_unavailable_without_queuing_more_work (test_integration.IntegrationTests.test_slow_inference_becomes_unavailable_without_queuing_more_work) ... ok
+test_swift_fixtures_match_production_risk_engine (test_integration.IntegrationTests.test_swift_fixtures_match_production_risk_engine) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.441s
+
+OK

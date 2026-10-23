@@ -1,0 +1,544 @@
+{
+  "ranking": {
+    "v2": {
+      "roc_auc": 0.7408,
+      "average_precision": 0.783058764422298,
+      "scam_score_quantiles": [
+        0.023877937346696854,
+        0.18793536350131035,
+        0.8764487206935883,
+        0.9812047183513641,
+        0.9910049438476562
+      ],
+      "normal_score_quantiles": [
+        0.015519951470196247,
+        0.08132469281554222,
+        0.1587328538298607,
+        0.7914728969335556,
+        0.9763514995574951
+      ],
+      "posthoc_test_oracle": {
+        "correct": 68,
+        "n": 100,
+        "threshold": 0.9470495581626892,
+        "warning": "Chosen with test answers. Diagnostic upper bound for a single cutoff on these scores only; not validated accuracy, not a deployment threshold."
+      }
+    },
+    "v5": {
+      "roc_auc": 0.9796,
+      "average_precision": 0.9830629063503841,
+      "scam_score_quantiles": [
+        0.003359270514920354,
+        0.019230758771300316,
+        0.07888160645961761,
+        0.8844364583492279,
+        0.986469030380249
+      ],
+      "normal_score_quantiles": [
+        0.0011664818739518523,
+        0.0018449110793881118,
+        0.0025028616655617952,
+        0.004319259081967175,
+        0.012095837853848934
+      ],
+      "posthoc_test_oracle": {
+        "correct": 95,
+        "n": 100,
+        "threshold": 0.008873258717358112,
+        "warning": "Chosen with test answers. Diagnostic upper bound for a single cutoff on these scores only; not validated accuracy, not a deployment threshold."
+      }
+    },
+    "v6": {
+      "roc_auc": 0.9636,
+      "average_precision": 0.9705005743210033,
+      "scam_score_quantiles": [
+        0.0013878265162929893,
+        0.005590953282080591,
+        0.010416033212095499,
+        0.4591969698667526,
+        0.975470244884491
+      ],
+      "normal_score_quantiles": [
+        0.0007311367662623525,
+        0.0010642323468346149,
+        0.0014376956387422979,
+        0.0022012863773852587,
+        0.004881915636360645
+      ],
+      "posthoc_test_oracle": {
+        "correct": 93,
+        "n": 100,
+        "threshold": 0.003323697717860341,
+        "warning": "Chosen with test answers. Diagnostic upper bound for a single cutoff on these scores only; not validated accuracy, not a deployment threshold."
+      }
+    },
+    "v3": {
+      "roc_auc": 0.98,
+      "average_precision": 0.9829121380885613,
+      "scam_score_quantiles": [
+        0.00602618558332324,
+        0.03012169525027275,
+        0.11770375072956085,
+        0.9627837836742401,
+        0.9916266202926636
+      ],
+      "normal_score_quantiles": [
+        0.0025509365368634462,
+        0.004052834119647741,
+        0.005120062734931707,
+        0.008239355054683983,
+        0.024050625041127205
+      ],
+      "posthoc_test_oracle": {
+        "correct": 94,
+        "n": 100,
+        "threshold": 0.015808751806616783,
+        "warning": "Chosen with test answers. Diagnostic upper bound for a single cutoff on these scores only; not validated accuracy, not a deployment threshold."
+      }
+    }
+  },
+  "v6_vs_v5_score_decreases": {
+    "scam": 50,
+    "normal": 50
+  },
+  "training": {
+    "v5": {
+      "total": 1822,
+      "positive": 804,
+      "negative": 1018,
+      "normal_share": 0.5587266739846323,
+      "validation_selection_sources": {
+        "authored_paired_training": {
+          "n": 24,
+          "positives": 12,
+          "negatives": 12,
+          "accuracy": 0.875,
+          "precision": 0.8,
+          "recall": 1.0,
+          "specificity": 0.75,
+          "f1": 0.8888888888888888,
+          "brier": 0.10401824116706848,
+          "nll": 0.302857369184494,
+          "ece_10_bin": 0.17211847628156343,
+          "confusion": {
+            "tp": 12,
+            "tn": 9,
+            "fp": 3,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training": {
+          "n": 32,
+          "positives": 0,
+          "negatives": 32,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 0.001778499921783805,
+          "nll": 0.02355283312499523,
+          "ece_10_bin": 0.022551956761162728,
+          "confusion": {
+            "tp": 0,
+            "tn": 32,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "ncsu_ftc": {
+          "n": 5,
+          "positives": 5,
+          "negatives": 0,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 0.0,
+          "f1": 1.0,
+          "brier": 0.002040205057710409,
+          "nll": 0.029670163989067078,
+          "ece_10_bin": 0.02858126163482666,
+          "confusion": {
+            "tp": 5,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "shake": {
+          "n": 361,
+          "positives": 181,
+          "negatives": 180,
+          "accuracy": 0.9806094182825484,
+          "precision": 0.9728260869565217,
+          "recall": 0.988950276243094,
+          "specificity": 0.9722222222222222,
+          "f1": 0.9808219178082191,
+          "brier": 0.015300222672522068,
+          "nll": 0.06306872516870499,
+          "ece_10_bin": 0.00989956357916223,
+          "confusion": {
+            "tp": 179,
+            "tn": 175,
+            "fp": 5,
+            "fn": 2
+          }
+        },
+        "switchboard": {
+          "n": 26,
+          "positives": 0,
+          "negatives": 26,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 2.510033482394647e-05,
+          "nll": 0.0034143163356930017,
+          "ece_10_bin": 0.003401658032089472,
+          "confusion": {
+            "tp": 0,
+            "tn": 26,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "selection_loss_before_after": [
+        0.28641796186566354,
+        0.08451268156059086
+      ]
+    },
+    "v6": {
+      "total": 2593,
+      "positive": 804,
+      "negative": 1789,
+      "normal_share": 0.6899344388738913,
+      "validation_selection_sources": {
+        "authored_paired_training": {
+          "n": 24,
+          "positives": 12,
+          "negatives": 12,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "f1": 1.0,
+          "brier": 0.007819061167538166,
+          "nll": 0.06149859353899956,
+          "ece_10_bin": 0.05700892023742198,
+          "confusion": {
+            "tp": 12,
+            "tn": 12,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training": {
+          "n": 32,
+          "positives": 0,
+          "negatives": 32,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 2.3121148842619732e-05,
+          "nll": 0.0039689503610134125,
+          "ece_10_bin": 0.003957322333008051,
+          "confusion": {
+            "tp": 0,
+            "tn": 32,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "hvb_recorded_roleplay_training_prefix": {
+          "n": 51,
+          "positives": 0,
+          "negatives": 51,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 7.816393917892128e-05,
+          "nll": 0.00583673408254981,
+          "ece_10_bin": 0.005796997342258692,
+          "confusion": {
+            "tp": 0,
+            "tn": 51,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "ncsu_ftc": {
+          "n": 5,
+          "positives": 5,
+          "negatives": 0,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 0.0,
+          "f1": 1.0,
+          "brier": 0.0353081189095974,
+          "nll": 0.11881177127361298,
+          "ece_10_bin": 0.09390236139297486,
+          "confusion": {
+            "tp": 5,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "shake": {
+          "n": 361,
+          "positives": 181,
+          "negatives": 180,
+          "accuracy": 0.9833795013850416,
+          "precision": 0.9888268156424581,
+          "recall": 0.9779005524861878,
+          "specificity": 0.9888888888888889,
+          "f1": 0.9833333333333333,
+          "brier": 0.016115719452500343,
+          "nll": 0.06741305440664291,
+          "ece_10_bin": 0.014196659684686835,
+          "confusion": {
+            "tp": 177,
+            "tn": 178,
+            "fp": 2,
+            "fn": 4
+          }
+        },
+        "switchboard": {
+          "n": 26,
+          "positives": 0,
+          "negatives": 26,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 5.627201062452514e-06,
+          "nll": 0.0018134998390451074,
+          "ece_10_bin": 0.0018106818897649646,
+          "confusion": {
+            "tp": 0,
+            "tn": 26,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "switchboard_prefix": {
+          "n": 52,
+          "positives": 0,
+          "negatives": 52,
+          "accuracy": 1.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "specificity": 1.0,
+          "f1": 0.0,
+          "brier": 7.776823622407392e-06,
+          "nll": 0.002120355609804392,
+          "ece_10_bin": 0.0021164482459425926,
+          "confusion": {
+            "tp": 0,
+            "tn": 52,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "selection_loss_before_after": [
+        0.07386640648889754,
+        0.037351851301666884
+      ]
+    }
+  },
+  "ablations": {
+    "v3": {},
+    "v5": {
+      "caller_prefix": {
+        "n": 100,
+        "positives": 50,
+        "negatives": 50,
+        "accuracy": 0.72,
+        "precision": 1.0,
+        "recall": 0.44,
+        "specificity": 1.0,
+        "f1": 0.6111111111111112,
+        "brier": 0.2394554849673883,
+        "nll": 0.9200463569538847,
+        "ece_10_bin": 0.27119801570894203,
+        "confusion": {
+          "tp": 22,
+          "tn": 50,
+          "fp": 0,
+          "fn": 28
+        },
+        "accuracy_wilson_95": [
+          0.6251197129007884,
+          0.7986031478881379
+        ],
+        "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+        "selective_0.2_0.8": {
+          "coverage": 0.94,
+          "abstentions": 6,
+          "accuracy_on_answered": 0.7340425531914894,
+          "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+        },
+        "alert_at_0.75": {
+          "missed_scams": 30,
+          "false_alerts": 0
+        }
+      },
+      "no_prefix": {
+        "n": 100,
+        "positives": 50,
+        "negatives": 50,
+        "accuracy": 0.72,
+        "precision": 1.0,
+        "recall": 0.44,
+        "specificity": 1.0,
+        "f1": 0.6111111111111112,
+        "brier": 0.26001152407304334,
+        "nll": 1.0276407811544286,
+        "ece_10_bin": 0.29580368090770215,
+        "confusion": {
+          "tp": 22,
+          "tn": 50,
+          "fp": 0,
+          "fn": 28
+        },
+        "accuracy_wilson_95": [
+          0.6251197129007884,
+          0.7986031478881379
+        ],
+        "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+        "selective_0.2_0.8": {
+          "coverage": 0.92,
+          "abstentions": 8,
+          "accuracy_on_answered": 0.717391304347826,
+          "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+        },
+        "alert_at_0.75": {
+          "missed_scams": 33,
+          "false_alerts": 0
+        }
+      },
+      "context": {
+        "n_over_300_tokens": 2,
+        "max_tokens": 322
+      }
+    },
+    "v6": {
+      "caller_prefix": {
+        "n": 100,
+        "positives": 50,
+        "negatives": 50,
+        "accuracy": 0.65,
+        "precision": 1.0,
+        "recall": 0.3,
+        "specificity": 1.0,
+        "f1": 0.46153846153846156,
+        "brier": 0.315980951981386,
+        "nll": 1.4925243964425237,
+        "ece_10_bin": 0.34245648729207456,
+        "confusion": {
+          "tp": 15,
+          "tn": 50,
+          "fp": 0,
+          "fn": 35
+        },
+        "accuracy_wilson_95": [
+          0.5525444329688796,
+          0.7363575175690247
+        ],
+        "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+        "selective_0.2_0.8": {
+          "coverage": 0.93,
+          "abstentions": 7,
+          "accuracy_on_answered": 0.6666666666666666,
+          "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+        },
+        "alert_at_0.75": {
+          "missed_scams": 37,
+          "false_alerts": 0
+        }
+      },
+      "no_prefix": {
+        "n": 100,
+        "positives": 50,
+        "negatives": 50,
+        "accuracy": 0.62,
+        "precision": 1.0,
+        "recall": 0.24,
+        "specificity": 1.0,
+        "f1": 0.3870967741935484,
+        "brier": 0.3445491549104254,
+        "nll": 1.625677979108736,
+        "ece_10_bin": 0.37120285482495097,
+        "confusion": {
+          "tp": 12,
+          "tn": 50,
+          "fp": 0,
+          "fn": 38
+        },
+        "accuracy_wilson_95": [
+          0.5220975529551107,
+          0.7090240074752127
+        ],
+        "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+        "selective_0.2_0.8": {
+          "coverage": 0.95,
+          "abstentions": 5,
+          "accuracy_on_answered": 0.631578947368421,
+          "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+        },
+        "alert_at_0.75": {
+          "missed_scams": 40,
+          "false_alerts": 0
+        }
+      },
+      "context": {
+        "n_over_300_tokens": 2,
+        "max_tokens": 322
+      }
+    }
+  },
+  "v3_same_100": {
+    "n": 100,
+    "positives": 50,
+    "negatives": 50,
+    "accuracy": 0.72,
+    "precision": 1.0,
+    "recall": 0.44,
+    "specificity": 1.0,
+    "f1": 0.6111111111111112,
+    "brier": 0.25854171901062545,
+    "nll": 0.9756798762713711,
+    "ece_10_bin": 0.2840578301646747,
+    "confusion": {
+      "tp": 22,
+      "tn": 50,
+      "fp": 0,
+      "fn": 28
+    },
+    "accuracy_wilson_95": [
+      0.6251197129007884,
+      0.7986031478881379
+    ],
+    "accuracy_wilson_assumption": "Descriptive iid approximation only. Related scripts/speakers and adaptive benchmark reuse invalidate independent-sample generalization claims.",
+    "selective_0.2_0.8": {
+      "coverage": 0.94,
+      "abstentions": 6,
+      "accuracy_on_answered": 0.7127659574468085,
+      "warning": "Threshold-only coverage on these non-short samples. Accuracy excludes abstentions; not overall accuracy or full service coverage."
+    },
+    "alert_at_0.75": {
+      "missed_scams": 31,
+      "false_alerts": 0
+    }
+  },
+  "limits": "All test-derived thresholds and ablations are exploratory. Labels remain source-attributed, not adjudicated for excerpt sufficiency. No model training or deployment change."
+}

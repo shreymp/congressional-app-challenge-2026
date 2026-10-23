@@ -1,0 +1,13 @@
+{
+  "count": 100,
+  "sha256": "8217dc8313370459acb5865261921d8c43c5aa2d3e215359ce1d64daa5acfdf0",
+  "thresholds": [
+    0.5,
+    0.75
+  ],
+  "training_use": "forbidden for this experiment",
+  "baseline_sha256": "56a6aa9cd4da7ef08cf128079007c1f3ab9deab08731e178b3fde6d38a4abc8e",
+  "source": "https://github.com/cricketclub/gridspace-stanford-harper-valley",
+  "license": "CC BY 4.0",
+  "limits": "Benign recorded roleplay only. Calls/exact text disjoint from prior probes and training. Speakers/scenarios may overlap. Cannot measure scam recall or organic real-world accuracy."
+}

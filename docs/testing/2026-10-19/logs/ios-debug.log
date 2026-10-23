@@ -1,0 +1,15 @@
+Writing result bundle at path:
+	/private/tmp/callshield-oct19-debug.xcresult
+
+2026-10-19 01:28:09.631 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:28:09.631 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:28:13.351 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:28:13.352 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:28:18.798 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:28:18.798 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:28:27.761 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-19 01:28:27.761 xcodebuild[47265:37271839] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-19 01:28:37.022 xcodebuild[47265:37271839] [MT] IDETestOperationsObserverDebug: 64.086 elapsed -- Testing started completed.
+2026-10-19 01:28:37.022 xcodebuild[47265:37271839] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-19 01:28:37.022 xcodebuild[47265:37271839] [MT] IDETestOperationsObserverDebug: 64.086 sec, +64.086 sec -- end
+Testing started

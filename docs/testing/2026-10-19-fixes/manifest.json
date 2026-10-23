@@ -1,0 +1,77 @@
+[
+  {
+    "path": "REPORT.md",
+    "bytes": 5617,
+    "sha256": "7af4e1fc61c59fc8c5e53a3555793ef6c9ddd9f2488db799d25ea395aaa523b0"
+  },
+  {
+    "path": "backend-fix.patch",
+    "bytes": 27203,
+    "sha256": "8d2144fde2bfc76051266e6ecb8401ab25bb0959c5f47709273045e7e3ec09a9"
+  },
+  {
+    "path": "logs/backend-summary.json",
+    "bytes": 950,
+    "sha256": "c16a28b31c1f08551cde50514b9e26a8123e1eae658c0576eedbc640524dd615"
+  },
+  {
+    "path": "logs/cloud-contracts.log",
+    "bytes": 1236,
+    "sha256": "39f694e30cf27576a98e7ade7bceca655884d4b9ec4b43062d8e8a40c3a7a3c0"
+  },
+  {
+    "path": "logs/node-connector.log",
+    "bytes": 250,
+    "sha256": "2ac7c5fcaf15ed5b595012e3ea91b737dc232b50b9dc20a77d84dac984dbfa98"
+  },
+  {
+    "path": "logs/ring-after-fix.log",
+    "bytes": 1135,
+    "sha256": "c9cddf47862245608c8978498e5873d39db290209e655d1861b13bc9db7018ca"
+  },
+  {
+    "path": "logs/ring-before-fix.log",
+    "bytes": 13852,
+    "sha256": "10c09a21f5ec2b3be9dc93cb8b50c36e2db8025ec8630e65f02ef256bdc3628c"
+  },
+  {
+    "path": "logs/ring-lifecycle-final.log",
+    "bytes": 1208,
+    "sha256": "522adb156669b355f7c0e9838d6b6cfc50ddf60105bb6abd16d2b834bf8db889"
+  },
+  {
+    "path": "logs/ring-lifecycle.log",
+    "bytes": 2336,
+    "sha256": "0622bfaa605844413d5933088fc1a02dcc32bc6f575f231b6904cf7b70325722"
+  },
+  {
+    "path": "logs/tester-tools.log",
+    "bytes": 2336,
+    "sha256": "cc5f0c2d76ceafa96825378814725611eeb0a310929180429978e466b872a817"
+  },
+  {
+    "path": "logs/transcript-service.log",
+    "bytes": 954,
+    "sha256": "89f61e1e14ddbdf0da1668cbea424f0656fc62101abd95fdb915def2f9001311"
+  },
+  {
+    "path": "logs/transcript.log",
+    "bytes": 1675,
+    "sha256": "4cbc5ce9f7c2f107e7f4ef53f154c357a33c81a6bdcaca13951a2ef5a934afef"
+  },
+  {
+    "path": "logs/worker-integration.log",
+    "bytes": 2596,
+    "sha256": "a9f138e95017013e8874532a9226269b57f6fc8b1bbcf9669280c67ffa518af9"
+  },
+  {
+    "path": "run-backend-checks.py",
+    "bytes": 2103,
+    "sha256": "cfa4baedd9b809d03580d854bf551940fa9413eb630103717a070c5c2e19fb33"
+  },
+  {
+    "path": "validation-final.json",
+    "bytes": 2485,
+    "sha256": "30edb7e0f6ba8928ca9511bf0b931c25e8a7ff1a6a50a273df0cb34600d58d99"
+  }
+]

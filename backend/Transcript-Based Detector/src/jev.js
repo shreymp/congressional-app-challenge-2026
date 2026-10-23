@@ -9,7 +9,7 @@ async function scoreTranscript(transcript) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ transcript }),
-    signal: AbortSignal.timeout(2500),
+    signal: AbortSignal.timeout(Math.max(100, Math.min(30000, Number(process.env.JEV_TIMEOUT_MS) || 2500))),
   });
   if (!response.ok) throw new Error(`Model returned HTTP ${response.status}`);
 
@@ -22,3 +22,4 @@ async function scoreTranscript(transcript) {
 }
 
 module.exports = { isConfigured, scoreTranscript };
+

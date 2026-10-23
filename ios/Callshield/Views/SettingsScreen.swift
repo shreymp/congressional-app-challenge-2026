@@ -6,47 +6,35 @@ struct SettingsScreen: View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(spacing: 0) {
                 BrandMark()
-                Text("Callshield").font(.system(size: 19, weight: .semibold)).padding(.top, 12)
-                Text("More clarity for every incoming call.")
-                    .font(.system(size: 11)).foregroundStyle(Color(hex: 0x89968D)).padding(.top, 4)
+                Text(AppBrand.name).scaledFont(size: 19, weight: .semibold).padding(.top, 12)
+                Text(AppBrand.tagline)
+                    .scaledFont(size: 11).foregroundStyle(Palette.secondary).padding(.top, 4)
             }
             .frame(maxWidth: .infinity)
             .padding(.top, 9)
             .padding(.bottom, 24)
+            .padding(.horizontal, 12)
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 24))
+            .padding(.bottom, 20)
 
+            AppearancePicker().padding(.bottom, 20)
             VStack(spacing: 0) {
                 Toggle("Larger text", isOn: $store.largeText)
-                    .tint(Color(hex: 0x34C759))
+                    .tint(Palette.teal)
                     .accessibilityIdentifier("largerTextToggle")
                     .frame(minHeight: 47)
                 Divider()
-                setting("Calling mode", value: "Incoming only")
+                setting("Calling", value: "Demo")
                 Divider()
-                setting("Connection", value: "Demo")
+                setting("Voice labels", value: "Simulated")
             }
-            .font(.system(size: store.largeText ? 14 : 12))
+            .scaledFont(size: store.largeText ? 14 : 12)
             .padding(.horizontal, 13)
-            .background(Color(hex: 0xF6F7F6), in: RoundedRectangle(cornerRadius: 12))
+            .background(Palette.softAccent, in: RoundedRectangle(cornerRadius: 12))
 
-            Text("UNDERSTANDING VOICE LABELS")
-                .font(.system(size: 9)).tracking(1)
-                .foregroundStyle(Color(hex: 0x9AA19C))
-                .accessibilityAddTraits(.isHeader)
-                .padding(.top, 23).padding(.bottom, 10)
-            ForEach([Voice.ai, .human, .unknown], id: \.self) { voice in
-                VStack(alignment: .leading, spacing: 6) {
-                    VoiceBadge(voice: voice)
-                    Text(voice.explanation)
-                        .font(.system(size: 11))
-                        .foregroundStyle(Color(hex: 0x8B958E))
-                        .lineSpacing(4)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(.vertical, 7)
-            }
             Text("This prototype uses sample calls and simulated results. Real incoming calls and voice analysis require connected services.")
-                .font(.system(size: 11))
-                .foregroundStyle(Color(hex: 0x8B958E))
+                .scaledFont(size: 11)
+                .foregroundStyle(Palette.secondary)
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 12)
@@ -59,7 +47,7 @@ struct SettingsScreen: View {
         HStack {
             Text(label)
             Spacer()
-            Text(value).font(.system(size: 11)).foregroundStyle(Color(hex: 0x89948D))
+            Text(value).scaledFont(size: 11).foregroundStyle(Palette.secondary)
         }
         .frame(minHeight: 47)
     }

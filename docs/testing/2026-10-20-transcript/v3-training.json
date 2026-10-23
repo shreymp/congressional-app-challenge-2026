@@ -1,0 +1,140 @@
+{
+  "base": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/runs/call-v2-caller",
+  "seed": 20261020,
+  "lr": 3e-06,
+  "history": [
+    {
+      "epoch": 0,
+      "temperature": 3.46281738762101,
+      "validation": {
+        "n": 392,
+        "positives": 186,
+        "negatives": 206,
+        "accuracy": 0.9464285714285714,
+        "precision": 0.9104477611940298,
+        "recall": 0.9838709677419355,
+        "specificity": 0.912621359223301,
+        "f1": 0.9457364341085271,
+        "brier": 0.04378185793757439,
+        "nll": 0.15496934950351715,
+        "ece_10_bin": 0.04188464939290165,
+        "confusion": {
+          "tp": 183,
+          "tn": 188,
+          "fp": 18,
+          "fn": 3
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 0.5161290322580645,
+        "precision": 0.25,
+        "recall": 1.0,
+        "specificity": 0.4230769230769231,
+        "f1": 0.4,
+        "brier": 0.3861902952194214,
+        "nll": 1.167299509048462,
+        "ece_10_bin": 0.4821582167379318,
+        "confusion": {
+          "tp": 5,
+          "tn": 11,
+          "fp": 15,
+          "fn": 0
+        }
+      },
+      "elapsed_sec": 10.736569499829784
+    },
+    {
+      "epoch": 1,
+      "temperature": 1.9814783183688471,
+      "validation": {
+        "n": 392,
+        "positives": 186,
+        "negatives": 206,
+        "accuracy": 0.9795918367346939,
+        "precision": 0.989010989010989,
+        "recall": 0.967741935483871,
+        "specificity": 0.9902912621359223,
+        "f1": 0.9782608695652174,
+        "brier": 0.01647675223648548,
+        "nll": 0.06746236979961395,
+        "ece_10_bin": 0.012416897607701177,
+        "confusion": {
+          "tp": 180,
+          "tn": 204,
+          "fp": 2,
+          "fn": 6
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 2.5392440875293687e-05,
+        "nll": 0.0036643596831709146,
+        "ece_10_bin": 0.0036515589172561327,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "elapsed_sec": 215.0111042088829
+    },
+    {
+      "epoch": 2,
+      "temperature": 2.744181375403828,
+      "validation": {
+        "n": 392,
+        "positives": 186,
+        "negatives": 206,
+        "accuracy": 0.9846938775510204,
+        "precision": 0.9838709677419355,
+        "recall": 0.9838709677419355,
+        "specificity": 0.9854368932038835,
+        "f1": 0.9838709677419355,
+        "brier": 0.012701213359832764,
+        "nll": 0.054342370480298996,
+        "ece_10_bin": 0.008006015611926497,
+        "confusion": {
+          "tp": 183,
+          "tn": 203,
+          "fp": 3,
+          "fn": 3
+        }
+      },
+      "recorded_validation": {
+        "n": 31,
+        "positives": 5,
+        "negatives": 26,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "brier": 6.610458513023332e-05,
+        "nll": 0.00583939952775836,
+        "ece_10_bin": 0.005805923182877802,
+        "confusion": {
+          "tp": 5,
+          "tn": 26,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "elapsed_sec": 423.1697661250364
+    }
+  ],
+  "real_training": 479,
+  "augmented_training": 479,
+  "test_access": "none",
+  "deployment": "research candidate only; evaluate before promotion"
+}

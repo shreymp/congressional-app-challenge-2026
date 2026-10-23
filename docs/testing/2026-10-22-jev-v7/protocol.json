@@ -1,0 +1,58 @@
+{
+  "seed": "jev-repair-v7-20261022:",
+  "dataset_sha256": {
+    "calibration": "2a3e8f33662a335afc1a62d9c27467139fd48e1f7ca6b1c9af67b0c30a18c378",
+    "test": "52e1785b2951dfce8bec1a147ecb4beaf67a22f5417ed26c30fdaa0b2a86bf85"
+  },
+  "input_sha256": {
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/train.jsonl": "06772b1d60abcc90fe16cae20a6b6dabefe9b6818dd49877134fcaffcc3ad0e0",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/validation.jsonl": "575db0c3a445bc0ea1454f7b4f5fdadc9187656519c5553bcf3c363584bb4b06",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/test.jsonl": "db89b9d2684724df4dc67d6b251b3e91f6e90c97583df67d942d94742a60083c",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/train.jsonl": "134464769f6c0a0435b1d026ccc7db015f141035250aa011114ab3d0bddb5610",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/human100/test.jsonl": "134ed53d825ca25f6ac65bb03b8a091d7a56e21b4fc5341a7263702eda961476",
+    "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/hvb/probes.jsonl": "ed870ffb8737df104dad3ef70e0fd39a805a5203ca01e2397c67ce7f837d2437",
+    "/tmp/jev-youtube-scam-transcripts.zip": "3f67497736e9421c2f6e59efc46c129006419d40fc752cbb981042940384cedd",
+    "/tmp/callshield-swda.zip": "a5fe9b1f0a6c1aca42904ac1fecd65538125b71fb1490716408bc087a7f6c529",
+    "/tmp/jev-sbcorpus.zip": "1c8eab15fa3bbf8a704086c5868ae22b465fdcb09d0ac5425c98f46a1d4f60ab"
+  },
+  "calibration": {
+    "human_excerpts": 40,
+    "new_human_excerpts": 22,
+    "previously_seen_validation_normals": 18,
+    "scams": 20,
+    "normal": 20,
+    "banking_roleplay_validation": "/Users/keshavparikh/Documents/CAC/congressional-app-challenge-2026/backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl",
+    "banking_sha256": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0"
+  },
+  "fresh_test": {
+    "n": 60,
+    "scams": 30,
+    "normal": 30
+  },
+  "source_split": "New calibration scams: ModderPaulScambaits. New test scams: other named creators. Creators overlap the previously inspected human100 development sample.",
+  "operating_requirements": {
+    "min_recall": 0.9,
+    "max_fpr_each_benign_domain": 0.05
+  },
+  "fresh_acceptance": {
+    "min_accuracy": 0.9,
+    "min_recall": 0.9,
+    "max_fpr": 0.05,
+    "no_additional_fn_or_fp_vs_baseline_fixed_0_75": true
+  },
+  "context_mode": "windows",
+  "maximum_scam_similarity_to_prior_or_other_selected": {
+    "calibration": 0.6312519235384392,
+    "test": 0.6058798669049978
+  },
+  "forbidden": "Never fit weights, cutoff, temperature or select epochs with test labels. Failed policy fits remain failed. No retry on these test answers.",
+  "limits": [
+    "Transcript excerpts, not full audio calls; no ASR or audio performance measured.",
+    "Silver source-call labels can overstate visible excerpt evidence; each video was not independently listened to.",
+    "Scam and normal source confounding remains. No field accuracy guarantee or deployment approval.",
+    "28/30 test normals are new-source Santa Barbara conversations, mostly face-to-face. Some within-corpus speakers can recur; no independent-call confidence claim.",
+    "Santa Barbara corpus: Du Bois et al. 2000-2005, UCSB; CC BY-ND 3.0 US. Local evaluation only; raw/processed text is not redistributed or trained on.",
+    "Banking threshold constraints use previously seen human roleplay validation, not organic banking calls."
+  ]
+}

@@ -1,0 +1,525 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "10469AE2-2454-4954-913E-A1100BE59050",
+      "deviceName" : "Callshield Oct 19 Automated",
+      "modelName" : "iPhone 17 Pro",
+      "osBuildNumber" : "23F77",
+      "osVersion" : "26.5",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.0024s",
+                  "durationInSeconds" : 0.002373933792114258,
+                  "name" : "testAllThreeDemoAssessments()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testAllThreeDemoAssessments()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testAllThreeDemoAssessments",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00066s",
+                  "durationInSeconds" : 0.0006560087203979492,
+                  "name" : "testAnalysisDeadlineAndConnectedClock()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testAnalysisDeadlineAndConnectedClock()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testAnalysisDeadlineAndConnectedClock",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.001s",
+                  "durationInSeconds" : 0.0010129213333129883,
+                  "name" : "testDeclineSavesMissedUnknownAndReturnsToRecents()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testDeclineSavesMissedUnknownAndReturnsToRecents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testDeclineSavesMissedUnknownAndReturnsToRecents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00069s",
+                  "durationInSeconds" : 0.0006949901580810547,
+                  "name" : "testDurationFormatting()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testDurationFormatting()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testDurationFormatting",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00079s",
+                  "durationInSeconds" : 0.0007859468460083008,
+                  "name" : "testEndingBeforeAnalysisSavesUnknownAndDoesNotUpdateLater()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testEndingBeforeAnalysisSavesUnknownAndDoesNotUpdateLater()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testEndingBeforeAnalysisSavesUnknownAndDoesNotUpdateLater",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00091s",
+                  "durationInSeconds" : 0.0009149312973022461,
+                  "name" : "testForegroundReconciliationCannotAcceptAnExpiredCall()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testForegroundReconciliationCannotAcceptAnExpiredCall()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testForegroundReconciliationCannotAcceptAnExpiredCall",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00074s",
+                  "durationInSeconds" : 0.000738978385925293,
+                  "name" : "testInitialHistoryAndContactsMatchTSX()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testInitialHistoryAndContactsMatchTSX()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testInitialHistoryAndContactsMatchTSX",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00063s",
+                  "durationInSeconds" : 0.0006320476531982422,
+                  "name" : "testMuteSpeakerAndFreshSessionReset()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testMuteSpeakerAndFreshSessionReset()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testMuteSpeakerAndFreshSessionReset",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00068s",
+                  "durationInSeconds" : 0.0006830692291259766,
+                  "name" : "testNoticeExpiresAndNextCallClearsIt()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testNoticeExpiresAndNextCallClearsIt()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testNoticeExpiresAndNextCallClearsIt",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0008s",
+                  "durationInSeconds" : 0.000800013542175293,
+                  "name" : "testOldAnalysisCannotBleedIntoNewCall()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testOldAnalysisCannotBleedIntoNewCall()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testOldAnalysisCannotBleedIntoNewCall",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00067s",
+                  "durationInSeconds" : 0.0006729364395141602,
+                  "name" : "testRingingNeverAnalyzesBeforeAcceptance()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testRingingNeverAnalyzesBeforeAcceptance()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testRingingNeverAnalyzesBeforeAcceptance",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00099s",
+                  "durationInSeconds" : 0.0009919404983520508,
+                  "name" : "testSearchNamesNumbersAndLabelsWithMissedFilter()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testSearchNamesNumbersAndLabelsWithMissedFilter()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testSearchNamesNumbersAndLabelsWithMissedFilter",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00093s",
+                  "durationInSeconds" : 0.0009260177612304688,
+                  "name" : "testStartingDuringActiveCallAndRepeatedAcceptAreIgnored()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testStartingDuringActiveCallAndRepeatedAcceptAreIgnored()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testStartingDuringActiveCallAndRepeatedAcceptAreIgnored",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.011s",
+                  "durationInSeconds" : 0.011230945587158203,
+                  "name" : "testTimeoutIsExactlyThirtySecondsAndOnlySavesOnce()",
+                  "nodeIdentifier" : "CallshieldStoreTests/testTimeoutIsExactlyThirtySecondsAndOnlySavesOnce()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests/testTimeoutIsExactlyThirtySecondsAndOnlySavesOnce",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CallshieldStoreTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/CallshieldStoreTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0016s",
+                  "durationInSeconds" : 0.0016220808029174805,
+                  "name" : "testHistoryRefreshPreservesDetectorEvidence()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testHistoryRefreshPreservesDetectorEvidence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testHistoryRefreshPreservesDetectorEvidence",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0039s",
+                  "durationInSeconds" : 0.003859996795654297,
+                  "name" : "testMalformedMessagesCannotBecomeVoiceLabels()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testMalformedMessagesCannotBecomeVoiceLabels()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testMalformedMessagesCannotBecomeVoiceLabels",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00059s",
+                  "durationInSeconds" : 0.0005909204483032227,
+                  "name" : "testNoMessagesTimesOutAndUnansweredOrStaleResultsAreIgnored()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testNoMessagesTimesOutAndUnansweredOrStaleResultsAreIgnored()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testNoMessagesTimesOutAndUnansweredOrStaleResultsAreIgnored",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00093s",
+                  "durationInSeconds" : 0.0009300708770751953,
+                  "name" : "testPythonRiskEngineFixturesDriveEveryVoiceState()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testPythonRiskEngineFixturesDriveEveryVoiceState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testPythonRiskEngineFixturesDriveEveryVoiceState",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.002s",
+                  "durationInSeconds" : 0.002012014389038086,
+                  "name" : "testSavedHistoryRemainsCompatibleWithOldRecords()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testSavedHistoryRemainsCompatibleWithOldRecords()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testSavedHistoryRemainsCompatibleWithOldRecords",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00099s",
+                  "durationInSeconds" : 0.000988006591796875,
+                  "name" : "testScopeOrderingRestartAndTimeoutRecovery()",
+                  "nodeIdentifier" : "DeepfakeIntegrationTests/testScopeOrderingRestartAndTimeoutRecovery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests/testScopeOrderingRestartAndTimeoutRecovery",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "DeepfakeIntegrationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/DeepfakeIntegrationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.00071s",
+                  "durationInSeconds" : 0.0007100105285644531,
+                  "name" : "testBackendThatCannotListenAnymoreIsShownToThePerson()",
+                  "nodeIdentifier" : "ProductionTests/testBackendThatCannotListenAnymoreIsShownToThePerson()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testBackendThatCannotListenAnymoreIsShownToThePerson",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.002s",
+                  "durationInSeconds" : 0.0020400285720825195,
+                  "name" : "testContactsRequirePermissionAndClearWhenRevoked()",
+                  "nodeIdentifier" : "ProductionTests/testContactsRequirePermissionAndClearWhenRevoked()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testContactsRequirePermissionAndClearWhenRevoked",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0029s",
+                  "durationInSeconds" : 0.002937912940979004,
+                  "name" : "testCorruptRepositoryIsNotOverwrittenAndWriteErrorsAreVisible()",
+                  "nodeIdentifier" : "ProductionTests/testCorruptRepositoryIsNotOverwrittenAndWriteErrorsAreVisible()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testCorruptRepositoryIsNotOverwrittenAndWriteErrorsAreVisible",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0013s",
+                  "durationInSeconds" : 0.0013229846954345703,
+                  "name" : "testExplicitCallUsesSystemPhoneWithoutInventedHistory()",
+                  "nodeIdentifier" : "ProductionTests/testExplicitCallUsesSystemPhoneWithoutInventedHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testExplicitCallUsesSystemPhoneWithoutInventedHistory",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0012079477310180664,
+                  "name" : "testExternalURLsPrefillWithoutCalling()",
+                  "nodeIdentifier" : "ProductionTests/testExternalURLsPrefillWithoutCalling()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testExternalURLsPrefillWithoutCalling",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0007s",
+                  "durationInSeconds" : 0.0006960630416870117,
+                  "name" : "testFavoritesAndPreferencePersistWithoutDemoData()",
+                  "nodeIdentifier" : "ProductionTests/testFavoritesAndPreferencePersistWithoutDemoData()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testFavoritesAndPreferencePersistWithoutDemoData",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00094s",
+                  "durationInSeconds" : 0.000944972038269043,
+                  "name" : "testHistoryMergeFiltersAndDeletedRowsStayDeletedAfterRefreshAndRelaunch()",
+                  "nodeIdentifier" : "ProductionTests/testHistoryMergeFiltersAndDeletedRowsStayDeletedAfterRefreshAndRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testHistoryMergeFiltersAndDeletedRowsStayDeletedAfterRefreshAndRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00093s",
+                  "durationInSeconds" : 0.0009310245513916016,
+                  "name" : "testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone()",
+                  "nodeIdentifier" : "ProductionTests/testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testInboundOnlyBackendListensAndLeavesOutgoingCallsToSystemPhone",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0008s",
+                  "durationInSeconds" : 0.0007990598678588867,
+                  "name" : "testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads()",
+                  "nodeIdentifier" : "ProductionTests/testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testIncomingInviteDecodingAcceptsMissingHandleAndRejectsIncompletePayloads",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00083s",
+                  "durationInSeconds" : 0.0008329153060913086,
+                  "name" : "testInvalidNumberNeverReachesSystemService()",
+                  "nodeIdentifier" : "ProductionTests/testInvalidNumberNeverReachesSystemService()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testInvalidNumberNeverReachesSystemService",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00068s",
+                  "durationInSeconds" : 0.0006809234619140625,
+                  "name" : "testLimitedContactsAndFetchFailure()",
+                  "nodeIdentifier" : "ProductionTests/testLimitedContactsAndFetchFailure()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testLimitedContactsAndFetchFailure",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.013s",
+                  "durationInSeconds" : 0.01267099380493164,
+                  "name" : "testLocalFileRoundTripAndHistoryBound()",
+                  "nodeIdentifier" : "ProductionTests/testLocalFileRoundTripAndHistoryBound()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testLocalFileRoundTripAndHistoryBound",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00061s",
+                  "durationInSeconds" : 0.0006079673767089844,
+                  "name" : "testNumberNormalizationAndRejection()",
+                  "nodeIdentifier" : "ProductionTests/testNumberNormalizationAndRejection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testNumberNormalizationAndRejection",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00078s",
+                  "durationInSeconds" : 0.0007810592651367188,
+                  "name" : "testProductionStartsWithoutSamplesOrCallingService()",
+                  "nodeIdentifier" : "ProductionTests/testProductionStartsWithoutSamplesOrCallingService()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testProductionStartsWithoutSamplesOrCallingService",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "2s",
+                  "durationInSeconds" : 2.1287509202957153,
+                  "name" : "testRenderProductionCallStatesForVisualReview()",
+                  "nodeIdentifier" : "ProductionTests/testRenderProductionCallStatesForVisualReview()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testRenderProductionCallStatesForVisualReview",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00087s",
+                  "durationInSeconds" : 0.000867009162902832,
+                  "name" : "testSessionIgnoresStaleEventsAndDuplicateConnections()",
+                  "nodeIdentifier" : "ProductionTests/testSessionIgnoresStaleEventsAndDuplicateConnections()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSessionIgnoresStaleEventsAndDuplicateConnections",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00031s",
+                  "durationInSeconds" : 0.0003069639205932617,
+                  "name" : "testSessionOnlyRealConnectionStartsClockAndAssessment()",
+                  "nodeIdentifier" : "ProductionTests/testSessionOnlyRealConnectionStartsClockAndAssessment()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSessionOnlyRealConnectionStartsClockAndAssessment",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.003096938133239746,
+                  "name" : "testSimulatorDeclineDoesNotActivateAudio()",
+                  "nodeIdentifier" : "ProductionTests/testSimulatorDeclineDoesNotActivateAudio()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSimulatorDeclineDoesNotActivateAudio",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0011s",
+                  "durationInSeconds" : 0.0011370182037353516,
+                  "name" : "testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit()",
+                  "nodeIdentifier" : "ProductionTests/testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSimulatorIncomingAnswerMuteAndEndUsesBackendWithoutCallKit",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0011680126190185547,
+                  "name" : "testSimulatorMicrophoneDenialEndsCallWithoutPublishing()",
+                  "nodeIdentifier" : "ProductionTests/testSimulatorMicrophoneDenialEndsCallWithoutPublishing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSimulatorMicrophoneDenialEndsCallWithoutPublishing",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00089s",
+                  "durationInSeconds" : 0.0008879899978637695,
+                  "name" : "testSystemCallFailureDoesNotCreateFakeCall()",
+                  "nodeIdentifier" : "ProductionTests/testSystemCallFailureDoesNotCreateFakeCall()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testSystemCallFailureDoesNotCreateFakeCall",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00045s",
+                  "durationInSeconds" : 0.00045299530029296875,
+                  "name" : "testUnansweredAndUnfinishedAssessmentSaveUnknown()",
+                  "nodeIdentifier" : "ProductionTests/testUnansweredAndUnfinishedAssessmentSaveUnknown()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testUnansweredAndUnfinishedAssessmentSaveUnknown",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.002s",
+                  "durationInSeconds" : 0.002032041549682617,
+                  "name" : "testVoicemailServiceStateAndActionsWaitForBackend()",
+                  "nodeIdentifier" : "ProductionTests/testVoicemailServiceStateAndActionsWaitForBackend()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests/testVoicemailServiceStateAndActionsWaitForBackend",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ProductionTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/ProductionTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0011s",
+                  "durationInSeconds" : 0.0010590553283691406,
+                  "name" : "testCoordinatorRoutesTranscriptAndHistoryRefreshPreservesIt()",
+                  "nodeIdentifier" : "TranscriptIntegrationTests/testCoordinatorRoutesTranscriptAndHistoryRefreshPreservesIt()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/TranscriptIntegrationTests/testCoordinatorRoutesTranscriptAndHistoryRefreshPreservesIt",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.006s",
+                  "durationInSeconds" : 0.006027936935424805,
+                  "name" : "testScopeOrderingRestartAndStaleScoreExpiration()",
+                  "nodeIdentifier" : "TranscriptIntegrationTests/testScopeOrderingRestartAndStaleScoreExpiration()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/TranscriptIntegrationTests/testScopeOrderingRestartAndStaleScoreExpiration",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0013s",
+                  "durationInSeconds" : 0.0013210773468017578,
+                  "name" : "testTranscriptCannotRelabelVoiceAndHistoryRemainsBackwardCompatible()",
+                  "nodeIdentifier" : "TranscriptIntegrationTests/testTranscriptCannotRelabelVoiceAndHistoryRemainsBackwardCompatible()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/TranscriptIntegrationTests/testTranscriptCannotRelabelVoiceAndHistoryRemainsBackwardCompatible",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00073s",
+                  "durationInSeconds" : 0.0007309913635253906,
+                  "name" : "testTranscriptRunsEvenWhenVoiceIsUnavailableAndRejectsInvalidProbabilities()",
+                  "nodeIdentifier" : "TranscriptIntegrationTests/testTranscriptRunsEvenWhenVoiceIsUnavailableAndRejectsInvalidProbabilities()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/TranscriptIntegrationTests/testTranscriptRunsEvenWhenVoiceIsUnavailableAndRejectsInvalidProbabilities",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "TranscriptIntegrationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests/TranscriptIntegrationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "CallshieldTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "9s",
+                  "durationInSeconds" : 9.909403920173645,
+                  "name" : "testKeypadAndSimulatorCallError()",
+                  "nodeIdentifier" : "ProductionUITests/testKeypadAndSimulatorCallError()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testKeypadAndSimulatorCallError",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "9s",
+                  "durationInSeconds" : 9.747928023338318,
+                  "name" : "testProductionNavigationWithoutSampleCallers()",
+                  "nodeIdentifier" : "ProductionUITests/testProductionNavigationWithoutSampleCallers()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests/testProductionNavigationWithoutSampleCallers",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ProductionUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests/ProductionUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "CallshieldUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Callshield/CallshieldUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Callshield",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

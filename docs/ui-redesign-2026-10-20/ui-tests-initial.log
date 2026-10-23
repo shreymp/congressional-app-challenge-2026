@@ -1,0 +1,56 @@
+Writing result bundle at path:
+	/tmp/callshield-ui-redesign-tests-retry1.xcresult
+
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestBundleInject.dylib (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework/XCTestSupport (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework/XCTestCore (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework/XCUnit (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/XCTest (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework/Testing (in target 'Callshield' from project 'Callshield')
+error: the following command failed with exit code 0 but produced no further output
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/Callshield.app/Frameworks/Testing.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework (in target 'Callshield' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework/XCTAutomationSupport (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/XCUIAutomation (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework/XCTest (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework/XCUnit (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework/Testing (in target 'CallshieldUITests' from project 'Callshield')
+error: the following command failed with exit code 0 but produced no further output
+Copy /tmp/callshield-ui-redesign-build/Build/Products/Debug-iphonesimulator/CallshieldUITests-Runner.app/Frameworks/Testing.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework/XCTestCore (in target 'CallshieldUITests' from project 'Callshield')
+warning: not stripping binary because it is signed: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework/XCTestSupport (in target 'CallshieldUITests' from project 'Callshield')
+2026-10-20 22:36:30.193 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:36:30.193 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:36:35.115 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:36:35.115 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:36:41.144 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:36:41.147 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:36:44.564 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:36:44.564 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:36:52.905 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:36:52.905 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:37:06.458 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:37:06.458 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:37:09.818 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:37:09.818 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:37:24.777 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:37:24.777 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:37:39.998 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:37:39.998 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:37:45.623 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:37:45.623 xcodebuild[16646:41953282] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:38:07.618 xcodebuild[16646:41953282] [MT] IDETestOperationsObserverDebug: 108.649 elapsed -- Testing started completed.
+2026-10-20 22:38:07.618 xcodebuild[16646:41953282] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-20 22:38:07.618 xcodebuild[16646:41953282] [MT] IDETestOperationsObserverDebug: 108.649 sec, +108.649 sec -- end
+Failing tests:
+	ProductionUITests.testBothPipelineResultsAreVisibleOnTheCallScreen()
+	ProductionUITests.testHighSignalReminderAppearsOnceOnReturn()
+	ProductionUITests.testProductionNavigationWithoutSampleCallers()
+	ProductionUITests.testSafetyStepsOpenAReviewedGuardianDraftWithoutSending()
+
+** TEST FAILED **
+
+Testing started

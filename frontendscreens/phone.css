@@ -1,32 +1,32 @@
-.callshield-app{
-  --ink:#17231f;
-  --green:#23745e;
+.callma-app{
+  --ink:#15223b;
+  --accent:#195ed9;
   min-height:100dvh;
-  background:#f4f6f3;
+  background:#f0f5ff;
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   -webkit-font-smoothing:antialiased
 }
-.callshield-app *{
+.callma-app *{
   box-sizing:border-box
 }
-.callshield-app button,.callshield-app input{
+.callma-app button,.callma-app input{
   font:inherit
 }
-.callshield-app button{
+.callma-app button{
   cursor:pointer;
   border:0;
   transition:background .18s,transform .18s
 }
-.callshield-app button:disabled{
+.callma-app button:disabled{
   cursor:default;
   opacity:.5
 }
-.callshield-app button:focus-visible,.callshield-app a:focus-visible,.callshield-app input:focus-visible{
+.callma-app button:focus-visible,.callma-app a:focus-visible,.callma-app input:focus-visible{
   outline:3px solid #007aff;
   outline-offset:4px
 }
-.callshield-app button:active:not(:disabled){
+.callma-app button:active:not(:disabled){
   transform:scale(.97)
 }
 .desktop-header{
@@ -48,22 +48,8 @@
   letter-spacing:-1px;
   gap:10px
 }
-.brand-mark{
-  width:36px;
-  height:40px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:#24765e;
-  color:white;
-  border-radius:12px
-}
-.wordmark-dot{
-  color:#5c947d;
-  margin-left:-10px
-}
 .header-caption{
-  color:#83918a;
+  color:#53657d;
   font-size:12px;
   letter-spacing:.15px
 }
@@ -82,7 +68,7 @@
   width:6px;
   height:6px;
   border-radius:50%;
-  background:#5b9378
+  background:#00856f
 }
 .presentation{
   max-width:1120px;
@@ -101,9 +87,9 @@
   display:flex;
   align-items:center;
   gap:9px;
-  font-size:10px;
+  font-size:11px;
   letter-spacing:1.9px;
-  color:#557566;
+  color:#195ed9;
   font-weight:650;
   margin-bottom:26px
 }
@@ -115,11 +101,11 @@
   margin:0 0 24px
 }
 .intro h1>span{
-  color:#739382
+  color:#195ed9
 }
 .intro>p{
   font-size:15px;
-  color:#778078;
+  color:#53657d;
   line-height:1.85;
   max-width:340px
 }
@@ -133,15 +119,15 @@
   align-items:center;
   gap:13px;
   font-size:13px;
-  color:#4f6359
+  color:#34496d
 }
 .intro-features svg{
   width:17px;
   height:17px;
-  color:#719581
+  color:#00856f
 }
 .primary-action{
-  background:#246d55;
+  background:#195ed9;
   color:#fff;
   padding:15px 19px;
   border-radius:12px;
@@ -150,14 +136,14 @@
   gap:11px;
   font-size:13px;
   font-weight:600;
-  box-shadow:0 5px 12px #246d5512
+  box-shadow:0 5px 12px #195ed912
 }
 .primary-action:hover{
-  background:#1a5a45
+  background:#1248b0
 }
 .intro .demo-disclosure{
-  font-size:10px;
-  color:#909a93;
+  font-size:11px;
+  color:#53657d;
   line-height:1.7;
   margin-top:14px
 }
@@ -167,7 +153,7 @@
   gap:8px;
   margin-top:57px;
   font-size:11px;
-  color:#91a096
+  color:#53657d
 }
 .phone-frame{
   width:390px;
@@ -258,16 +244,16 @@
   gap:5px;
   font-size:12px;
   font-weight:650;
-  color:#327459
+  color:#195ed9
 }
 .demo-button{
   border-radius:20px;
-  color:#6c7d72;
-  background:#f0f5f1;
+  color:#195ed9;
+  background:#e3eeff;
   display:flex;
   align-items:center;
   gap:4px;
-  font-size:10px!important;
+  font-size:11px!important;
   padding:6px 10px
 }
 .screen-title{
@@ -300,7 +286,7 @@
 .search-field{
   height:37px;
   background:#f0f0f2;
-  color:#8f9097;
+  color:#53657d;
   border-radius:10px;
   display:flex;
   align-items:center;
@@ -330,13 +316,13 @@
   display:flex;
   justify-content:space-between;
   align-items:center;
-  font-size:9px;
-  color:#92979a;
+  font-size:11px;
+  color:#53657d;
   letter-spacing:1.1px;
   margin-bottom:7px
 }
 .sample-caption{
-  font-size:9px;
+  font-size:11px;
   letter-spacing:0;
   color:#a2a7a5
 }
@@ -365,20 +351,20 @@
   font-weight:650
 }
 .rose{
-  background:#f4e6e3;
-  color:#ae7b70
+  background:#ffe3de;
+  color:#9f392d
 }
 .blue{
-  background:#e5edf5;
-  color:#6a8aab
+  background:#ddebff;
+  color:#205ab4
 }
 .mint{
-  background:#e3eee8;
-  color:#739786
+  background:#cef5e8;
+  color:#006e58
 }
 .slate{
-  background:#eeeff1;
-  color:#8d949b
+  background:#eae3ff;
+  color:#6042ad
 }
 .row-main{
   min-width:0;
@@ -402,15 +388,15 @@
   display:flex;
   align-items:center;
   gap:3px;
-  font-size:9px;
-  color:#959ba0;
+  font-size:11px;
+  color:#53657d;
   white-space:nowrap
 }
 .dot-divider{
   padding:0 1px
 }
 .voice-badge{
-  font-size:9px;
+  font-size:11px;
   line-height:1.5;
   display:inline-flex;
   align-items:center;
@@ -421,19 +407,19 @@
   font-weight:500
 }
 .voice-badge.ai{
-  color:#a27628;
+  color:#745211;
   background:#fbf1dd
 }
 .voice-badge.human{
-  color:#43886c;
+  color:#236246;
   background:#eaf5ee
 }
 .voice-badge.unknown{
-  color:#80868e;
+  color:#536171;
   background:#f0f1f3
 }
 .voice-badge.analyzing{
-  color:#7590b2;
+  color:#425e86;
   background:#edf2f9
 }
 .row-end{
@@ -442,8 +428,8 @@
   gap:7px
 }
 .row-end time{
-  font-size:9px;
-  color:#96999e;
+  font-size:11px;
+  color:#53657d;
   white-space:nowrap
 }
 .row-end>svg{
@@ -455,8 +441,8 @@
   display:flex;
   justify-content:center;
   gap:4px;
-  font-size:9px;
-  color:#a1a7a2;
+  font-size:11px;
+  color:#53657d;
   line-height:1.6;
   margin:20px 0 0;
   text-align:center
@@ -479,13 +465,13 @@
   flex-direction:column;
   align-items:center;
   gap:4px;
-  color:#a1a4a9;
+  color:#53657d;
   background:none;
   min-width:72px;
-  font-size:9px
+  font-size:11px
 }
 .tab-bar button[aria-current=page]{
-  color:#24775d
+  color:#195ed9
 }
 .home-indicator{
   position:absolute;
@@ -505,8 +491,8 @@
   justify-content:center;
   gap:9px;
   margin-top:25px;
-  color:#9aa39c;
-  font-size:8px;
+  color:#53657d;
+  font-size:11px;
   letter-spacing:1.25px
 }
 .preview-caption>span:first-child{
@@ -558,7 +544,7 @@
 .empty-state{
   text-align:center;
   padding:48px 12px;
-  color:#8a9690
+  color:#53657d
 }
 .empty-state>svg{
   margin:auto
@@ -576,11 +562,6 @@
   text-align:center;
   padding:9px 0 24px
 }
-.settings-hero .brand-mark{
-  width:52px;
-  height:55px;
-  border-radius:16px
-}
 .settings-hero h2{
   font-size:19px;
   font-weight:650;
@@ -588,10 +569,10 @@
 }
 .settings-hero p{
   font-size:11px;
-  color:#89968d
+  color:#53657d
 }
 .settings-group{
-  background:#f6f7f6;
+  background:#e3eeff;
   border-radius:12px;
   padding:0 13px
 }
@@ -607,7 +588,7 @@
   border:0
 }
 .setting-value{
-  color:#89948d;
+  color:#53657d;
   font-size:11px
 }
 .toggle{
@@ -627,15 +608,15 @@
   transition:transform .2s
 }
 .toggle.enabled{
-  background:#34c759
+  background:#00856f
 }
 .toggle.enabled>span{
   transform:translateX(19px)
 }
 .settings-label{
-  font-size:9px;
+  font-size:11px;
   letter-spacing:1px;
-  color:#9aa19c;
+  color:#53657d;
   margin:23px 0 10px
 }
 .label-guide>div{
@@ -643,7 +624,7 @@
 }
 .label-guide p,.settings-note{
   font-size:11px;
-  color:#8b958e;
+  color:#53657d;
   line-height:1.65;
   margin:6px 0
 }
@@ -655,10 +636,10 @@
   font-size:15px
 }
 .large-text .row-sub,.large-text .voice-badge{
-  font-size:10px
+  font-size:11px
 }
 .large-text .row-end time{
-  font-size:10px
+  font-size:11px
 }
 .large-text .row-end{
   flex-direction:column;
@@ -668,7 +649,7 @@
   font-size:14px
 }
 .on-call .phone-display{
-  background:radial-gradient(ellipse at 20% 20%,#3a554c 0%,#25382f 40%,#131f1c 100%);
+  background:radial-gradient(ellipse at 20% 20%,#195ed9 0%,#274fa0 40%,#152654 100%);
   color:white
 }
 .on-call .home-indicator{
@@ -680,9 +661,12 @@
   align-items:center;
   flex:1;
   min-height:0;
+  overflow-y:auto;
   padding:9px 28px 25px;
   text-align:center
 }
+.call-screen > * { flex-shrink: 0; }
+.call-screen .call-spacer { flex: 1 0 10px; }
 .call-service{
   display:flex;
   align-items:center;
@@ -692,7 +676,7 @@
 }
 .call-service>span{
   margin-left:5px;
-  font-size:8px;
+  font-size:11px;
   letter-spacing:1px;
   color:#bdcec4;
   border:1px solid #ffffff25;
@@ -764,7 +748,7 @@
   margin:12px 0 7px
 }
 .detection-panel small{
-  font-size:9px;
+  font-size:11px;
   color:#8da597
 }
 .call-spacer{
@@ -795,13 +779,13 @@
   justify-content:center
 }
 .decline,.end-call{
-  background:#f44e54
+  background:#ef5d50
 }
 .accept{
-  background:#32c968
+  background:#00856f
 }
 .call-footer{
-  font-size:9px;
+  font-size:11px;
   color:#829c8c;
   margin:27px 0 4px
 }
@@ -890,8 +874,8 @@
   font-size:13px
 }
 .sheet-top>span{
-  font-size:9px;
-  color:#9ca69f;
+  font-size:11px;
+  color:#53657d;
   letter-spacing:1.2px
 }
 .sheet h2{
@@ -904,10 +888,10 @@
 .sheet-description,.sheet-note{
   font-size:12px;
   line-height:1.7;
-  color:#88968c
+  color:#53657d
 }
 .sheet-note{
-  font-size:10px;
+  font-size:11px;
   margin-top:22px
 }
 .demo-options{
@@ -921,7 +905,7 @@
 }
 .detail-number{
   font-size:14px;
-  color:#98a198;
+  color:#53657d;
   margin:0
 }
 .detail-detection{
@@ -932,13 +916,13 @@
   padding:5px 9px
 }
 .detail-detection p{
-  font-size:10px;
-  color:#9ca69f;
+  font-size:11px;
+  color:#53657d;
   margin-top:7px
 }
 .detail-info{
   padding:4px 13px;
-  background:#f5f7f5;
+  background:#e3eeff;
   border-radius:12px
 }
 .detail-info>div{
@@ -953,7 +937,7 @@
   border:0
 }
 .detail-info span{
-  color:#8b978e
+  color:#53657d
 }
 .detail-info strong{
   font-weight:500
@@ -1029,7 +1013,7 @@
   .desktop-header,.intro,.preview-caption{
     display:none
   }
-  .callshield-app{
+  .callma-app{
     background:white
   }
   .presentation{
@@ -1076,10 +1060,10 @@
     font-size:11px
   }
   .voice-badge{
-    font-size:10px
+    font-size:11px
   }
   .row-end time{
-    font-size:10px
+    font-size:11px
   }
   .call-row{
     padding:16px 0
@@ -1107,21 +1091,117 @@
   }
 }
 @media(prefers-reduced-motion:reduce){
-  .callshield-app *{
+  .callma-app *{
     transition:none!important;
     animation:none!important
   }
 }
+
+/* Temporary logo slots: no shield or finalized artwork until approved assets arrive. */
+.brand-placeholder {
+  display: inline-flex;
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed #195ed999;
+  border-radius: 13px;
+  background: #e3eeff;
+  color: #195ed9;
+  font: 12px ui-monospace, monospace;
+  flex-shrink: 0;
+}
+.brand-placeholder.small { width: 24px; height: 24px; border-radius: 6px; font-size: 20px; }
+.call-service .brand-placeholder { margin: 0; padding: 0; color: white; background: #ffffff12; border: 1px dashed #ffffff90; }
+.settings-hero { background: linear-gradient(135deg, #ddebff, #eae3ff 60%, #fff0c9); padding: 22px; border-radius: 22px; }
+.callma-app { background: radial-gradient(ellipse at 12% 20%, #ddebff 0, transparent 45%), radial-gradient(ellipse at 90% 70%, #cef5e8 0, transparent 40%), #f0f5ff; }
+.tab-bar button[aria-current="page"] { color: #195ed9; background: #e3eeff; border-radius: 14px; }
+@media (prefers-reduced-motion: no-preference) {
+  .phone-content, .call-screen { animation: callma-enter .22s ease-out; }
+  @keyframes callma-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+.phone-display { background: #f0f5ff; color: #15223b; }
+.search-field { background: #e3eeff; }
+.settings-hero p { color: #53657d; }
+.call-row { background: white; }
+
+/* Match the production app's five primary screens. */
+.tab-bar { padding-left: 7px; padding-right: 7px; }
+.tab-bar button { min-width: 0; flex: 1; min-height: 44px; }
+.keypad-screen { max-width: 300px; margin: auto; text-align: center; }
+.dialed-number { width: 100%; background: transparent; border: 0; color: #15223b; text-align: center; font-size: 28px !important; padding: 12px 0 22px; }
+.dial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 24px; }
+.dial-grid button { width: 74px; height: 74px; border-radius: 50%; margin: auto; color: #15223b; background: #e3eeff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.dial-grid button > span { font-size: 31px; }
+.dial-grid small { font-size: 9px; letter-spacing: 1.4px; }
+.dial-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+.dial-actions button { width: 60px; height: 60px; color: #53657d; background: transparent; border-radius: 50%; }
+.dial-actions .dial-call { width: 70px; height: 70px; color: white; background: #00856f; }
+.keypad-note { color: #53657d; font-size: 11px; margin: 20px 0 0; }
+.phone-empty { padding: 40px 20px; text-align: center; color: #53657d; }
+.phone-empty > svg { color: #195ed9; width: 76px; height: 76px; padding: 22px; border-radius: 24px; background: #e3eeff; }
+.phone-empty h2 { font-size: 20px; color: #15223b; }
+.phone-empty p { font-size: 14px; line-height: 1.6; }
+.phone-empty button { background: transparent; color: #195ed9; padding: 12px; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+.detail-actions button { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 10px 14px; background: #e3eeff; color: #195ed9; border-radius: 12px; }
+.voice-with-help { display: inline-flex; align-items: center; gap: 4px; position: relative; }
+.result-help { display: inline-flex; justify-content: center; align-items: center; min-width: 44px; min-height: 44px; color: #195ed9; background: transparent; }
+.call-screen .result-help { color: white; }
+.result-tooltip { position: absolute; z-index: 4; top: 100%; left: 50%; transform: translateX(-50%); width: min(265px, 70vw); padding: 14px; border: 1px solid #dce7f5; background: white; color: #15223b; box-shadow: 0 8px 28px #15223b30; border-radius: 14px; font-size: 13px; font-weight: normal; line-height: 1.5; text-align: left; }
+.assessment-heading { font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+.demo-risk-panel { margin-top: 12px; padding: 14px; border-radius: 18px; background: #ffffff0d; width: 100%; color: white; }
+.demo-risk-panel strong { font-size: 14px; }
+.demo-risk-panel p { font-size: 12px; margin: 8px 0; }
+.demo-risk-panel small { color: #c7d9e8; font-size: 10px; }
+.call-screen:has(.connected-actions) .caller-avatar { width: 64px; height: 64px; margin-top: 12px; }
+.call-screen:has(.connected-actions) .detection-panel { margin-top: 10px; padding: 10px; }
+.call-screen:has(.connected-actions) .call-spacer { min-height: 16px; }
+.dial-actions button { display: grid; place-items: center; }
+@media (max-height: 820px) {
+  .dial-grid button { width: 64px; height: 64px; }
+  .dial-grid { gap: 12px 24px; }
+  .dialed-number { padding-top: 6px; padding-bottom: 16px; }
+  .keypad-note { margin-top: 12px; }
+}
+
+/* Final legibility and alignment pass. */
+.app-toolbar > span, .back-button { color: #195ed9; }
+.demo-button { min-height: 44px; padding: 8px 12px; }
+.search-field { min-height: 44px; }
+.search-field input::placeholder { color: #53657d; opacity: 1; }
+.caller-name, .contact-list strong { font-size: 17px; }
+.row-sub, .contact-list small { font-size: 12px; color: #53657d; }
+.row-end time, .list-footnote, .settings-note, .sheet-note { color: #53657d; }
+.settings-hero { margin-bottom: 20px; }
+.settings-group > div { font-size: 16px; gap: 12px; }
+.setting-value { font-size: 14px; color: #53657d; text-align: right; }
+.settings-note, .sheet-description { font-size: 14px; line-height: 1.6; }
+.tab-bar button { color: #53657d; }
+.voice-badge.ai { color: #745211; }
+.voice-badge.human { color: #236246; }
+.voice-badge.unknown { color: #536171; }
+.voice-badge.analyzing { color: #425e86; }
+.call-screen .voice-badge.ai { color: #ffe0a3; }
+.call-screen .voice-badge.human { color: #c3f5db; }
+.call-screen .voice-badge.unknown, .call-screen .voice-badge.analyzing { color: #e3eeff; }
+.call-screen .call-footer, .call-screen .caller-number, .call-screen .call-status, .call-screen .detection-panel small { color: #d5e4fb; }
+.detail-dialog { color: #15223b; }
+.large-text .settings-group > div, .large-text .settings-note, .large-text .contact-list strong { font-size: 19px; }
+.large-text .caller-name { font-size: 20px; }
+@media (prefers-reduced-transparency: reduce) { .tab-bar { background: white; } .detail-dialog::backdrop { backdrop-filter: none; background: #15223b99; } }
+
 /* Callma: Paper & Midnight (light), Space Black (dark). */
-.callshield-app{
+.callma-app{
  --ink:#25262a;--page:#f4ece0;--surface:#fffdf8;--soft:#e9e4dc;--line:#d6d1c9;--muted:#626873;--accent:#315b93;--accent-soft:#e1e8f1;--action:#25262a;--action-ink:#fffdf8;
  color-scheme:light;background:radial-gradient(ellipse at 85% 10%,#315b9318,transparent 55%),var(--page);color:var(--ink)
 }
-.callshield-app[data-theme=dark]{
+.callma-app[data-theme=dark]{
  --ink:#f5f5f3;--page:#1c1d1f;--surface:#282a2d;--soft:#32353a;--line:#454a52;--muted:#b5beca;--accent:#cad8e6;--accent-soft:#353f4b;--action:#cad8e6;--action-ink:#1c1d1f;
  color-scheme:dark;background:radial-gradient(ellipse at 85% 10%,#cad8e60a,transparent 55%),var(--page)
 }
-.callshield-app :is(button,input,a):focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.callma-app :is(button,input,a):focus-visible{outline:3px solid var(--accent);outline-offset:4px}
 .brand{font-size:30px;letter-spacing:-1.6px;gap:11px}
 .brand-mark{background:var(--action);color:var(--action-ink);box-shadow:0 6px 18px #1c1d1f16}
 .wordmark-dot{color:var(--accent);margin-left:-11px}
@@ -1179,9 +1259,18 @@
 .detail-dialog{background:var(--surface);color:var(--ink);border-color:var(--line)}
 .detail-dialog::backdrop{background:#1c1d1f88}
 .toast{background:var(--action);color:var(--action-ink)}
-@media(max-width:700px){.callshield-app,.phone-frame{background:var(--page)}.call-row{padding-left:10px;padding-right:10px}.phone-frame{box-shadow:none}.app-toolbar{padding:5px 0 8px}}
+@media(max-width:700px){.callma-app,.phone-frame{background:var(--page)}.call-row{padding-left:10px;padding-right:10px}.phone-frame{box-shadow:none}.app-toolbar{padding:5px 0 8px}}
 
 /* A typographic c. monogram replaces the shield throughout Callma. */
 .callma-monogram{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:30px;font-weight:800;letter-spacing:-3px;line-height:1;padding-right:3px;font-style:normal}
 .settings-hero .callma-monogram{font-size:42px;letter-spacing:-4px;padding-right:4px}
 .call-service>span.callma-monogram{display:inline-flex;align-items:center;justify-content:center;width:27px;height:29px;margin:0 2px 0 0;padding:0 3px 2px 0;border:0;border-radius:9px;background:#cad8e6;color:#1c1d1f;font-size:24px;font-weight:800;letter-spacing:-2px}
+
+/* Apply appearance choices to the additional phone screens. */
+.dialed-number,.dial-grid button,.phone-empty h2{color:var(--ink)}
+.dial-grid button,.detail-actions button,.phone-empty>svg{background:var(--accent-soft);color:var(--accent)}
+.dial-actions button,.keypad-note,.phone-empty{color:var(--muted)}
+.phone-empty button,.result-help{color:var(--accent)}
+.result-tooltip{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.tab-bar button{min-width:0;flex:1;padding:7px 4px}
+@media(prefers-reduced-transparency:reduce){.tab-bar{background:var(--surface)}}

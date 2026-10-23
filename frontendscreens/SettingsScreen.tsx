@@ -1,6 +1,5 @@
-import type { Dispatch, SetStateAction, RefObject } from 'react';
-import { ArrowDownLeft, AudioLines, BatteryFull, Bot, Check, ChevronLeft, ChevronRight, Clock3, Info, Mic, MicOff, Phone, PhoneIncoming, PhoneOff, Play, Search, Settings, ShieldCheck, Signal, UserRound, UsersRound, Volume2, Wifi, X } from 'lucide-react';
-import { type Voice, type Person, type Entry, type Active, people, labels, duration, VoiceBadge } from "./shared";
+import type { Dispatch, SetStateAction } from 'react';
+import { type Voice, VoiceBadge } from "./shared";
 
 type Props = { largeText: boolean; setLargeText: Dispatch<SetStateAction<boolean>>; theme: 'light' | 'dark'; setTheme: Dispatch<SetStateAction<'light' | 'dark'>>; };
 

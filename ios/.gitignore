@@ -1,4 +1,17 @@
 build/
+build-device/
+Vendor/libvosk.xcframework/
+Vendor/vosk_api.h
+Vendor/ONNXRuntime/
+ScamTranscript/Resources/Jev/
+ScamTranscript/Resources/vosk-model-small-en-us-0.15/
+*.xcuserstate
+xcuserdata/
+TestResults/
+__pycache__/
+ScamTranscript/Resources/JevCallV1/
+ScamTranscript/Resources/JevCallV2/
 *.xcresult/
 xcuserdata/
 .DS_Store
+Configuration/Local.xcconfig
