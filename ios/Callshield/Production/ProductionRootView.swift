@@ -20,6 +20,8 @@ struct ProductionRootView: View {
         _store = StateObject(wrappedValue: ProductionStore())
     }
 
+    @AppStorage("callmaAppearance") private var appearance = "system"
+
     var body: some View {
         Group {
             if let call = store.active { ProductionCallView(call: call).transition(.opacity) }
@@ -58,6 +60,7 @@ struct ProductionRootView: View {
                                     Text(tab.rawValue).font(.system(size: 11))
                                 }
                                 .frame(maxWidth: .infinity, minHeight: 50)
+                                .background(store.tab == tab ? Palette.softAccent : Color.clear, in: RoundedRectangle(cornerRadius: 12))
                                 .contentShape(Rectangle())
                                 .foregroundStyle(store.tab == tab ? Palette.accent : Palette.secondary)
                             }
@@ -77,7 +80,7 @@ struct ProductionRootView: View {
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.22), value: store.active?.id)
         .environmentObject(store)
         .environment(\.dynamicTypeSize, store.largeText ? .xxLarge : systemTextSize)
-        .preferredColorScheme(store.active == nil ? nil : .dark)
+        .preferredColorScheme(appearance == "light" ? .light : appearance == "dark" ? .dark : nil)
         .sheet(item: $store.detail) { person in ProductionPersonDetail(person: person).environmentObject(store) }
         .sheet(item: $store.recordDetail) { record in ProductionPersonDetail(person: record.person, record: record).environmentObject(store) }
         .sheet(isPresented: $store.showVoicemail) { ProductionVoicemailView().environmentObject(store) }
@@ -85,6 +88,11 @@ struct ProductionRootView: View {
             Button("OK", role: .cancel) { store.errorMessage = nil }
         } message: { Text(store.errorMessage ?? "") }
         .task { await store.refresh() }
+        .onDisappear {
+            if let backend = store.coordinator.backend as? LiveKitCallingBackend {
+                Task { await backend.shutDown() }
+            }
+        }
         .onChange(of: scenePhase) { phase in if phase == .active { Task { await store.refresh() } } }
         .onReceive(NotificationCenter.default.publisher(for: .CNContactStoreDidChange)) { _ in Task { await store.refreshContacts() } }
         .onOpenURL { store.receive($0) }

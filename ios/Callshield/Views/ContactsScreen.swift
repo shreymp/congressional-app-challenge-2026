@@ -66,8 +66,8 @@ struct DemoKeypadScreen: View {
                 }.foregroundStyle(Palette.secondary).accessibilityLabel("International prefix")
                 Spacer()
                 Button { editing = false; store.previewOutgoing(store.dialedNumber) } label: {
-                    Image(systemName: "phone.fill").scaledFont(size: 29).foregroundStyle(.white)
-                        .frame(width: 70, height: 70).background(Palette.teal, in: Circle())
+                    Image(systemName: "phone.fill").scaledFont(size: 29).foregroundStyle(Palette.actionInk)
+                        .frame(width: 70, height: 70).background(Palette.action, in: Circle())
                 }.buttonStyle(CallActionStyle()).disabled(store.dialedNumber.isEmpty)
                     .accessibilityLabel("Call").accessibilityIdentifier("demoCallButton")
                 Spacer()

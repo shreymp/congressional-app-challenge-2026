@@ -1,0 +1,11 @@
+{
+  "primary_mode": "windows",
+  "primary_threshold": 0.75,
+  "fresh_full_call_false_alerts_strictly_improved": false,
+  "recorded_scam_misses_did_not_increase": true,
+  "existing_probe_false_alerts_did_not_increase": true,
+  "protocol_gate_passed": false,
+  "decision": "retain V5; V6 remains research only",
+  "additional_regression": "Older synthetic scam misses at 0.75 increased from 7/650 to 16/650 in tail mode",
+  "production_changed": false
+}

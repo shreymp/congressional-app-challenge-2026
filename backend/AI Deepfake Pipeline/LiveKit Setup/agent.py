@@ -92,7 +92,7 @@ async def scam_guard(ctx: JobContext) -> None:
     # 0. Ring grandma's app for the phone caller. Starts its own task and returns at once; it
     #    must not wait for step 1, because nothing answers the call until she has been rung.
     probe = ctx.room.name.startswith("backend-probe-") and ctx.job.metadata == "cac-backend-probe-v1"
-    if not probe:
+    if not probe and ctx.job.metadata != "callma-outbound-v1":
         senior_ring.start_for_job(ctx)
     # Steps 1-4 (scoring) must never take the ring down with them. An exception that escapes this
     # function makes the framework disconnect the agent and run the shutdown callbacks, which

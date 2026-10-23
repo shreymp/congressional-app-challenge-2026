@@ -32,8 +32,8 @@ struct ProductionCallView: View {
                 ScrollView { callContent(height: 0) }.scrollIndicators(.hidden)
             }
         }
-        .multilineTextAlignment(.center).foregroundStyle(.white)
-        .background(RadialGradient(colors: [Color(hex: 0x195ED9), Color(hex: 0x274FA0), Color(hex: 0x152654)], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
+        .multilineTextAlignment(.center).foregroundStyle(Palette.ink)
+        .background(RadialGradient(colors: [Palette.softAccent, Palette.surface, Palette.canvas], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
         .onReceive(clock) { now = $0 }
         .sheet(isPresented: $showingGuardian) {
             GuardianAlertSheet(call: call, store: store)
@@ -59,14 +59,11 @@ struct ProductionCallView: View {
     }
     private func callContent(height: CGFloat) -> some View {
         VStack(spacing: 12) {
-            BrandWordmark(onDark: true).font(.subheadline).foregroundStyle(Color(hex: 0xD3DFD7))
-            #if targetEnvironment(simulator)
-            Text("Simulator call test").font(.caption).foregroundStyle(Color(hex: 0xD3DFD7))
-            #endif
+            BrandWordmark(onDark: true).font(.subheadline).foregroundStyle(Palette.secondary)
             Avatar(person: call.person, size: 64).padding(.top, 4)
             Text(call.person.name).font(.title.weight(.medium)).accessibilityIdentifier("callCallerName")
-            Text(call.person.number).font(.subheadline).foregroundStyle(Color(hex: 0xBDCCC3))
-            Text(status).monospacedDigit().foregroundStyle(Color(hex: 0xC7D9E8))
+            Text(call.person.number).font(.subheadline).foregroundStyle(Palette.secondary)
+            Text(status).monospacedDigit().foregroundStyle(Palette.secondary)
             if call.connectedAt != nil {
                 VStack(spacing: 10) {
                     Text("Caller’s voice").font(.caption.weight(.semibold))
@@ -74,40 +71,40 @@ struct ProductionCallView: View {
                         VoiceBadge(voice: call.voice, size: 13, onCall: true)
                         ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Unknown means there is not enough information.", onDark: true)
                     }
-                    Text(assessment).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                    Text(assessment).font(.caption).foregroundStyle(Palette.secondary)
                     if let voiceScore {
                         Text("Experimental voice warning score: \(Int((voiceScore * 100).rounded())) out of 100")
-                            .font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                            .font(.caption).foregroundStyle(Palette.secondary)
                     }
                     if let previous = call.lastDeepfakeResult,
                        let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
                         Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
                     }
-                    Text("A human voice does not confirm who is calling.").font(.caption).foregroundStyle(Color(hex: 0xC7D9E8))
+                    Text("A human voice does not confirm who is calling.").font(.caption).foregroundStyle(Palette.secondary)
                 }.padding(16).frame(maxWidth: .infinity)
-                    .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+                    .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
             }
             if call.connectedAt != nil {
                 let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
                 VStack(spacing: 8) {
                     Label("Scam warning", systemImage: "text.bubble").font(.caption.weight(.semibold))
                     Text(text.title).font(.subheadline.weight(.semibold))
-                        .foregroundStyle(text.isWarning ? Color(hex: 0xFFD59A) : Color.white)
+                        .foregroundStyle(text.isWarning ? Palette.warning : Palette.ink)
                         .accessibilityIdentifier("transcriptAssessmentTitle")
-                    Text(text.message).font(.caption).foregroundStyle(Color(hex: 0xD0DCD5))
+                    Text(text.message).font(.caption).foregroundStyle(Palette.secondary)
                         .accessibilityIdentifier("transcriptAssessmentScore")
                     Text("Based on the caller’s words. A low score does not prove a call is safe.")
-                        .font(.caption2).foregroundStyle(Color(hex: 0xC7D9E8))
+                        .font(.caption2).foregroundStyle(Palette.secondary)
                 }.padding(16).frame(maxWidth: .infinity)
-                    .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+                    .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
             }
             if call.connectedAt != nil && needsSafetySteps { safetySteps }
             Spacer(minLength: 8)
             if call.stage == .incoming {
                 HStack {
-                    action("Decline", "phone.down.fill", color: Palette.coral) { try await store.coordinator.end() }
+                    action("Decline", "phone.down.fill", color: Palette.destructive) { try await store.coordinator.end() }
                     Spacer()
-                    action("Accept", "phone.fill", color: Palette.teal) { try await store.coordinator.answer() }
+                    action("Accept", "phone.fill", color: Palette.action) { try await store.coordinator.answer() }
                 }.padding(.horizontal, 12)
             } else {
                 if showingKeypad {
@@ -131,7 +128,7 @@ struct ProductionCallView: View {
                     Button(showingKeypad ? "Hide keypad" : "Keypad") { showingKeypad.toggle() }
                         .disabled(call.connectedAt == nil).padding(8)
                 }
-                action("End call", "phone.down.fill", color: Palette.coral) { try await store.coordinator.end() }
+                action("End call", "phone.down.fill", color: Palette.destructive) { try await store.coordinator.end() }
             }
         }
         .padding(20).frame(maxWidth: 500).frame(minHeight: height).frame(maxWidth: .infinity)
@@ -139,16 +136,16 @@ struct ProductionCallView: View {
     private var safetySteps: some View {
         VStack(spacing: 10) {
             Label("Pause Before Sharing", systemImage: "hand.raised.fill").font(.subheadline.weight(.semibold))
-                .foregroundStyle(Color(hex: 0xFFD59A))
+                .foregroundStyle(Palette.warning)
             Text("Don’t share codes, passwords, or move money. Hang up and verify using a number you already know.")
                 .font(.caption).fixedSize(horizontal: false, vertical: true)
             Button { showingGuardian = true } label: {
                 Label("Alert Guardian", systemImage: "person.2.fill").frame(maxWidth: .infinity, minHeight: 44)
-            }.buttonStyle(.bordered).tint(.white).accessibilityIdentifier("alertGuardianButton")
+            }.buttonStyle(.bordered).tint(Palette.accent).accessibilityIdentifier("alertGuardianButton")
             Text("Warning scores are experimental. They do not confirm fraud or identity.")
-                .font(.caption2).foregroundStyle(Color(hex: 0xC7D9E8))
+                .font(.caption2).foregroundStyle(Palette.secondary)
         }.padding(16).frame(maxWidth: .infinity)
-            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 18))
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
     }
     private var status: String {
         switch call.stage {
@@ -167,13 +164,13 @@ struct ProductionCallView: View {
         case .unknown: return "A voice assessment is not available."
         }
     }
-    private func action(_ title: String, _ symbol: String, color: Color = .white.opacity(0.13), selected: Bool = false,
+    private func action(_ title: String, _ symbol: String, color: Color = Palette.softAccent, selected: Bool = false,
                         operation: @escaping () async throws -> Void) -> some View {
         Button { perform(operation) } label: {
             VStack(spacing: 9) {
                 Image(systemName: symbol).scaledFont(size: 27)
-                    .foregroundStyle(selected ? Color(hex: 0x273C31) : .white)
-                    .frame(width: 64, height: 64).background(selected ? .white : color, in: Circle())
+                    .foregroundStyle(title == "Decline" || title == "End call" ? Color.white : selected || title == "Accept" ? Palette.actionInk : Palette.ink)
+                    .frame(width: 64, height: 64).background(selected ? Palette.action : color, in: Circle())
                 Text(title).font(.caption)
             }
         }.buttonStyle(CallActionStyle()).disabled(busy).accessibilityValue(selected ? "On" : "Off")

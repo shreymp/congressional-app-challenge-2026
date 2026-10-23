@@ -14,9 +14,10 @@ struct SettingsScreen: View {
             .padding(.top, 9)
             .padding(.bottom, 24)
             .padding(.horizontal, 12)
-            .background(LinearGradient(colors: [Palette.softAccent, Palette.lavender, Palette.sand], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 24))
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 24))
             .padding(.bottom, 20)
 
+            AppearancePicker().padding(.bottom, 20)
             VStack(spacing: 0) {
                 Toggle("Larger text", isOn: $store.largeText)
                     .tint(Palette.teal)

@@ -97,6 +97,16 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             throw PhoneError.actionUnavailable
         }
         switch action {
+        case let start as CXStartCallAction:
+            do {
+                try await backend.start(callID: call.id, number: start.handle.value)
+                guard active?.id == call.id else { return }
+                backend.activateAudio(AVAudioSession.sharedInstance())
+            } catch {
+                backend.reset()
+                finish(call.id, outcome: .failed, reason: .failed)
+                throw error
+            }
         case is CXAnswerCallAction:
             let allowed = await microphonePermission()
             guard active?.id == call.id else { throw PhoneError.actionUnavailable }
@@ -254,19 +264,18 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP])
                 provider.reportOutgoingCall(with: action.callUUID, startedConnectingAt: Date())
+                action.fulfill() // CallKit must not wait through the remote ringing interval.
                 try await self.backend.start(callID: action.callUUID, number: action.handle.value)
-                guard self.active?.id == action.callUUID else { action.fail(); return }
-                action.fulfill()
+                guard self.active?.id == action.callUUID else { return }
                 let update = CXCallUpdate()
                 update.localizedCallerName = self.active?.person.name
                 update.remoteHandle = action.handle
-                update.supportsHolding = true
-                update.supportsDTMF = true
+                update.supportsHolding = self.backend.supportsHoldAndKeypad
+                update.supportsDTMF = self.backend.supportsHoldAndKeypad
                 update.supportsGrouping = false
                 update.supportsUngrouping = false
                 provider.reportCall(with: action.callUUID, updated: update)
             } catch {
-                action.fail()
                 guard self.active?.id == action.callUUID else { return }
                 self.backend.reset()
                 self.finish(action.callUUID, outcome: .failed, reason: .failed)
