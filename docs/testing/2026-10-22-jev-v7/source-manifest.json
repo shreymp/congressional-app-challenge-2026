@@ -1,0 +1,1318 @@
+[
+  {
+    "split": "calibration",
+    "id": "youtube:RklQ_DNpKfM",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=RklQ_DNpKfM",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "105a811a0967ab5e376e8aa465df76770888ef416cb942f4749056949dd01075"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:kKKb5qOzq2A",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=kKKb5qOzq2A",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "2c4a211e9f66ed69f78815250ef025218488282ae6fea33bf0f1fd3d85ee1bb8"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2160",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CRIME",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2160",
+    "speakers": [
+      "1167",
+      "1123"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "cca88b7e3afcaa40ecc64c2ed56de521b54d64b27831c6c20b81d2cd2edf184d"
+  },
+  {
+    "split": "validation",
+    "id": "swda:4666",
+    "label": 0,
+    "source": "switchboard",
+    "category": "BASEBALL",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "4666",
+    "speakers": [
+      "1199",
+      "1533"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "2460fb9a68087a1ac4e332a7cbbc6e885910151dff6c90277571fc09165aecde"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3311",
+    "label": 0,
+    "source": "switchboard",
+    "category": "VACATION SPOTS",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3311",
+    "speakers": [
+      "1389",
+      "1419"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "9b99dac5bbc67539d252ea13e7e24d2c6efa5bc2104d4f52ecca9c13ded05e13"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:bbkfzQafU8U",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=bbkfzQafU8U",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "5a88a02a1bca719ad45d62a2a62ede469b7587e868d20b3e89e472844d5b560c"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:l2gMJQvMSA0",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=l2gMJQvMSA0",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "533286d4d3576c0bbf245eb3ec8e72b7c6b4e523f58e6f77ebb5e5666caf5c1b"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:g2tb4eOM_gI",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=g2tb4eOM_gI",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "dc6f8ef509d7582982d3a795bbb9a80cd810d88ce67ba58efcaa2efecd01c634"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:addhaKXCVH4",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=addhaKXCVH4",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "42947cc3c5e0ee150b5eded5d546292fbae5bed2c32bd067a786478da041adfb"
+  },
+  {
+    "split": "validation",
+    "id": "swda:4801",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CAPITAL PUNISHMENT",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "4801",
+    "speakers": [
+      "1522",
+      "1533"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "d0c247656efd18cdf849444f9481cf2ba0717c48e5b529672585ec86803cf976"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:bfpFYWLXRBk",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=bfpFYWLXRBk",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "72e05301d1f8b162c53f995b052fc3ef55024ad544c03454dfd49967f3f9c5e8"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2984",
+    "label": 0,
+    "source": "switchboard",
+    "category": "GARDENING",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2984",
+    "speakers": [
+      "1263",
+      "1188"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "3fb4f9433fa47800713d9eb473e488969460e81ec3b2a5ff1f6b841162a10a7f"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2279",
+    "label": 0,
+    "source": "switchboard",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2279",
+    "speakers": [
+      "1000",
+      "1167"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "e211e1ef7c21637c4e0c28556584e46794035414b7701b096eab00d550752eb9"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3283",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CAPITAL PUNISHMENT",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3283",
+    "speakers": [
+      "1413",
+      "1409"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "f12072fad750dc973d7e290f48cb40c2f3dfef05c81f1c4f0600156ccb80f490"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:wPnsqrOiRSQ",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=wPnsqrOiRSQ",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "c0705698e72a30beaf7b833a3da943446d11dc3866c2aa8b91ecfa55d3f6dbbf"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:41qDBhbJSik",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=41qDBhbJSik",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "77c2a79c1fa703aee33252d920e2253a4af3f3afe8e538cb49f700296ff47a18"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:v8wkKddqJHo",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=v8wkKddqJHo",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "cbf8a12c66a2aff6fd233606e164dff21733de70faaafed86b507307199b685e"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:6hPvH48r21M",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=6hPvH48r21M",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "dc8da11084961fb9c90438a5a66f644f7421699845f331392088dda50a822e66"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2231",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CAPITAL PUNISHMENT",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2231",
+    "speakers": [
+      "1000",
+      "1138"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "59768b7de4110ac3ddcf2552330e5086c156ce1f7ab77c77038ace29437ffc47"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:riDZMoersSE",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=riDZMoersSE",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "ec328d019f92f30f280955f68c0efd96b1374d6e7943e3f53f0074f9adac0099"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3052",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CARE OF THE ELDERLY",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3052",
+    "speakers": [
+      "1285",
+      "1204"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "de90516480cdd29910508f75bb78409e104e98c9e418e7ba87ae1b703b5cabdc"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3497",
+    "label": 0,
+    "source": "switchboard",
+    "category": "WEATHER CLIMATE",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3497",
+    "speakers": [
+      "1389",
+      "1461"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "2c49cf491df2b6f61ab50cb62b828b52dc9863564b58ee1ff045236797e98064"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3876",
+    "label": 0,
+    "source": "switchboard",
+    "category": "RECYCLING",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3876",
+    "speakers": [
+      "1493",
+      "1469"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "8e11714841e3932f9e3951fd98adc0c605cce4416b006bc56de710f787d44fed"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:ZhnMe4nE8qI",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=ZhnMe4nE8qI",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "4ec813d84405c1fea02360db12d7b4fee396ca71e3ae9f982ef0034866d432f6"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2593",
+    "label": 0,
+    "source": "switchboard",
+    "category": "HOBBIES AND CRAFTS",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2593",
+    "speakers": [
+      "1179",
+      "1038"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "e0412563612b1c8f3f4ae9fcde0625df4a0a1c2b48fcc5eb3f0e42bc0dbae1cd"
+  },
+  {
+    "split": "validation",
+    "id": "swda:4090",
+    "label": 0,
+    "source": "switchboard",
+    "category": "FAMILY FINANCE",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "4090",
+    "speakers": [
+      "1514",
+      "1560"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "f91d7e35d518378a08a921715d6a17edf5f7176773207f2ff9e53276f9571262"
+  },
+  {
+    "split": "calibration",
+    "id": "swda:2229",
+    "source": "natural_switchboard_excerpt",
+    "label": 0,
+    "speakers": [
+      "1075",
+      "1139"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw12utt/sw_1203_2229.utt.csv",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "text_sha256": "cfd07e6daeb8b4d37dfb1a873dc8d108bbaa8fed64e1f944fe208b9267b9b156"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:AqzhM7y4Z_Q",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=AqzhM7y4Z_Q",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "1ac50f25e880bace80ca059fe393483c3b2b76c1272eab6b8c84202b40cd7353"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3320",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CRIME",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3320",
+    "speakers": [
+      "1413",
+      "1353"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "3ec7f455c29d530940b84568c41083dfd02f30a6b18def2b64fc05c7a9fa79cf"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:5FFkMDg4N18",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=5FFkMDg4N18",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "b891bbe1ab50bf5c12286e422f54b7bfadadba309419c18bb74dc500c33095a9"
+  },
+  {
+    "split": "validation",
+    "id": "swda:2539",
+    "label": 0,
+    "source": "switchboard",
+    "category": "FAMILY LIFE",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "2539",
+    "speakers": [
+      "1226",
+      "1123"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "3054d1bb91c451dfedef4653b0952bff1729c7bfe2c6f128a223a7a3f2037fd8"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:Jf9WxySHPMI",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=Jf9WxySHPMI",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "b119c703aa305c425c604d0c6ce6b660f481aea25a58988fb68db2d5069b5e09"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3902",
+    "label": 0,
+    "source": "switchboard",
+    "category": "CARE OF THE ELDERLY",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3902",
+    "speakers": [
+      "1493",
+      "1502"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "f9a133788f2f54313d87e090d123a8a63c5736da0df5795da01563cd988b08c6"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3458",
+    "label": 0,
+    "source": "switchboard",
+    "category": "MAGAZINES",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3458",
+    "speakers": [
+      "1443",
+      "1409"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "2d81a1cb6b4d3fbedda962cc1a9a09cad52f69fff95b70fc90648e0b87128f30"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:1AVcXu602yg",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=1AVcXu602yg",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "3fd3939214278ed88f69f54ce7f9ba819e6b141b65ecdd19da36a2a8ee2ef2d4"
+  },
+  {
+    "split": "calibration",
+    "id": "swda:2347",
+    "source": "natural_switchboard_excerpt",
+    "label": 0,
+    "speakers": [
+      "1020",
+      "1180"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1301_2347.utt.csv",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "text_sha256": "53a869d3216d0085cc7ef4d65162f7f59fec7a1ef91f5e9ad1ca59400ac41027"
+  },
+  {
+    "split": "validation",
+    "id": "swda:3355",
+    "label": 0,
+    "source": "switchboard",
+    "category": "MUSIC",
+    "label_quality": "natural_conversation_context_not_fraud_annotation",
+    "group": "3355",
+    "speakers": [
+      "1419",
+      "1409"
+    ],
+    "previously_seen_validation": true,
+    "text_sha256": "56ed5608ea892253d85f94e30b3c42ad5f789bd50a358e166a5742c52e2539fd"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:ul6JlEKq-Xw",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=ul6JlEKq-Xw",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "68992779c295621d480b7a27feddc5458144faa362dcd0a2742dbb4af7ff2d2b"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:U3rbtrXSbS0",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=U3rbtrXSbS0",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "0706d2bba0d77e104eed7609910ebdbba860c1577107599f1cfffbe90b027f93"
+  },
+  {
+    "split": "calibration",
+    "id": "youtube:KwrJvjkljxI",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ModderPaulScambaits",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=KwrJvjkljxI",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "23ce3cd5e3e316e1087c1a22460cd97611429b845e9c417218149e4cdaa4dc63"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC057",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC057.trn",
+    "archive_member": "TRN/SBC057.trn",
+    "source_sha256": "8d36c89c92fcefe3ec89876c10652fc9cd7561c2491559796d811d09556e86f2",
+    "speaker_pseudonyms": [
+      "BENTON",
+      "BILL",
+      "DARREN",
+      "JED",
+      "MARTIN",
+      "NICK",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "452077fba7680a4d12f45c800ecffa0313ca1682f679adebc2f7319b0e6a8c9b"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC022",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC022.trn",
+    "archive_member": "TRN/SBC022.trn",
+    "source_sha256": "74a3c2cccc314a2092ec877b72b28bd70e2d05fa94a9e0c3090e7e8418e26a50",
+    "speaker_pseudonyms": [
+      "BILL",
+      "LANCE",
+      "RANDY"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "eae6278c4870edf8a5e3d3637073fed32c65d5198b0120e17195856ebb1b4e75"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC050",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC050.trn",
+    "archive_member": "TRN/SBC050.trn",
+    "source_sha256": "2c744e8610ebad2e02e746024b661596076a2aa1237b301e15ae207b76b70c5a",
+    "speaker_pseudonyms": [
+      "ARIANNA",
+      "DANA",
+      "KELLY",
+      "NANCY",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "e7b10d6ae05d43a24e4ad738ab688547ad33228430b17295e4f953cffadb5bd7"
+  },
+  {
+    "split": "test",
+    "id": "youtube:c0PX1zIc18k",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=c0PX1zIc18k",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "c53fc123fd182a7650ef71c7ead553ddc92e1dd104187f5993584a836abcf4fd"
+  },
+  {
+    "split": "test",
+    "id": "youtube:q1oyAqHnSG8",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=q1oyAqHnSG8",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "6fe82591917def5931fc86253ea3d723a10ad929d509932614b3d0392dc15e96"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC018",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC018.trn",
+    "archive_member": "TRN/SBC018.trn",
+    "source_sha256": "50218d36f7cedaac0851e150a910b1487d3bc58e2120d5673884ea31274576d6",
+    "speaker_pseudonyms": [
+      "HEIDI",
+      "KRISTEN",
+      "LINDSEY",
+      "MARCIA",
+      "TRENT"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "5390dd1ca5eb1737044d6ad06e683740944c6c0092ff0a28c8c6ff1675afc2dc"
+  },
+  {
+    "split": "test",
+    "id": "youtube:a_RaQZHfYvU",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=a_RaQZHfYvU",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "4a6626afc69a20dd0989c5b064604c04fed67140d40499cff96e36996367c981"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC041",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC041.trn",
+    "archive_member": "TRN/SBC041.trn",
+    "source_sha256": "20f99b535e3db8075ccf48e8180876baeadf476414c78e56ddaea8bf052a5cf7",
+    "speaker_pseudonyms": [
+      "KRISTIN",
+      "PAIGE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "22c8445b508831432af88c806a544f249e053a9b10ce00cbf56ecb3de0f35858"
+  },
+  {
+    "split": "test",
+    "id": "youtube:hW2yCFQCaBs",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=hW2yCFQCaBs",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "d7e2ab950bd334b93c5e27c71276e7c2959b47e131caf45b89ac40647174a0b9"
+  },
+  {
+    "split": "test",
+    "id": "youtube:HUIFVGfNuno",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=HUIFVGfNuno",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "3a52235221e7410c29335cc7121913e6c365fac963dd5b21afdd41607d7d9549"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC001",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC001.trn",
+    "archive_member": "TRN/SBC001.trn",
+    "source_sha256": "1da23c35673c2eb418310c0afaf9cf22f5dd4ebb1b99c092b40eb96bae941e92",
+    "speaker_pseudonyms": [
+      "DORIS",
+      "LENORE",
+      "LYNNE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "2434431076e7f569e70718866839b259d10d2b423be26c866b02d6a5073b1482"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC024",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC024.trn",
+    "archive_member": "TRN/SBC024.trn",
+    "source_sha256": "aa82f801e64cbff53f39596093e5212170798ad4eff590784d33739b44b56751",
+    "speaker_pseudonyms": [
+      "DAN",
+      "JENNIFER"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "5d7b78ef81db9a9fa4f63962611448f100250f3b9d4b2df90944c4e703d277a8"
+  },
+  {
+    "split": "test",
+    "id": "youtube:02TlkV6u6Q4",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=02TlkV6u6Q4",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "45440366703a0a41ad766217e3f5c7518ebd9c2a2e166308da6491d2dbf062dd"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC059",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC059.trn",
+    "archive_member": "TRN/SBC059.trn",
+    "source_sha256": "4dc7fcea5a8379db1a312f15e6d1178ef7ccef6c8ea6b5b335f9bff46ff30fe2",
+    "speaker_pseudonyms": [
+      "CAM",
+      "FRED",
+      "JO",
+      "WESS"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "222e6a329da13ba800e7b35a7a073914f5eeb6db28b17bddb1d529e2d47edcb8"
+  },
+  {
+    "split": "test",
+    "id": "youtube:rDewAzjfGIU",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=rDewAzjfGIU",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "062e22976df0bbf58da6c512f007c939f74dd3fe0daf0a0bca9546e3beb5eec8"
+  },
+  {
+    "split": "test",
+    "id": "youtube:Nx1K73QkpxM",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=Nx1K73QkpxM",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "8bf10e3e404794d6f3eaf7c4b6cd1e3a8edce672afdc25078c38cb6f9b374772"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC026",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC026.trn",
+    "archive_member": "TRN/SBC026.trn",
+    "source_sha256": "99c79d9df199cb0e3152fa1dec8ea064c107354c3c046d8a4e1ee0fee9a69da2",
+    "speaker_pseudonyms": [
+      "AUD",
+      "BERNIE",
+      "CHERYL",
+      "DAN",
+      "DEREK",
+      "GRANT",
+      "KAREN",
+      "MANY",
+      "PATTY",
+      "PAUL",
+      "ROSE",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "ff1b92f0bd5360a031bc94f23a0a23e11d591e5203f78cd4ed9474f3dab1e05d"
+  },
+  {
+    "split": "test",
+    "id": "youtube:Y5icXINVwk8",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=Y5icXINVwk8",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "2e9eb3ada34e861dbc4d8c154bd61902fa47dda721e71564036b498f49fd20e2"
+  },
+  {
+    "split": "test",
+    "id": "youtube:CO2HWS8ANeg",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=CO2HWS8ANeg",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "d4b100c475307821cd0b623f1701768d0039996df192d856e3009aa42f9628da"
+  },
+  {
+    "split": "test",
+    "id": "youtube:6kGGo0LTZi0",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=6kGGo0LTZi0",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "2a906f63aa26343ccb9c2251eaf845cd6a3cabb6644c2b0b4ac3e90988151b86"
+  },
+  {
+    "split": "test",
+    "id": "youtube:D7DSotlVuhg",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=D7DSotlVuhg",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "22514415631d5832adbd8c947a96fc302a755e81202728f5f35d1e8f7feb5dc7"
+  },
+  {
+    "split": "test",
+    "id": "youtube:0D6KEV2vLAY",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=0D6KEV2vLAY",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "a49a4fd86fabe313af27bc19c63521c4b735f57bcf4f0b497029b132dcc88ec0"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC016",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC016.trn",
+    "archive_member": "TRN/SBC016.trn",
+    "source_sha256": "f898d85f4d8012fdb5f7a1c2ebac30c5589613565fa2fe3f2940c25c84591817",
+    "speaker_pseudonyms": [
+      "BRAD",
+      "JONATHAN",
+      "TAMMY",
+      "TODD"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "95cc51737298bd1d76735e79abb3ab33b00001b207626296263e34eb937a5817"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC031",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC031.trn",
+    "archive_member": "TRN/SBC031.trn",
+    "source_sha256": "10eb0707ad6ca747980ec2406fb272c307e923c3ad3b6e4d4c09f183427778d3",
+    "speaker_pseudonyms": [
+      "BETH",
+      "JAMIE",
+      "ROSEMARY",
+      "SHERRY"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "8012fd000698f4046b2edacac888ff7324fa9144c6ef8748eb43f3308d80e47a"
+  },
+  {
+    "split": "test",
+    "id": "youtube:uV-qa9M-o4E",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=uV-qa9M-o4E",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "635aeac59640263ddbda4c4d7af364712452d7fc44b424c1e2805d3c3706588d"
+  },
+  {
+    "split": "test",
+    "id": "youtube:S_hSKTgf33I",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=S_hSKTgf33I",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "81251bea8f7129fe01d42c445526c16f7fc7355c2c80fd5fd73451146e298fab"
+  },
+  {
+    "split": "test",
+    "id": "youtube:7WBFf-Fma7c",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "DanGleeballsScambaiter",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=7WBFf-Fma7c",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "019dc996c214bc1ff90c39aa32dc782376d7af0c8876b04905302043bff86349"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC006",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC006.trn",
+    "archive_member": "TRN/SBC006.trn",
+    "source_sha256": "a7193e9f2ecd9b0f1d56d89b8ea365d7de157f0c8d4fbf4c5d1bfea31cd44a85",
+    "speaker_pseudonyms": [
+      "ALINA",
+      "ALL",
+      "LENORE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "860082d268aafcf1263f7be84263bdcb890f4644c64083c7b09370bf1ee451bb"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC047",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC047.trn",
+    "archive_member": "TRN/SBC047.trn",
+    "source_sha256": "f03f359938a7cff438554cc8c0b982a92c2160d3e268cdc9df56fa81e8df005f",
+    "speaker_pseudonyms": [
+      "FRED",
+      "RICHARD"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "9f54372986aaadff50299ff360949543d5c6efa6e62fa5214670bcb9a1ee7432"
+  },
+  {
+    "split": "test",
+    "id": "swda:3994",
+    "source": "natural_switchboard_excerpt",
+    "label": 0,
+    "speakers": [
+      "1312",
+      "1512"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw13utt/sw_1319_3994.utt.csv",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "text_sha256": "f08dfddb8bed201eb439a792063eda758c5f3ee3d8f89a09ae68d36a6bc991ae"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC023",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC023.trn",
+    "archive_member": "TRN/SBC023.trn",
+    "source_sha256": "591842734cee126f1310383716c69343063fac16b8f4c6876e0cd47340dc8a66",
+    "speaker_pseudonyms": [
+      "ALICE",
+      "DEBORAH",
+      "DIANE",
+      "EVELYN",
+      "HARRIET",
+      "JANICD",
+      "JANICE",
+      "KIM",
+      "LINDA",
+      "LOIS",
+      "LORI",
+      "MANY",
+      "NANCY",
+      "NORA",
+      "PATTY",
+      "SUE",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "ba1786e0494316a7f347f7eb30678316a5129fc0633f6fddf9054315cdc1038e"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC036",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC036.trn",
+    "archive_member": "TRN/SBC036.trn",
+    "source_sha256": "b1645e1688365377d086cd3d6708ecaaeac7a4b6a293d38dc9a337b250ce242d",
+    "speaker_pseudonyms": [
+      "KEVIN",
+      "LISA",
+      "MARIE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "c8ba0a97f0e218f7f483b2163f86e3c953dc5a2e670e5b1828d65c860bc8610d"
+  },
+  {
+    "split": "test",
+    "id": "youtube:8M_7cd1sXhc",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ScammerAllergy",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=8M_7cd1sXhc",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "ef39ad321c331e26cb46a6d4b07ca0bc3d349c615a8e074168e8985d0e4e971a"
+  },
+  {
+    "split": "test",
+    "id": "youtube:tbtpbuFvJvs",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=tbtpbuFvJvs",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "06046f94b55a267cacb8ed4cd3759c23264b802344af57987e9e1348a953306a"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC007",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC007.trn",
+    "archive_member": "TRN/SBC007.trn",
+    "source_sha256": "43df12fd575b8bcc32aa1f0f00d7a3495e3abea9832ea2a60fa70fca7b18a600",
+    "speaker_pseudonyms": [
+      "ALICE",
+      "MARY"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "3791e8bffe12939af27fa65e2af08701d266eb614e270ad2ab32f30bb86cd072"
+  },
+  {
+    "split": "test",
+    "id": "youtube:PENEBtRYP70",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=PENEBtRYP70",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "bc9fd07c2db7ba99d5ddea2f9b172407aadf7087d4fc34eb2401a0841fe21f64"
+  },
+  {
+    "split": "test",
+    "id": "youtube:_PhkvPhhXSE",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=_PhkvPhhXSE",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "771459c28a4bc4882b500a1e9c9bfa48c29ddc50a6cec133956d101ff4cdca86"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC004",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC004.trn",
+    "archive_member": "TRN/SBC004.trn",
+    "source_sha256": "b0921bd2c8f9e2189a6f22987a4874f09092f9b381899ae572beb6807099392a",
+    "speaker_pseudonyms": [
+      "CAROLYN",
+      "KATE",
+      "KATHY",
+      "PAM",
+      "SHANE",
+      "SHARON",
+      "WARREN",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "6a565c62952f33c0f89b0277602fb76563fa6b34426592c2612000f9bcaba01b"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC003",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC003.trn",
+    "archive_member": "TRN/SBC003.trn",
+    "source_sha256": "b6416ae4c700ecfe6d70ab20d6cf5c3833ae40eb4cb471f7140292aebbee74a7",
+    "speaker_pseudonyms": [
+      "MARILYN",
+      "PETE",
+      "ROY"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "d35ad56882cb7b7270849e158541c793a9243a3e90483c7a4fc2799123bff1c5"
+  },
+  {
+    "split": "test",
+    "id": "youtube:Dpp1sIL1m5Q",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=Dpp1sIL1m5Q",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "1b698d8274e3eaee62fe78b954c90c0004bbe4d144133fd4f85848b6d5ba9ca2"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC044",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC044.trn",
+    "archive_member": "TRN/SBC044.trn",
+    "source_sha256": "d4b4333bc67e19c01a69cec15ed8ddee80b4ae016efaeb9ef85f9427d3ce4d73",
+    "speaker_pseudonyms": [
+      "CAM",
+      "LAJUAN"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "a4b27deac2bf36654f0e0a09cf2cc1ada66510b2779e591c4c56763cea83be50"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC005",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC005.trn",
+    "archive_member": "TRN/SBC005.trn",
+    "source_sha256": "3c537a69be481e8e96add188437211c4c6a767ddb9f8de106ae5503a689f5e51",
+    "speaker_pseudonyms": [
+      "DARRYL",
+      "PAMELA"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "e2549b1e94806b74ee5d6161cec029f154f9368087ccfb796b8464c798b07924"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC002",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC002.trn",
+    "archive_member": "TRN/SBC002.trn",
+    "source_sha256": "6e7bf5ec824c8a43021ee88632336e030f0914a00e1448cb3234c04dc71a3e02",
+    "speaker_pseudonyms": [
+      "HAROLD",
+      "JAMIE",
+      "MILES",
+      "PETE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "a47dc07e7e51157440df17cad4f5f6748674570456954ed700c38be5993ad897"
+  },
+  {
+    "split": "test",
+    "id": "youtube:le71yVPh4uk",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "JimBrowning",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=le71yVPh4uk",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "5e74df494d9857c580f3182ed6b99bc65b567ad84ea16e37cb5be6ac91029a72"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC029",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC029.trn",
+    "archive_member": "TRN/SBC029.trn",
+    "source_sha256": "4050e995b063bab1f92b6abb86df5e28a0c801b84a5474cceb20d1202a097318",
+    "speaker_pseudonyms": [
+      "LARRY",
+      "SETH",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "9750d48e5bf3f8b4b62bd1d05e156b49615ec346f509f4a5d3199c0ef4bed9b2"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC014",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC014.trn",
+    "archive_member": "TRN/SBC014.trn",
+    "source_sha256": "e5fbf98c5a6fe48ecf95aecad3df609022d595bac4fb889671c1b161f99b9f7b",
+    "speaker_pseudonyms": [
+      "FRED",
+      "JIM",
+      "JOE",
+      "KURT",
+      "VIVIAN",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "f2ff3027708c63d8730dc03ca26baec26c60941356a408f290791b2185cc0e1b"
+  },
+  {
+    "split": "test",
+    "id": "swda:2395",
+    "source": "natural_switchboard_excerpt",
+    "label": 0,
+    "speakers": [
+      "1055",
+      "1162"
+    ],
+    "url": "https://github.com/cgpotts/swda/blob/master/swda.zip",
+    "archive_member": "swda/sw00utt/sw_0085_2395.utt.csv",
+    "label_quality": "natural_conversation_context_not_fraud_adjudicated",
+    "text_sha256": "780208666c2f8a65e8ae73c4714e38dc6a0bdf1c3ad8a12ae021587d677a3e42"
+  },
+  {
+    "split": "test",
+    "id": "youtube:awYB1Q7THgE",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=awYB1Q7THgE",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "43eb90094e23c210e74581b0b446a012f68fa4f7dc5a5c4b8788b815f3c95264"
+  },
+  {
+    "split": "test",
+    "id": "youtube:fiNICVJh_Q8",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=fiNICVJh_Q8",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "d61c4f0ccfeef897ae1bfb8a1211cdc83afbd6fd4ed1e0d647b2bd4ce313fa72"
+  },
+  {
+    "split": "test",
+    "id": "youtube:HYEGXFJUWb0",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ToniMosh",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=HYEGXFJUWb0",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "b4cc40fddb81829decc5c387af6846639d148bd4e79aca0f3c412c003f1379c4"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC039",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC039.trn",
+    "archive_member": "TRN/SBC039.trn",
+    "source_sha256": "6f3343b4a166cf128a58b6642b238f4f76c20e32019201cb08616d871bc5446d",
+    "speaker_pseudonyms": [
+      "ALICE",
+      "AMY",
+      "DON",
+      "KIRSTEN",
+      "LORI",
+      "NICOLE",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "2f644ea2d0b7507a744750114ba946fde1b446ec514b4d36aa9066b1d1e95c65"
+  },
+  {
+    "split": "test",
+    "id": "youtube:XrFRv9s8LEk",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "scambaittv",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=XrFRv9s8LEk",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "347efcc93b624d6f568324c4cb1a9ffd50d6a1e4c5f6a5c9122eedf866696e76"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC058",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC058.trn",
+    "archive_member": "TRN/SBC058.trn",
+    "source_sha256": "5d5cffe92b096705ad6fb1b6bb75e01f77b4d7d597ec4e4707cef5bffb171910",
+    "speaker_pseudonyms": [
+      "SHERI",
+      "STEVEN"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "eb9051868aed88f6725b2a1b97e7eb034673a9e8a1ab915eccd8dd8c3b490cd5"
+  },
+  {
+    "split": "test",
+    "id": "youtube:5qZVmaerV0M",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=5qZVmaerV0M",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "0def43955eda3e8d0a8cf1cd636da06ed68830cef8b373dc667e59be190fe557"
+  },
+  {
+    "split": "test",
+    "id": "youtube:8lwREQPRTEM",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "ScammerAllergy",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=8lwREQPRTEM",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "9e903c41a10bf66ce38cc72a61d0649d98b3a547b1dded0b2155eb0d6ae1cead"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC048",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC048.trn",
+    "archive_member": "TRN/SBC048.trn",
+    "source_sha256": "d49823837e78f688364a5d4c8e8b0885fd7f54970c39cd0dd2f6991e84676dd1",
+    "speaker_pseudonyms": [
+      "DAN",
+      "JUDY",
+      "LEA",
+      "TIM",
+      "X"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "8fcd6eed6ce3fdca024954169ee4687a1c20c7f42ce79f3e372de47153ca0442"
+  },
+  {
+    "split": "test",
+    "id": "youtube:Ad2t7lbHOE8",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=Ad2t7lbHOE8",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "f5b2fb034e6342f545aa11d99de84c4207dd1e5e7053eaf98fa631feb61902c6"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC028",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC028.trn",
+    "archive_member": "TRN/SBC028.trn",
+    "source_sha256": "72ec3a2d6d8f91450f8079b533f8e6e13d4b73a7db30143da1643bb78fed6b8e",
+    "speaker_pseudonyms": [
+      "BOTH",
+      "JEFF",
+      "JILL",
+      "JILL_S"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "01066f1bbd1df864f2b56aed3b70eace717e87728ace336dbb4b2381537cb6ea"
+  },
+  {
+    "split": "test",
+    "id": "youtube:AUMYpTFxWlU",
+    "source": "human_youtube_scambait_excerpt",
+    "channel": "CJSCAMS",
+    "label": 1,
+    "url": "https://www.youtube.com/watch?v=AUMYpTFxWlU",
+    "label_quality": "source_call_silver_not_excerpt_adjudicated",
+    "text_sha256": "3a62c0b4b8bc1eace423b48b9c85ddcc7aef26b386249260182b8bb9c2a74665"
+  },
+  {
+    "split": "test",
+    "id": "sbc:SBC043",
+    "source": "natural_santa_barbara_excerpt",
+    "label": 0,
+    "url": "https://www.linguistics.ucsb.edu/sites/default/files/sitefiles/research/SBC/SBC043.trn",
+    "archive_member": "TRN/SBC043.trn",
+    "source_sha256": "d8c85ae474a2ce7a3dd6af1b7ffa2bb977ce4e0bd8144c9ad2033e0c525551a1",
+    "speaker_pseudonyms": [
+      "ALICE",
+      "ANNETTE"
+    ],
+    "label_quality": "natural_interaction_context_not_fraud_adjudicated",
+    "text_sha256": "3a66ec572c7e108fc4318c38919f74c6cf386422bdccca42c891f716b73c2672"
+  }
+]

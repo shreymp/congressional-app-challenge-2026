@@ -1,0 +1,57 @@
+{
+  "brand": {
+    "name": "callma.",
+    "tagline": "call with more peace of mind.",
+    "artwork": "temporary placeholders"
+  },
+  "native": {
+    "result": "Passed",
+    "passed": 63,
+    "failed": 0,
+    "device": "iPhone 17 Pro",
+    "os": "iOS Simulator 26.5",
+    "summary": "branding-ios-test-summary.json",
+    "visual_review": [
+      "native-demo-keypad.png",
+      "native-settings.png",
+      "native-demo-settings.png",
+      "native-demo-call.png",
+      "native-call-test-fixture.png",
+      "native-larger-text.png",
+      "native-demo-call-blocked.png"
+    ],
+    "coverage": [
+      "five-tab navigation",
+      "demo dialing blocked",
+      "session favorites",
+      "contextual voice help",
+      "exact brand strings",
+      "analysis state and saved results",
+      "production call controls and feedback"
+    ],
+    "test_source": "isolated clean project plus reviewed changes; existing local project edits excluded",
+    "manual_dialer_check": "Entered 123, pressed Call, observed no-call-placed explanation; left simulator on Keypad"
+  },
+  "contrast_ratios": {
+    "primary action": 5.76,
+    "secondary text": 5.45,
+    "AI badge": 6.33,
+    "human badge": 6.47,
+    "unknown badge": 5.6,
+    "analyzing badge": 5.88,
+    "call action": 4.58
+  },
+  "other_checks": {
+    "browser_typescript_and_build": "passed; final visual review uses SwiftUI at user request",
+    "expo_ios_export": "passed",
+    "backend": "26 passed on original functional patch; unchanged in branding pass"
+  },
+  "limits": [
+    "No live calls or deployment during this implementation session",
+    "Demo risk is authored sample data",
+    "Production screenshot uses explicit injected test results",
+    "Largest accessibility text sizes, physical-device VoiceOver, sunlight and exhaustive dark appearance review not validated",
+    "Custom tab bars retain current implementation; broader iPad adaptation remains future work",
+    "False-positive model issue and protected outbound routing remain open in STATUS.md"
+  ]
+}

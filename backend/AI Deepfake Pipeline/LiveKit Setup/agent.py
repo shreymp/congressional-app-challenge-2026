@@ -97,8 +97,9 @@ async def scam_guard(ctx: JobContext) -> None:
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
     # 0. Ring grandma's app for the phone caller. Starts its own task and returns at once; it
     #    must not wait for step 1, because nothing answers the call until she has been rung.
-    probe = ctx.room.name.startswith("backend-probe-") and ctx.job.metadata == "cac-backend-probe-v1"
-    if not probe:
+    job_metadata = getattr(getattr(ctx, "job", None), "metadata", "") or ""
+    probe = ctx.room.name.startswith("backend-probe-") and job_metadata == "cac-backend-probe-v1"
+    if not probe and job_metadata != "callma-outbound-v1":
         senior_ring.start_for_job(ctx)
     # Steps 1-4 (scoring) must never take the ring down with them. An exception that escapes this
     # function makes the framework disconnect the agent and run the shutdown callbacks, which
@@ -147,6 +148,8 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
     if ctx.proc.userdata.get("stt_model") is not None:
         try:
             transcript = await asyncio.to_thread(transcript_pipeline.for_call, ctx.proc.userdata["stt_model"])
+            if probe:
+                transcript.save_excerpt = False
             transcript.start()
         except Exception:
             transcript_state = "stt_unavailable"
@@ -165,7 +168,8 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
         msg = publisher.message({**payload, "t": round(time.monotonic() - t_start, 2)})
         try:
             await room.local_participant.publish_data(
-                json.dumps(msg, allow_nan=False), reliable=True, topic=RISK_TOPIC)
+                json.dumps(msg, allow_nan=False, ensure_ascii=False), reliable=True, topic=RISK_TOPIC,
+                destination_identities=[senior_ring.SENIOR_IDENTITY] if text_state.get("saved_excerpt") and not probe else [])
         except Exception:
             log.warning("risk update could not be sent", exc_info=True)
 

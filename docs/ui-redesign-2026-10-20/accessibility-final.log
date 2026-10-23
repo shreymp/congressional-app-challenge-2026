@@ -1,0 +1,15 @@
+Writing result bundle at path:
+	/tmp/callshield-ui-bounded-popover.xcresult
+
+2026-10-20 22:57:50.763 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:57:50.763 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:57:54.227 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:57:54.227 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:58:03.533 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:58:03.533 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:58:06.643 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-20 22:58:06.643 xcodebuild[25350:42058902] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 22:58:11.237 xcodebuild[25350:42058902] [MT] IDETestOperationsObserverDebug: 22.883 elapsed -- Testing started completed.
+2026-10-20 22:58:11.237 xcodebuild[25350:42058902] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-20 22:58:11.237 xcodebuild[25350:42058902] [MT] IDETestOperationsObserverDebug: 22.883 sec, +22.883 sec -- end
+Testing started

@@ -15,6 +15,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     var onCallChanged: ((PhoneCall?) -> Void)?
     var onRecord: ((PhoneCallRecord) -> Void)?
     var onError: ((String) -> Void)?
+    var shouldBlockIncoming: ((String) -> Bool)?
     var active: PhoneCall? { session.current }
 
     init(backend: CallingBackend, microphonePermission: @escaping @MainActor () async -> Bool = {
@@ -101,6 +102,16 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             throw PhoneError.actionUnavailable
         }
         switch action {
+        case let start as CXStartCallAction:
+            do {
+                try await backend.start(callID: call.id, number: start.handle.value)
+                guard active?.id == call.id else { return }
+                backend.activateAudio(AVAudioSession.sharedInstance())
+            } catch {
+                backend.reset()
+                finish(call.id, outcome: .failed, reason: .failed)
+                throw error
+            }
         case is CXAnswerCallAction:
             let allowed = await microphonePermission()
             guard active?.id == call.id else { throw PhoneError.actionUnavailable }
@@ -185,7 +196,10 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             backend.reset()
             finish(id, outcome: .failed, reason: .failed)
             onError?(message)
-        case .incoming(let id, let handle, let name): reportIncoming(id, handle: handle, name: name)
+        case .incoming(let id, let handle, let name):
+            if shouldBlockIncoming?(handle) == true {
+                Task { try? await backend.end(callID: id) }
+            } else { reportIncoming(id, handle: handle, name: name) }
         case .incomingCallsUnavailable(let message): onError?(message)
         }
     }
@@ -210,7 +224,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         #if targetEnvironment(simulator)
         guard session.begin(PhoneCall(id: id, person: person, direction: .incoming,
                                      createdAt: Date(), stage: .incoming)) else { return }
-        print("[Callshield] Simulator incoming call; use Accept in the app")
+        print("[callma.] Simulator incoming call; use Accept in the app")
         changed()
         Task { @MainActor in
             do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
@@ -226,7 +240,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             Task { @MainActor in
                 // CallKit can refuse (Do Not Disturb, a blocked caller). Then nothing rang and there is no session.
                 if let error {
-                    print("[Callshield] CallKit refused the incoming call: \(error.localizedDescription)")
+                    print("[callma.] CallKit refused the incoming call: \(error.localizedDescription)")
                     try? await self.backend.end(callID: id)
                     return
                 }
@@ -236,7 +250,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
                     try? await self.backend.end(callID: id)
                     return
                 }
-                print("[Callshield] CallKit reported the incoming call")
+                print("[callma.] CallKit reported the incoming call")
                 self.changed()
                 Task { @MainActor in
                     do { try await self.backend.prepareIncoming(callID: id, number: number ?? "") }
@@ -265,19 +279,18 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetoothHFP])
                 provider.reportOutgoingCall(with: action.callUUID, startedConnectingAt: Date())
+                action.fulfill() // CallKit must not wait through the remote ringing interval.
                 try await self.backend.start(callID: action.callUUID, number: action.handle.value)
-                guard self.active?.id == action.callUUID else { action.fail(); return }
-                action.fulfill()
+                guard self.active?.id == action.callUUID else { return }
                 let update = CXCallUpdate()
                 update.localizedCallerName = self.active?.person.name
                 update.remoteHandle = action.handle
-                update.supportsHolding = true
-                update.supportsDTMF = true
+                update.supportsHolding = self.backend.supportsHoldAndKeypad
+                update.supportsDTMF = self.backend.supportsHoldAndKeypad
                 update.supportsGrouping = false
                 update.supportsUngrouping = false
                 provider.reportCall(with: action.callUUID, updated: update)
             } catch {
-                action.fail()
                 guard self.active?.id == action.callUUID else { return }
                 self.backend.reset()
                 self.finish(action.callUUID, outcome: .failed, reason: .failed)

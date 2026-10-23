@@ -1,0 +1,14 @@
+test_calibration_and_prompt_match_training_contract (test_model_service.ModelServiceTests.test_calibration_and_prompt_match_training_contract) ... ok
+test_control_tokens_cannot_create_caller_authored_labels (test_model_service.ModelServiceTests.test_control_tokens_cannot_create_caller_authored_labels) ... ok
+test_greetings_abstain_before_inference (test_model_service.ModelServiceTests.test_greetings_abstain_before_inference) ... ok
+test_pipeline_http_through_node_connector_to_model_service (test_model_service.ModelServiceTests.test_pipeline_http_through_node_connector_to_model_service) ... /opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 503: 'Service Unavailable'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'Bad Request'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_window_budget_keeps_early_evidence_and_reports_gaps (test_model_service.ModelServiceTests.test_window_budget_keeps_early_evidence_and_reports_gaps) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.594s
+
+OK

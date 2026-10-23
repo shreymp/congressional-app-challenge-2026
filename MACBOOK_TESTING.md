@@ -67,11 +67,11 @@ The connected call screen has two separate cards:
 
 | Card | What the tester should see |
 | --- | --- |
-| Voice / deepfake analysis | Waiting → analyzing → a human, possible AI, or uncertain result after several voiced windows |
-| Transcript analysis | Listening → a scam-language result, **Scam risk score: …%**, and an advancing update number |
+| Caller’s voice | Analyzing → a human, possible AI, or uncertain result; missing service updates show unavailable |
+| Scam warning | Listening → a scam-language result and **Highest scam risk this call: …%**; the peak cannot decrease during the call |
 
-The transcript card shows analysis of the caller's words; it does not display or
-save verbatim speech. A high transcript score must not change a human voice into
+The scam card shows analysis of the caller's words, without a live transcript.
+Saved excerpts are off by default; see [the controlled-test option](docs/meeting-2026-10-20/STATUS.md) before enabling them. A high transcript score must not change a human voice into
 an AI voice label. Model/service failures appear as unavailable, and expired
 transcript results stop being shown as current.
 
@@ -80,14 +80,14 @@ Test these scenarios with consenting participants:
 1. **Ordinary human speech:** a natural conversation for 45–60 seconds. Require
    current feedback from both cards; record the actual scores/labels.
 2. **Scam-like language:** read a test script about urgently sending money or
-   sharing a bank verification code. Watch the transcript score/update number.
+   sharing a bank verification code. Watch the highest scam-risk score.
    Use fictional details only.
 3. **AI voice:** play a known synthesized speech sample into the calling phone
    for 45–60 seconds. Record the voice label and transcript feedback. Audio played
    through a phone speaker/microphone is a different domain from clean model audio;
    a wrong label is a model-quality finding, not proof that inference never ran.
-4. **Pause:** stop caller speech for at least 8 seconds. The current voice result
-   should return to waiting. Its clearly labeled last result may remain visible.
+4. **Pause:** stop caller speech for at least 8 seconds. The current analysis
+   should wait for more speech while the previous result remains visible. Service outages must still be shown.
 5. **Call controls:** mute/unmute, speaker, decline and hang-up from each end.
 6. **Repeat:** call again without restarting the app. Previous-call scores must
    not appear in the new call. After hang-up, call details preserve each pipeline's

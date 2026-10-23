@@ -1,0 +1,133 @@
+{
+  "audit_type": "Read-only deterministic text/id overlap and within-test dependence audit; no inference or retraining",
+  "date": "2026-10-20",
+  "label_convention": {
+    "1": "scam/silver-positive",
+    "0": "benign/context-derived-negative"
+  },
+  "normalization": "Lowercase; replace every character outside ASCII a-z and space with a space; collapse whitespace; strip. Matches real_calls.normalized. Case, punctuation, numbers and non-ASCII text are discarded.",
+  "prior_caller_extraction": "Uses the same Context/Evaluate-proposition boundaries and case-insensitive caller/receiver turn regex as train.caller_only. Audits every eligible prior training row, a superset of the sampled replay; excludes rows without the literal caller: substring, matching finetune_real.py.",
+  "recorded_test_input": {
+    "path": "backend/jev-posttrain/data/real_calls/test.jsonl",
+    "sha256": "db89b9d2684724df4dc67d6b251b3e91f6e90c97583df67d942d94742a60083c"
+  },
+  "recorded_test_vs_development_data": [
+    {
+      "left": "recorded_test",
+      "right": "recorded_train",
+      "left_rows": 31,
+      "right_rows": 479,
+      "left_distinct_normalized_texts": 31,
+      "right_distinct_normalized_texts": 479,
+      "normalized_exact_overlap_count": 0,
+      "right_input": {
+        "path": "backend/jev-posttrain/data/real_calls/train.jsonl",
+        "sha256": "06772b1d60abcc90fe16cae20a6b6dabefe9b6818dd49877134fcaffcc3ad0e0"
+      }
+    },
+    {
+      "left": "recorded_test",
+      "right": "mixed_banking_and_authored_train",
+      "left_rows": 31,
+      "right_rows": 264,
+      "left_distinct_normalized_texts": 31,
+      "right_distinct_normalized_texts": 264,
+      "normalized_exact_overlap_count": 0,
+      "right_input": {
+        "path": "backend/jev-posttrain/data/real_calls/banking_training/train.jsonl",
+        "sha256": "134464769f6c0a0435b1d026ccc7db015f141035250aa011114ab3d0bddb5610"
+      }
+    },
+    {
+      "left": "recorded_test",
+      "right": "mixed_banking_and_authored_validation",
+      "left_rows": 31,
+      "right_rows": 56,
+      "left_distinct_normalized_texts": 31,
+      "right_distinct_normalized_texts": 56,
+      "normalized_exact_overlap_count": 0,
+      "right_input": {
+        "path": "backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl",
+        "sha256": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0"
+      }
+    },
+    {
+      "left": "recorded_test",
+      "right": "all_eligible_prior_caller_only_training",
+      "left_rows": 31,
+      "right_rows": 5736,
+      "left_distinct_normalized_texts": 31,
+      "right_distinct_normalized_texts": 5731,
+      "normalized_exact_overlap_count": 0,
+      "right_input": {
+        "path": "backend/jev-posttrain/data/prepared/train.jsonl",
+        "sha256": "82ab0ab8eeecb0cc61145c576203f74092570c1f2cfb1f4b9e68ca732d545c03"
+      }
+    }
+  ],
+  "banking_probe_input": {
+    "path": "backend/jev-posttrain/data/real_calls/hvb/probes.jsonl",
+    "sha256": "ed870ffb8737df104dad3ef70e0fd39a805a5203ca01e2397c67ce7f837d2437"
+  },
+  "banking_probe_rows": 40,
+  "banking_probe_distinct_ids": 40,
+  "banking_probe_distinct_normalized_texts": 40,
+  "banking_probe_vs_new_development_data": [
+    {
+      "split": "train",
+      "compared_rows_including_authored": 264,
+      "banking_rows": 160,
+      "input": {
+        "path": "backend/jev-posttrain/data/real_calls/banking_training/train.jsonl",
+        "sha256": "134464769f6c0a0435b1d026ccc7db015f141035250aa011114ab3d0bddb5610"
+      },
+      "id_overlap_count": 0,
+      "normalized_exact_overlap_count": 0
+    },
+    {
+      "split": "validation",
+      "compared_rows_including_authored": 56,
+      "banking_rows": 32,
+      "input": {
+        "path": "backend/jev-posttrain/data/real_calls/banking_training/validation.jsonl",
+        "sha256": "a375dd2b9bfa3cbb08afae9b65abcf4bdea32312ea73158eded98793183a1ed0"
+      },
+      "id_overlap_count": 0,
+      "normalized_exact_overlap_count": 0
+    }
+  ],
+  "recorded_test_dependence": {
+    "rows": 31,
+    "positive_recordings": 10,
+    "positive_script_groups": 4,
+    "positive_group_sizes_descending": [
+      5,
+      3,
+      1,
+      1
+    ],
+    "normal_conversations": 21,
+    "normal_speaker_conversation_memberships": 42,
+    "normal_unique_speakers": 31,
+    "normal_speakers_appearing_in_multiple_test_conversations": 6,
+    "repeated_speaker_conversation_counts_descending": [
+      5,
+      4,
+      2,
+      2,
+      2,
+      2
+    ],
+    "normal_conversations_involving_a_repeated_test_speaker": 15,
+    "normal_conversation_pairs_sharing_at_least_one_speaker": 20
+  },
+  "limits": [
+    "Exploratory evaluation: these benchmarks have been inspected repeatedly and informed later development; no fresh blinded generalization claim.",
+    "Scam labels are silver enforcement-provenance plus content-filter labels. Normal Switchboard labels derive from conversation context, not blinded fraud adjudication.",
+    "Positive and negative recorded classes come from different sources; source/style bias remains.",
+    "Zero normalized exact or ID overlap does not prove semantic, speaker, scenario or script independence. The banking roleplay development split can share speakers and scenarios with probes.",
+    "Positive test recordings cluster into script groups, and normal test conversations share speakers. Per-call descriptive iid confidence intervals do not account for that dependence.",
+    "This audit does not establish 99 percent accuracy, real-call probability calibration, streaming-prefix accuracy, deployment safety or audio-transcription robustness.",
+    "Earlier caller-only training is audited as the full eligible pool, not reconstructed sampled replay or training-only augmentation. File checksums identify the audited local inputs."
+  ]
+}

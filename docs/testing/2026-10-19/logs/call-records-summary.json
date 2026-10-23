@@ -1,0 +1,92 @@
+[
+  {
+    "invite_utc": "2026-10-19T06:14:24.516514+00:00",
+    "id": "C86F5635-1927-4194-BA05-3380BD43922B",
+    "outcome": "missed",
+    "duration_seconds": 0,
+    "voice": "unknown",
+    "voice_windows": null,
+    "transcript_probability": null,
+    "transcript_update": null
+  },
+  {
+    "invite_utc": "2026-10-19T06:14:41.043723+00:00",
+    "id": "D9BCF7E9-2963-4B75-AAB6-F282EA6A7619",
+    "outcome": "failed",
+    "duration_seconds": 0,
+    "voice": "unknown",
+    "voice_windows": null,
+    "transcript_probability": null,
+    "transcript_update": null
+  },
+  {
+    "invite_utc": "2026-10-19T06:15:49.211929+00:00",
+    "id": "1237682D-1383-489C-8980-3D7B93E41ABA",
+    "outcome": "completed",
+    "duration_seconds": 357,
+    "voice": "unknown",
+    "voice_windows": 0,
+    "transcript_probability": 0.9536101165158918,
+    "transcript_update": 3
+  },
+  {
+    "invite_utc": "2026-10-19T06:22:25.486377+00:00",
+    "id": "8980D360-54C8-4BA2-85A7-AB5DC7B4D49C",
+    "outcome": "completed",
+    "duration_seconds": 126,
+    "voice": "ai",
+    "voice_windows": 46,
+    "transcript_probability": 0.03185823427460827,
+    "transcript_update": 156
+  },
+  {
+    "invite_utc": "2026-10-19T06:25:24.409889+00:00",
+    "id": "C904025C-6A5D-4DDC-8CA1-5F7E8C723D33",
+    "outcome": "completed",
+    "duration_seconds": 84,
+    "voice": "ai",
+    "voice_windows": 41,
+    "transcript_probability": 0.9837185467113015,
+    "transcript_update": 129
+  },
+  {
+    "invite_utc": "2026-10-19T06:27:23.283641+00:00",
+    "id": "616B04B7-B945-49F0-8016-31E735939C9D",
+    "outcome": "completed",
+    "duration_seconds": 18,
+    "voice": "human",
+    "voice_windows": 10,
+    "transcript_probability": 0.07684115804206378,
+    "transcript_update": 23
+  },
+  {
+    "invite_utc": "2026-10-19T06:28:53.987974+00:00",
+    "id": "A6C4BC21-094F-4C71-BA96-4A1922F96682",
+    "outcome": "missed",
+    "duration_seconds": 0,
+    "voice": "unknown",
+    "voice_windows": null,
+    "transcript_probability": null,
+    "transcript_update": null
+  },
+  {
+    "invite_utc": "2026-10-19T06:29:56.376086+00:00",
+    "id": "EA86661A-830D-4B34-A1A8-B386EEFFDF2F",
+    "outcome": "missed",
+    "duration_seconds": 0,
+    "voice": "unknown",
+    "voice_windows": null,
+    "transcript_probability": null,
+    "transcript_update": null
+  },
+  {
+    "invite_utc": "2026-10-19T06:30:26.986101+00:00",
+    "id": "FA8EC89E-E7CA-4132-B19A-6A1589A74E35",
+    "outcome": "missed",
+    "duration_seconds": 0,
+    "voice": "unknown",
+    "voice_windows": null,
+    "transcript_probability": null,
+    "transcript_update": null
+  }
+]

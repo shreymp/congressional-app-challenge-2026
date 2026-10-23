@@ -1,0 +1,4 @@
+Query chain:
+ →Find: Target Application 'org.callshield.Callshield'
+  ↪︎Find: Descendants matching type StaticText
+    ↪︎Find: Elements matching predicate '"This voice appears to be human." IN identifiers'

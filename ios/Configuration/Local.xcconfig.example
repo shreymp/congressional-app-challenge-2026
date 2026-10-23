@@ -24,3 +24,10 @@
 // The token is a credential and it expires; mint a new one when it does.
 // CALLSHIELD_LIVEKIT_HOST = your-project.livekit.cloud
 // CALLSHIELD_LOBBY_TOKEN = paste-the-token-here
+
+// Optional blocking/reporting service for a provisioned research tester.
+// Escape the double slash using $() so xcconfig does not treat it as a comment.
+// CALLSHIELD_SAFETY_BASE_URL = https:/$()/your-safety-service.example
+// Use a per-user token mapped to the same user identity as the incoming-call service.
+// Never include the shared-list administrator token in the app.
+// CALLSHIELD_SAFETY_TOKEN = your-private-per-user-test-token

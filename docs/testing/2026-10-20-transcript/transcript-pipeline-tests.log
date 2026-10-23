@@ -1,0 +1,19 @@
+test_contract_rejects_invalid_probabilities_and_limits_response (test_transcript_pipeline.HttpTests.test_contract_rejects_invalid_probabilities_and_limits_response) ... ok
+test_continuous_speech_keeps_score_fresh (test_transcript_pipeline.PipelineTests.test_continuous_speech_keeps_score_fresh) ... ok
+test_excerpt_requires_opt_in_flagged_call_and_final_words (test_transcript_pipeline.PipelineTests.test_excerpt_requires_opt_in_flagged_call_and_final_words) ... ok
+test_excerpt_warning_boundary_matches_in_call_guidance (test_transcript_pipeline.PipelineTests.test_excerpt_warning_boundary_matches_in_call_guidance) ... ok
+test_inflight_result_cannot_revive_overrun (test_transcript_pipeline.PipelineTests.test_inflight_result_cannot_revive_overrun) ... transcript audio queue full; transcript scoring disabled for this call
+ok
+test_partial_revisions_and_final_do_not_duplicate_words (test_transcript_pipeline.PipelineTests.test_partial_revisions_and_final_do_not_duplicate_words) ... ok
+test_service_failure_clears_old_score_and_retries (test_transcript_pipeline.PipelineTests.test_service_failure_clears_old_score_and_retries) ... transcript inference unavailable; deepfake scoring continues
+ok
+test_silence_preserved_audio_and_fused_risk (test_transcript_pipeline.PipelineTests.test_silence_preserved_audio_and_fused_risk) ... ok
+test_slow_inference_coalesces_latest_context (test_transcript_pipeline.PipelineTests.test_slow_inference_coalesces_latest_context) ... ok
+test_stale_score_and_queue_overrun_cannot_escalate (test_transcript_pipeline.PipelineTests.test_stale_score_and_queue_overrun_cannot_escalate) ... transcript audio queue full; transcript scoring disabled for this call
+ok
+test_withdrawn_context_cannot_revive_inflight_score (test_transcript_pipeline.PipelineTests.test_withdrawn_context_cannot_revive_inflight_score) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.847s
+
+OK

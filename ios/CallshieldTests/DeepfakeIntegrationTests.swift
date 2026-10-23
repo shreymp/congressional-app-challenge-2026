@@ -41,7 +41,7 @@ final class DeepfakeIntegrationTests: XCTestCase {
         var status = try payload(named: "waiting"); status["state"] = "human"
         XCTAssertNil(DeepfakeUpdate.decode(try JSONSerialization.data(withJSONObject: status)))
         XCTAssertNil(DeepfakeUpdate.decode(Data("not json".utf8)))
-        XCTAssertNil(DeepfakeUpdate.decode(Data(repeating: 32, count: 16_385)))
+        XCTAssertNil(DeepfakeUpdate.decode(Data(repeating: 32, count: 32_769)))
     }
     func testScopeOrderingRestartAndTimeoutRecovery() throws {
         var monitor = DeepfakeMonitor()
@@ -78,6 +78,8 @@ final class DeepfakeIntegrationTests: XCTestCase {
         XCTAssertEqual(session.current?.deepfake?.state, .analyzing)
         session.assessDeepfake(id: id, assessment: assessment)
         XCTAssertEqual(session.current?.voice, .ai)
+        session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .waiting, updatedAt: now.addingTimeInterval(5)))
+        XCTAssertEqual(session.current?.voice, .ai)
         session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .unavailable, updatedAt: now.addingTimeInterval(6)))
         XCTAssertEqual(session.current?.voice, .unknown)
         XCTAssertEqual(session.current?.lastDeepfakeResult, assessment)
@@ -87,6 +89,40 @@ final class DeepfakeIntegrationTests: XCTestCase {
         session.assessDeepfake(id: id, assessment: assessment)
         XCTAssertNil(session.current)
     }
+    func testVoiceEvidenceStillDecodesAlongsideBoundedUnicodeExcerpt() throws {
+        var message = try payload(named: "high")
+        message["transcript"] = ["state": "monitoring", "probability": 0.95,
+                                 "scored_revision": 1, "age_sec": 0,
+                                 "saved_excerpt": String(repeating: "😀", count: 6000)]
+        let data = try JSONSerialization.data(withJSONObject: message)
+        XCTAssertLessThanOrEqual(data.count, 32_768)
+        XCTAssertEqual(DeepfakeUpdate.decode(data)?.assessment(at: now).voice, .ai)
+        XCTAssertEqual(TranscriptUpdate.decode(data)?.assessment(at: now).savedExcerpt?.count, 6000)
+    }
+
+    func testWaitingShowsAnalyzingAndContinuousInconclusiveEvidenceEndsByThirtySeconds() throws {
+        let waiting = try payload(named: "waiting")
+        var monitor = DeepfakeMonitor()
+        XCTAssertEqual(try decode(waiting).assessment(at: now).voice, .analyzing)
+        for second in stride(from: 0, through: 32, by: 2) {
+            var message = waiting
+            message["sequence"] = second + 1
+            let result = monitor.receive(try decode(message), room: "call-test", callerIdentity: "sip-test", isAgent: true,
+                                         at: now.addingTimeInterval(Double(second)))
+            XCTAssertEqual(result?.state, second < 30 ? .waiting : .uncertain)
+        }
+    }
+
+    func testPauseDoesNotReplaceResolvedVoiceWithDeadlineUncertainty() throws {
+        var monitor = DeepfakeMonitor()
+        _ = monitor.receive(try decode(payload(named: "high")), room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now)
+        var waiting = try payload(named: "waiting")
+        waiting["sequence"] = 100
+        let result = monitor.receive(try decode(waiting), room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now.addingTimeInterval(32))
+        XCTAssertEqual(result?.state, .waiting)
+        XCTAssertNil(monitor.expire(at: now.addingTimeInterval(32), connectedAt: now))
+    }
+
     func testSavedHistoryRemainsCompatibleWithOldRecords() throws {
         let assessment = DeepfakeAssessment(state: .human, updatedAt: now, windows: 3)
         let record = PhoneCallRecord(id: UUID(), person: PhoneNumber.person("+13125550123"), date: now,
@@ -236,6 +272,48 @@ final class TranscriptIntegrationTests: XCTestCase {
         var old = object(); old["sequence"] = 100
         XCTAssertNil(monitor.receive(try decode(old), room: "call-test", callerIdentity: "sip-test", isAgent: true, at: now))
     }
+    func testPeakRiskPersistsAcrossLowerScoresAndFailuresAndResetsForNextCall() throws {
+        var session = PhoneSessionState()
+        let person = PhoneNumber.person("+13125550123"), id = UUID()
+        _ = session.begin(PhoneCall(id: id, person: person, direction: .incoming, createdAt: now, stage: .incoming))
+        session.connected(id: id, at: now)
+        XCTAssertEqual(session.current?.voice, .analyzing)
+        for probability in [0.62, 0.08, 0.91, 0.12] {
+            session.assessTranscript(id: id, assessment: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: probability))
+        }
+        XCTAssertEqual(session.current?.transcript?.probability, 0.91)
+        session.assessTranscript(id: id, assessment: TranscriptAssessment(state: .unavailable, updatedAt: now))
+        XCTAssertEqual(session.current?.transcript?.state, .unavailable)
+        XCTAssertEqual(session.finish(id: id, outcome: .completed, at: now)?.transcript?.probability, 0.91)
+        let next = UUID()
+        _ = session.begin(PhoneCall(id: next, person: person, direction: .incoming, createdAt: now, stage: .incoming))
+        session.connected(id: next, at: now)
+        session.assessTranscript(id: next, assessment: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.08))
+        XCTAssertEqual(session.current?.transcript?.probability, 0.08)
+    }
+    func testSavedExcerptDecodesAndSurvivesCallEndAndOlderRecords() throws {
+        var payload = object()
+        var evidence = try XCTUnwrap(payload["transcript"] as? [String: Any])
+        evidence["saved_excerpt"] = "Please read me your bank code."
+        payload["transcript"] = evidence
+        let assessment = try decode(payload).assessment(at: now)
+        XCTAssertEqual(assessment.savedExcerpt, "Please read me your bank code.")
+        XCTAssertNil(try decode(object()).assessment(at: now).savedExcerpt)
+        var session = PhoneSessionState()
+        let id = UUID(), person = PhoneNumber.person("+13125550123")
+        _ = session.begin(PhoneCall(id: id, person: person, direction: .incoming, createdAt: now, stage: .incoming))
+        session.connected(id: id, at: now)
+        session.assessTranscript(id: id, assessment: assessment)
+        session.assessTranscript(id: id, assessment: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: 0.1))
+        let record = try XCTUnwrap(session.finish(id: id, outcome: .completed, at: now))
+        XCTAssertEqual(record.transcript?.savedExcerpt, assessment.savedExcerpt)
+        XCTAssertEqual(try JSONDecoder().decode(PhoneCallRecord.self, from: JSONEncoder().encode(record)), record)
+
+        evidence["saved_excerpt"] = String(repeating: "x", count: 6001)
+        payload["transcript"] = evidence
+        XCTAssertNil(TranscriptUpdate.decode(try JSONSerialization.data(withJSONObject: payload)))
+    }
+
     func testTranscriptCannotRelabelVoiceAndHistoryRemainsBackwardCompatible() throws {
         var session = PhoneSessionState()
         let id = UUID(), person = PhoneNumber.person("+13125550123")

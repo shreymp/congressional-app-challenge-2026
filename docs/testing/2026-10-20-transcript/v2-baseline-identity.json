@@ -1,0 +1,24 @@
+{
+  "version": "V2",
+  "released_bundle_files": {
+    "model.onnx": {
+      "actual_sha256": "8f7bbb21ce135765d4de33d7fc3f5947d31826424249018a6671d0b611541c8a",
+      "published_sha256": "8f7bbb21ce135765d4de33d7fc3f5947d31826424249018a6671d0b611541c8a",
+      "matches": true
+    },
+    "tokenizer.json": {
+      "actual_sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+      "published_sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+      "matches": true
+    },
+    "calibration.json": {
+      "actual_sha256": "1b13be92f629997502aea80185f8c3ec556098c7d78596309ddf050fbcbc4e4f",
+      "published_sha256": "1b13be92f629997502aea80185f8c3ec556098c7d78596309ddf050fbcbc4e4f",
+      "matches": true
+    }
+  },
+  "export_onnx_matches_release": true,
+  "export_checkpoint_matches_benchmark": true,
+  "temperature": 3.0117541906437966,
+  "scope": "Baseline identity verification, not a new accuracy measurement."
+}

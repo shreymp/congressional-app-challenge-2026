@@ -10,11 +10,13 @@ import {
   View,
 } from 'react-native';
 
+const brand = { name: 'callma.', tagline: 'call with more peace of mind.' };
+
 const colors = {
-  ink: '#10243B', muted: '#64748B', canvas: '#F4F8F8', panel: '#FFFFFF',
-  line: '#DFE9E8', teal: '#0E8475', tealDark: '#075B55', mint: '#DDF5EC',
-  mintText: '#16705A', amber: '#EF9A1B', amberSoft: '#FFF3D8',
-  danger: '#D94B4B', dangerSoft: '#FFE8E8', blue: '#387DD5', blueSoft: '#E7F0FF',
+  ink: '#15223B', muted: '#64748B', canvas: '#F0F5FF', panel: '#FFFFFF',
+  line: '#DCE7F5', teal: '#195ED9', tealDark: '#195ED9', mint: '#CEF5E8',
+  mintText: '#006E58', amber: '#FFC857', amberSoft: '#FFF3D8',
+  danger: '#C93F45', dangerSoft: '#FFE8E8', blue: '#195ED9', blueSoft: '#E7F0FF',
 };
 
 const signals = [
@@ -65,8 +67,8 @@ function ProtectScreen({ callActive, onToggleCall, onReport }) {
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
       <View style={styles.topRow}>
-        <View><Text style={styles.eyebrow}>LIVE PROTECTION</Text><Text style={styles.pageTitle}>{callActive ? 'We’re watching with you.' : 'You’re protected.'}</Text></View>
-        <View style={styles.shield}><Text style={styles.shieldIcon}>✓</Text></View>
+        <View><Text style={styles.eyebrow}>STAGED CALL DEMO</Text><Text style={styles.pageTitle}>{callActive ? 'A moment to pause.' : 'Ready to try a call.'}</Text></View>
+        <View style={styles.logoPlaceholder} accessibilityLabel="Temporary logo placeholder"><Text style={styles.logoPlaceholderText}>logo</Text></View>
       </View>
 
       <View style={[styles.callCard, callActive && styles.callCardDanger]}>
@@ -77,7 +79,7 @@ function ProtectScreen({ callActive, onToggleCall, onReport }) {
         </View>
         <Waveform active={callActive} />
         <View style={styles.callFooter}>
-          <View style={styles.privateNote}><Text style={styles.privateLock}>⌁</Text><Text style={styles.privateText}>Audio stays on your device</Text></View>
+          <View style={styles.privateNote}><Text style={styles.privateLock}>⌁</Text><Text style={styles.privateText}>Simulated audio · no call connected</Text></View>
           <Pressable accessibilityRole="button" onPress={onToggleCall} style={({ pressed }) => [styles.smallCallButton, pressed && styles.pressed]}><Text style={styles.smallCallButtonText}>{callActive ? 'End call' : 'Start demo'}</Text></Pressable>
         </View>
       </View>
@@ -101,12 +103,12 @@ function ProtectScreen({ callActive, onToggleCall, onReport }) {
             <Pressable accessibilityRole="button" onPress={onToggleCall} style={({ pressed }) => [styles.primaryAction, pressed && styles.pressed]}><Text style={styles.primaryActionText}>End call</Text></Pressable>
             <Pressable accessibilityRole="button" onPress={onReport} style={({ pressed }) => [styles.secondaryAction, pressed && styles.pressed]}><Text style={styles.secondaryActionText}>Report caller</Text></Pressable>
           </View>
-          <Text style={styles.guardianNote}>● Your guardian is being notified of this high-risk call.</Text>
+          <Text style={styles.guardianNote}>Guardian alert preview · no notification sent.</Text>
         </>
       ) : (
         <View style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>✦</Text><Text style={styles.emptyTitle}>Protection is standing by</Text>
-          <Text style={styles.emptyBody}>During a supported call, Scam Guardian checks number reputation and on-device risk signals in real time.</Text>
+          <Text style={styles.emptyIcon}>✦</Text><Text style={styles.emptyTitle}>Try a sample call</Text>
+          <Text style={styles.emptyBody}>This interface previews callma. warnings with sample data. Start a simulated call to explore the controls.</Text>
           <Pressable accessibilityRole="button" onPress={onToggleCall} style={({ pressed }) => [styles.primaryAction, styles.emptyButton, pressed && styles.pressed]}><Text style={styles.primaryActionText}>Run a simulated call</Text></Pressable>
         </View>
       )}
@@ -120,7 +122,7 @@ function ActivityScreen() {
     <View style={styles.summaryRow}><View style={styles.summaryCard}><Text style={styles.summaryValue}>12</Text><Text style={styles.summaryLabel}>Calls protected</Text></View><View style={styles.summaryCard}><Text style={[styles.summaryValue, { color: colors.danger }]}>2</Text><Text style={styles.summaryLabel}>Warnings sent</Text></View></View>
     <Text style={styles.sectionTitle}>This week</Text>
     {history.map((item) => <View key={item.time} style={styles.historyCard}><View style={[styles.historyIcon, styles[`history_${item.tone}`]]}><Text>{item.tone === 'safe' ? '✓' : item.tone === 'danger' ? '!' : '⌕'}</Text></View><View style={styles.historyCopy}><Text style={styles.historyCaller}>{item.caller}</Text><Text style={styles.historyTime}>{item.time}</Text></View><Badge tone={item.tone}>{item.result}</Badge></View>)}
-    <View style={styles.infoCard}><Text style={styles.infoCardTitle}>Your privacy, by design</Text><Text style={styles.infoCardBody}>Call audio is analyzed on-device for protection. Scam Guardian only shares the minimum metadata needed for alerts and number reports.</Text></View>
+    <View style={styles.infoCard}><Text style={styles.infoCardTitle}>Your privacy, by design</Text><Text style={styles.infoCardBody}>This interface does not capture or send call audio. The calling app uses cloud analysis; review its settings before a real test.</Text></View>
   </ScrollView>;
 }
 
@@ -140,10 +142,10 @@ function SettingsScreen() {
   return <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
     <Text style={styles.eyebrow}>SETTINGS</Text><Text style={styles.pageTitle}>Protection controls</Text>
     <Text style={styles.settingsGroupLabel}>CALL PROTECTION</Text>
-    <View style={styles.settingsPanel}><Setting label="Live risk analysis" description="Analyze supported calls on your device" enabled /><Setting label="Guardian alerts" description="Alert your family for high-risk calls" enabled={alerts} onPress={() => setAlerts(!alerts)} /><Setting label="Private by default" description="Keep call audio and transcripts off our servers" enabled={privacy} onPress={() => setPrivacy(!privacy)} /></View>
+    <View style={styles.settingsPanel}><Setting label="Live risk analysis" description="Preview risk feedback with sample data" enabled /><Setting label="Guardian alerts" description="Preview a future family alert; sends nothing" enabled={alerts} onPress={() => setAlerts(!alerts)} /><Setting label="Private by default" description="Demo setting only; no real calls connected" enabled={privacy} onPress={() => setPrivacy(!privacy)} /></View>
     <Text style={styles.settingsGroupLabel}>ABOUT</Text>
-    <View style={styles.settingsPanel}><Setting label="How Scam Guardian works" description="Learn about risk signals and their limits" /><Setting label="Help & report a problem" description="Get support or send feedback" /></View>
-    <Text style={styles.version}>Scam Guardian prototype · v0.1</Text>
+    <View style={styles.settingsPanel}><Setting label="How callma. works" description="Learn about risk signals and their limits" /><Setting label="Help & report a problem" description="Get support or send feedback" /></View>
+    <Text style={styles.version}>callma. prototype · v0.1</Text>
   </ScrollView>;
 }
 
@@ -161,13 +163,18 @@ export default function App() {
     if (tab === 'Settings') return <SettingsScreen />;
     return <ProtectScreen callActive={callActive} onToggleCall={() => setCallActive(!callActive)} onReport={onReport} />;
   };
-  return <SafeAreaView style={styles.safe}><StatusBar style="dark" />{renderScreen()}<View style={styles.tabBar}>{[['⌂', 'Protect'], ['◷', 'Activity'], ['♧', 'Family'], ['⚙', 'Settings']].map(([icon, label]) => <IconButton key={label} icon={icon} label={label} active={tab === label} onPress={() => setTab(label)} />)}</View></SafeAreaView>;
+  return <SafeAreaView style={styles.safe}><StatusBar style="dark" /><View style={styles.brandHeader}><Text style={styles.brandName}>{brand.name}</Text><Text style={styles.brandTagline}>{brand.tagline}</Text><Text style={styles.prototypeLabel}>Interface demo · sample data</Text></View>{renderScreen()}<View style={styles.tabBar}>{[['⌂', 'Protect'], ['◷', 'Activity'], ['♧', 'Family'], ['⚙', 'Settings']].map(([icon, label]) => <IconButton key={label} icon={icon} label={label} active={tab === label} onPress={() => setTab(label)} />)}</View></SafeAreaView>;
 }
 
 const styles = StyleSheet.create({
+  brandHeader: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 12, backgroundColor: '#E3EEFF', borderBottomWidth: 1, borderBottomColor: '#DCE7F5' },
+  brandName: { color: colors.teal, fontSize: 25, fontWeight: '800' },
+  brandTagline: { color: colors.ink, fontSize: 13, marginTop: 3 },
+  prototypeLabel: { color: colors.muted, fontSize: 10, marginTop: 6 },
+  logoPlaceholder: { width: 44, height: 44, borderRadius: 12, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.teal, backgroundColor: colors.blueSoft, alignItems: 'center', justifyContent: 'center' },
+  logoPlaceholderText: { color: colors.teal, fontSize: 10, fontWeight: '500' },
   safe: { flex: 1, backgroundColor: colors.canvas }, scrollContent: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 106 },
   topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 }, eyebrow: { color: colors.teal, fontSize: 11, letterSpacing: 1.4, fontWeight: '800', marginBottom: 5 }, pageTitle: { color: colors.ink, fontSize: 28, lineHeight: 34, fontWeight: '800', letterSpacing: -0.6 },
-  shield: { height: 42, width: 42, borderRadius: 21, backgroundColor: colors.mint, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#B8E8D8' }, shieldIcon: { color: colors.tealDark, fontSize: 24, fontWeight: '900' },
   callCard: { backgroundColor: colors.panel, borderRadius: 22, padding: 17, borderWidth: 1, borderColor: colors.line, shadowColor: '#2C5460', shadowOpacity: 0.07, shadowRadius: 16, elevation: 2 }, callCardDanger: { borderColor: '#F2CACA' }, callCardTop: { flexDirection: 'row', alignItems: 'center' },
   callerAvatar: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.dangerSoft, alignItems: 'center', justifyContent: 'center' }, callerAvatarText: { fontSize: 25, color: colors.danger, fontWeight: '800' }, callInfo: { flex: 1, marginLeft: 12 }, callerName: { fontWeight: '800', fontSize: 17, color: colors.ink }, callerNumber: { marginTop: 2, color: colors.muted, fontSize: 13 },
   livePill: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FDF1F1', paddingHorizontal: 9, paddingVertical: 6, borderRadius: 99 }, liveDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.danger, marginRight: 5 }, liveText: { color: colors.danger, fontSize: 12, fontWeight: '800' },

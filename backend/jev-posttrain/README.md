@@ -1,5 +1,9 @@
 # Jev scam-call post-training experiment
 
+For the October 22 V6 benign-prefix experiment and the frozen 100-call banking-roleplay evaluation, see [the V6 report](../../docs/testing/2026-10-22-jev/REPORT.md) and [the fixed evaluation protocol](../../docs/testing/2026-10-22-jev/PROTOCOL.md). These are local research comparisons, not proof of 100% real-world accuracy.
+
+For the later recorded-call fine-tuning passes (V3–V5), public-audio probes, hard-negative regressions, and explicit deployment decision, read [the October 20 evaluation](../../docs/testing/2026-10-20-transcript/REPORT.md) and [research methods](../../docs/testing/2026-10-20-transcript/RESEARCH.md). Results below describe the earlier synthetic-data runs, not real-world validation.
+
 This run starts from the public 151M-parameter GLiClass/ModernBERT Jev checkpoint and fine-tunes it for one proposition: **“The caller is attempting to scam or defraud the other person.”** It was trained locally on the Mac GPU. The app's existing ten caller-behavior questions are a different task and were not given fabricated labels.
 
 ## Data
@@ -79,3 +83,61 @@ From the repository root, after installing the listed dependencies in `.venv` an
 ```
 
 The model release belongs to this private repository. Downloading requires repository access through Git HTTPS credentials or the `GITHUB_TOKEN` (or `GH_TOKEN`) environment variable. SSH-only clones need a token for the release download. Tokens are never stored in the repository.
+
+## Guarded training and validation-only warning policies (October 22)
+
+Use `finetune_real.py` for new binary scam experiments, including a restart from
+`verdict-151m` if needed. The older `train.py` commands above reproduce historical
+V1/V2 experiments; they are not the guarded V7 workflow.
+
+The repaired trainer always gives scams and normal calls equal total objective
+weight. Each parent call shares its weight among its transcript, augmentation
+and prefixes. It rejects train/validation overlap in parent calls, known script
+groups, speakers and normalized text. Prefixes retain their original domain and
+do not become extra independent validation sources.
+
+Checkpoint comparison freezes the baseline temperature and uses the same .5/.75
+cutoffs in tail and window inference. Any additional missed scam or false alert,
+overall or within an original validation domain, rejects that epoch regardless
+of average loss. Calls and their prefixes count once for these gates. Among
+eligible epochs, selection minimizes loss averaged within parents and then
+within original domains. Epoch zero is saved first, so a failed experiment
+retains its baseline instead of silently replacing it with a regression. Existing
+output directories cannot be overwritten. These checks prevent measured
+validation regressions; they cannot guarantee performance on future calls.
+
+```sh
+.venv/bin/python backend/jev-posttrain/finetune_real.py \
+  --model backend/jev-posttrain/runs/call-v5-balanced \
+  --output backend/jev-posttrain/runs/call-v7-guarded \
+  --epochs 1 --lr 1e-7 \
+  --extra-train backend/jev-posttrain/data/real_calls/banking_training/train.jsonl \
+  --extra-validation backend/jev-posttrain/data/real_calls/benign_prefix_training/validation.jsonl
+PYTHONPATH=backend/jev-posttrain .venv/bin/python -m unittest discover \
+  -s backend/jev-posttrain -p 'test_*training*.py' -v
+```
+
+`repair_eval.py build` freezes and hashes the separate cutoff-validation and
+fresh-test sets before model scoring. It needs the previously downloaded public
+YouTube/Switchboard archives and the UCSB Santa Barbara transcript archive at
+`/tmp/jev-sbcorpus.zip`. `repair_eval.py evaluate` fits policies on validation
+only, writes both frozen policies before accessing the fresh test, then evaluates
+once. It refuses an existing evaluation directory. Failed validation fits have
+no usable threshold. The earlier human100 remains an inspected development set.
+Raw source transcripts remain local and ignored by Git.
+
+The policy requires at least 90% validation scam recall and at most 5% false alerts
+within every benign validation source. These are experimental requirements, not
+field accuracy promises. `score.py --checkpoint PATH --policy POLICY.json TEXT`
+accepts only a successful policy matching the exact model, tokenizer, temperature
+and window inference. It returns `alert`/`no_alert`, not a guarantee of safety.
+
+Run evidence and limitations: [V7 report](../../docs/testing/2026-10-22-jev-v7/REPORT.md).
+New checkpoints/policies are research artifacts; this workflow does not replace
+the app bundle, running service or published model release.
+
+Both October 22 weight updates were rejected for additional validation scam
+misses; the selected V7-directory weights remain V5. Cutoff fitting also failed
+the recall/false-alert requirements. No improved V7 or validated 90% result was
+produced. The new GitHub training-safety workflow exercises these safeguards on
+future relevant pushes/PRs; it does not run the private model or claim call accuracy.

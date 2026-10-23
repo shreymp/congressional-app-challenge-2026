@@ -39,3 +39,22 @@ The configured JEV service receives the same JSON body and must respond with JSO
 
 Point `JEV_MODEL_URL` at the model service's HTTP prediction endpoint. The connector is tested against that contract. The post-trained model remains experimental, with synthetic-data calibration and no established real-call/prefix accuracy.
 
+## Recorded-call research candidates
+
+The October 20 research pass adds script-disjoint FTC/NCSU transcripts, speaker-disjoint Switchboard conversation text, external recorded banking roleplay, and six public-audio/Vosk probes. See [the evaluation report](../../docs/testing/2026-10-20-transcript/REPORT.md) and [method/source notes](../../docs/testing/2026-10-20-transcript/RESEARCH.md). These are small development comparisons, not a 99% deployment claim. New research checkpoints are local, ignored artifacts; they are not part of the V1/V2 release or deployed cloud service.
+
+The adapter keeps the existing `/predict` success contract and adds `POST /assess` for explicit score metadata: `scoreType`, `modelVersion`, `modelSha256`, `calibratedOnRealCalls: false`, `contextMode`, `windows`, and `contextCovered`. Caller-authored classifier control tokens are stripped. A greeting with fewer than four meaningful words returns HTTP 422 with `decision: insufficient_evidence`, rather than a false low-risk score. The existing Node connector maps unsuccessful upstream requests to HTTP 503; the streaming producer preserves an unavailable/listening state rather than interpreting it as safe.
+
+Local candidate selection is explicit:
+
+```sh
+.venv/bin/python 'backend/Transcript-Based Detector/model_service.py' \
+  --version V5 --model-dir backend/jev-posttrain/runs/call-v5-balanced \
+  --bundle-manifest backend/jev-posttrain/runs/call-v5-balanced/bundle.json \
+  --context-mode windows
+```
+
+Only run this after exporting and packaging that local candidate. Startup checks the ONNX, tokenizer, and temperature checksums together. The service binds to loopback. A model score never blocks or reports a caller, and cannot independently send a guardian message.
+
+`--context-mode windows` is the suggested V5 development configuration based on the exploratory comparison, bounded to six overlapping windows with maximum-score pooling. It retains early evidence but can increase false alarms and has different calibration. The service's global default remains the last 300 context tokens (`tail`), matching the deployed V2 policy. Default version remains V2 until a candidate passes independent validation and the service is explicitly upgraded. This command alone does not update the iOS on-device model.
+

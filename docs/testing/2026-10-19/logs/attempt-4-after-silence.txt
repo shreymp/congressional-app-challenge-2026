@@ -1,0 +1,44 @@
+2026-10-19T06:24:33.775Z
+Window: "Callshield Oct 17 Validation", App: Simulator.
+0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise
+	1 button Action
+	2 button Volume Up
+	3 button Volume Down
+	4 button Sleep/Wake
+	5 container
+		6 text Description: Callshield, Secondary Actions: Cancel
+		7 text Description: Simulator call test, Secondary Actions: Cancel
+		8 text Description: [test caller], Secondary Actions: Cancel
+		9 text Description: [test caller], Secondary Actions: Cancel
+		10 text Description: 01:54, Secondary Actions: Cancel
+		11 text Description: Voice / deepfake analysis, Secondary Actions: Cancel
+		12 element Description: Unknown, Secondary Actions: Cancel
+		13 text Description: Waiting for enough caller speech…, Secondary Actions: Cancel
+		14 text Description: Last result: Likely AI, Secondary Actions: Cancel
+		15 text Description: Not an identity check, Secondary Actions: Cancel
+		16 text Description: Transcript analysis, Secondary Actions: Cancel
+		17 text Description: No strong scam-language signal, ID: transcriptAssessmentTitle, Secondary Actions: Cancel
+		18 text Description: Scam risk score: 3% · update 156, ID: transcriptAssessmentScore, Secondary Actions: Cancel
+		19 text Description: Based on the caller’s words. A low score does not prove a call is safe., Secondary Actions: Cancel
+		20 button Description: unmute, Value: On, Secondary Actions: Cancel
+		21 button Description: speaker, Value: Off, Secondary Actions: Cancel
+		22 button Description: End call, Value: Off, Secondary Actions: Cancel
+	23 toolbar
+		24 button Description: Home, Secondary Actions: Move previous, Move next, Remove from toolbar
+		25 button Description: Save Screen, Secondary Actions: Move previous, Move next, Remove from toolbar
+		26 button Description: Rotate, Secondary Actions: Move previous, Move next, Remove from toolbar
+	27 close button
+	28 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	29 minimize button
+	30 text Callshield Oct 17 Validation – iOS 26.5
+31 menu bar
+	32 Simulator
+	33 File
+	34 Edit
+	35 Device
+	36 I/O
+	37 Features
+	38 Window
+	39 Help
+
+The focused UI element is 0 standard window Callshield Oct 17 Validation – iOS 26.5, Secondary Actions: Raise

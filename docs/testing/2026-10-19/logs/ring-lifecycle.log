@@ -1,0 +1,22 @@
+Started UTC: 2026-10-19T06:11:53.126194+00:00
+Exit: 0
+PASS  test_invite_has_exactly_the_contract_keys  (0.00s)
+PASS  test_call_token_grants  (0.00s)
+PASS  test_lobby_token_grants  (0.00s)
+PASS  test_invite_is_resent_until_the_senior_joins  (0.50s)
+PASS  test_no_invite_while_the_app_is_not_in_the_lobby  (0.33s)
+PASS  test_timeout_fires_the_stub_exactly_once  (1.00s)
+PASS  test_ringing_out_with_the_senior_in_the_room_fires_once  (1.21s)
+PASS  test_decline_fires_the_stub_exactly_once  (1.71s)
+PASS  test_blip_before_answering_is_not_a_decline  (0.74s)
+PASS  test_hangup_after_answering_deletes_the_room  (0.92s)
+PASS  test_rejoin_within_grace_keeps_the_room  (0.89s)
+PASS  test_late_answer_after_the_ring_window_is_still_supervised  (0.85s)
+PASS  test_caller_leaving_stops_quietly  (0.28s)
+PASS  test_nothing_raises_when_the_api_throws  (4.06s)
+PASS  test_bad_ring_timeout_setting_never_breaks_the_agent  (0.32s)
+PASS  test_start_for_job_rings_once_for_a_real_sip_caller  (0.78s)
+PASS  test_state_changes_are_logged_once  (0.54s)
+PASS  test_scoring_trouble_never_takes_the_ring_down  (0.33s)
+
+18 passed, 0 failed in 4.9s
