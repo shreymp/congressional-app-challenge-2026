@@ -16,7 +16,7 @@ The model server binds only to loopback. Jobs use its real deepfake endpoint,
 so the large weights are shared across calls instead of duplicated for each job.
 Startup checks require deepfake warm-up, real JEV inference through the connector,
 and a successful Vosk load before the worker starts registering. A crashed model
-service terminates the worker so LiveKit can restart it. Audio recording is off.
+service terminates the worker so LiveKit can restart it. Caller-audio recording is ON for testing (`RECORD_CALLER_AUDIO=1`); each call's WAV is uploaded to the "CAC call recordings" folder in the configured Google Drive (see Recording below).
 
 The image also bundles a mono 16 kHz PCM announcement, generated at build time with
 eSpeak NG and SoX: **"This call is being recorded."** Startup and image checks reject
@@ -57,7 +57,8 @@ Manual equivalent from a configured checkout:
 ```sh
 python3 deploy/livekit/prepare.py --output .cloud-context
 lk --project CAC agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production \
-  --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=0
+  --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 \
+  --secrets GDRIVE_CLIENT_ID=... --secrets GDRIVE_CLIENT_SECRET=... --secrets GDRIVE_REFRESH_TOKEN=...
 python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav
 ```
 
@@ -81,3 +82,16 @@ using the real model test and deployed probe. A finite score proves that inferen
 ran, not model accuracy or threshold calibration. A real incoming PSTN call is
 still needed to validate telephone routing/audio with the eventual app.
 
+
+## Recording (testing)
+
+Recording is forced on in the deploy config (`Dockerfile` and the `--secrets` list in the workflow). After the
+recording notice plays, the caller's audio is saved as a WAV under `RECORD_DIR` (`/tmp/cac-recordings`, which is
+temporary container storage) and then uploaded to Google Drive by `drive_upload.py`.
+
+The deploy workflow needs three repository Actions secrets and refuses to deploy without them:
+`GDRIVE_CLIENT_ID`, `GDRIVE_CLIENT_SECRET`, `GDRIVE_REFRESH_TOKEN`. They belong to an OAuth client in a Google
+Cloud project with the Drive API enabled and the consent screen published ("In production"; a "Testing" consent
+screen issues refresh tokens that expire after 7 days). The token uses only the `drive.file` scope, so the worker
+can only see the folder and files it created itself. A service account does not work here because it cannot store
+files in a personal My Drive.
