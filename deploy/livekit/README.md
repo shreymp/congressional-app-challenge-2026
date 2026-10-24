@@ -58,7 +58,7 @@ Manual equivalent from a configured checkout:
 python3 deploy/livekit/prepare.py --output .cloud-context
 lk --project CAC agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production \
   --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 \
-  --secrets GDRIVE_CLIENT_ID=... --secrets GDRIVE_CLIENT_SECRET=... --secrets GDRIVE_REFRESH_TOKEN=...
+  --secrets GDRIVE_UPLOAD_URL=... --secrets GDRIVE_UPLOAD_TOKEN=...
 python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav
 ```
 
@@ -87,11 +87,14 @@ still needed to validate telephone routing/audio with the eventual app.
 
 Recording is forced on in the deploy config (`Dockerfile` and the `--secrets` list in the workflow). After the
 recording notice plays, the caller's audio is saved as a WAV under `RECORD_DIR` (`/tmp/cac-recordings`, which is
-temporary container storage) and then uploaded to Google Drive by `drive_upload.py`.
+temporary container storage) and then sent to Google Drive by `drive_upload.py`.
 
-The deploy workflow needs three repository Actions secrets and refuses to deploy without them:
-`GDRIVE_CLIENT_ID`, `GDRIVE_CLIENT_SECRET`, `GDRIVE_REFRESH_TOKEN`. They belong to an OAuth client in a Google
-Cloud project with the Drive API enabled and the consent screen published ("In production"; a "Testing" consent
-screen issues refresh tokens that expire after 7 days). The token uses only the `drive.file` scope, so the worker
-can only see the folder and files it created itself. A service account does not work here because it cannot store
-files in a personal My Drive.
+The worker has no Google login. It POSTs each recording to an Apps Script web app (deployed "Execute as: Me", owned
+by the Drive account) that saves it into the "CAC call recordings" folder. Calls are cut into 60-second pieces
+(`<name>_part01.wav`, ...), each a valid WAV, so no single request is large (Google does not document an incoming
+request-size limit for web apps). The web app only accepts requests that carry the shared token.
+
+The deploy workflow needs two repository Actions secrets and refuses to deploy without them:
+`GDRIVE_UPLOAD_URL` (the web app's `/exec` URL) and `GDRIVE_UPLOAD_TOKEN` (the same random string that is set in the
+script). Anyone holding both can write files into that Drive folder, so treat them as secrets and rotate them by
+changing the token in the script and the GitHub secret.

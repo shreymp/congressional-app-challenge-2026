@@ -45,20 +45,19 @@ jobs:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
           LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
           LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
-          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
-          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
-          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+          GDRIVE_UPLOAD_URL: ${{ secrets.GDRIVE_UPLOAD_URL }}
+          GDRIVE_UPLOAD_TOKEN: ${{ secrets.GDRIVE_UPLOAD_TOKEN }}
         run: |
           test -n "$LIVEKIT_URL" && test -n "$LIVEKIT_API_KEY" && test -n "$LIVEKIT_API_SECRET"
           # Recording is forced on, so refuse to deploy without somewhere to send the audio.
-          test -n "$GDRIVE_CLIENT_ID" && test -n "$GDRIVE_CLIENT_SECRET" && test -n "$GDRIVE_REFRESH_TOKEN"
+          test -n "$GDRIVE_UPLOAD_URL" && test -n "$GDRIVE_UPLOAD_TOKEN"
           python3 -c 'import shutil; shutil.rmtree(".cloud-context")'
           python3 deploy/livekit/prepare.py --output .cloud-context
           curl -fsSL https://github.com/livekit/livekit-cli/releases/download/v2.19.0/lk_2.19.0_linux_amd64.tar.gz -o /tmp/lk.tgz
           echo '601ce74299db7e538014426644ab23b2a1ba171c506967197a259c3cd762d418  /tmp/lk.tgz' | sha256sum -c -
           tar -xzf /tmp/lk.tgz -C /tmp
           # One --secrets flag per KEY=value: a comma list is stored as a single DETECTOR value.
-          /tmp/lk agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production --attribute git_commit="$GITHUB_SHA" --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 --secrets GDRIVE_CLIENT_ID="$GDRIVE_CLIENT_ID" --secrets GDRIVE_CLIENT_SECRET="$GDRIVE_CLIENT_SECRET" --secrets GDRIVE_REFRESH_TOKEN="$GDRIVE_REFRESH_TOKEN"
+          /tmp/lk agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production --attribute git_commit="$GITHUB_SHA" --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 --secrets GDRIVE_UPLOAD_URL="$GDRIVE_UPLOAD_URL" --secrets GDRIVE_UPLOAD_TOKEN="$GDRIVE_UPLOAD_TOKEN"
       - name: Backend audio probe
         if: github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.probe_only)
         env:
