@@ -45,6 +45,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(HERE, ".env.local"))
 
 import detector_adapter
+import drive_upload
 import transcript_pipeline
 from risk import combine
 from scoring import AudioScoringSession
@@ -57,7 +58,8 @@ SAMPLE_RATE = 16000
 SCORE_EVERY_SEC = float(os.environ.get("SCORE_EVERY_SEC", "1.0"))
 # TESTING: caller-audio recording is ON by default (set RECORD_CALLER_AUDIO=0 to turn it off).
 RECORD = os.environ.get("RECORD_CALLER_AUDIO", "1") == "1"
-RECORD_DIR = os.path.join(HERE, "recordings")
+# The cloud image runs as a non-root user that cannot write under /app, so it sets RECORD_DIR.
+RECORD_DIR = os.environ.get("RECORD_DIR") or os.path.join(HERE, "recordings")
 
 log = logging.getLogger("scam-guard")
 
@@ -239,16 +241,29 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
         if stream is not None:
             await stream.aclose()
         if RECORD and recorded:
-            await asyncio.to_thread(_save_wav, np.concatenate(recorded), caller_number)
+            await asyncio.to_thread(_save_and_upload, np.concatenate(recorded), caller_number)
 
 
-def _save_wav(pcm: np.ndarray, caller_number: str) -> None:
+def _save_and_upload(pcm: np.ndarray, caller_number: str) -> None:
+    """Save the caller audio, then (if GDRIVE_* is configured) copy it to Google Drive.
+
+    Runs in a worker thread at the end of the call. A failure here must never affect the call.
+    """
+    try:
+        path = _save_wav(pcm, caller_number)
+        drive_upload.upload_with_retry(path)
+    except Exception:
+        log.exception("saving/uploading caller audio failed")
+
+
+def _save_wav(pcm: np.ndarray, caller_number: str) -> str:
     import soundfile as sf
     os.makedirs(RECORD_DIR, exist_ok=True)
     safe = "".join(c for c in caller_number if c.isalnum()) or "unknown"
     path = os.path.join(RECORD_DIR, f"{datetime.now():%Y%m%d-%H%M%S}_{safe}.wav")
     sf.write(path, pcm, SAMPLE_RATE, subtype="PCM_16")
     log.info("saved caller audio to %s", path)
+    return path
 
 
 def _probe_diag(userdata: dict, frames: int) -> dict:
