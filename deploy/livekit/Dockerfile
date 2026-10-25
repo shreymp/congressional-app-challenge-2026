@@ -33,9 +33,7 @@ COPY backend ./backend
 COPY --from=announcement ["/recording_notice.wav", "./backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav"]
 COPY deploy/livekit ./deploy/livekit
 COPY --from=models /models /app/models
-# inference.py now builds the backbone from the pinned backend/AI Deepfake Pipeline/architecture/config.json
-# and model_integrity.py verifies detector_config.json byte for byte, so the config must NOT be rewritten
-# here (the old base_model rewrite changed its SHA-256 and would make the detector fail to load).
+# Load the pinned local architecture and preserve the integrity-checked config.
 RUN useradd --uid 10001 --create-home appuser \
     && python -m compileall -q backend deploy
 USER appuser
