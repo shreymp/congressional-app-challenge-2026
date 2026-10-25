@@ -115,12 +115,12 @@ open ios/Callma.xcodeproj
 ```
 
 1. In Xcode 26, choose the **Callma** scheme and an iPhone simulator, then **Product → Run**. Allow microphone access.
-2. From a separate phone, call **+1 267-509-1164**. Accept in the simulator.
+2. From a separate phone, call **+1 267-509-1164**. Accept in the simulator. (Wait about 45-60 seconds the first time for the server to start.)
 3. Speak from the calling phone for 45–60 seconds and watch both checks on the call screen.
 
 Step-by-step details: [MACBOOK_TESTING.md](MACBOOK_TESTING.md).
 
-### Use it with your own number
+### Use it with your own number (not recommended)
 
 Turn on call forwarding of **all calls** to +1 267-509-1164 (for example `*72` on Verizon). The app's **Settings → Call Forwarding Instructions** shows the code for your carrier. Keep the app open: this build rings only while it is in the foreground.
 
