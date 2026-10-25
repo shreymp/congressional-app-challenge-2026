@@ -149,5 +149,7 @@ Every answered call starts with *"This call is being recorded."* Only the caller
 
 Built for the **2026 Congressional App Challenge (IL-11)**. Thanks to the open models and datasets this work builds on: [XLS-R](https://huggingface.co/facebook/wav2vec2-xls-r-300m), [OpenJev / Verdict](https://github.com/Heman10x-NGU/Verdict-open-jev), [GLiClass](https://huggingface.co/knowledgator/gliclass-modern-base-v2.0), [MLAAD](https://arxiv.org/abs/2401.09512), [LibriSpeech](https://www.openslr.org/12), [Vosk](https://alphacephei.com/vosk/) and [LiveKit](https://livekit.io). Several training datasets carry non-commercial licenses (for example MLAAD, CC BY-NC 4.0), so the trained models are for this student project, not commercial use.
 
-Made by Shrey Patel<sup>1</sup>, Keshav Parikh<sup>2</sup>, and Azim Salomov<sup>3</sup>
+---
+Made by Shrey Patel<sup>1</sup>, Keshav Parikh<sup>2</sup>, and Azim Salomov<sup>3</sup>.
+
 Contact spatel7@imsa.edu for any questions.
