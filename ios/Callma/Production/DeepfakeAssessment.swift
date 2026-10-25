@@ -237,6 +237,18 @@ struct TranscriptAssessment: Codable, Equatable {
         return "Highest transcript risk score this call: \(Int((probability * 100).rounded())) out of 100. This experimental score is not a confirmed likelihood."
     }
     var isWarning: Bool { state == .monitoring && (probability ?? 0) >= 0.75 }
+
+    /// One plain-language band for the call screen; the high band matches the safety-steps threshold.
+    enum Risk { case low, medium, high }
+    var risk: Risk? {
+        guard state == .monitoring, let probability else { return nil }
+        return probability >= 0.75 ? .high : probability >= 0.4 ? .medium : .low
+    }
+    /// The 0...100 number shown in the call screen dial.
+    var score: Int? {
+        guard state == .monitoring, let probability else { return nil }
+        return Int((probability * 100).rounded())
+    }
 }
 
 struct TranscriptUpdate: Decodable {

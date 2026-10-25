@@ -39,6 +39,17 @@ enum Palette {
     static let missed = adaptive(0xBA1A1A, 0xFFDAD6)
     static let warning = adaptive(0x544434, 0xDAC2AD)
     static let destructive = Color(hex: 0xBA1A1A)
+    // Call-verdict colors. Danger and calm carry white text; caution carries verdictInk.
+    static let danger = Color(hex: 0xB3261E)
+    static let caution = Color(hex: 0xF4B400)
+    /// Amber dark enough to read as a score bar on the light panel.
+    static let cautionStrong = Color(hex: 0xB25E00)
+    /// Low-risk call verdict: calm blue rather than green, since a low score does not prove a call is safe.
+    static let calm = Color(hex: 0x2B5A8A)
+    /// Dark text that stays dark on the amber caution fill in both appearances.
+    static let verdictInk = Color(hex: 0x1B1B1C)
+    /// Deeper blue-gray where the call screen's background gradient starts.
+    static let callGlow = adaptive(0xC5D3E3, 0x34424E)
 
 }
 

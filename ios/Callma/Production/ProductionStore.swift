@@ -97,14 +97,16 @@ final class ProductionStore: ObservableObject {
         let voiceWarning = arguments.contains("--ui-test-voice-warning")
         let transcriptWarning = arguments.contains("--ui-test-transcript-warning")
         let lowScores = arguments.contains("--ui-test-low-scores")
-        let voice: DeepfakeAssessment.State = deadline ? .analyzing : voiceWarning ? .ai : lowScores ? .uncertain : .human
+        let checking = arguments.contains("--ui-test-analysis-checking")
+        let voice: DeepfakeAssessment.State = deadline || checking ? .analyzing : voiceWarning ? .ai : lowScores ? .uncertain : .human
         let transcriptScore = transcriptWarning ? 0.75 : (voiceWarning || lowScores) ? 0.74 : 0.94
         active = PhoneCall(id: UUID(), person: PhoneNumber.person("+15555550100", name: "Analysis test"),
             direction: .incoming, createdAt: connectedAt, connectedAt: connectedAt, stage: .connected,
-            voice: deadline ? .analyzing : voiceWarning ? .ai : lowScores ? .unknown : .human,
-            deepfake: DeepfakeAssessment(state: voice, updatedAt: now, windows: deadline ? 0 : 3,
-                                        aiScore: deadline ? nil : voiceWarning ? 0.75 : lowScores ? 0.74 : 0.12),
-            transcript: TranscriptAssessment(state: .monitoring, updatedAt: now, probability: transcriptScore, scoredRevision: 8))
+            voice: deadline || checking ? .analyzing : voiceWarning ? .ai : lowScores ? .unknown : .human,
+            deepfake: DeepfakeAssessment(state: voice, updatedAt: now, windows: deadline || checking ? 0 : 3,
+                                        aiScore: deadline || checking ? nil : voiceWarning ? 0.75 : lowScores ? 0.74 : 0.12),
+            transcript: checking ? TranscriptAssessment(state: .listening, updatedAt: now)
+                : TranscriptAssessment(state: .monitoring, updatedAt: now, probability: transcriptScore, scoredRevision: 8))
     }
     #endif
 

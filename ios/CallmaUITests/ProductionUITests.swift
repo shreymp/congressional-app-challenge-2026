@@ -51,22 +51,34 @@ final class ProductionUITests: XCTestCase {
         app.launch()
         let title = app.staticTexts["transcriptAssessmentTitle"]
         XCTAssertTrue(title.waitForExistence(timeout: 5))
-        reveal(title)
-        XCTAssertEqual(title.label, "Possible scam language")
-        XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("94 out of 100"))
-        XCTAssertTrue(app.staticTexts["transcriptAssessmentScore"].label.contains("experimental"))
-        XCTAssertTrue(app.staticTexts["Caller’s voice"].exists)
+        XCTAssertTrue(title.isHittable)
+        XCTAssertEqual(title.label, "Scam language")
+        XCTAssertEqual(app.staticTexts["transcriptAssessmentScore"].label, "94%")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Sounds human")
+        XCTAssertTrue(app.descendants(matching: .any)["callVerdictHeadline"].label.hasPrefix("Likely scam"))
         snapshot("Restored-Call-Pipeline-Feedback")
-        reveal(app.buttons["End call"])
         XCTAssertTrue(app.buttons["End call"].isHittable)
+    }
+
+    func testRunningChecksShowTheCheckingState() {
+        app.terminate()
+        app.launchArguments = ["--ui-test-production", "--ui-test-analysis", "--ui-test-analysis-checking"]
+        app.launch()
+        let headline = app.descendants(matching: .any)["callVerdictHeadline"]
+        XCTAssertTrue(headline.waitForExistence(timeout: 5))
+        XCTAssertTrue(headline.label.hasPrefix("Checking this call"))
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Checking…")
+        XCTAssertEqual(app.staticTexts["transcriptAssessmentTitle"].label, "Listening…")
+        XCTAssertFalse(app.buttons["alertGuardianButton"].exists)
+        snapshot("Production-21-Checks-Running")
     }
     func testInitialDeadlineShowsInconclusiveWithoutInventingScore() {
         app.terminate()
         app.launchArguments = ["--ui-test-production", "--ui-test-analysis", "--ui-test-analysis-deadline"]
         app.launch()
         XCTAssertTrue(app.staticTexts["deepfakeAssessmentTitle"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Inconclusive")
-        XCTAssertEqual(app.staticTexts["deepfakeAssessmentScore"].label, "AI score unavailable")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentTitle"].label, "Not sure yet")
+        XCTAssertEqual(app.staticTexts["deepfakeAssessmentScore"].label, "No score")
         snapshot("Production-13-Initial-Verdict-Deadline")
     }
     func testKeypadAndSimulatorCallError() {
@@ -90,7 +102,6 @@ final class ProductionUITests: XCTestCase {
         app.launch()
         let guardian = app.buttons["alertGuardianButton"]
         XCTAssertTrue(guardian.waitForExistence(timeout: 5))
-        reveal(guardian)
         XCTAssertTrue(guardian.isHittable)
         snapshot("Restored-Call-Safety-Steps")
         guardian.tap()
@@ -102,7 +113,6 @@ final class ProductionUITests: XCTestCase {
         XCTAssertFalse(app.buttons["saveGuardian"].isEnabled)
         app.buttons["Cancel"].tap()
         app.buttons["Done"].tap()
-        reveal(app.buttons["End call"])
         XCTAssertTrue(app.buttons["End call"].isHittable)
     }
 
@@ -130,8 +140,9 @@ final class ProductionUITests: XCTestCase {
                                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         app.launch()
         XCTAssertTrue(app.buttons["End call"].waitForExistence(timeout: 5))
-        reveal(app.buttons["End call"])
         XCTAssertTrue(app.buttons["End call"].isHittable)
+        XCTAssertTrue(app.descendants(matching: .any)["callVerdictHeadline"].isHittable)
+        XCTAssertEqual(app.scrollViews.count, 0)
         snapshot("Restored-Accessibility-Call-Controls")
     }
 
@@ -141,9 +152,7 @@ final class ProductionUITests: XCTestCase {
             app.launchArguments = ["--ui-test-production", "--ui-test-analysis", flag]
             app.launch()
             XCTAssertTrue(app.buttons["alertGuardianButton"].waitForExistence(timeout: 5), flag)
-            reveal(app.buttons["alertGuardianButton"])
             XCTAssertTrue(app.buttons["alertGuardianButton"].isHittable)
-            reveal(app.buttons["End call"])
             XCTAssertTrue(app.buttons["End call"].isHittable)
         }
     }
