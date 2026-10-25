@@ -137,6 +137,25 @@ async def _score_call(ctx: JobContext, probe: bool = False, connection_monotonic
         if not await senior_ring.wait_for_answer(room, caller.identity):
             log.info("call ended before app pickup; no notice or caller processing")
             return
+        timeline["app_answer_sec"] = round(time.monotonic() - t_start, 3)
+        timeline["notice_start_sec"] = round(time.monotonic() - t_start, 3)
+
+        async def notice_status(reason: str, state: str) -> None:
+            await room.local_participant.publish_data(json.dumps(publisher.message({
+                "type": "status", "state": state, "reason": reason,
+                "transcript": {"state": "disabled", "probability": None},
+                "timing": dict(timeline), "t": round(time.monotonic() - t_start, 2),
+            })), reliable=True, topic=RISK_TOPIC)
+
+        async def notice_heartbeat() -> None:
+            while room.isconnected():
+                try:
+                    await notice_status("recording_notice_pending", "analyzing")
+                except Exception:
+                    log.warning("notice pending status could not be sent", exc_info=True)
+                await asyncio.sleep(2)
+
+        pending_notice = asyncio.create_task(notice_heartbeat())
         try:
             await asyncio.wait_for(play_recording_notice(room), timeout=NOTICE_TIMEOUT_SEC)
             timeline["notice_end_sec"] = round(time.monotonic() - t_start, 3)

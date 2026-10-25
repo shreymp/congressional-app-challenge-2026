@@ -183,6 +183,35 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 task.cancel()
                 await asyncio.gather(task, return_exceptions=True)
 
+    async def test_cancellation_during_notice_stops_playback_and_pending_heartbeat(self):
+        ctx = self.context(FakeDetector())
+        started, cancelled = asyncio.Event(), asyncio.Event()
+
+        async def stalled(room):
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+
+        self.notice.side_effect = stalled
+        with patch.object(agent.rtc.AudioStream, "from_participant") as audio:
+            task = asyncio.create_task(agent._score_call(ctx))
+            try:
+                await asyncio.wait_for(started.wait(), 1)
+                heartbeats = [t for t in asyncio.all_tasks()
+                              if t.get_coro().__name__ == "notice_heartbeat"]
+                self.assertEqual(len(heartbeats), 1)
+                task.cancel()
+                with self.assertRaises(asyncio.CancelledError):
+                    await task
+                self.assertTrue(cancelled.is_set())
+                self.assertTrue(heartbeats[0].cancelled())
+                audio.assert_not_called()
+            finally:
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
+
     async def test_failed_or_timed_out_notice_never_opens_processing_stream(self):
         for failure in (RuntimeError("missing announcement"), asyncio.TimeoutError()):
             ctx = self.context(FakeDetector())
