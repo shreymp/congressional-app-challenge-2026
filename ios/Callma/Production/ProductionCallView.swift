@@ -33,13 +33,22 @@ struct ProductionCallView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            // The call screen never scrolls: it drops the logo and avatar, then caps text size, until it fits.
             ViewThatFits(in: .vertical) {
-                callContent(height: geometry.size.height)
-                ScrollView { callContent(height: 0) }.scrollIndicators(.hidden)
+                callContent(height: geometry.size.height, compact: false)
+                callContent(height: geometry.size.height, compact: true)
+                callContent(height: geometry.size.height, compact: true).dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                callContent(height: geometry.size.height, compact: true).dynamicTypeSize(...DynamicTypeSize.accessibility1)
+                callContent(height: geometry.size.height, compact: true).dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+                callContent(height: geometry.size.height, compact: true).dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
         .multilineTextAlignment(.center).foregroundStyle(Palette.ink)
-        .background(RadialGradient(colors: [Palette.softAccent, Palette.surface, Palette.canvas], center: .topLeading, startRadius: 0, endRadius: 700).ignoresSafeArea())
+        // Blue-gray from the top-left corner, strong enough to read on a real screen, fading to the page color.
+        .background(RadialGradient(stops: [.init(color: Palette.callGlow, location: 0),
+                                            .init(color: Palette.lavender, location: 0.35),
+                                            .init(color: Palette.canvas, location: 1)],
+                                    center: .topLeading, startRadius: 0, endRadius: 950).ignoresSafeArea())
         .onReceive(clock) { now = $0 }
         .sheet(isPresented: $showingGuardian) {
             GuardianAlertSheet(call: call, store: store)
@@ -63,48 +72,16 @@ struct ProductionCallView: View {
             Text("This call had a very high experimental warning score. Don’t share codes, passwords, or move money. You can end the call and verify the caller independently.")
         }
     }
-    private func callContent(height: CGFloat) -> some View {
-        VStack(spacing: 12) {
-            BrandWordmark(onDark: true).font(.subheadline).foregroundStyle(Palette.secondary)
-            Avatar(person: call.person, size: 64).padding(.top, 4)
+    private func callContent(height: CGFloat, compact: Bool) -> some View {
+        VStack(spacing: compact ? 8 : 12) {
+            if !compact {
+                BrandWordmark(onDark: true).font(.subheadline).foregroundStyle(Palette.secondary)
+                Avatar(person: call.person, size: 64).padding(.top, 4)
+            }
             Text(call.person.name).font(.title.weight(.medium)).accessibilityIdentifier("callCallerName")
-            Text(call.person.number).font(.subheadline).foregroundStyle(Palette.secondary)
-            Text(status).monospacedDigit().foregroundStyle(Palette.secondary)
-            if call.connectedAt != nil {
-                VStack(spacing: 10) {
-                    Text("Caller’s voice").font(.caption.weight(.semibold))
-                    HStack(spacing: 4) {
-                        Text(voiceAssessment.title).font(.subheadline.weight(.semibold))
-                            .accessibilityIdentifier("deepfakeAssessmentTitle")
-                        ResultHelpButton(title: "Voice labels", message: "A voice label estimates whether audio sounds human or AI-generated. It does not verify identity or prove a call is safe. Analyzing means the check is still running; Inconclusive means there is not enough information.", onDark: true)
-                    }
-                    Text(assessment).font(.caption).foregroundStyle(Palette.secondary)
-                    Text(voiceAssessment.scoreText).font(.caption).foregroundStyle(Palette.secondary)
-                        .accessibilityIdentifier("deepfakeAssessmentScore")
-                    if let previous = call.lastDeepfakeResult,
-                       let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
-                        Text("Last result: \(previous.voice.label)").font(.caption.weight(.semibold))
-                    }
-                    Text("A human voice does not confirm who is calling.").font(.caption).foregroundStyle(Palette.secondary)
-                }.padding(16).frame(maxWidth: .infinity)
-                    .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
-            }
-            if call.connectedAt != nil {
-                let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
-                VStack(spacing: 8) {
-                    Label("Scam warning", systemImage: "text.bubble").font(.caption.weight(.semibold))
-                    Text(text.title).font(.subheadline.weight(.semibold))
-                        .foregroundStyle(text.isWarning ? Palette.warning : Palette.ink)
-                        .accessibilityIdentifier("transcriptAssessmentTitle")
-                    Text(text.message).font(.caption).foregroundStyle(Palette.secondary)
-                        .accessibilityIdentifier("transcriptAssessmentScore")
-                    Text("Based on the caller’s words. A low score does not prove a call is safe.")
-                        .font(.caption2).foregroundStyle(Palette.secondary)
-                }.padding(16).frame(maxWidth: .infinity)
-                    .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
-            }
-            if call.connectedAt != nil && needsSafetySteps { safetySteps }
-            Spacer(minLength: 8)
+            Text("\(call.person.number) · \(status)").font(.subheadline).monospacedDigit().foregroundStyle(Palette.secondary)
+            if call.connectedAt != nil { verdictCard }
+            Spacer(minLength: compact ? 4 : 8)
             if call.stage == .incoming {
                 HStack {
                     action("Decline", "phone.down.fill", color: Palette.destructive) { try await store.coordinator.end() }
@@ -136,21 +113,129 @@ struct ProductionCallView: View {
                 action("End call", "phone.down.fill", color: Palette.destructive) { try await store.coordinator.end() }
             }
         }
-        .padding(20).frame(maxWidth: 500).frame(minHeight: height).frame(maxWidth: .infinity)
+        .padding(compact ? 16 : 20).frame(maxWidth: 500).frame(minHeight: height).frame(maxWidth: .infinity)
     }
-    private var safetySteps: some View {
-        VStack(spacing: 10) {
-            Label("Pause Before Sharing", systemImage: "hand.raised.fill").font(.subheadline.weight(.semibold))
-                .foregroundStyle(Palette.warning)
-            Text("Don’t share codes, passwords, or move money. Hang up and verify using a number you already know.")
-                .font(.caption).fixedSize(horizontal: false, vertical: true)
-            Button { showingGuardian = true } label: {
-                Label("Alert Guardian", systemImage: "person.2.fill").frame(maxWidth: .infinity, minHeight: 44)
-            }.buttonStyle(.bordered).tint(Palette.accent).accessibilityIdentifier("alertGuardianButton")
-            Text("Warning scores are experimental. They do not confirm fraud or identity.")
-                .font(.caption2).foregroundStyle(Palette.secondary)
-        }.padding(16).frame(maxWidth: .infinity)
-            .background(Palette.surface, in: RoundedRectangle(cornerRadius: 18))
+    /// One card for both checks: the header takes the most serious finished result, each row keeps its own.
+    private var verdictCard: some View {
+        let verdict = self.verdict
+        return VStack(spacing: 0) {
+            HStack(spacing: 14) {
+                Group {
+                    if verdict.level == nil && verdict.checking {
+                        CheckingSpinner(size: 32)
+                    } else {
+                        // Fixed size: the icon stays inside its frame at the largest text sizes.
+                        Image(systemName: verdict.level?.symbol ?? "minus.circle").font(.system(size: 32, weight: .semibold))
+                    }
+                }.frame(width: 40, height: 40).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(verdict.headline).scaledFont(size: 26, weight: .heavy)
+                    Text(verdict.advice).scaledFont(size: 15, weight: .medium).fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(18)
+            .foregroundStyle(verdict.level?.ink ?? Palette.accent)
+            .background(verdict.level?.fill ?? Palette.softAccent)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("callVerdictHeadline")
+            VStack(alignment: .leading, spacing: 14) {
+                checkRow(voiceCheck)
+                checkRow(wordsCheck)
+                if verdict.level == .high || needsSafetySteps {
+                    Button { showingGuardian = true } label: {
+                        Text("Alert Guardian").font(.headline)
+                            .frame(maxWidth: .infinity, minHeight: 48)
+                            .foregroundStyle(Palette.actionInk)
+                            .background(Palette.action, in: RoundedRectangle(cornerRadius: 12))
+                    }.buttonStyle(.plain).accessibilityIdentifier("alertGuardianButton")
+                }
+            }.padding(EdgeInsets(top: 14, leading: 18, bottom: 16, trailing: 18))
+        }
+        .multilineTextAlignment(.leading)
+        .background(Palette.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .shadow(color: Palette.line, radius: 0, x: 0, y: 1)
+        .padding(.top, 6)
+    }
+    private func checkRow(_ check: CheckResult) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(check.name).font(.subheadline).foregroundStyle(Palette.secondary).frame(minWidth: 56, alignment: .leading)
+                Text(check.label).font(.headline).accessibilityIdentifier(check.titleID)
+                Spacer(minLength: 4)
+                Text(check.score.map { "\($0)%" } ?? "—").monospacedDigit()
+                    .scaledFont(size: 23, weight: .bold).fixedSize()
+                    .accessibilityLabel(check.score.map { "\($0)%" } ?? "No score")
+                    .accessibilityIdentifier(check.scoreID)
+            }
+            ScoreBar(fraction: Double(check.score ?? 0) / 100, color: check.level?.bar ?? Palette.line, checking: check.checking)
+            if let note = check.note {
+                Text(note).font(.caption.weight(.semibold)).foregroundStyle(Palette.secondary)
+            }
+        }
+    }
+    private var voiceCheck: CheckResult {
+        let voice = voiceAssessment
+        let score = voice.score.map { Int($0.rounded()) }
+        var check = CheckResult(name: "Voice", label: "Checking…", level: nil, score: nil, checking: true,
+                                titleID: "deepfakeAssessmentTitle", scoreID: "deepfakeAssessmentScore")
+        switch voice.state {
+        case .waiting, .analyzing:
+            if let previous = call.lastDeepfakeResult { check.note = "Last result: \(previous.voice.label)" }
+        case .human: (check.label, check.level, check.score, check.checking) = ("Sounds human", .low, score, false)
+        case .ai: (check.label, check.level, check.score, check.checking) = ("Likely AI", .high, score, false)
+        case .uncertain: (check.label, check.level, check.score, check.checking) = ("Not sure yet", .caution, score, false)
+        case .unavailable: (check.label, check.checking) = ("Unavailable", false)
+        }
+        return check
+    }
+    private var wordsCheck: CheckResult {
+        let text = call.transcript ?? TranscriptAssessment(state: .listening, updatedAt: now)
+        var check = CheckResult(name: "Words", label: "Listening…", level: nil, score: text.score, checking: false,
+                                titleID: "transcriptAssessmentTitle", scoreID: "transcriptAssessmentScore")
+        switch text.risk {
+        case .high: (check.label, check.level) = ("Scam language", .high)
+        case .medium: (check.label, check.level) = ("Some warning signs", .caution)
+        case .low: (check.label, check.level) = ("No scam language", .low)
+        case nil:
+            check.score = nil
+            switch text.state {
+            case .listening: check.checking = true
+            case .stale: (check.label, check.checking) = ("Updating…", true)
+            case .insufficientEvidence: check.label = "Not enough to judge"
+            case .disabled: check.label = "Off"
+            default: check.label = "Unavailable"
+            }
+        }
+        return check
+    }
+    private var verdict: (level: RiskLevel?, headline: String, advice: String, checking: Bool) {
+        let voice = voiceCheck, words = wordsCheck
+        let checking = voice.checking || words.checking
+        let worst = [voice.level, words.level].compactMap { $0 }.max()
+        let voiceHigh = voice.level == .high, wordsHigh = words.level == .high
+        switch worst {
+        case nil where checking:
+            return (nil, "Checking this call", "Results appear as the caller speaks.", true)
+        case nil:
+            return (nil, "Checks unavailable", "Your call can continue. Verify who is calling before sharing anything.", false)
+        case .high where voiceHigh && wordsHigh:
+            return (.high, "Likely scam", "Don’t share money, codes, or passwords.", checking)
+        case .high where wordsHigh:
+            let advice = voice.checking ? "Scam language heard. Still checking the voice."
+                : voice.level == .low ? "The voice sounds human, but a real person can still be a scammer."
+                : "Don’t share money, codes, or passwords."
+            return (.high, "Likely scam", advice, checking)
+        case .high:
+            let advice = words.checking ? "The voice may be AI. Still listening to the words."
+                : "The words sound normal, but the voice may be AI. Verify who is calling."
+            return (.high, "Possible fake voice", advice, checking)
+        case .caution:
+            return (.caution, "Be careful", "Check who is calling before sharing anything.", checking)
+        case .low:
+            return (.low, "No strong signs", checking ? "So far. Still checking the other signal." : "Stay alert. This doesn’t prove who is calling.", checking)
+        }
     }
     private var status: String {
         switch call.stage {
@@ -158,15 +243,6 @@ struct ProductionCallView: View {
         case .connecting: return "Connecting…"
         case .held: return "On hold"
         case .connected: return callDuration(call.connectedAt.map { max(0, Int(now.timeIntervalSince($0))) } ?? 0)
-        }
-    }
-    private var assessment: String {
-        if call.deepfake != nil { return voiceAssessment.message }
-        switch call.voice {
-        case .analyzing: return "Checking the caller’s voice…"
-        case .ai: return "This voice may be AI-generated."
-        case .human: return "This voice appears to be human."
-        case .unknown: return "A voice assessment is not available."
         }
     }
     private func action(_ title: String, _ symbol: String, color: Color = Palette.softAccent, selected: Bool = false,
@@ -187,6 +263,85 @@ struct ProductionCallView: View {
             defer { busy = false }
             do { try await operation() }
             catch { store.errorMessage = error.localizedDescription }
+        }
+    }
+}
+
+/// The call-screen band for one check's finished result; ordered so the worst one wins the header.
+private enum RiskLevel: Int, Comparable {
+    case low, caution, high
+    static func < (lhs: RiskLevel, rhs: RiskLevel) -> Bool { lhs.rawValue < rhs.rawValue }
+    var symbol: String {
+        switch self {
+        case .high: return "exclamationmark.triangle"
+        case .caution: return "exclamationmark.circle"
+        case .low: return "checkmark"
+        }
+    }
+    var fill: Color {
+        switch self {
+        case .high: return Palette.danger
+        case .caution: return Palette.caution
+        case .low: return Palette.calm
+        }
+    }
+    var ink: Color { self == .caution ? Palette.verdictInk : .white }
+    var bar: Color { self == .caution ? Palette.cautionStrong : fill }
+}
+
+private struct CheckResult {
+    let name: String
+    var label: String
+    var level: RiskLevel?
+    var score: Int?
+    var checking: Bool
+    let titleID: String
+    let scoreID: String
+    var note: String? = nil
+}
+
+/// A score bar; while its check is running a short segment sweeps across instead.
+private struct ScoreBar: View {
+    let fraction: Double
+    let color: Color
+    let checking: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Capsule().fill(Palette.softAccent)
+                if checking {
+                    TimelineView(.animation) { context in
+                        let time = context.date.timeIntervalSinceReferenceDate
+                        let segment = geometry.size.width * 0.28
+                        let phase = (sin(time * 2.6) + 1) / 2
+                        Capsule().fill(Palette.line).frame(width: segment)
+                            .offset(x: reduceMotion ? 0 : phase * (geometry.size.width - segment))
+                            .opacity(reduceMotion ? 0.45 + 0.55 * phase : 1)
+                    }
+                } else {
+                    Capsule().fill(color).frame(width: geometry.size.width * min(max(fraction, 0), 1))
+                }
+            }
+        }
+        .frame(height: 8)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.5), value: fraction)
+        .accessibilityHidden(true)
+    }
+}
+
+/// Spins while both checks are still running; pulses instead when Reduce Motion is on.
+private struct CheckingSpinner: View {
+    let size: CGFloat
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    var body: some View {
+        TimelineView(.animation) { context in
+            let time = context.date.timeIntervalSinceReferenceDate
+            Circle().trim(from: 0, to: 0.72)
+                .stroke(style: StrokeStyle(lineWidth: size * 0.11, lineCap: .round))
+                .rotationEffect(.degrees(reduceMotion ? 0 : time.truncatingRemainder(dividingBy: 1) * 360))
+                .opacity(reduceMotion ? 0.5 + 0.5 * abs(sin(time * 2)) : 1)
+                .frame(width: size, height: size)
         }
     }
 }
