@@ -4,7 +4,7 @@ The tester does **not** need a LiveKit account, API key, API secret, model files
 Node, PyTorch, or a running backend on the Mac. The hosted worker runs both
 AI voice/deepfake detection and Vosk → JEV transcript analysis.
 
-Use **main**, `ios/Callshield.xcodeproj`, scheme **Callshield**, Xcode 26 and an
+Use the latest **main** with the Callma naming repair, `ios/Callma.xcodeproj`, scheme **Callma**, Xcode 26 and an
 installed iOS Simulator runtime. The separate ScamTranscript app is not this
 full calling app. No paid Apple account is needed for simulator builds.
 
@@ -16,7 +16,7 @@ cd congressional-app-challenge-2026
 git switch main
 git pull --ff-only
 python3 scripts/tester_access.py install
-open ios/Callshield.xcodeproj
+open ios/Callma.xcodeproj
 ```
 
 The install command uses GitHub CLI (`gh`) and the same GitHub account that can
@@ -42,11 +42,11 @@ the worker. Do not commit configuration/token files.
 
 If access has expired, the owner runs **Tester app access** on **main** in Actions;
 then repeat install and rebuild. Only one simulator/phone may use this test
-identity at a time: close other Callshield instances before testing.
+identity at a time: close other Callma instances before testing.
 
 ## 2. Run the simulator app
 
-Select **Callshield** and an available iPhone simulator, then **Product → Run**.
+Select **Callma** and an available iPhone simulator, then **Product → Run**.
 Resolve Swift packages if Xcode asks. Use Xcode 26 and select the full Xcode in
 Settings → Locations → Command Line Tools. Product → Test deliberately disables
 live network calling; it is not how to receive the real test call.
@@ -120,7 +120,7 @@ Physical iPhone CallKit, lock-screen ringing and device audio require later test
 The owner can run **LiveKit real models** with `probe_only=true` in GitHub Actions
 to send fixture speech through the deployed worker without using the app. It
 requires 35 seconds of fresh evidence and advancing results from both pipelines.
-The **Callshield simulator** workflow builds and tests the app without credentials.
+The **Callma simulator** workflow builds and tests the app without credentials.
 
 For local diagnostic tools only:
 

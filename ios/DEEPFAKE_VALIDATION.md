@@ -1,6 +1,6 @@
 # Deepfake connector validation — October 16, 2026
 
-Branch: `deepfake-connector`. Integration target: native Callshield production app.
+Branch: `deepfake-connector`. Integration target: native Callma production app.
 
 ## Completed on Windows
 
@@ -23,7 +23,7 @@ Sandbox note: even a minimal `asyncio.sleep` stalled in this Windows sandbox. Th
 Run from the repository root with Xcode 26 or later:
 
 ```sh
-xcodebuild -project ios/Callshield.xcodeproj -scheme Callshield \
+xcodebuild -project ios/Callma.xcodeproj -scheme Callma \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -derivedDataPath /tmp/callshield-deepfake-build \
   -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test

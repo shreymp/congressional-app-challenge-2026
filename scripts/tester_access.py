@@ -135,12 +135,12 @@ def install(path=None):
     host, token, expiry = validate(config)
     original = CONFIG.read_text() if CONFIG.exists() else "// Private tester connection settings. Do not commit.\n"
     private_write(CONFIG, set_xcconfig(original, {
-        "CALLSHIELD_DEMO": "false", "CALLSHIELD_DEFAULT_DIALER": "false",
-        "CALLSHIELD_ENTITLEMENTS_FILE": "", "CALLSHIELD_LIVEKIT_HOST": host,
-        "CALLSHIELD_LOBBY_TOKEN": token,
+        "CALLMA_DEMO": "false", "CALLMA_DEFAULT_DIALER": "false",
+        "CALLMA_ENTITLEMENTS_FILE": "", "CALLMA_LIVEKIT_HOST": host,
+        "CALLMA_LOBBY_TOKEN": token,
     }))
     print("App access installed; expires", time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime(expiry)))
-    print("Build and run Callshield. No LiveKit account, API key, or API secret is needed on this Mac.")
+    print("Build and run Callma. No LiveKit account, API key, or API secret is needed on this Mac.")
 
 
 if __name__ == "__main__":

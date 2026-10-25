@@ -13,11 +13,11 @@ spec.loader.exec_module(helper)
 
 class HandoffTests(unittest.TestCase):
     def test_config_preserves_signing_and_replaces_all_active_duplicates(self):
-        old = "// CALLSHIELD_LOBBY_TOKEN = example\nDEVELOPMENT_TEAM = TEAM123\nCALLSHIELD_LOBBY_TOKEN = old\nCALLSHIELD_LOBBY_TOKEN = duplicate\n"
-        result = helper.set_xcconfig(old, {"CALLSHIELD_LOBBY_TOKEN": "new-token"})
+        old = "// CALLMA_LOBBY_TOKEN = example\nDEVELOPMENT_TEAM = TEAM123\nCALLMA_LOBBY_TOKEN = old\nCALLMA_LOBBY_TOKEN = duplicate\n"
+        result = helper.set_xcconfig(old, {"CALLMA_LOBBY_TOKEN": "new-token"})
         self.assertIn("DEVELOPMENT_TEAM = TEAM123", result)
-        self.assertIn("// CALLSHIELD_LOBBY_TOKEN = example", result)
-        self.assertEqual(result.count("CALLSHIELD_LOBBY_TOKEN = new-token"), 1)
+        self.assertIn("// CALLMA_LOBBY_TOKEN = example", result)
+        self.assertEqual(result.count("CALLMA_LOBBY_TOKEN = new-token"), 1)
         self.assertNotIn("old", result)
         self.assertNotIn("duplicate", result)
 
