@@ -127,8 +127,11 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
     caller = (await ctx.wait_for_participant(identity="backend-probe-caller") if probe else
               await ctx.wait_for_participant(kind=rtc.ParticipantKind.PARTICIPANT_KIND_SIP))
     if not probe:
-        # wait_for_participant returns an ACTIVE SIP caller: the senior's microphone has
-        # answered the call. Do not publish the notice while the app is still ringing.
+        # SIP active does not prove Callma pickup. The app joins silently while ringing;
+        # only Accept publishes its microphone. Publishing the notice earlier answers SIP.
+        if not await senior_ring.wait_for_answer(room, caller.identity):
+            log.info("call ended before app pickup; no notice or caller processing")
+            return
         try:
             await asyncio.wait_for(play_recording_notice(room), timeout=NOTICE_TIMEOUT_SEC)
         except Exception:
