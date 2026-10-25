@@ -8,6 +8,10 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[2]
+REPO = "shreymp/congressional-app-challenge-2026"
+# V8b checkpoint; the previous V2 best.pt was release asset 628783673.
+DETECTOR_RELEASE_TAG = "deepfake-weights-v8"
+DETECTOR_ASSET_NAME = "detector_state_v8b.pt"
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -31,6 +35,18 @@ def asset_url(api_url, token):
         return location
 
 
+def release_asset_api_url(tag, name, token):
+    request = urllib.request.Request(f"https://api.github.com/repos/{REPO}/releases/tags/{tag}", headers={
+        "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "CAC-cloud-build"})
+    with urllib.request.urlopen(request, timeout=30) as response:
+        assets = json.load(response)["assets"]
+    match = [a for a in assets if a["name"] == name]
+    if len(match) != 1:
+        raise RuntimeError(f"Release {tag} must contain exactly one asset named {name}")
+    return match[0]["url"]
+
+
 def prepare(output):
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     if not token:
@@ -51,8 +67,8 @@ def prepare(output):
     # `lk agent deploy` detects the project type from a requirements.txt at the context root.
     # The Dockerfile still installs from deploy/livekit/requirements.txt; this copy is for detection.
     shutil.copy2(ROOT / "deploy/livekit/requirements.txt", output / "requirements.txt")
-    sources = [{"path": "deepfake/best.pt", "sha256": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0",
-                "url": asset_url("https://api.github.com/repos/shreymp/congressional-app-challenge-2026/releases/assets/628783673", token)}]
+    sources = [{"path": "deepfake/detector_state.pt", "sha256": "cc6a75eae2948aeae5f491dffbc0e05af274bb4d8f6740451ad762b72f9703d5",
+                "url": asset_url(release_asset_api_url(DETECTOR_RELEASE_TAG, DETECTOR_ASSET_NAME, token), token)}]
     bundle = next(b for b in json.loads((ROOT / manifest_path).read_text()) if b["version"] == "V2")
     for name, item in bundle["files"].items():
         sources.append({"path": "JevCallV2/" + name, "sha256": item["sha256"], "url": asset_url(item["api_url"], token)})
