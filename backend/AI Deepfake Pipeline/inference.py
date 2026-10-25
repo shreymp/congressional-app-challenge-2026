@@ -11,9 +11,11 @@ class AttnStatsPool(nn.Module):
         sd = torch.sqrt(((a * (h - mu.unsqueeze(1)) ** 2).sum(1)).clamp(min=1e-6)); return torch.cat([mu, sd], -1)
 
 class DeepfakeDetector(nn.Module):
-    def __init__(self, base, keep_layers):
+    def __init__(self, base, keep_layers, architecture_path=None):
         super().__init__()
-        cfg = Wav2Vec2Config.from_pretrained(base); cfg.num_hidden_layers = keep_layers; cfg.layerdrop = 0.0
+        if architecture_path is None:
+            architecture_path = os.path.join(os.path.dirname(__file__), "architecture", "config.json")
+        cfg = Wav2Vec2Config.from_json_file(architecture_path); cfg.num_hidden_layers = keep_layers; cfg.layerdrop = 0.0
         self.backbone = Wav2Vec2Model(cfg); d = cfg.hidden_size
         self.layer_w = nn.Parameter(torch.zeros(keep_layers + 1))
         self.proj = nn.Sequential(nn.LayerNorm(d), nn.Linear(d, 256), nn.GELU()); self.pool = AttnStatsPool(256)
@@ -24,12 +26,14 @@ class DeepfakeDetector(nn.Module):
 
 class Detector:
     def __init__(self, folder, device="cpu"):
+        from model_integrity import verify_bundle
+        self.integrity = verify_bundle(folder)
         self.meta = json.load(open(f"{folder}/detector_config.json")); self.device = device
-        self.model = DeepfakeDetector(self.meta["base_model"], self.meta["keep_layers"])
+        self.model = DeepfakeDetector(self.meta["base_model"], self.meta["keep_layers"], self.integrity["architecture_path"])
         paths = [f"{folder}/detector_state.pt", f"{folder}/best.pt"]
         path = next((q for q in paths if os.path.exists(q)), None)
         if path is None: raise FileNotFoundError(f"No weights found; expected one of {paths}")
-        state = torch.load(path, map_location="cpu")
+        state = torch.load(path, map_location="cpu", weights_only=True)
         if isinstance(state, dict) and "model" in state: state = state["model"]   # best.pt wraps the state dict under 'model'
         self.model.load_state_dict(state); self.model.to(device).eval()
         self.sr, self.win = self.meta["sample_rate"], int(self.meta["window_sec"] * self.meta["sample_rate"])

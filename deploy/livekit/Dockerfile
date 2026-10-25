@@ -33,10 +33,8 @@ COPY backend ./backend
 COPY --from=announcement ["/recording_notice.wav", "./backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav"]
 COPY deploy/livekit ./deploy/livekit
 COPY --from=models /models /app/models
-# Cache only the backbone architecture config, never untrained backbone weights.
-RUN HF_HUB_OFFLINE=0 python -c "from transformers import Wav2Vec2Config; Wav2Vec2Config.from_pretrained('facebook/wav2vec2-xls-r-300m').save_pretrained('/app/models/backbone')" \
-    && python -c "import json,pathlib; p=pathlib.Path('/app/models/deepfake/detector_config.json'); d=json.loads(p.read_text()); d['base_model']='/app/models/backbone'; p.write_text(json.dumps(d))" \
-    && useradd --uid 10001 --create-home appuser \
+# Load the pinned local architecture and preserve the integrity-checked config.
+RUN useradd --uid 10001 --create-home appuser \
     && python -m compileall -q backend deploy
 USER appuser
 CMD ["python", "deploy/livekit/cloud_agent.py", "start"]
