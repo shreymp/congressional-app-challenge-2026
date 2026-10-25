@@ -3,6 +3,8 @@
 livekit-agents>=1.8,<2
 livekit>=1.1
 livekit-api>=1.2
+# Optional trained speech gate (SPEECH_GATE=silero). speech_vad.py uses its internal onnx_model module; keep the pin.
+livekit-plugins-silero==1.8.8
 python-dotenv
 numpy
 scipy

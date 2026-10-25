@@ -11,6 +11,7 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
     private let controller = CXCallController()
     private var registry: PKPushRegistry?
     private var session = PhoneSessionState()
+    private var initialAssessmentTask: Task<Void, Never>?
     var onCallChanged: ((PhoneCall?) -> Void)?
     var onRecord: ((PhoneCallRecord) -> Void)?
     var onError: ((String) -> Void)?
@@ -134,9 +135,13 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         #endif
     }
 
+    func recordVoiceDisplay(id: UUID) { session.recordVoiceDisplay(id: id) }
+
     private func changed() { onCallChanged?(active) }
     private func finish(_ id: UUID, outcome: PhoneCallOutcome, reason: CXCallEndedReason, at date: Date = Date()) {
         guard let record = session.finish(id: id, outcome: outcome, at: date) else { return }
+        initialAssessmentTask?.cancel()
+        initialAssessmentTask = nil
         #if targetEnvironment(simulator)
         backend.deactivateAudio(AVAudioSession.sharedInstance())
         #else
@@ -150,7 +155,18 @@ final class PhoneCallCoordinator: NSObject, CXProviderDelegate, PKPushRegistryDe
         switch event {
         case .connected(let id, let date):
             guard active?.id == id else { return }
+            let firstConnection = active?.connectedAt == nil
             session.connected(id: id, at: date)
+            if firstConnection {
+                initialAssessmentTask?.cancel()
+                initialAssessmentTask = Task { @MainActor [weak self] in
+                    // Task.sleep uses a monotonic clock; ringing and disclosure do not restart it.
+                    do { try await Task.sleep(nanoseconds: 15_000_000_000) } catch { return }
+                    guard let self, self.active?.id == id else { return }
+                    self.session.finalizeInitialAssessment(id: id, at: max(Date(), date.addingTimeInterval(15)))
+                    self.changed()
+                }
+            }
             #if !targetEnvironment(simulator)
             if active?.direction == .outgoing { provider.reportOutgoingCall(with: id, connectedAt: date) }
             #endif

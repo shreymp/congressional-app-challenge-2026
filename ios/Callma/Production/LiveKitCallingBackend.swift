@@ -63,6 +63,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         var audioActive = false  // engine running inside CallKit's activation window
         var connected = false    // `connected` already emitted
         var connectedAt: Date?
+        var connectedMonotonicTime: TimeInterval?
         var detector = DeepfakeMonitor()
         var transcriptDetector = TranscriptMonitor()
     }
@@ -418,6 +419,7 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         callmaLog("connected")
         let now = Date()
         call?.connectedAt = now
+        call?.connectedMonotonicTime = ProcessInfo.processInfo.systemUptime
         onEvent?(.connected(current.invite.callID, now))
         onEvent?(.deepfakeAssessment(current.invite.callID, DeepfakeAssessment(state: .waiting, updatedAt: now)))
         onEvent?(.transcriptAssessment(current.invite.callID, TranscriptAssessment(state: .listening, updatedAt: now)))
@@ -503,7 +505,8 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
         let now = Date()
         let voice = DeepfakeUpdate.decode(data).flatMap {
             current.detector.receive($0, room: current.invite.room,
-                callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: now)
+                callerIdentity: current.invite.callerIdentity, isAgent: isAgent, at: now,
+                monotonicTime: ProcessInfo.processInfo.systemUptime)
         }
         let transcript = TranscriptUpdate.decode(data).flatMap {
             current.transcriptDetector.receive($0, room: current.invite.room,
@@ -522,7 +525,8 @@ final class LiveKitCallingBackend: NSObject, CallingBackend, RoomDelegate {
                 guard let self, var current = self.call, current.invite.callID == callID,
                       let connectedAt = current.connectedAt else { return }
                 let now = Date()
-                let voice = current.detector.expire(at: now, connectedAt: connectedAt)
+                let voice = current.detector.expire(at: now, connectedAt: connectedAt,
+                    monotonicTime: ProcessInfo.processInfo.systemUptime, connectedMonotonicTime: current.connectedMonotonicTime)
                 let transcript = current.transcriptDetector.expire(at: now, connectedAt: connectedAt)
                 self.call = current
                 if let voice { self.onEvent?(.deepfakeAssessment(callID, voice)) }

@@ -1,0 +1,50 @@
+[
+  {
+    "check": "swift_wire_compile_baseline",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "check": "swift_wire_baseline",
+    "exit_code": 0,
+    "stdout": "Passed 8 Python/Swift wire fixtures plus malformed/oversize rejection\n",
+    "stderr": ""
+  },
+  {
+    "check": "swift_wire_compile_current",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "check": "swift_wire_current",
+    "exit_code": 0,
+    "stdout": "Passed 11 Python/Swift wire fixtures plus malformed/oversize rejection\n",
+    "stderr": ""
+  },
+  {
+    "check": "swift_compile",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "check": "swift_contract",
+    "exit_code": 0,
+    "stdout": "Passed 11 wire fixtures, 15-second deadline, late recovery, pause retention and history round-trip\n",
+    "stderr": ""
+  },
+  {
+    "check": "swift_version",
+    "exit_code": 0,
+    "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx26.0\n",
+    "stderr": "swift-driver version: 1.168.6 "
+  },
+  {
+    "check": "xcode_version",
+    "exit_code": 0,
+    "stdout": "Xcode 27.1\nBuild version 27A9275\n",
+    "stderr": ""
+  }
+]

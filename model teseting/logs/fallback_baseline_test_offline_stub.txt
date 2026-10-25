@@ -1,0 +1,45 @@
+STUB plumbing check; not model accuracy or human false-positive evidence.
+Command: DETECTOR=stub ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/.venv/bin/python', '-c', "import random,runpy,sys;random.seed(20261022);sys.path.insert(0,'/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline');sys.argv=['/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/test_offline.py','/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/audio/human_controls/librispeech_test_clean_6930_40s.wav','--json-out','/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/results/fallback_baseline_offline_stub_wire.json'];runpy.run_path('/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/test_offline.py',run_name='__main__')"]
+
+device=stub  thresholds elevated=0.9999904632568359 high=0.9999998807907104
+t=  6.0s  p_last=0.127694  logit= -1.92  smoothed_logit= -1.92  level=listening  infer=20ms
+t=  7.0s  p_last=0.074173  logit= -2.52  smoothed_logit= -2.16  level=listening  infer=20ms
+t=  8.0s  p_last=0.293862  logit= -0.88  smoothed_logit= -1.65  level=listening  infer=20ms
+t=  9.0s  p_last=0.003305  logit= -5.71  smoothed_logit= -3.27  level=listening  infer=20ms
+t= 10.0s  p_last=0.257627  logit= -1.06  smoothed_logit= -2.39  level=listening  infer=20ms
+t= 11.0s  p_last=0.009783  logit= -4.62  smoothed_logit= -3.28  level=listening  infer=20ms
+t= 12.0s  p_last=0.002516  logit= -5.98  smoothed_logit= -4.36  level=listening  infer=20ms
+t= 13.0s  p_last=0.259801  logit= -1.05  smoothed_logit= -3.04  level=listening  infer=20ms
+t= 14.0s  p_last=0.005432  logit= -5.21  smoothed_logit= -3.90  level=listening  infer=20ms
+t= 15.0s  p_last=0.008107  logit= -4.81  smoothed_logit= -4.27  level=listening  infer=20ms
+t= 16.0s  p_last=0.015538  logit= -4.15  smoothed_logit= -4.22  level=listening  infer=20ms
+t= 17.0s  p_last=0.143356  logit= -1.79  smoothed_logit= -3.25  level=listening  infer=20ms
+t= 18.0s  p_last=0.113646  logit= -2.05  smoothed_logit= -2.77  level=listening  infer=20ms
+t= 19.0s  p_last=0.004677  logit= -5.36  smoothed_logit= -3.81  level=listening  infer=20ms
+t= 20.0s  p_last=0.007850  logit= -4.84  smoothed_logit= -4.22  level=listening  infer=20ms
+t= 21.0s  p_last=0.006070  logit= -5.10  smoothed_logit= -4.57  level=listening  infer=20ms
+t= 22.0s  p_last=0.004942  logit= -5.30  smoothed_logit= -4.87  level=listening  infer=20ms
+t= 23.0s  p_last=0.078815  logit= -2.46  smoothed_logit= -3.90  level=listening  infer=20ms
+t= 24.0s  p_last=0.002549  logit= -5.97  smoothed_logit= -4.73  level=listening  infer=20ms
+t= 25.0s  p_last=0.004915  logit= -5.31  smoothed_logit= -4.96  level=listening  infer=20ms
+t= 26.0s  p_last=0.005741  logit= -5.15  smoothed_logit= -5.04  level=listening  infer=20ms
+t= 27.0s  p_last=0.019574  logit= -3.91  smoothed_logit= -4.59  level=listening  infer=20ms
+t= 28.0s  p_last=0.003478  logit= -5.66  smoothed_logit= -5.02  level=listening  infer=20ms
+t= 29.0s  p_last=0.269399  logit= -1.00  smoothed_logit= -3.41  level=listening  infer=20ms
+t= 30.0s  p_last=0.006000  logit= -5.11  smoothed_logit= -4.09  level=listening  infer=20ms
+t= 31.0s  p_last=0.037131  logit= -3.25  smoothed_logit= -3.76  level=listening  infer=20ms
+t= 32.0s  p_last=0.375858  logit= -0.51  smoothed_logit= -2.46  level=listening  infer=20ms
+t= 33.0s  p_last=0.067699  logit= -2.62  smoothed_logit= -2.52  level=listening  infer=20ms
+t= 34.0s  p_last=0.051087  logit= -2.92  smoothed_logit= -2.68  level=listening  infer=20ms
+t= 35.0s  p_last=0.051265  logit= -2.92  smoothed_logit= -2.78  level=listening  infer=20ms
+t= 36.0s  p_last=0.004363  logit= -5.43  smoothed_logit= -3.84  level=listening  infer=20ms
+t= 37.0s  p_last=0.007147  logit= -4.93  smoothed_logit= -4.28  level=listening  infer=20ms
+t= 38.0s  p_last=0.090436  logit= -2.31  smoothed_logit= -3.49  level=listening  infer=20ms
+t= 39.0s  p_last=0.029268  logit= -3.50  smoothed_logit= -3.49  level=listening  infer=20ms
+t= 40.0s  p_last=0.004208  logit= -5.47  smoothed_logit= -4.28  level=listening  infer=20ms
+App wire messages saved to /Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/results/fallback_baseline_offline_stub_wire.json
+(for reference: elevated threshold logit = 11.56, high threshold logit = 15.94)
+
+inference ms: median 20, max 20  (must stay well under 1000 ms to keep up with once-per-second scoring)
+
+Exit code: 0

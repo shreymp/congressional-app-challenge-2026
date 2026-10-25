@@ -50,7 +50,7 @@ struct ProductionRecentsView: View {
             Label(callKind(record), systemImage: missed ? "phone.arrow.down.left" : record.direction == .incoming ? "phone.arrow.down.left" : "phone.arrow.up.right")
                 .font(.callout).foregroundStyle(missed ? Theme.textDestructive : Theme.textSecondary)
             // Only an answered incoming call is ever checked, so only it carries a voice result.
-            if record.direction == .incoming && record.outcome == .completed { VoiceBadge(voice: record.voice) }
+            if record.direction == .incoming && record.outcome == .completed { VoiceBadge(voice: record.deepfake?.voice ?? record.voice, title: record.deepfake?.historyTitle) }
         }
     }
 
@@ -290,10 +290,17 @@ struct ProductionPersonDetail: View {
 
     @ViewBuilder private func recordDetails(_ record: PhoneCallRecord) -> some View {
         let checked = record.direction == .incoming && record.outcome == .completed
-        VoiceStatusCard(voice: record.voice, heading: "Voice check",
+        VoiceStatusCard(voice: record.deepfake?.voice ?? record.voice, heading: "Recorded voice assessment",
                         message: checked ? (record.deepfake?.historyMessage ?? record.voice.explanation)
-                                         : "This call wasn’t checked. Only answered incoming calls are checked.") {
+                                         : "This call wasn’t checked. Only answered incoming calls are checked.",
+                        assessmentTitle: record.deepfake?.historyTitle,
+                        warning: record.deepfake?.hasCurrentWarning == true) {
             if let assessment = record.deepfake {
+                Text(assessment.scoreText).font(.callout).foregroundStyle(Theme.textSecondary)
+                ForEach(assessment.historicalWarnings ?? [], id: \.id) { event in
+                    Text("AI-like evidence: \(Int(event.start_sec))–\(Int(event.end_sec)) seconds in the analysis stream")
+                        .font(.callout).foregroundStyle(Theme.textSecondary)
+                }
                 Text("Last voice update \(assessment.updatedAt.formatted(date: .abbreviated, time: .shortened))")
                     .font(.callout).foregroundStyle(Theme.textSecondary)
             }

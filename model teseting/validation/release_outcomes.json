@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "unexecuted_external_validation",
+  "calls": [],
+  "checks": {},
+  "frozen_bundle": {},
+  "missing_inputs": [
+    "Independent consented phone-domain recordings",
+    "Training notebook and validation corpus with overlap audit",
+    "Actual deployment hardware and concurrency measurements",
+    "Physical iPhone and live phone-path timing"
+  ]
+}

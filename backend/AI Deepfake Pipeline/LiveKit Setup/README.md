@@ -14,24 +14,24 @@ Scammer dials grandma's normal cell number
      and dispatches the agent named "scam-guard"
   -> scam-guard rings grandma's open app (senior_ring.py); she answers by joining the same
      room from the app, so the call never leaves LiveKit (see "Ringing the senior's app")
-  -> scam-guard (this folder, running on the MacBook) subscribes to the caller's audio only
-  -> every ~1 s: last ~4 s of caller speech -> ../best.pt deepfake detector (MPS) -> risk engine
+  -> scam-guard plays the recording notice after pickup, before opening caller processing
+  -> checks every ~1 s: distinct contiguous 4 s eligible windows -> detector -> whole-call evidence
   -> same caller PCM, including silence -> local Vosk -> rolling transcript -> JEV HTTP connector
   -> deepfake level + fresh transcript probability -> existing fusion rule
   -> JSON update published to the room on topic "scam-guard.risk"
   -> the iPhone app displays the voice assessment; tools/watch_risk.py can inspect updates
 ```
 
-The agent never publishes audio. The phone caller can't hear or detect it.
+The agent publishes the fixed disclosure once, then stops publishing audio. Recording is disabled by default (`RECORD_CALLER_AUDIO=0`); explicit opt-in requires consent from everyone. See [evidence contract and rollout](docs/EVIDENCE_CONTRACT.md) for freshness, quality, current-evidence candidates, integrity checks and rollback.
 
 | File | What it does |
 |---|---|
 | `agent.py` | The LiveKit worker. Registers as `scam-guard`, starts the ring, finds the SIP caller, streams audio, scores, publishes. |
 | `detector_adapter.py` | The only file that knows about the model. Loads `../inference.py` + `../best.pt` on MPS. `DETECTOR=stub` gives fake scores. |
-| `audio_window.py` | Rolling 4 s buffer of caller *speech* (simple energy gate drops silence). |
+| `audio_window.py` | Contiguous 4 s audio; fixed or opt-in adaptive eligibility retains pauses. |
 | `scoring.py` | Shared live/file scoring session, fresh-speech checks, inference state and silence reset. |
 | `risk_protocol.py` | Versioned caller/room/stream envelope for the iPhone app. |
-| `risk.py` | Smoothing (in log-odds), levels `listening / elevated / high`, hysteresis. Transcript fusion stub. |
+| `risk.py` | Bounded cumulative whole-call heuristic and legacy EMA; separate transcript fusion. |
 | `transcript_pipeline.py` | Per-call local Vosk recognition and bounded, coalesced HTTP transcript scoring. |
 | `dispatch-rule.json` | Dashboard JSON for `cac-inbound` → per-caller `call-` rooms → `scam-guard`. |
 | `test_offline.py` | Runs the exact scoring path on a WAV file with no call. Use it to time the model. |
@@ -59,7 +59,7 @@ The agent never publishes audio. The phone caller can't hear or detect it.
 python test_offline.py "../melo_everyday_03_en-us_s1.1.wav"
 python test_offline.py "../ov2_shrey_everyday_03_en-us_s1.1_t0.3_wm1.wav" --phone
 ```
-Check the first line says `device=mps`, and the final `inference ms: median ...` is well under 1000. The first run downloads the XLS-R config from Hugging Face.
+Check the first line says `device=mps`, and the final `inference ms: median ...` is well under 1000. The official architecture config is pinned locally; startup verifies architecture, checkpoint and detector-config hashes before warmup.
 
 **Step 2: call plumbing with fake scores.**
 ```bash
@@ -68,7 +68,7 @@ DETECTOR=stub python agent.py dev
 - On a test phone, turn on *forward all calls* to `+1 267-509-1164` (carrier code varies; often `*72` Verizon, `**21*` AT&T/T-Mobile).
 - From a *different* phone, call the test phone.
 - In the app, inspect the incoming caller number. **Record whether it is the real caller or the forwarding phone.** That decides whether grandma's app can show caller ID.
-- In a second terminal: `python tools/watch_risk.py` and watch updates arrive once there has been ~3 s of talking.
+- In a second terminal: `python tools/watch_risk.py` and watch updates arrive after complete eligible four-second windows; a first verdict requires multiple distinct windows.
 - Note what the calling phone hears (ringing, silence, or a tone) and when its call timer starts. Expected: ringing, and the timer starts only when grandma answers in the app (see Known issues). With the app closed nobody answers, so it just keeps ringing.
 
 **Step 3: real model on a real call.**
@@ -157,12 +157,12 @@ new lobby token for the app.
 
 ## Known issues / open questions
 
-- **Thresholds are probably wrong for phone audio.** The config thresholds (0.99999 / 0.9999999) come from the training test split. Real LiveKit audio will shift the scores. Use Step 3 and `recordings/` to recalibrate, then set `THRESHOLD_ELEVATED` / `THRESHOLD_HIGH` in `.env.local`.
-- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. scam-guard never publishes audio, so grandma's microphone is the answer. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
+- **Thresholds are probably wrong for phone audio.** The config thresholds (0.99999 / 0.9999999) come from the training test split. Real LiveKit audio will shift the scores. Use consented independent development/calibration recordings and raw float64 logits to select settings, then freeze them before held-out evaluation. Do not tune thresholds on the reused demo clips.
+- **LiveKit answers the call only when someone publishes audio (to confirm on a live call).** An earlier version of this file guessed that LiveKit answers as soon as the call arrives. Per LiveKit's SIP docs and the open-source SIP service it does not: the caller hears ringing, the SIP participant waits in the room with `sip.callStatus=ringing`, and the call is answered once another participant publishes an audio track. The disclosure is gated until the SIP caller is active; grandma's microphone answers before the notice plays. Consequences: the agent gets no caller audio, so no scores, before she answers; and because all calls are forwarded, her carrier voicemail never triggers, so "no answer" is ours to handle (`no_answer_fallback()`, a stub today). Still to confirm on a live call: that a LiveKit-rented number behaves this way, and how long LiveKit lets it ring before giving up (3 minutes in the open-source default).
 - **A second ring is possible after an agent crash.** If LiveKit re-dispatches the agent into a call that is still ringing, the new job sends a new `callUUID`. Harmless if the app already joined the call room (no invite is sent then); if grandma had declined, her phone rings again. The same happens if the app is quit and reopened inside the ring window for a call it never joined: the app remembers handled `callUUID`s in memory only, so the repeated invite rings again. That second case is arguably right, since the phone caller is still ringing.
 - **An early decline is reported as a timeout.** The agent only learns of a decline once the app has been in the call room. Declining while the app is still joining, Do Not Disturb refusing the CallKit call, or a failed join all show up as `no_answer_fallback(reason="timeout")` at the end of the ring window, not as `"declined"` after 5 s. The app ignores the repeated invites for that call meanwhile. The obvious shortcut (treat "back in the lobby" as a decline) is wrong: the app also leaves and rejoins the lobby when it is backgrounded or loses its network.
 - **Transcript branch needs its local models and services running.** Set `VOSK_MODEL_PATH`, start the JEV model service and connector, then run the agent. Missing STT/model services produce a null transcript probability and an explicit state; deepfake scoring continues. The fusion rule is still experimental and has not been calibrated on real-call prefixes. See [INCOMING_CALL_SETUP.md](INCOMING_CALL_SETUP.md).
-- **Energy gate, not a real VAD.** Fine for testing. Swap for Silero VAD if quiet speech is skipped or noise is scored.
+- **Candidate eligibility remains experimental.** The default fixed gate misses quiet speech and passes DTMF and tonal music, which the model scores near logit 50 (strongly AI). The opt-in adaptive gate also passes them. `SPEECH_GATE=silero` uses a trained VAD that rejected every non-speech control in development checks; it still needs a real-model replay and live-call check before it becomes the default. A digital-silence guard (on by default) skips windows with more than 0.2 s of exact zeros. See [the contract doc](docs/EVIDENCE_CONTRACT.md).
 - `sip.callStatus` exists as a SIP attribute; we log it, and the ring skips participants whose status is `dialing` (outbound calls). The `ringing` to `active` change is not used.
 
 
@@ -170,7 +170,7 @@ new lobby token for the app.
 
 Deploy the updated agent together with the updated iPhone app. Topic: `scam-guard.risk`, reliable data. Every message includes `schema: 1`, `room`, `callerIdentity`, `streamID` (UUID per scoring session), positive increasing `sequence`, and `model` (`real` or `stub`). The app requires a LiveKit agent participant as sender. The SDK exposes this through [Participant.kind](https://docs.livekit.io/reference/client-sdk-swift/documentation/livekit/participant/); data and reconnect callbacks follow the pinned [RoomDelegate API](https://github.com/livekit/client-sdk-swift/blob/2.17.0/Sources/LiveKit/Protocols/RoomDelegate.swift).
 
-`type: status` carries `state: waiting | analyzing | unavailable`. `type: risk` carries `deepfake` with `level`, `updates`, `human_steps`, `p_last`, `p_smoothed`, `logit_last`, `logit_smoothed`. Existing diagnostic fields (`level`, `transcript`, `infer_ms`, `voiced_sec`, `t`) remain available to the watcher. The app derives its voice label from `deepfake`, never from the combined `level`. A heartbeat sends current state every two seconds; scores arrive after fresh caller speech, around once per second. Silence for six seconds resets the voiced window and risk accumulation. Inference longer than ten seconds reports unavailable without starting more work. A model-load or per-window failure leaves calling operational.
+`type: status` carries `state: waiting | analyzing | unavailable`. `type: risk` carries `deepfake` with `level`, `updates`, `human_steps`, `p_last`, `p_smoothed`, `logit_last`, `logit_smoothed`. Existing diagnostic fields (`level`, `transcript`, `infer_ms`, `voiced_sec`, `t`) remain available to the watcher. The app derives its voice label from `deepfake`, never from the combined `level`. A heartbeat sends status every two seconds; distinct eligible four-second windows add evidence. Silence for six seconds clears rolling audio but retains whole-call evidence and dated history. Additive evidence timestamps, freshness and quality do not refresh on heartbeat. Inference longer than ten seconds reports unavailable without starting more work. A model-load or per-window failure leaves calling operational.
 
 Offline checks from the repository root:
 

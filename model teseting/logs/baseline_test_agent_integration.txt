@@ -1,0 +1,15 @@
+Command: ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/.venv/bin/python', '-c', "import sys,unittest;sys.path.insert(0,'/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline');import test_agent_integration as m;r=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(m));sys.exit(not r.wasSuccessful())"]
+
+test_cancellation_stops_inflight_inference_from_publishing (test_agent_integration.AgentIntegrationTests.test_cancellation_stops_inflight_inference_from_publishing) ... ok
+test_failed_inference_does_not_fail_call_or_leak_stream (test_agent_integration.AgentIntegrationTests.test_failed_inference_does_not_fail_call_or_leak_stream) ... ok
+test_failed_model_load_reports_unavailable_and_can_be_cancelled (test_agent_integration.AgentIntegrationTests.test_failed_model_load_reports_unavailable_and_can_be_cancelled) ... ok
+test_scores_and_publishes_versioned_caller_evidence_then_closes (test_agent_integration.AgentIntegrationTests.test_scores_and_publishes_versioned_caller_evidence_then_closes) ... ok
+test_transcript_is_fused_into_versioned_risk_updates (test_agent_integration.AgentIntegrationTests.test_transcript_is_fused_into_versioned_risk_updates) ... ok
+test_transcription_continues_when_voice_model_is_missing (test_agent_integration.AgentIntegrationTests.test_transcription_continues_when_voice_model_is_missing) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.430s
+
+OK
+
+Result: 0

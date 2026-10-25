@@ -1,0 +1,351 @@
+{
+ "before": {
+  "val": [
+   {
+    "set": "val (before)",
+    "condition": "clean",
+    "eer": 0.12389024914969471,
+    "auc": 0.9552321948121133,
+    "real_median": 4.203125,
+    "fake_median": 24.625,
+    "real_p95": 18.381249999999994,
+    "fake_p05": 11.8125
+   },
+   {
+    "set": "val (before)",
+    "condition": "phone",
+    "eer": 0.18022681637503588,
+    "auc": 0.8992626418882924,
+    "real_median": 6.78125,
+    "fake_median": 17.75,
+    "real_p95": 14.940624999999997,
+    "fake_p05": 5.3484375
+   },
+   {
+    "set": "val (before)",
+    "condition": "noise20",
+    "eer": 0.17652132934475268,
+    "auc": 0.9013182933450806,
+    "real_median": 8.75,
+    "fake_median": 18.25,
+    "real_p95": 14.940624999999997,
+    "fake_p05": 7.3484375
+   },
+   {
+    "set": "val (before)",
+    "condition": "noise10",
+    "eer": 0.2745625537843708,
+    "auc": 0.7909033341187559,
+    "real_median": 8.1875,
+    "fake_median": 13.875,
+    "real_p95": 13.0,
+    "fake_p05": 0.7439453125000001
+   },
+   {
+    "set": "val (before)",
+    "condition": "phone_noise10",
+    "eer": 0.36572680613039377,
+    "auc": 0.6872292213047577,
+    "real_median": 8.4375,
+    "fake_median": 12.3125,
+    "real_p95": 15.4375,
+    "fake_p05": -1.7734375
+   },
+   {
+    "set": "val (before)",
+    "condition": "gap2s",
+    "eer": 0.23415384378969795,
+    "auc": 0.8559999026759005,
+    "real_median": 26.625,
+    "fake_median": 31.9375,
+    "real_p95": 31.75,
+    "fake_p05": 25.625
+   },
+   {
+    "set": "val (before)",
+    "condition": "music10",
+    "eer": 0.24849685489488996,
+    "auc": 0.8357221064008523,
+    "real_median": 17.5,
+    "fake_median": 23.5,
+    "real_p95": 23.5,
+    "fake_p05": 15.4375
+   },
+   {
+    "set": "val (before)",
+    "condition": "POOLED (one threshold)",
+    "eer": 0.29254212011403746,
+    "auc": 0.7587148229830389,
+    "real_median": 10.25,
+    "fake_median": 19.625,
+    "real_p95": 27.875,
+    "fake_p05": 4.625
+   }
+  ],
+  "nonspeech": {
+   "dtmf": {
+    "median": 57.5,
+    "max": 59.5
+   },
+   "music": {
+    "median": 35.0,
+    "max": 52.0
+   },
+   "white_noise": {
+    "median": 17.5625,
+    "max": 19.875
+   },
+   "recorded_noise": {
+    "median": 14.3125,
+    "max": 36.0
+   }
+  }
+ },
+ "after": {
+  "val": [
+   {
+    "set": "val (after)",
+    "condition": "clean",
+    "eer": 0.032562594762938976,
+    "auc": 0.9941118919804942,
+    "real_median": -4.875,
+    "fake_median": 10.9375,
+    "real_p95": 1.2124999999999986,
+    "fake_p05": 3.3039062500000003
+   },
+   {
+    "set": "val (after)",
+    "condition": "phone",
+    "eer": 0.09554050731467445,
+    "auc": 0.9680266002130886,
+    "real_median": -3.6796875,
+    "fake_median": 7.125,
+    "real_p95": 2.1726562499999993,
+    "fake_p05": -0.6869140625
+   },
+   {
+    "set": "val (after)",
+    "condition": "noise20",
+    "eer": 0.0887091238782117,
+    "auc": 0.9708676315412037,
+    "real_median": -2.6875,
+    "fake_median": 7.34375,
+    "real_p95": 2.6101562499999993,
+    "fake_p05": 0.23051757812500004
+   },
+   {
+    "set": "val (after)",
+    "condition": "noise10",
+    "eer": 0.15863623325001025,
+    "auc": 0.9188540471458427,
+    "real_median": -1.2109375,
+    "fake_median": 4.90625,
+    "real_p95": 2.5320312499999993,
+    "fake_p05": -1.272265625
+   },
+   {
+    "set": "val (after)",
+    "condition": "phone_noise10",
+    "eer": 0.21025258164979715,
+    "auc": 0.8793546131623161,
+    "real_median": -1.52734375,
+    "fake_median": 3.625,
+    "real_p95": 2.7976562499999993,
+    "fake_p05": -2.04453125
+   },
+   {
+    "set": "val (after)",
+    "condition": "gap2s",
+    "eer": 0.06016934393312299,
+    "auc": 0.984271080912183,
+    "real_median": -3.015625,
+    "fake_median": 8.875,
+    "real_p95": 2.890625,
+    "fake_p05": 1.985546875
+   },
+   {
+    "set": "val (after)",
+    "condition": "music10",
+    "eer": 0.1452907941646519,
+    "auc": 0.9318819663565956,
+    "real_median": 1.69921875,
+    "fake_median": 7.9375,
+    "real_p95": 6.220312499999999,
+    "fake_p05": 2.78359375
+   },
+   {
+    "set": "val (after)",
+    "condition": "POOLED (one threshold)",
+    "eer": 0.12764622763009234,
+    "auc": 0.9474361737892716,
+    "real_median": -2.21875,
+    "fake_median": 7.28125,
+    "real_p95": 3.921875,
+    "fake_p05": -0.51953125
+   }
+  ],
+  "test": [
+   {
+    "set": "test (after)",
+    "condition": "clean",
+    "eer": 0.0609389659313313,
+    "auc": 0.9874216817635971,
+    "real_median": -6.65625,
+    "fake_median": 9.5,
+    "real_p95": 1.5609374999999996,
+    "fake_p05": 0.4279296875000004
+   },
+   {
+    "set": "test (after)",
+    "condition": "phone",
+    "eer": 0.098836350077705,
+    "auc": 0.9663542365627757,
+    "real_median": -5.125,
+    "fake_median": 6.15625,
+    "real_p95": 1.5828124999999993,
+    "fake_p05": -2.15625
+   },
+   {
+    "set": "test (after)",
+    "condition": "noise20",
+    "eer": 0.09374171153226361,
+    "auc": 0.968016194637564,
+    "real_median": -4.28125,
+    "fake_median": 6.625,
+    "real_p95": 2.0874999999999986,
+    "fake_p05": -1.1234374999999996
+   },
+   {
+    "set": "test (after)",
+    "condition": "noise10",
+    "eer": 0.15197492910694754,
+    "auc": 0.9237260195805969,
+    "real_median": -2.109375,
+    "fake_median": 4.6875,
+    "real_p95": 2.756249999999998,
+    "fake_p05": -1.4921875
+   },
+   {
+    "set": "test (after)",
+    "condition": "phone_noise10",
+    "eer": 0.178634113351896,
+    "auc": 0.9078917911996758,
+    "real_median": -2.421875,
+    "fake_median": 3.296875,
+    "real_p95": 1.7624999999999993,
+    "fake_p05": -2.2765625
+   },
+   {
+    "set": "test (after)",
+    "condition": "gap2s",
+    "eer": 0.07598746455347377,
+    "auc": 0.9783157456167827,
+    "real_median": -4.5625,
+    "fake_median": 7.6875,
+    "real_p95": 2.1218749999999993,
+    "fake_p05": -0.21728515624999972
+   },
+   {
+    "set": "test (after)",
+    "condition": "music10",
+    "eer": 0.13452463349593888,
+    "auc": 0.9378985163218186,
+    "real_median": -0.17578125,
+    "fake_median": 7.375,
+    "real_p95": 5.8125,
+    "fake_p05": 1.8984375
+   },
+   {
+    "set": "test (after)",
+    "condition": "POOLED (one threshold)",
+    "eer": 0.12358612582609722,
+    "auc": 0.9495242960768486,
+    "real_median": -3.484375,
+    "fake_median": 6.34375,
+    "real_p95": 3.203125,
+    "fake_p05": -1.2578125
+   }
+  ],
+  "nonspeech": {
+   "dtmf": {
+    "median": -5.9375,
+    "max": -5.21875
+   },
+   "music": {
+    "median": -4.90625,
+    "max": -3.21875
+   },
+   "white_noise": {
+    "median": -3.234375,
+    "max": -2.984375
+   },
+   "recorded_noise": {
+    "median": -3.4921875,
+    "max": 0.85546875
+   }
+  }
+ },
+ "per_unseen_system_detection_phone_1pct": {
+  "tts_models_en_ljspeech_neural_hmm": 0.04666666666666667,
+  "LongCat-AudioDiT": 0.09333333333333334,
+  "facebook_mms-tts-eng": 0.15261044176706828,
+  "MegaTTS3": 0.24497991967871485,
+  "Llasa-8B": 0.26104417670682734,
+  "tts_models_en_ljspeech_vits--neon": 0.2653061224489796,
+  "Qwen2.5-Omni": 0.312,
+  "Llasa-1B": 0.4066666666666667,
+  "Spark-TTS-0.5B": 0.4817813765182186,
+  "parler_tts_large_v1": 0.488,
+  "Llasa-1B-Multilingual": 0.5301204819277109,
+  "MisoTTS": 0.6174496644295302,
+  "OpenVoiceV2": 0.6260162601626016,
+  "Inworld-TTS-2": 0.7333333333333333,
+  "Resemble.ai (April 12th, 2025)": 0.7670682730923695,
+  "NeuTTS-Nano": 0.8095238095238095,
+  "tts_models_en_ljspeech_tacotron2-DCA": 0.8133333333333334,
+  "tts_models_en_ljspeech_glow-tts": 0.8389261744966443,
+  "tts_models_multilingual_multi-dataset_xtts_v1.1": 0.8657718120805369,
+  "OpenAI TTS-1 HD": 0.9328859060402684,
+  "VoXtream2": 0.959731543624161
+ },
+ "own_data": [],
+ "history": [
+  {
+   "epoch": 1,
+   "loss": 0.2362962728779246,
+   "pooled_val_eer": 0.13207346432815636,
+   "worst_condition_eer": 0.18249190673277874,
+   "eer_clean": 0.04568188337499487,
+   "eer_phone": 0.11799189648813671,
+   "eer_noise10": 0.18249190673277874,
+   "eer_gap2s": 0.07738367208949719,
+   "eer_music10": 0.16610227226160718,
+   "minutes": 12.746398981412252
+  },
+  {
+   "epoch": 2,
+   "loss": 0.21356771580200815,
+   "pooled_val_eer": 0.11860985329672581,
+   "worst_condition_eer": 0.1658210568372741,
+   "eer_clean": 0.033695139941810406,
+   "eer_phone": 0.09327541695693153,
+   "eer_noise10": 0.1658210568372741,
+   "eer_gap2s": 0.06219880752366512,
+   "eer_music10": 0.1452907941646519,
+   "minutes": 12.745231676101685
+  },
+  {
+   "epoch": 3,
+   "loss": 0.20913756367980244,
+   "pooled_val_eer": 0.1144456624185551,
+   "worst_condition_eer": 0.15863623325001025,
+   "eer_clean": 0.032562594762938976,
+   "eer_phone": 0.09554050731467445,
+   "eer_noise10": 0.15863623325001025,
+   "eer_gap2s": 0.06016934393312299,
+   "eer_music10": 0.1452907941646519,
+   "minutes": 12.774772890408833
+  }
+ ],
+ "init_checkpoint": "/content/drive/MyDrive/CAC_deepfake_detector/ckpt_en/best.pt"
+}

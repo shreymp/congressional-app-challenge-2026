@@ -1,9 +1,15 @@
-"""Version 1 of the voice assessment wire contract consumed by the iPhone app."""
+"""Schema-1 envelope; v1 legacy evidence plus additive, explicitly targeted v2.
+
+A heartbeat increments sequence but never changes evidence timestamps. See
+`docs/EVIDENCE_CONTRACT.md` for migration and score semantics.
+"""
 from __future__ import annotations
 
 import uuid
 
 RISK_TOPIC = "scam-guard.risk"
+EVIDENCE_VERSION = "call-evidence-v2"
+SUPPORTED_SCORING_METHODS = ("call-evidence-v1", "call-evidence-v2")
 
 
 class RiskPublisher:

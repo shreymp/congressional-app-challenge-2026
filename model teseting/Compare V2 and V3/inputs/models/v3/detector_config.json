@@ -1,0 +1,136 @@
+{
+  "base_model": "facebook/wav2vec2-xls-r-300m",
+  "keep_layers": 12,
+  "sample_rate": 16000,
+  "window_sec": 4.0,
+  "threshold_eer": 0.8840392817460332,
+  "threshold_1pct_fpr": 0.9975273768433653,
+  "logit_threshold_eer": 2.03125,
+  "logit_threshold_1pct_fpr": 6.000000000000001,
+  "threshold_selection": "validation windows pooled over all robustness conditions, raw float64 logits",
+  "val_eer": 0.12764622763009234,
+  "val_eer_by_condition": {
+    "clean": 0.032562594762938976,
+    "phone": 0.09554050731467445,
+    "noise20": 0.0887091238782117,
+    "noise10": 0.15863623325001025,
+    "phone_noise10": 0.21025258164979715,
+    "gap2s": 0.06016934393312299,
+    "music10": 0.1452907941646519,
+    "POOLED (one threshold)": 0.12764622763009234
+  },
+  "test": {
+    "clean": {
+      "eer": 0.0609389659313313,
+      "auc": 0.9874216817635971
+    },
+    "phone": {
+      "eer": 0.098836350077705,
+      "auc": 0.9663542365627757
+    },
+    "noise20": {
+      "eer": 0.09374171153226361,
+      "auc": 0.968016194637564
+    },
+    "noise10": {
+      "eer": 0.15197492910694754,
+      "auc": 0.9237260195805969
+    },
+    "phone_noise10": {
+      "eer": 0.178634113351896,
+      "auc": 0.9078917911996758
+    },
+    "gap2s": {
+      "eer": 0.07598746455347377,
+      "auc": 0.9783157456167827
+    },
+    "music10": {
+      "eer": 0.13452463349593888,
+      "auc": 0.9378985163218186
+    },
+    "POOLED (one threshold)": {
+      "eer": 0.12358612582609722,
+      "auc": 0.9495242960768486
+    }
+  },
+  "unseen_test_systems": [
+    "Inworld-TTS-2",
+    "Llasa-1B",
+    "Llasa-1B-Multilingual",
+    "Llasa-8B",
+    "LongCat-AudioDiT",
+    "MegaTTS3",
+    "MisoTTS",
+    "NeuTTS-Nano",
+    "OpenAI TTS-1 HD",
+    "OpenVoiceV2",
+    "Qwen2.5-Omni",
+    "Resemble.ai (April 12th, 2025)",
+    "Spark-TTS-0.5B",
+    "VoXtream2",
+    "facebook_mms-tts-eng",
+    "parler_tts_large_v1",
+    "tts_models_en_ljspeech_glow-tts",
+    "tts_models_en_ljspeech_neural_hmm",
+    "tts_models_en_ljspeech_tacotron2-DCA",
+    "tts_models_en_ljspeech_vits--neon",
+    "tts_models_multilingual_multi-dataset_xtts_v1.1"
+  ],
+  "score_meaning": "sigmoid(logit) = probability the audio is AI-generated (uncalibrated)",
+  "trained": "2026-10-23",
+  "posttrain": {
+    "version": "v3",
+    "init_checkpoint_sha256": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0",
+    "kept_epoch": 3,
+    "real_corpora": [
+      "LibriSpeech",
+      "M-AILABS"
+    ],
+    "librispeech_subsets": [
+      "dev-clean",
+      "dev-other",
+      "test-other"
+    ],
+    "excluded_speakers": [
+      "1320",
+      "6930"
+    ],
+    "augmentation": {
+      "TRAIN_SEC": 4.0,
+      "MAX_STORE_SEC": 8.0,
+      "MIN_SEC": 1.0,
+      "WARMUP_FRAC": 0.05,
+      "PHONE_AUG_P": 0.7,
+      "OPUS_P": 0.12,
+      "MP3_P": 0.1,
+      "NOISE_P": 0.6,
+      "NOISE_SNR_DB": [
+        0.0,
+        30.0
+      ],
+      "RECORDED_NOISE_FRAC": 0.4,
+      "OVERLAY_P": 0.25,
+      "OVERLAY_SNR_DB": [
+        5.0,
+        25.0
+      ],
+      "GAP_P": 0.35,
+      "GAP_SEC": [
+        0.1,
+        2.5
+      ],
+      "GAP_DIGITAL_FRAC": 0.5,
+      "NOISE_FLOOR_P": 0.35,
+      "NOISE_FLOOR_DBFS": [
+        -75.0,
+        -50.0
+      ],
+      "NOISE_GATE_P": 0.15,
+      "CLIP_P": 0.08,
+      "NONSPEECH_AS_REAL_P": 0.03,
+      "LS_VAL_FRAC": 0.15,
+      "LS_TEST_FRAC": 0.15
+    },
+    "caveat": "Benchmark LibriSpeech controls are now in-corpus (other speakers of the same corpus were trained on); use own recordings for an out-of-corpus check."
+  }
+}

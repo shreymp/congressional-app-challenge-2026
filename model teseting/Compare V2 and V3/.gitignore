@@ -1,0 +1,5 @@
+inputs/windows.npy
+inputs/audio/
+inputs/models/**/*.pt
+logs/matplotlib/
+__pycache__/

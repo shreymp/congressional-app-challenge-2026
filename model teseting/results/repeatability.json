@@ -1,0 +1,16 @@
+{
+  "baseline": {
+    "same_window_times_and_exact_model_outputs": true,
+    "window_count": 33,
+    "first_run_first_ai": 8.020091,
+    "final_run_first_ai": 8.019455,
+    "max_absolute_logit_difference": 0.0
+  },
+  "current": {
+    "same_window_times_and_exact_model_outputs": true,
+    "window_count": 9,
+    "first_run_first_ai": 8.019773,
+    "final_run_first_ai": 8.020278,
+    "max_absolute_logit_difference": 0.0
+  }
+}

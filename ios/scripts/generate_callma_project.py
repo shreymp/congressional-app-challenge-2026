@@ -71,7 +71,7 @@ for name, folder, product_type, extension in [
     resources = []
     resource_paths = (["Callma/Assets.xcassets", "Callma/PrivacyInfo.xcprivacy"] if name == "Callma" else [])
     if name == "CallmaTests":
-        resource_paths.append("CallmaTests/Fixtures/deepfake-wire.json")
+        resource_paths.extend(["CallmaTests/Fixtures/deepfake-wire.json", "CallmaTests/Fixtures/deepfake-presentation.json"])
     for path in resource_paths:
         file_id = ref(path, "folder.assetcatalog" if path.endswith("xcassets") else "text.json" if path.endswith(".json") else "text.xml")
         files.append(file_id)

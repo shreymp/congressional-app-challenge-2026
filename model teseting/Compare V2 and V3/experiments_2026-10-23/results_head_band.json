@@ -1,0 +1,167 @@
+[
+ {
+  "k": 0,
+  "C": 0.01,
+  "all": {
+   "ai": 0.784,
+   "fp": 0.066,
+   "bal": 0.859
+  },
+  "no_noise": {
+   "ai": 0.938,
+   "fp": 0.007,
+   "bal": 0.965
+  },
+  "noise": {
+   "ai": 0.429,
+   "fp": 0.2,
+   "bal": 0.614
+  },
+  "calls": {
+   "ai->ai": 29,
+   "ai->uncertain": 1,
+   "ai_warned": 30,
+   "human->ai": 1,
+   "human->human": 19,
+   "human_warned": 1
+  }
+ },
+ {
+  "k": 0,
+  "C": 0.1,
+  "all": {
+   "ai": 0.784,
+   "fp": 0.066,
+   "bal": 0.859
+  },
+  "no_noise": {
+   "ai": 0.938,
+   "fp": 0.007,
+   "bal": 0.965
+  },
+  "noise": {
+   "ai": 0.429,
+   "fp": 0.2,
+   "bal": 0.614
+  },
+  "calls": {
+   "ai->ai": 29,
+   "ai->uncertain": 1,
+   "ai_warned": 30,
+   "human->ai": 1,
+   "human->human": 19,
+   "human_warned": 1
+  }
+ },
+ {
+  "k": 4,
+  "C": 0.01,
+  "all": {
+   "ai": 0.795,
+   "fp": 0.092,
+   "bal": 0.852
+  },
+  "no_noise": {
+   "ai": 0.959,
+   "fp": 0.0,
+   "bal": 0.979
+  },
+  "noise": {
+   "ai": 0.417,
+   "fp": 0.3,
+   "bal": 0.558
+  },
+  "calls": {
+   "ai->ai": 29,
+   "ai->uncertain": 1,
+   "ai_warned": 30,
+   "human->ai": 1,
+   "human->human": 18,
+   "human->uncertain": 1,
+   "human_warned": 2
+  }
+ },
+ {
+  "k": 4,
+  "C": 0.1,
+  "all": {
+   "ai": 0.799,
+   "fp": 0.097,
+   "bal": 0.851
+  },
+  "no_noise": {
+   "ai": 0.959,
+   "fp": 0.015,
+   "bal": 0.972
+  },
+  "noise": {
+   "ai": 0.429,
+   "fp": 0.283,
+   "bal": 0.573
+  },
+  "calls": {
+   "ai->ai": 29,
+   "ai->uncertain": 1,
+   "ai_warned": 30,
+   "human->ai": 1,
+   "human->human": 18,
+   "human->uncertain": 1,
+   "human_warned": 2
+  }
+ },
+ {
+  "k": 8,
+  "C": 0.01,
+  "all": {
+   "ai": 0.942,
+   "fp": 0.276,
+   "bal": 0.833
+  },
+  "no_noise": {
+   "ai": 1.0,
+   "fp": 0.206,
+   "bal": 0.897
+  },
+  "noise": {
+   "ai": 0.81,
+   "fp": 0.433,
+   "bal": 0.688
+  },
+  "calls": {
+   "ai->ai": 29,
+   "ai->uncertain": 1,
+   "ai_warned": 30,
+   "human->ai": 2,
+   "human->human": 17,
+   "human->uncertain": 1,
+   "human_warned": 3
+  }
+ },
+ {
+  "k": 8,
+  "C": 0.1,
+  "all": {
+   "ai": 0.975,
+   "fp": 0.347,
+   "bal": 0.814
+  },
+  "no_noise": {
+   "ai": 1.0,
+   "fp": 0.301,
+   "bal": 0.849
+  },
+  "noise": {
+   "ai": 0.917,
+   "fp": 0.45,
+   "bal": 0.733
+  },
+  "calls": {
+   "ai->ai": 30,
+   "ai_warned": 30,
+   "human->ai": 2,
+   "human->human": 17,
+   "human->uncertain": 1,
+   "human_warned": 3
+  }
+ }
+]

@@ -93,6 +93,31 @@ SENIOR_HUNG_UP = "senior_hung_up"
 CRASHED = "error"
 
 
+def senior_has_microphone(room: Any, *, identity: str = SENIOR_IDENTITY) -> bool:
+    """Only the app's microphone publication proves pickup, even when SIP is active."""
+    senior = room.remote_participants.get(identity)
+    return senior is not None and any(
+        pub.source == rtc.TrackSource.SOURCE_MICROPHONE
+        for pub in senior.track_publications.values())
+
+
+async def wait_for_answer(room: Any, caller_identity: str, *,
+                          senior_identity: str = SENIOR_IDENTITY,
+                          poll_every: float = POLL_EVERY_SEC) -> bool:
+    """Wait for Callma Accept, or return False when the caller/room goes away.
+
+    SIP can become active before the app answers. Publishing the notice at that point
+    would answer the telephone itself. A silent app join, the caller's microphone and
+    other app tracks therefore never release this gate. The playback timeout starts
+    only after this wait; an unanswered ring can last longer than that timeout.
+    """
+    while room.isconnected() and caller_identity in room.remote_participants:
+        if senior_has_microphone(room, identity=senior_identity):
+            return True
+        await asyncio.sleep(poll_every)
+    return False
+
+
 def mint_call_token(room_name: str, *, identity: str = SENIOR_IDENTITY,
                     ttl_sec: float = CALL_TOKEN_TTL_SEC,
                     api_key: str | None = None, api_secret: str | None = None) -> str:
@@ -275,8 +300,7 @@ class SeniorRing:
                     log.info("senior is back in %s", name)
                 left_at = None
                 # Only the senior's own microphone counts. The caller publishes while ringing too.
-                if not self.answered and any(pub.source == rtc.TrackSource.SOURCE_MICROPHONE
-                                             for pub in senior.track_publications.values()):
+                if not self.answered and senior_has_microphone(room, identity=self._senior_identity):
                     self.answered = True
                     log.info("senior answered %s after %.1fs (microphone published)", name, now - start)
             elif self.joined and left_at is None:
