@@ -21,7 +21,7 @@ ENV PYTHONUNBUFFERED=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
     TRANSCRIPT_SCORE_TIMEOUT_SEC=25 TRANSCRIPT_MAX_AGE_SEC=35 TRANSCRIPT_SCORE_EVERY_SEC=5 \
     JEV_MODEL_URL=http://127.0.0.1:8000/predict JEV_TIMEOUT_MS=20000 \
     JEV_MODEL_DIR=/app/models/JevCallV2 DETECTOR_WEIGHTS_DIR=/app/models/deepfake \
-    HOST=127.0.0.1 PORT=3000 RECORD_CALLER_AUDIO=0 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2
+    HOST=127.0.0.1 PORT=3000 RECORD_CALLER_AUDIO=1 RECORD_DIR=/tmp/cac-recordings OMP_NUM_THREADS=2 MKL_NUM_THREADS=2
 WORKDIR /app
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN apt-get update && apt-get install -y --no-install-recommends libsndfile1 libgomp1 libstdc++6 libatomic1 ca-certificates \
