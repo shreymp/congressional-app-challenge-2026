@@ -1,0 +1,20 @@
+STUB plumbing check; not model accuracy or human false-positive evidence.
+Command: DETECTOR=stub ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/.venv/bin/python', '-c', "import random,runpy,sys;random.seed(20261022);sys.path.insert(0,'/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current');sys.argv=['/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_offline.py','/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/audio/human_controls/librispeech_test_clean_6930_40s.wav','--json-out','/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/results/fallback_current_offline_stub_wire.json'];runpy.run_path('/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_offline.py',run_name='__main__')"]
+
+device=stub  thresholds elevated=0.9999904632568359 high=0.9999998807907104
+t=  4.0s  p_last=0.127694  logit= -1.92  smoothed_logit= -0.41  level=listening  infer=20ms
+t=  8.0s  p_last=0.074173  logit= -2.52  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 12.0s  p_last=0.293862  logit= -0.88  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 16.0s  p_last=0.003305  logit= -5.71  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 20.0s  p_last=0.257627  logit= -1.06  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 24.0s  p_last=0.009783  logit= -4.62  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 28.0s  p_last=0.002516  logit= -5.98  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 32.0s  p_last=0.259801  logit= -1.05  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 36.0s  p_last=0.005432  logit= -5.21  smoothed_logit= -0.41  level=listening  infer=20ms
+t= 40.0s  p_last=0.008107  logit= -4.81  smoothed_logit= -0.41  level=listening  infer=20ms
+App wire messages saved to /Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/results/fallback_current_offline_stub_wire.json
+(for reference: elevated threshold logit = 11.56, high threshold logit = 15.94)
+
+inference ms: median 20, max 20  (must stay well under 1000 ms to keep up with once-per-second scoring)
+
+Exit code: 0

@@ -1,0 +1,5 @@
+Command: ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/cache/check_deepfake_contract', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/CallshieldTests/Fixtures/deepfake-wire.json']
+
+Passed 11 wire fixtures, 15-second deadline, late recovery, pause retention and history round-trip
+
+Exit code: 0

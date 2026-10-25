@@ -24,6 +24,35 @@ def _sigmoid(z: float) -> float:
     return 1 / (1 + math.exp(-z)) if z >= 0 else math.exp(z) / (1 + math.exp(z))
 
 
+def load_calibration(checkpoint_sha256):
+    """Optional Platt calibration, bound to one checkpoint.
+
+    Looks for CALIBRATION_PATH, else calibration.json beside the weights. Written by
+    `model teseting/benchmark/calibrate.py` or the post-training notebook. A file for a
+    different checkpoint stops startup instead of silently mis-scoring.
+    CALIBRATION=off ignores any file.
+    """
+    if os.environ.get("CALIBRATION", "on") == "off":
+        return None
+    path = os.environ.get("CALIBRATION_PATH", os.path.join(WEIGHTS_DIR, "calibration.json"))
+    if not os.path.exists(path):
+        return None
+    with open(path) as source:
+        data = json.load(source)
+    if data.get("schema") == "detector-calibration-v1":          # model teseting/benchmark/calibrate.py
+        a, b, release = data["platt"]["a"], data["platt"]["b"], data.get("status") == "release"
+    elif data.get("schema_version") == 1 and data.get("method") == "float64_call_weighted_platt":
+        # model teseting/validation/calibrate.py fit: a candidate until frozen held-out validation passes.
+        a, b, release = data["a"], data["b"], False
+    else:
+        raise ValueError("Unknown calibration schema")
+    if not checkpoint_sha256 or data.get("checkpoint_sha256") != checkpoint_sha256:
+        raise ValueError("calibration.json was fitted for a different checkpoint")
+    if not release and os.environ.get("ALLOW_DEV_CALIBRATION") != "1":
+        raise ValueError("calibration.json is not a release artifact; set ALLOW_DEV_CALIBRATION=1 to use it")
+    return {"a": float(a), "b": float(b), "path": path, "status": data.get("status")}
+
+
 def pick_device() -> str:
     forced = os.environ.get("DETECTOR_DEVICE")
     if forced:
@@ -55,12 +84,18 @@ class RealDetector:
         if WEIGHTS_DIR not in sys.path:
             sys.path.insert(0, WEIGHTS_DIR)
         from inference import Detector          # the team's existing inference.py
+        t_start = time.perf_counter()
         self.device = pick_device()
         self._det = Detector(WEIGHTS_DIR, device=self.device)
         self.meta = self._det.meta
         # Warm-up: the first call on MPS compiles kernels and is much slower than later ones.
-        self._det.score(np.zeros(int(self.meta["window_sec"] * self.meta["sample_rate"]), np.float32),
-                        self.meta["sample_rate"])
+        warmup = self._det.score(np.zeros(int(self.meta["window_sec"] * self.meta["sample_rate"]), np.float32),
+                                 self.meta["sample_rate"])
+        if not np.isfinite(warmup["mean"]):
+            raise ValueError("Detector warmup returned nonfinite evidence")
+        self.calibration = load_calibration(self._det.integrity["sha256"]["checkpoint"])
+        self.diagnostics = {"ready": True, "device": self.device, "warmup_sec": round(time.perf_counter() - t_start, 3),
+                            "integrity": self._det.integrity, "calibration": self.calibration}
 
     def score_window(self, audio: np.ndarray) -> dict:
         """Score the most recent window. Same preprocessing as inference.py's Detector.score,
@@ -96,6 +131,11 @@ class RemoteDetector:
             raise RuntimeError("Real detector service is not ready")
         self.meta = health["meta"]
         self.device = health["device"]
+        integrity = health.get("integrity") or {}
+        self.calibration = load_calibration(integrity.get("sha256", {}).get("checkpoint"))
+        self.diagnostics = {"ready": True, "device": self.device, "remote_health": True,
+                            "integrity": health.get("integrity"), "integrity_verified": bool(health.get("integrity")),
+                            "calibration": self.calibration}
 
     def score_window(self, audio):
         import urllib.request
@@ -119,9 +159,24 @@ def load():
 
 
 def thresholds(det) -> tuple[float, float]:
-    """(elevated, high). Env vars override the config so they can be recalibrated on phone audio."""
-    elevated = float(os.environ.get("THRESHOLD_ELEVATED", det.meta["threshold_eer"]))
-    high = float(os.environ.get("THRESHOLD_HIGH", det.meta["threshold_1pct_fpr"]))
+    """(elevated, high) as probabilities.
+
+    Prefers logit-space thresholds (`logit_threshold_eer`, `logit_threshold_1pct_fpr` in
+    detector_config.json, or THRESHOLD_ELEVATED_LOGIT / THRESHOLD_HIGH_LOGIT), converted in
+    float64. The original probability thresholds were computed on saturated float32
+    sigmoids: 0.9999998807907104 is 1 - 2*2^-24, so the true 1%-FPR logit is unknown.
+    The engines clamp logits at about +/-27.6 (eps 1e-12), so keep logit thresholds below that.
+    """
+    meta = det.meta
+    low_z = os.environ.get("THRESHOLD_ELEVATED_LOGIT", meta.get("logit_threshold_eer"))
+    high_z = os.environ.get("THRESHOLD_HIGH_LOGIT", meta.get("logit_threshold_1pct_fpr"))
+    if low_z is not None and high_z is not None:
+        low_z, high_z = float(low_z), float(high_z)
+        if not (low_z <= high_z < 27.6):
+            raise ValueError("Logit thresholds must satisfy elevated <= high < 27.6")
+        return _sigmoid(low_z), _sigmoid(high_z)
+    elevated = float(os.environ.get("THRESHOLD_ELEVATED", meta["threshold_eer"]))
+    high = float(os.environ.get("THRESHOLD_HIGH", meta["threshold_1pct_fpr"]))
     return elevated, high
 
 

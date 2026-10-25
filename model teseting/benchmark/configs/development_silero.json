@@ -1,0 +1,20 @@
+{
+  "schema": "trent-benchmark-v1",
+  "seed": 20261022,
+  "frame_samples": 320,
+  "sample_rate": 16000,
+  "score_interval_sec": 1.0,
+  "expected_checkpoint_sha256": "ae78eb6ed8e343dedd72351d942a27718eced82f355a90ef7583334a203beec0",
+  "windowing": {"baseline": "drop fixed-RMS rejected frames; partial input repeats", "current": "contiguous four seconds; distinct windows"},
+  "eligibility": {"baseline_rms": 0.01, "current_rms": 0.01, "candidate": "silero VAD (livekit-plugins-silero 1.8.8) plus 0.2 s digital-silence guard; rows are still labeled candidate_quiet"},
+  "candidate_gate": "silero",
+  "candidate_digital_silence_max_sec": 0.2,
+  "aggregation": {"reference": "call-evidence-v1", "candidate_horizon_sec": 16.0, "candidates": ["mean", "decay"], "entry_steps": 2, "recovery_steps": 2, "min_segments": 2, "min_usable_sec": 3.0},
+  "display": {"policy": "qualified_recent_warning", "initial_deadline_sec": 15.0},
+  "extended_controls": true,
+  "non_speech_duration_sec": 20,
+  "non_speech_rms_levels": [0.003, 0.03],
+  "candidate_overlap_hops_sec": [1.0, 2.0],
+  "independent_heldout": "not supplied; not evaluated",
+  "live_call": "not executed by this offline benchmark"
+}

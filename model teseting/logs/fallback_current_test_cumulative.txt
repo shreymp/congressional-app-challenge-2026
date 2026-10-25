@@ -1,0 +1,17 @@
+Command: ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/.venv/bin/python', '-c', "import pathlib,sys,unittest;sys.path.insert(0,'/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current');import test_cumulative as m;r=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(m));sys.exit(not r.wasSuccessful())"]
+
+test_audio_preserves_pauses_and_rejects_clipping (test_cumulative.CumulativeTests.test_audio_preserves_pauses_and_rejects_clipping) ... ok
+test_consistent_speech_gets_early_verdict_with_score (test_cumulative.CumulativeTests.test_consistent_speech_gets_early_verdict_with_score) ... ok
+test_duplicate_and_retired_inference_cannot_count_twice (test_cumulative.CumulativeTests.test_duplicate_and_retired_inference_cannot_count_twice) ... ok
+test_extreme_model_outliers_have_bounded_influence (test_cumulative.CumulativeTests.test_extreme_model_outliers_have_bounded_influence) ... ok
+test_mixed_evidence_is_inconclusive_and_can_recover (test_cumulative.CumulativeTests.test_mixed_evidence_is_inconclusive_and_can_recover) ... ok
+test_one_opposing_segment_cannot_erase_established_evidence (test_cumulative.CumulativeTests.test_one_opposing_segment_cannot_erase_established_evidence) ... ok
+test_quality_weight_changes_influence_without_inventing_confidence (test_cumulative.CumulativeTests.test_quality_weight_changes_influence_without_inventing_confidence) ... ok
+test_recent_switch_is_not_hidden_by_long_human_introduction (test_cumulative.CumulativeTests.test_recent_switch_is_not_hidden_by_long_human_introduction) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
+
+Exit code: 0

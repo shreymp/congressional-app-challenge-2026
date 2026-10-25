@@ -1,0 +1,279 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Action completed."
+    }
+  ],
+  "structuredContent": {
+    "repository_full_name": "shreymp/congressional-app-challenge-2026",
+    "base": "dca989c3126be4778638a002d3355a463f8789eb",
+    "head": "ec2f4dd80de433f176b1d9f90a20ca35d60707aa",
+    "status": "ahead",
+    "ahead_by": 6,
+    "behind_by": 0,
+    "total_commits": 6,
+    "too_large": null,
+    "base_commit": {
+      "sha": "dca989c3126be4778638a002d3355a463f8789eb",
+      "url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/commits/dca989c3126be4778638a002d3355a463f8789eb",
+      "html_url": "https://github.com/shreymp/congressional-app-challenge-2026/commit/dca989c3126be4778638a002d3355a463f8789eb"
+    },
+    "merge_base_commit": {
+      "sha": "dca989c3126be4778638a002d3355a463f8789eb",
+      "url": "https://api.github.com/repos/shreymp/congressional-app-challenge-2026/commits/dca989c3126be4778638a002d3355a463f8789eb",
+      "html_url": "https://github.com/shreymp/congressional-app-challenge-2026/commit/dca989c3126be4778638a002d3355a463f8789eb"
+    },
+    "files": [
+      {
+        "filename": ".github/workflows/call-pipeline.yml",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 3,
+        "changes": 5,
+        "previous_filename": null
+      },
+      {
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 0,
+        "changes": 24,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/README.md",
+        "status": "modified",
+        "additions": 28,
+        "deletions": 7,
+        "changes": 35,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/agent.py",
+        "status": "modified",
+        "additions": 26,
+        "deletions": 5,
+        "changes": 31,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+        "status": "modified",
+        "additions": 29,
+        "deletions": 30,
+        "changes": 59,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/recording_notice.py",
+        "status": "added",
+        "additions": 70,
+        "deletions": 0,
+        "changes": 70,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+        "status": "modified",
+        "additions": 68,
+        "deletions": 0,
+        "changes": 68,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 12,
+        "changes": 24,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/test_agent_integration.py",
+        "status": "modified",
+        "additions": 81,
+        "deletions": 5,
+        "changes": 86,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/test_cumulative.py",
+        "status": "added",
+        "additions": 105,
+        "deletions": 0,
+        "changes": 105,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/test_integration.py",
+        "status": "modified",
+        "additions": 46,
+        "deletions": 33,
+        "changes": 79,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/test_offline.py",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "backend/AI Deepfake Pipeline/LiveKit Setup/test_recording_notice.py",
+        "status": "added",
+        "additions": 119,
+        "deletions": 0,
+        "changes": 119,
+        "previous_filename": null
+      },
+      {
+        "filename": "deploy/livekit/Dockerfile",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "previous_filename": null
+      },
+      {
+        "filename": "deploy/livekit/README.md",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0,
+        "changes": 9,
+        "previous_filename": null
+      },
+      {
+        "filename": "deploy/livekit/cloud_agent.py",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "deploy/livekit/generate_recording_notice.py",
+        "status": "added",
+        "additions": 22,
+        "deletions": 0,
+        "changes": 22,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/CUMULATIVE_VOICE_ANALYSIS.md",
+        "status": "added",
+        "additions": 159,
+        "deletions": 0,
+        "changes": 159,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/CALLSHIELD.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/DeepfakeAssessment.swift",
+        "status": "modified",
+        "additions": 44,
+        "deletions": 2,
+        "changes": 46,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/LiveKitCallingBackend.swift",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 3,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/PhoneCallCoordinator.swift",
+        "status": "modified",
+        "additions": 16,
+        "deletions": 3,
+        "changes": 19,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/PhoneSessionState.swift",
+        "status": "modified",
+        "additions": 23,
+        "deletions": 2,
+        "changes": 25,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/ProductionCallView.swift",
+        "status": "modified",
+        "additions": 20,
+        "deletions": 6,
+        "changes": 26,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/Callshield/Production/ProductionStore.swift",
+        "status": "modified",
+        "additions": 5,
+        "deletions": 3,
+        "changes": 8,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/CallshieldTests/DeepfakeIntegrationTests.swift",
+        "status": "modified",
+        "additions": 80,
+        "deletions": 1,
+        "changes": 81,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/CallshieldTests/Fixtures/deepfake-wire.json",
+        "status": "modified",
+        "additions": 84,
+        "deletions": 0,
+        "changes": 84,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/CallshieldUITests/ProductionUITests.swift",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 1,
+        "changes": 12,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/DEEPFAKE_VALIDATION.md",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "previous_filename": null
+      },
+      {
+        "filename": "ios/scripts/check_deepfake_contract.swift",
+        "status": "added",
+        "additions": 36,
+        "deletions": 0,
+        "changes": 36,
+        "previous_filename": null
+      }
+    ]
+  },
+  "isError": false
+}

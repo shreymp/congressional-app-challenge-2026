@@ -1,0 +1,10 @@
+{
+  "sample_rate": 16000,
+  "channels": 1,
+  "sample_width": 2,
+  "frames": 25237,
+  "duration_sec": 1.5773125,
+  "text": "This call is being recorded.",
+  "source": "Generated locally with macOS system voice Samantha, 155 words/minute; requires listening verification on deployed phone path.",
+  "sha256": "24db891da407f83a87ec96ea42a23ee373bffcfcc269dea02b99e1ab49bde1e7"
+}

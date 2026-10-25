@@ -1,0 +1,446 @@
+{
+  "schema_version": 1,
+  "created_local_date": "2026-10-22",
+  "sources": [
+    {
+      "id": "supplied_elevenlabs",
+      "label": "ai",
+      "partition": "development",
+      "path": "/Users/spatel7/Downloads/ElevenLabs_2026-10-23T01_11_44_shrey_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "86e4df799bad88b6c3df61bdf459b7bd698345ee78c4989d4a0ac13bf3893198",
+      "groups": [
+        "source:supplied_elevenlabs",
+        "voice:unverified_supplied_voice",
+        "system:elevenlabs"
+      ],
+      "parents": [],
+      "provenance": {
+        "origin": "User-supplied audio, labeled synthetic in frozen evaluation",
+        "rights": "unverified",
+        "training_overlap": "unknown",
+        "independent_review": false
+      },
+      "transitions": []
+    },
+    {
+      "id": "librispeech_test_clean_1320_40s",
+      "label": "human",
+      "partition": "development",
+      "path": "audio/human_controls/librispeech_test_clean_1320_40s.wav",
+      "sha256": "970fbce110bee879d4d2a1cffad28d5152333842121b999e97276d476f6308b5",
+      "groups": [
+        "source:librispeech_test_clean_1320_40s",
+        "speaker:librispeech_1320"
+      ],
+      "parents": [],
+      "provenance": {
+        "origin": "OpenSLR LibriSpeech test-clean, CC BY 4.0; see human_control_provenance.json",
+        "rights": "licensed",
+        "training_overlap": "unknown",
+        "independent_review": false
+      },
+      "transitions": []
+    },
+    {
+      "id": "librispeech_test_clean_6930_40s",
+      "label": "human",
+      "partition": "development",
+      "path": "audio/human_controls/librispeech_test_clean_6930_40s.wav",
+      "sha256": "abea4c792d779286082be773dc8a2eb87277d995f4ce9efa134ee3feb6523597",
+      "groups": [
+        "source:librispeech_test_clean_6930_40s",
+        "speaker:librispeech_6930"
+      ],
+      "parents": [],
+      "provenance": {
+        "origin": "OpenSLR LibriSpeech test-clean, CC BY 4.0; see human_control_provenance.json",
+        "rights": "licensed",
+        "training_overlap": "unknown",
+        "independent_review": false
+      },
+      "transitions": []
+    },
+    {
+      "id": "supplied_elevenlabs_azim",
+      "label": "ai",
+      "partition": "development",
+      "path": "/Users/spatel7/Downloads/ElevenLabs_2026-10-23T02_47_47_azim_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "b3c3785615cdeaa01a9409068fbc87e751ef91c9ad27d165efdc812ee6d74fac",
+      "groups": [
+        "source:supplied_elevenlabs_azim",
+        "voice:unverified_filename_azim",
+        "system:elevenlabs"
+      ],
+      "parents": [],
+      "provenance": {
+        "origin": "User-directed ElevenLabs Downloads file; voice name inferred only from filename and not identity-verified",
+        "rights": "unverified",
+        "training_overlap": "unknown",
+        "independent_review": false
+      },
+      "sample_rate": 44100,
+      "channels": 1,
+      "decoded_duration_sec": 37.58562358276644,
+      "transitions": []
+    },
+    {
+      "id": "supplied_elevenlabs_keshav",
+      "label": "ai",
+      "partition": "development",
+      "path": "/Users/spatel7/Downloads/ElevenLabs_2026-10-23T02_47_03_keshav_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "47447595751ef238aed6419eab38b602cdece73e94ca9ceb3e2b9462c478c0b1",
+      "groups": [
+        "source:supplied_elevenlabs_keshav",
+        "voice:unverified_filename_keshav",
+        "system:elevenlabs"
+      ],
+      "parents": [],
+      "provenance": {
+        "origin": "User-directed ElevenLabs Downloads file; voice name inferred only from filename and not identity-verified",
+        "rights": "unverified",
+        "training_overlap": "unknown",
+        "independent_review": false
+      },
+      "sample_rate": 44100,
+      "channels": 1,
+      "decoded_duration_sec": 43.68612244897959,
+      "transitions": []
+    }
+  ],
+  "regression_cases": [
+    {
+      "id": "original",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "8khz_bandwidth_only",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "g711_mulaw",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "low_volume_minus20dB",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "mild_clipping",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "white_noise_30dB_SNR",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "white_noise_20dB_SNR",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "white_noise_10dB_SNR",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "pause_2s_after_16s",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "ai"
+        },
+        {
+          "start": 16,
+          "end": 18,
+          "label": "silence"
+        },
+        {
+          "start": 18,
+          "end": 40.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "pause_10s_after_16s",
+      "sources": [
+        "supplied_elevenlabs"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "ai"
+        },
+        {
+          "start": 16,
+          "end": 26,
+          "label": "silence"
+        },
+        {
+          "start": 26,
+          "end": 48.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "librispeech_test_clean_1320_40s",
+      "sources": [
+        "librispeech_test_clean_1320_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 40.0,
+          "label": "human"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "librispeech_test_clean_6930_40s",
+      "sources": [
+        "librispeech_test_clean_6930_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 40.0,
+          "label": "human"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "human60_then_ai",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_1320_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 60,
+          "label": "human"
+        },
+        {
+          "start": 60,
+          "end": 98.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "ai_then_human",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_1320_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        },
+        {
+          "start": 38.3478125,
+          "end": 78.3478125,
+          "label": "human"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "diagnostic_human16_then_ai",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_6930_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 16,
+          "label": "human"
+        },
+        {
+          "start": 16,
+          "end": 54.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "diagnostic_human_prefix60_then_ai",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_6930_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 60,
+          "label": "human"
+        },
+        {
+          "start": 60,
+          "end": 98.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "diagnostic_human_prefix120_then_ai",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_6930_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 120,
+          "label": "human"
+        },
+        {
+          "start": 120,
+          "end": 158.3478125,
+          "label": "ai"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    },
+    {
+      "id": "diagnostic_ai_then_human6930",
+      "sources": [
+        "supplied_elevenlabs",
+        "librispeech_test_clean_6930_40s"
+      ],
+      "partition": "development",
+      "labels": [
+        {
+          "start": 0,
+          "end": 38.3478125,
+          "label": "ai"
+        },
+        {
+          "start": 38.3478125,
+          "end": 78.3478125,
+          "label": "human"
+        }
+      ],
+      "status": "reused_development_regression_not_independent"
+    }
+  ],
+  "calibration_sources": [],
+  "final_test_sources": [],
+  "collection_status": "not_collected",
+  "coverage_goals": {
+    "human_speakers": 30,
+    "synthetic_voices": 10,
+    "synthetic_systems": 3
+  }
+}
