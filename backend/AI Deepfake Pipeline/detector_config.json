@@ -3,17 +3,54 @@
   "keep_layers": 12,
   "sample_rate": 16000,
   "window_sec": 4.0,
-  "threshold_1pct_fpr": 0.9999998807907104,
-  "threshold_eer": 0.9999904632568359,
-  "val_eer": 0.10812107002024937,
+  "threshold_eer": 0.8824278664544911,
+  "threshold_1pct_fpr": 0.9986749775827868,
+  "logit_threshold_eer": 2.015625,
+  "logit_threshold_1pct_fpr": 6.625000000000001,
+  "logit_threshold_2pct_fpr": 5.718750000000001,
+  "threshold_selection": "validation windows pooled over all robustness conditions (incl. simulated calls), raw float64 logits",
+  "val_eer": 0.12628970865719907,
+  "val_eer_by_condition": {
+    "call": 0.20358717061635448,
+    "call_noisy": 0.26403975328159446,
+    "clean": 0.023463454529096688,
+    "gap2s": 0.0443398284099318,
+    "music10": 0.11290709317075777,
+    "noise10": 0.1163771724721539,
+    "noise20": 0.05604240319051423,
+    "phone": 0.0636287302315035,
+    "phone_noise10": 0.1614821861516198
+  },
   "test": {
+    "pooled": {
+      "eer": 0.1304182772652952
+    },
+    "call": {
+      "eer": 0.19712500575864045
+    },
+    "call_noisy": {
+      "eer": 0.25321781594148995
+    },
     "clean": {
-      "eer": 0.005884252081979182,
-      "auc": 0.9991767059730616
+      "eer": 0.05140691546240853
+    },
+    "gap2s": {
+      "eer": 0.07126795150831434
+    },
+    "music10": {
+      "eer": 0.11648985299454921
+    },
+    "noise10": {
+      "eer": 0.11661401490167615
+    },
+    "noise20": {
+      "eer": 0.07426619001977977
     },
     "phone": {
-      "eer": 0.017199309705965456,
-      "auc": 0.9981098699317456
+      "eer": 0.08263550783343651
+    },
+    "phone_noise10": {
+      "eer": 0.14415918417948828
     }
   },
   "unseen_test_systems": [
@@ -39,6 +76,331 @@
     "tts_models_en_ljspeech_vits--neon",
     "tts_models_multilingual_multi-dataset_xtts_v1.1"
   ],
-  "score_meaning": "sigmoid(logit) = probability the audio is AI-generated",
-  "trained": "2026-10-09"
+  "score_meaning": "sigmoid(logit) = probability the audio is AI-generated (uncalibrated)",
+  "trained": "2026-10-25",
+  "recommended_call_engine_env": {
+    "THRESHOLD_ELEVATED_LOGIT": -0.28906250000000044,
+    "THRESHOLD_HIGH_LOGIT": 4.3203125,
+    "why": "Centres the app's call verdict on the validated EER threshold with the same spread (see Compare V2 and V3/experiments)."
+  },
+  "posttrain": {
+    "version": "v8b",
+    "init_checkpoint_sha256": "c634c95b2bb0fb5f5505d4d0364ad96980aa00de83d93bcc04a34ec4585e96a8",
+    "kept_check": 1,
+    "kept_state": {
+      "candidate": "best check 14",
+      "alpha": 1.0,
+      "fine_tuned": true
+    },
+    "release_gate_passed": true,
+    "interpolation": [
+      {
+        "candidate": "best check 14",
+        "alpha": 0.6,
+        "passes": true,
+        "objective": 0.5627906976744186,
+        "el_det_eer": 0.6790697674418604,
+        "el_det": 0.44651162790697674,
+        "ls_all_fpr": 0.015831332533013207,
+        "real_fpr_eer": 0.10324227132996926,
+        "pooled_eer": 0.10334139018382013,
+        "fails": ""
+      },
+      {
+        "candidate": "best check 14",
+        "alpha": 0.8,
+        "passes": true,
+        "objective": 0.6081395348837209,
+        "el_det_eer": 0.7069767441860465,
+        "el_det": 0.5093023255813953,
+        "ls_all_fpr": 0.015831332533013207,
+        "real_fpr_eer": 0.09755814627921815,
+        "pooled_eer": 0.09731784221444437,
+        "fails": ""
+      },
+      {
+        "candidate": "best check 14",
+        "alpha": 1.0,
+        "passes": true,
+        "objective": 0.6465116279069767,
+        "el_det_eer": 0.7325581395348837,
+        "el_det": 0.5604651162790698,
+        "ls_all_fpr": 0.015606242496998799,
+        "real_fpr_eer": 0.09141001102024245,
+        "pooled_eer": 0.09140014600226606,
+        "fails": ""
+      },
+      {
+        "candidate": "soup of 16 checks",
+        "alpha": 0.6,
+        "passes": true,
+        "objective": 0.5430232558139535,
+        "el_det_eer": 0.6674418604651163,
+        "el_det": 0.4186046511627907,
+        "ls_all_fpr": 0.015606242496998799,
+        "real_fpr_eer": 0.10701235427179398,
+        "pooled_eer": 0.10694387069972376,
+        "fails": ""
+      },
+      {
+        "candidate": "soup of 16 checks",
+        "alpha": 0.8,
+        "passes": true,
+        "objective": 0.5697674418604651,
+        "el_det_eer": 0.6906976744186046,
+        "el_det": 0.44883720930232557,
+        "ls_all_fpr": 0.015756302521008403,
+        "real_fpr_eer": 0.10144423177309901,
+        "pooled_eer": 0.10159772825211066,
+        "fails": ""
+      },
+      {
+        "candidate": "soup of 16 checks",
+        "alpha": 1.0,
+        "passes": true,
+        "objective": 0.6011627906976744,
+        "el_det_eer": 0.7093023255813954,
+        "el_det": 0.4930232558139535,
+        "ls_all_fpr": 0.015531212484993997,
+        "real_fpr_eer": 0.0963981207586567,
+        "pooled_eer": 0.09642812733129634,
+        "fails": ""
+      }
+    ],
+    "soup_checks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "librispeech100": {
+      "test": 63,
+      "train": 125,
+      "val": 63
+    },
+    "train_scope": "full",
+    "objective_on": "own English ElevenLabs validation voices ['charlie', 'dee', 'george', 'rodo', 'spuds_oxley']",
+    "data_mode": "own_voices",
+    "commercial_data": [
+      {
+        "corpus": "ElevenLabs",
+        "origin": "benchmark",
+        "split": "test",
+        "segments": 15,
+        "voices": 3
+      },
+      {
+        "corpus": "ElevenLabs",
+        "origin": "own",
+        "split": "test",
+        "segments": 28,
+        "voices": 6
+      },
+      {
+        "corpus": "ElevenLabs",
+        "origin": "own",
+        "split": "train",
+        "segments": 68,
+        "voices": 13
+      },
+      {
+        "corpus": "ElevenLabs",
+        "origin": "own",
+        "split": "val",
+        "segments": 24,
+        "voices": 5
+      },
+      {
+        "corpus": "OwnReal",
+        "origin": "own_real",
+        "split": "train",
+        "segments": 32,
+        "voices": 1
+      },
+      {
+        "corpus": "RealCalls",
+        "origin": "call_real",
+        "split": "train",
+        "segments": 26,
+        "voices": 8
+      }
+    ],
+    "mendeley_used": false,
+    "call_simulation": {
+      "p": 0.5,
+      "codecs": {
+        "g711u": 0.39,
+        "g711a": 0.122,
+        "gsm": 0.098,
+        "opus_nb": 0.122,
+        "opus_wb": 0.146,
+        "g722": 0.122
+      }
+    },
+    "self_improvement": [
+      {
+        "round": 1,
+        "improved": true,
+        "best_check": 3,
+        "best_objective": 0.5523,
+        "lr_scale": 1.0,
+        "train_loss_by_condition": {
+          "call": 0.5814,
+          "clean": 0.0994,
+          "gap2s": 0.1378,
+          "music10": 0.3063,
+          "noise10": 0.2402
+        },
+        "train_eer_by_condition": {
+          "call": 0.1527,
+          "clean": 0.0231,
+          "gap2s": 0.0413,
+          "music10": 0.0761,
+          "noise10": 0.0825
+        },
+        "hard_weight_max": 1.799,
+        "augmentation_change": {
+          "worst": "call",
+          "excess": 0.4819,
+          "knob": "CALL_SIM_P",
+          "old": 0.5,
+          "new": 0.55,
+          "changed": true
+        },
+        "next_lr_scale": 1.0
+      },
+      {
+        "round": 2,
+        "improved": true,
+        "best_check": 6,
+        "best_objective": 0.6035,
+        "lr_scale": 1.0,
+        "train_loss_by_condition": {
+          "call": 0.5434,
+          "clean": 0.085,
+          "gap2s": 0.125,
+          "music10": 0.2703,
+          "noise10": 0.2315
+        },
+        "train_eer_by_condition": {
+          "call": 0.1481,
+          "clean": 0.0211,
+          "gap2s": 0.0373,
+          "music10": 0.071,
+          "noise10": 0.0781
+        },
+        "hard_weight_max": 1.799,
+        "augmentation_change": {
+          "worst": "call",
+          "excess": 0.4584,
+          "knob": "CALL_SIM_P",
+          "old": 0.55,
+          "new": 0.6,
+          "changed": true
+        },
+        "next_lr_scale": 1.0
+      },
+      {
+        "round": 3,
+        "improved": true,
+        "best_check": 10,
+        "best_objective": 0.6151,
+        "lr_scale": 1.0,
+        "train_loss_by_condition": {
+          "call": 0.4989,
+          "clean": 0.0744,
+          "gap2s": 0.1184,
+          "music10": 0.3049,
+          "noise10": 0.1955
+        },
+        "train_eer_by_condition": {
+          "call": 0.1481,
+          "clean": 0.0174,
+          "gap2s": 0.0331,
+          "music10": 0.0678,
+          "noise10": 0.0639
+        },
+        "hard_weight_max": 1.799,
+        "augmentation_change": {
+          "worst": "call",
+          "excess": 0.4245,
+          "knob": "CALL_SIM_P",
+          "old": 0.6,
+          "new": 0.65,
+          "changed": true
+        },
+        "next_lr_scale": 1.0
+      },
+      {
+        "round": 4,
+        "improved": true,
+        "best_check": 14,
+        "best_objective": 0.6465,
+        "lr_scale": 1.0
+      }
+    ],
+    "final_knobs": {
+      "NOISE_P": 0.65,
+      "GAP_P": 0.35,
+      "OVERLAY_P": 0.25,
+      "CALL_SIM_P": 0.65,
+      "NONSPEECH_AS_REAL_P": 0.03,
+      "CONSIST_WEIGHT": 0.1,
+      "KD_WEIGHT": 1.0,
+      "ANCHOR_RATE": 0.0001,
+      "ELEVEN_FAKE_SHARE": 0.25,
+      "LR_SCALE": 1.0
+    },
+    "benchmark_voices_held_out": true,
+    "trained_voices": [
+      "alexander_kensington",
+      "alice",
+      "bella",
+      "charlie",
+      "cheryl",
+      "dee",
+      "george",
+      "hannah",
+      "ian_christopher",
+      "jon",
+      "laura",
+      "liam",
+      "megan",
+      "rodo",
+      "roger",
+      "sarah",
+      "spuds_oxley",
+      "vanishree"
+    ],
+    "held_out_elevenlabs_gain_95ci": [
+      0.10410820066641986,
+      0.3127906976744186
+    ],
+    "real_corpora": [
+      "LibriSpeech",
+      "LibriSpeech100",
+      "M-AILABS",
+      "OwnReal",
+      "RealCalls"
+    ],
+    "excluded_speakers": [
+      "1320",
+      "6930"
+    ],
+    "losses": "BCE + noisy-twin consistency + one-sided V3 distillation; per-step anchor to V3 weights; fixed weights",
+    "selection_rule": "validation only, compared with V3, tolerances fixed before the run; rounds restart from the best accepted state",
+    "caveat": "Selection used validation only; test and benchmark were scored once after training. Few ElevenLabs voices (library voices, 2 clips each); calls are simulated, not recorded; real speech is read audiobook speech; confirm with consented live calls."
+  }
 }
