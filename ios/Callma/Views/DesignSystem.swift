@@ -144,9 +144,10 @@ struct Avatar: View {
 
 struct VoiceBadge: View {
     let voice: Voice
+    var title: String? = nil
     var large = false
     var body: some View {
-        Label { Text(voice.label) } icon: { Image(systemName: voice.symbol) }
+        Label { Text(title ?? voice.label) } icon: { Image(systemName: voice.symbol) }
             .font(large ? .body.weight(.semibold) : .subheadline.weight(.semibold))
             .foregroundStyle(voice.foreground)
             .padding(.horizontal, large ? 14 : 10)
@@ -154,7 +155,7 @@ struct VoiceBadge: View {
             .background(voice.background, in: Capsule())
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(voice.label)
+            .accessibilityLabel(title ?? voice.label)
     }
 }
 
@@ -164,6 +165,8 @@ struct VoiceStatusCard<Footer: View>: View {
     let heading: String
     let message: String
     var messageID: String? = nil
+    var assessmentTitle: String? = nil
+    var warning: Bool = false
     @ViewBuilder var footer: Footer
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -176,19 +179,19 @@ struct VoiceStatusCard<Footer: View>: View {
                     .frame(width: 52, height: 52)
                     .background(voice.background, in: Circle())
                     .accessibilityHidden(true)
-                Text(voice.label).font(.title2.weight(.semibold))
+                Text(assessmentTitle ?? voice.label).font(.title2.weight(.semibold))
             }
-            .foregroundStyle(voice.foreground)
+            .foregroundStyle(warning ? Theme.statusAI : voice.foreground)
             Text(message).font(.body).foregroundStyle(Theme.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier(messageID ?? "")
-            if voice == .ai { SafetySteps() }
+            if voice == .ai || warning { SafetySteps() }
             footer
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .multilineTextAlignment(.leading)
-        .card(background: voice == .ai ? Theme.statusAIBackground : Theme.backgroundSurface,
-              border: voice == .ai ? Theme.statusAI : Theme.borderDecorative)
+        .card(background: voice == .ai || warning ? Theme.statusAIBackground : Theme.backgroundSurface,
+              border: voice == .ai || warning ? Theme.statusAI : Theme.borderDecorative)
     }
 }
 

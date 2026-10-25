@@ -1,0 +1,45 @@
+W1022 20:34:51.727000 71080 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+LOADED mps 1.7214067919994704
+original baseline 6.00 z=24.856 21ms
+original baseline 7.00 z=23.375 21ms
+original baseline 8.00 z=25.112 20ms
+original baseline 9.00 z=24.470 20ms
+original baseline 10.00 z=23.783 20ms
+original baseline 11.00 z=20.645 20ms
+original baseline 12.00 z=21.946 19ms
+original baseline 13.00 z=22.476 19ms
+original baseline 14.00 z=18.827 20ms
+original baseline 15.00 z=19.766 20ms
+original baseline 16.00 z=22.810 20ms
+original baseline 17.00 z=24.578 20ms
+original baseline 18.00 z=28.066 20ms
+original baseline 19.00 z=30.395 19ms
+original baseline 20.00 z=31.025 19ms
+original baseline 21.00 z=30.199 19ms
+original baseline 22.00 z=30.197 20ms
+original baseline 23.00 z=28.790 20ms
+original baseline 24.00 z=27.541 19ms
+original baseline 25.00 z=26.078 19ms
+original baseline 26.00 z=26.847 19ms
+original baseline 27.00 z=28.156 20ms
+original baseline 28.00 z=27.429 19ms
+original baseline 29.00 z=24.336 19ms
+original baseline 30.00 z=25.444 19ms
+original baseline 31.00 z=25.903 19ms
+original baseline 32.00 z=25.172 19ms
+original baseline 33.00 z=23.617 19ms
+original baseline 34.00 z=22.927 19ms
+original baseline 35.00 z=24.245 19ms
+original baseline 36.00 z=22.433 20ms
+original baseline 37.00 z=19.651 19ms
+original baseline 38.00 z=22.509 19ms
+original current 4.00 z=22.110 20ms
+original current 8.00 z=25.947 20ms
+original current 12.00 z=24.263 20ms
+original current 16.00 z=29.140 20ms
+original current 20.00 z=30.271 20ms
+original current 24.00 z=25.659 20ms
+original current 28.00 z=27.745 20ms
+original current 32.00 z=26.955 19ms
+original current 36.00 z=22.330 20ms
+DONE 5.225169291996281 42 0

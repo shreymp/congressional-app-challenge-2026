@@ -9,9 +9,10 @@ import sys
 import unittest
 
 import numpy as np
-from risk import RiskEngine, sigmoid
+from risk import CallEvidenceEngine, RiskEngine, sigmoid
 from risk_protocol import RiskPublisher
 from scoring import AudioScoringSession
+from pipeline_config import ScoringConfig
 
 FIXTURE = Path(__file__).resolve().parents[3] / "ios/CallmaTests/Fixtures/deepfake-wire.json"
 THRESHOLDS = (0.9999904632568359, 0.9999998807907104)
@@ -46,6 +47,13 @@ def wire_fixtures():
     stub = pub.message({"type": "risk", "deepfake": evidence(20, 3)})
     stub["model"] = "stub"
     cases.append({"name": "stub_never_a_verdict", "expected": "unavailable", "payload": stub})
+    for name, z, expected in [("cumulative_human", -2, "human"), ("cumulative_ai", 20, "ai"),
+                               ("cumulative_mixed", 13.75, "uncertain")]:
+        engine = CallEvidenceEngine(*THRESHOLDS)
+        for _ in range(3):
+            result = engine.update(sigmoid(z), z)
+        cases.append({"name": name, "expected": expected,
+                      "payload": pub.message({"type": "risk", "deepfake": result})})
     return {"cases": cases}
 
 
@@ -65,54 +73,74 @@ class IntegrationTests(unittest.TestCase):
         self.session.complete({"p_fake": sigmoid(z), "logit": z, "infer_ms": 20}, generation)
         return self.session.payload(now)
 
-    def test_silence_never_reaches_model_and_waits_for_three_seconds(self):
+    def test_silence_never_reaches_model_and_requires_complete_contiguous_window(self):
+        # Legacy contiguity rule, with the digital-silence guard disabled.
+        self.session = AudioScoringSession(FakeDetector(), THRESHOLDS,
+                                           config=ScoringConfig(digital_silence_max_sec=None))
         self.feed(0, 8, speech=False)
         self.assertIsNone(self.session.snapshot(8))
-        self.feed(8, 2.98)
-        self.assertIsNone(self.session.snapshot(10.98))
-        self.feed(10.98, .02)
-        self.assertIsNotNone(self.session.snapshot(11))
+        self.feed(8, 1.48)
+        self.assertIsNone(self.session.snapshot(9.48))
+        self.feed(9.48, .02)
+        self.assertIsNotNone(self.session.snapshot(9.5))
+
+    def test_default_guard_waits_for_a_window_without_digital_silence(self):
+        self.feed(0, 8, speech=False)
+        self.feed(8, 1.5)
+        self.assertIsNone(self.session.snapshot(9.5))
+        self.assertEqual(self.session.window.quality_detail, "digital_silence_gap")
+        self.assertEqual(self.session.payload(9.5)["assessment"]["quality_reason"], "insufficient_speech")
+        self.feed(9.5, 2)
+        self.assertIsNone(self.session.snapshot(11.5))
+        self.feed(11.5, .5)  # the 4 s window [8, 12] now holds speech only
+        self.assertIsNotNone(self.session.snapshot(12))
 
     def test_human_requires_multiple_distinct_windows_and_no_rescoring_silence(self):
-        self.feed(0, 3)
-        first = self.score(3, -2)
+        self.feed(0, 4)
+        first = self.score(4, -2)
         self.assertEqual(first["deepfake"]["human_steps"], 1)
-        self.assertIsNone(self.session.snapshot(3.01))
-        for sec in (3, 4):
-            self.feed(sec, 1)
-            last = self.score(sec + 1, -2)
+        self.assertIsNone(self.session.snapshot(4.01))
+        self.feed(4, 1)
+        self.assertIsNone(self.session.snapshot(5))
+        self.feed(5, 3)
+        last = self.score(8, -2)
+        self.assertEqual(last["deepfake"]["state"], "human")
+        self.feed(8, 4)
+        last = self.score(12, -2)
         self.assertEqual(last["deepfake"]["human_steps"], 3)
-        self.feed(5, 2, speech=False)
-        self.assertIsNone(self.session.snapshot(7))
+        self.feed(12, 4, speech=False)
+        self.assertIsNone(self.session.snapshot(16))
 
-    def test_pause_discards_old_speech_and_old_inflight_result(self):
-        self.feed(0, 3)
-        _, generation = self.session.snapshot(3)
-        self.session.refresh(10)
+    def test_pause_preserves_accumulated_evidence_and_valid_inflight_result(self):
+        self.feed(0, 4)
+        _, generation = self.session.snapshot(4)
+        self.session.refresh(11)
         self.session.complete({"p_fake": 1, "logit": 30, "infer_ms": 1}, generation)
-        self.assertEqual(self.session.payload(10)["state"], "waiting")
-        self.feed(10, 2)
-        self.assertIsNone(self.session.snapshot(12))
-        self.assertEqual(self.session.risk.n_updates, 0)
+        self.assertEqual(self.session.payload(11)["deepfake"]["updates"], 1)
+        self.feed(11, 2)
+        self.assertIsNone(self.session.snapshot(13))
+        self.assertEqual(self.session.risk.n_updates, 1)
+        self.feed(13, 2)
+        self.assertEqual(self.score(15, 30)["deepfake"]["state"], "ai")
 
     def test_slow_inference_becomes_unavailable_without_queuing_more_work(self):
-        self.feed(0, 3)
-        self.session.snapshot(3)
-        self.feed(3, 11)
-        self.assertIsNone(self.session.snapshot(14))
-        self.assertEqual(self.session.payload(14)["state"], "unavailable")
+        self.feed(0, 4)
+        self.session.snapshot(4)
+        self.feed(4, 11)
+        self.assertIsNone(self.session.snapshot(15))
+        self.assertEqual(self.session.payload(15)["state"], "unavailable")
         self.session.failed()
-        self.assertIsNotNone(self.session.snapshot(14))
+        self.assertIsNotNone(self.session.snapshot(15))
 
     def test_nonfinite_scores_fail_and_later_inference_recovers(self):
-        self.feed(0, 3)
-        _, generation = self.session.snapshot(3)
+        self.feed(0, 4)
+        _, generation = self.session.snapshot(4)
         with self.assertRaises(ValueError):
             self.session.complete({"p_fake": math.nan, "logit": 0, "infer_ms": 1}, generation)
         self.session.failed()
-        self.assertEqual(self.session.payload(3)["state"], "unavailable")
-        self.feed(3, 1)
-        self.assertEqual(self.score(4, -2)["type"], "risk")
+        self.assertEqual(self.session.payload(4)["state"], "unavailable")
+        self.feed(4, 4)
+        self.assertEqual(self.score(8, -2)["type"], "risk")
 
     def test_risk_escalates_and_deescalates_with_hysteresis(self):
         engine = RiskEngine(*THRESHOLDS, alpha=1)
@@ -146,7 +174,9 @@ class IntegrationTests(unittest.TestCase):
         json.dumps(first, allow_nan=False)
 
     def test_swift_fixtures_match_production_risk_engine(self):
-        self.assertEqual(json.loads(FIXTURE.read_text(encoding="utf-8")), wire_fixtures())
+        actual = {case["name"]: case for case in json.loads(FIXTURE.read_text(encoding="utf-8"))["cases"]}
+        for case in wire_fixtures()["cases"]:
+            self.assertEqual(actual[case["name"]], case)
 
 
 if __name__ == "__main__":

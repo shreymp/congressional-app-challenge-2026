@@ -1,0 +1,66 @@
+{
+  "release_allowed": false,
+  "blocking_reasons": [
+    "No independent final-test sources registered",
+    "human_false_warning: insufficient evidence or failure bound above budget",
+    "ai_missed: insufficient evidence or failure bound above budget",
+    "ai_deadline_missed: insufficient evidence or failure bound above budget",
+    "analysis_uncovered: insufficient evidence or failure bound above budget",
+    "switch_detection_p95_sec: missing or above budget",
+    "human_recovery_p95_sec: missing or above budget",
+    "Required executed check missing: python_unit_integration",
+    "Required executed check missing: swift_contract",
+    "Required executed check missing: ios_xctest_simulator",
+    "Required executed check missing: physical_iphone_display_voiceover",
+    "Required executed check missing: consented_live_phone_path",
+    "Required executed check missing: deployed_device_concurrency",
+    "Required executed check missing: legacy_v1_rollback",
+    "Frozen bundle hash missing: checkpoint_sha256",
+    "Frozen bundle hash missing: architecture_sha256",
+    "Frozen bundle hash missing: policy_sha256",
+    "Frozen bundle hash missing: manifest_sha256",
+    "Frozen bundle hash missing: release_spec_sha256",
+    "Frozen bundle hash missing: source_sha256",
+    "Frozen bundle does not match manifest_sha256",
+    "Frozen bundle does not match release_spec_sha256"
+  ],
+  "metrics": {
+    "human_false_warning": {
+      "failures": 0,
+      "independent_units": 0,
+      "upper_bound": null,
+      "budget": 0.01
+    },
+    "ai_missed": {
+      "failures": 0,
+      "independent_units": 0,
+      "upper_bound": null,
+      "budget": 0.05
+    },
+    "ai_deadline_missed": {
+      "failures": 0,
+      "independent_units": 0,
+      "upper_bound": null,
+      "budget": 0.1
+    },
+    "analysis_uncovered": {
+      "failures": 0,
+      "independent_units": 0,
+      "upper_bound": null,
+      "budget": 0.1
+    },
+    "switch_detection_p95_sec": {
+      "value": null,
+      "transitions": 0,
+      "budget": 16
+    },
+    "human_recovery_p95_sec": {
+      "value": null,
+      "transitions": 0,
+      "budget": 20
+    }
+  },
+  "registered_final_test_sources": 0,
+  "reported_final_test_sources": 0,
+  "statistical_unit": "registered independent source/speaker group, never a window or transformed clip"
+}

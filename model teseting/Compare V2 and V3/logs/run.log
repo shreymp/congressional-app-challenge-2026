@@ -1,0 +1,44 @@
+PREPARED 65 cases; 677 windows; 467 unique inputs
+W1023 09:19:08.312000 97635 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+LOADING v2
+v2 25/467; last logit 23.4993; 19 ms
+v2 50/467; last logit 26.5741; 19 ms
+v2 75/467; last logit 28.4835; 19 ms
+v2 100/467; last logit 29.6511; 19 ms
+v2 125/467; last logit 26.3740; 19 ms
+v2 150/467; last logit 24.3273; 19 ms
+v2 175/467; last logit 25.4201; 19 ms
+v2 200/467; last logit 26.4185; 19 ms
+v2 225/467; last logit 17.5752; 19 ms
+v2 250/467; last logit 27.5619; 19 ms
+v2 275/467; last logit 11.5975; 19 ms
+v2 300/467; last logit 7.2269; 19 ms
+v2 325/467; last logit 16.5294; 19 ms
+v2 350/467; last logit 10.2294; 19 ms
+v2 375/467; last logit 11.7578; 19 ms
+v2 400/467; last logit 18.0319; 19 ms
+v2 425/467; last logit 7.8182; 19 ms
+v2 450/467; last logit 11.2948; 19 ms
+v2 467/467; last logit 48.6822; 19 ms
+LOADING v3
+v3 25/467; last logit 4.9560; 19 ms
+v3 50/467; last logit 4.5681; 20 ms
+v3 75/467; last logit 8.2830; 19 ms
+v3 100/467; last logit 3.3322; 19 ms
+v3 125/467; last logit 0.5976; 19 ms
+v3 150/467; last logit 5.6151; 19 ms
+v3 175/467; last logit 0.4443; 19 ms
+v3 200/467; last logit 1.8355; 19 ms
+v3 225/467; last logit 1.5567; 19 ms
+v3 250/467; last logit 5.2891; 19 ms
+v3 275/467; last logit 0.9229; 19 ms
+v3 300/467; last logit -7.4530; 19 ms
+v3 325/467; last logit -1.5531; 19 ms
+v3 350/467; last logit 0.2181; 19 ms
+v3 375/467; last logit -6.5260; 19 ms
+v3 400/467; last logit -4.3118; 19 ms
+v3 425/467; last logit -4.6791; 19 ms
+v3 450/467; last logit -3.8445; 19 ms
+v3 467/467; last logit -4.2969; 19 ms
+Matplotlib is building the font cache; this may take a moment.
+REPORT SAVED /Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/REPORT.md

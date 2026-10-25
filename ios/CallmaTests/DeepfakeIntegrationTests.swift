@@ -6,9 +6,11 @@ final class DeepfakeIntegrationTests: XCTestCase {
     private let now = Date(timeIntervalSince1970: 1_800_000_000)
 
     private func fixtureObjects() throws -> [[String: Any]] {
-        let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: "deepfake-wire", withExtension: "json"))
-        let root = try XCTUnwrap(try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
-        return try XCTUnwrap(root["cases"] as? [[String: Any]])
+        try ["deepfake-wire", "deepfake-presentation"].flatMap { name in
+            let url = try XCTUnwrap(Bundle(for: Self.self).url(forResource: name, withExtension: "json"))
+            let root = try XCTUnwrap(try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
+            return try XCTUnwrap(root["cases"] as? [[String: Any]])
+        }
     }
     private func payload(named name: String) throws -> [String: Any] {
         let item = try XCTUnwrap(try fixtureObjects().first { $0["name"] as? String == name })
@@ -21,8 +23,94 @@ final class DeepfakeIntegrationTests: XCTestCase {
     func testPythonRiskEngineFixturesDriveEveryVoiceState() throws {
         for item in try fixtureObjects() {
             let update = try decode(XCTUnwrap(item["payload"] as? [String: Any]))
-            XCTAssertEqual(update.assessment(at: now).state.rawValue, item["expected"] as? String, item["name"] as? String ?? "")
+            let value = update.assessment(at: now)
+            XCTAssertEqual(value.state.rawValue, item["expected"] as? String, item["name"] as? String ?? "")
+            if let title = item["expected_title"] as? String { XCTAssertEqual(value.title, title) }
+            if value.hasCurrentWarning {
+                XCTAssertNotEqual(value.voice, .human)
+                XCTAssertEqual(value.title, "AI-like voice detected recently")
+                XCTAssertFalse(value.message.contains("appears human"))
+            }
         }
+    }
+    func testWarningPendingHistoryAndQualityPresentation() throws {
+        let warning = try decode(payload(named: "human_plus_warning")).assessment(at: now)
+        XCTAssertEqual(warning.state, .human) // presentation fix is not a classification change
+        XCTAssertEqual(warning.voice, .unknown)
+        XCTAssertEqual(warning.title, "AI-like voice detected recently")
+        XCTAssertTrue(warning.message.contains("number you already trust"))
+        let pending = try decode(payload(named: "pending_65_6")).assessment(at: now)
+        XCTAssertEqual(pending.state, .uncertain)
+        XCTAssertTrue(pending.scoreText.contains("65.6/100"))
+        XCTAssertTrue(pending.scoreText.contains("Whole-call evidence"))
+        XCTAssertNotNil(pending.pendingMessage)
+        let recovered = try decode(payload(named: "v2_actual_recovered")).assessment(at: now)
+        XCTAssertEqual(recovered.voice, .human)
+        XCTAssertFalse(recovered.hasCurrentWarning)
+        XCTAssertFalse(try XCTUnwrap(recovered.historicalWarnings).isEmpty)
+        XCTAssertTrue(recovered.historyMessage.contains("Recorded"))
+        for name in ["quality_audio_too_quiet", "quality_audio_too_noisy", "quality_audio_distorted", "quality_insufficient_speech"] {
+            let value = try decode(payload(named: name)).assessment(at: now)
+            XCTAssertNotEqual(value.voice, .human)
+            XCTAssertNotEqual(value.voice, .ai)
+        }
+    }
+    func testInvalidV2CannotRelabelVoiceAndFreshnessIsNotHeartbeatReceipt() throws {
+        let valid = try payload(named: "v2_actual_recovered")
+        for field in ["evidence_start_sec", "evidence_end_sec", "evidence_age_sec"] {
+            var object = valid
+            var assessment = try XCTUnwrap(object["assessment"] as? [String: Any])
+            assessment[field] = -1
+            object["assessment"] = assessment
+            XCTAssertNil(DeepfakeUpdate.decode(try JSONSerialization.data(withJSONObject: object)))
+        }
+        var monitor = DeepfakeMonitor()
+        var value = valid
+        var evidence = try XCTUnwrap(value["assessment"] as? [String: Any])
+        evidence["evidence_age_sec"] = 19.0
+        value["assessment"] = evidence
+        let update = try decode(value)
+        _ = monitor.receive(update, room: update.room, callerIdentity: update.callerIdentity, isAgent: true,
+                            at: now, monotonicTime: 100)
+        let stale = monitor.expire(at: now.addingTimeInterval(-500), connectedAt: now, monotonicTime: 101)
+        XCTAssertEqual(stale?.freshness, "stale")
+        XCTAssertNotEqual(stale?.voice, .human)
+        XCTAssertEqual(monitor.expire(at: now.addingTimeInterval(-500), connectedAt: now, monotonicTime: 112)?.state, .unavailable)
+    }
+    func testInitialDeadlineStartsAtConnectionAndLateResultRecovers() throws {
+        var session = PhoneSessionState()
+        let id = UUID()
+        _ = session.begin(PhoneCall(id: id, person: PhoneNumber.person("+13125550123"), direction: .incoming,
+                                   createdAt: now.addingTimeInterval(-60), stage: .incoming))
+        session.connected(id: id, at: now, monotonicTime: 100)
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(14.999), monotonicTime: 114.999)
+        XCTAssertEqual(session.current?.deepfake?.state, .analyzing)
+        session.finalizeInitialAssessment(id: id, at: now.addingTimeInterval(15), monotonicTime: 115)
+        XCTAssertEqual(session.current?.deepfake?.state, .uncertain)
+        XCTAssertEqual(session.current?.deepfake?.statusReason, "insufficient_speech")
+        let late = DeepfakeAssessment(state: .human, updatedAt: now.addingTimeInterval(16), windows: 3, score: 12)
+        session.assessDeepfake(id: id, assessment: late)
+        session.recordVoiceDisplay(id: id, monotonicTime: 116.5)
+        XCTAssertEqual(session.current?.voice, .human)
+        XCTAssertEqual(session.current?.analysisTiming.last?.elapsedSeconds, 16.5)
+    }
+    @MainActor
+    func testActualCoordinatorDeadlineDuringNoticeAndLateRecovery() async throws {
+        let backend = TranscriptTestBackend()
+        let coordinator = PhoneCallCoordinator(backend: backend, microphonePermission: { true })
+        let id = UUID(), connectedAt = Date()
+        backend.onEvent?(.incoming(id, "+13125550123", nil))
+        backend.onEvent?(.connected(id, connectedAt))
+        let object = try payload(named: "status_recording_notice_pending")
+        backend.onEvent?(.deepfakeAssessment(id, try decode(object).assessment(at: connectedAt)))
+        try await Task.sleep(nanoseconds: 15_200_000_000)
+        XCTAssertEqual(coordinator.active?.deepfake?.state, .uncertain)
+        XCTAssertEqual(coordinator.active?.deepfake?.statusReason, "recording_notice_pending")
+        XCTAssertEqual(coordinator.active?.analysisTiming.first?.event, "connected")
+        XCTAssertTrue(coordinator.active?.analysisTiming.contains { $0.event == "initial_deadline" && $0.elapsedSeconds >= 15 } == true)
+        backend.onEvent?(.deepfakeAssessment(id, DeepfakeAssessment(state: .human, updatedAt: Date(), windows: 3)))
+        XCTAssertEqual(coordinator.active?.voice, .human)
+        backend.onEvent?(.ended(id, .completed, Date()))
     }
     func testMalformedMessagesCannotBecomeVoiceLabels() throws {
         let complete = try payload(named: "high")
@@ -75,7 +163,7 @@ final class DeepfakeIntegrationTests: XCTestCase {
         XCTAssertNil(session.current?.deepfake)
         session.connected(id: id, at: now)
         session.assessDeepfake(id: other, assessment: assessment)
-        XCTAssertNil(session.current?.deepfake)
+        XCTAssertEqual(session.current?.deepfake?.state, .analyzing)
         session.assessDeepfake(id: id, assessment: assessment)
         XCTAssertEqual(session.current?.voice, .ai)
         session.assessDeepfake(id: id, assessment: DeepfakeAssessment(state: .unavailable, updatedAt: now.addingTimeInterval(6)))

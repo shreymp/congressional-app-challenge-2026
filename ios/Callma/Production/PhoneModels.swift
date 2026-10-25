@@ -26,6 +26,7 @@ struct PhoneCallRecord: Identifiable, Codable, Equatable {
     let voice: Voice
     var deepfake: DeepfakeAssessment? = nil
     var transcript: TranscriptAssessment? = nil
+    var analysisTiming: [CallAnalysisTiming]? = nil
 }
 
 struct PhoneCall: Identifiable, Equatable {
@@ -43,6 +44,8 @@ struct PhoneCall: Identifiable, Equatable {
     var transcript: TranscriptAssessment? = nil
     var lastDeepfakeResult: DeepfakeAssessment? = nil
     var lastTranscriptResult: TranscriptAssessment? = nil
+    var connectedMonotonicTime: TimeInterval? = nil
+    var analysisTiming: [CallAnalysisTiming] = []
 }
 
 struct PhoneSnapshot: Codable {
@@ -92,3 +95,15 @@ enum PhoneNumber {
     }
 }
 
+
+/// Metadata only, in seconds since this phone's connected event. Agent evidence
+/// intervals use a different stream clock and must never be subtracted from these.
+struct CallAnalysisTiming: Codable, Equatable {
+    let event: String
+    let elapsedSeconds: TimeInterval
+    let streamID: UUID?
+    let sequence: Int?
+    let windowCount: Int?
+    var windowID: Int? = nil
+    let displayedTitle: String?
+}

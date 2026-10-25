@@ -28,10 +28,25 @@ struct ProductionCallView: View {
                     Text(status).font(.title3.weight(.medium)).monospacedDigit().foregroundStyle(Theme.textSecondary)
                 }
                 if call.connectedAt != nil {
-                    VoiceStatusCard(voice: displayedVoice, heading: "Voice check", message: assessment) {
+                    VoiceStatusCard(voice: displayedVoice, heading: "Current voice assessment", message: assessment,
+                                    assessmentTitle: call.deepfake?.title,
+                                    warning: call.deepfake?.hasCurrentWarning == true) {
+                        if let current = call.deepfake {
+                            if let score = current.currentScoreText { Text(score).font(.callout) }
+                            Text(current.scoreText).font(.callout).foregroundStyle(Theme.textSecondary)
+                            if let pending = current.pendingMessage { Text(pending).font(.body) }
+                            if let age = current.evidenceAge {
+                                Text("Model evidence age: \(Int(age.rounded())) seconds at receipt")
+                                    .font(.callout).foregroundStyle(Theme.textSecondary)
+                            }
+                            if current.historicalWarnings?.isEmpty == false {
+                                Text("AI-like evidence occurred earlier in this call. See call history after hanging up.")
+                                    .font(.callout).foregroundStyle(Theme.textSecondary)
+                            }
+                        }
                         if let previous = call.lastDeepfakeResult,
                            let current = call.deepfake, [.waiting, .analyzing, .unavailable].contains(current.state) {
-                            Text("Last result: \(previous.voice.label)").font(.callout.weight(.semibold))
+                            Text("Earlier result: \(previous.title) · \(previous.updatedAt.formatted(date: .omitted, time: .shortened))").font(.callout.weight(.semibold))
                                 .foregroundStyle(Theme.textPrimary)
                         }
                         Text("Not an identity check").font(.callout).foregroundStyle(Theme.textSecondary)
@@ -68,6 +83,8 @@ struct ProductionCallView: View {
         .multilineTextAlignment(.center)
         .background(Theme.backgroundPrimary.ignoresSafeArea())
         .onReceive(clock) { now = $0 }
+        .onAppear { store.coordinator.recordVoiceDisplay(id: call.id) }
+        .onChange(of: call.deepfake) { _ in store.coordinator.recordVoiceDisplay(id: call.id) }
     }
     /// Answer and end controls stay pinned to the bottom so they are never scrolled out of reach.
     @ViewBuilder private var controls: some View {
@@ -122,7 +139,7 @@ struct ProductionCallView: View {
         }
     }
     /// Waiting for enough speech is the start of a check, so it looks like Analyzing rather than an inconclusive result.
-    private var displayedVoice: Voice { call.deepfake?.state == .waiting ? .analyzing : call.voice }
+    private var displayedVoice: Voice { call.deepfake?.voice ?? call.voice }
     private var assessment: String {
         if let deepfake = call.deepfake { return deepfake.message }
         switch call.voice {

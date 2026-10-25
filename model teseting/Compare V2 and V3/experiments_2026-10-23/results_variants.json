@@ -1,0 +1,391 @@
+[
+ {
+  "method": "V3 as is (baseline)",
+  "auc": 0.9837,
+  "eer": 0.0717,
+  "det_at_2pct_fp": 0.7266,
+  "det_at_5pct_fp": 0.8489,
+  "det_at_10pct_fp": 0.9712,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.7266,
+    "human_fp": 0.1582,
+    "balanced": 0.7842
+   },
+   "window_no_noise": {
+    "ai_detected": 0.8454,
+    "human_fp": 0.0588,
+    "balanced": 0.8933
+   },
+   "window_noise": {
+    "ai_detected": 0.4524,
+    "human_fp": 0.3833,
+    "balanced": 0.5345
+   },
+   "calls": {
+    "ai->ai": 30,
+    "ai_warned": 30,
+    "human->ai": 2,
+    "human->human": 17,
+    "human->uncertain": 1,
+    "human_warned": 2
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.7914,
+   "human_fp": 0.0204,
+   "balanced": 0.8855
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 on 8 kHz band-limited input",
+  "auc": 0.988,
+  "eer": 0.0568,
+  "det_at_2pct_fp": 0.7842,
+  "det_at_5pct_fp": 0.9353,
+  "det_at_10pct_fp": 0.9676,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.7842,
+    "human_fp": 0.0663,
+    "balanced": 0.8589
+   },
+   "window_no_noise": {
+    "ai_detected": 0.9381,
+    "human_fp": 0.0074,
+    "balanced": 0.9654
+   },
+   "window_noise": {
+    "ai_detected": 0.4286,
+    "human_fp": 0.2,
+    "balanced": 0.6143
+   },
+   "calls": {
+    "ai->ai": 29,
+    "ai->uncertain": 1,
+    "ai_warned": 30,
+    "human->ai": 1,
+    "human->human": 19,
+    "human_warned": 1
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.7482,
+   "human_fp": 0.0051,
+   "balanced": 0.8715
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 avg(original, 8 kHz)",
+  "auc": 0.9879,
+  "eer": 0.0568,
+  "det_at_2pct_fp": 0.7914,
+  "det_at_5pct_fp": 0.9173,
+  "det_at_10pct_fp": 0.9784,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.7914,
+    "human_fp": 0.1071,
+    "balanced": 0.8421
+   },
+   "window_no_noise": {
+    "ai_detected": 0.9124,
+    "human_fp": 0.0074,
+    "balanced": 0.9525
+   },
+   "window_noise": {
+    "ai_detected": 0.5119,
+    "human_fp": 0.3333,
+    "balanced": 0.5893
+   },
+   "calls": {
+    "ai->ai": 29,
+    "ai->uncertain": 1,
+    "ai_warned": 30,
+    "human->ai": 1,
+    "human->human": 18,
+    "human->uncertain": 1,
+    "human_warned": 2
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.759,
+   "human_fp": 0.0153,
+   "balanced": 0.8718
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 on denoised input",
+  "auc": 0.9249,
+  "eer": 0.1434,
+  "det_at_2pct_fp": 0.5468,
+  "det_at_5pct_fp": 0.8129,
+  "det_at_10pct_fp": 0.8381,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.5468,
+    "human_fp": 0.051,
+    "balanced": 0.7479
+   },
+   "window_no_noise": {
+    "ai_detected": 0.7423,
+    "human_fp": 0.0662,
+    "balanced": 0.838
+   },
+   "window_noise": {
+    "ai_detected": 0.0952,
+    "human_fp": 0.0167,
+    "balanced": 0.5393
+   },
+   "calls": {
+    "ai->ai": 25,
+    "ai->human": 4,
+    "ai->uncertain": 1,
+    "ai_warned": 26,
+    "human->human": 16,
+    "human->uncertain": 4
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.8381,
+   "human_fp": 0.0663,
+   "balanced": 0.8859
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 avg(original, denoised)",
+  "auc": 0.9767,
+  "eer": 0.0909,
+  "det_at_2pct_fp": 0.8273,
+  "det_at_5pct_fp": 0.8813,
+  "det_at_10pct_fp": 0.9245,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.8273,
+    "human_fp": 0.1122,
+    "balanced": 0.8575
+   },
+   "window_no_noise": {
+    "ai_detected": 0.9639,
+    "human_fp": 0.0588,
+    "balanced": 0.9525
+   },
+   "window_noise": {
+    "ai_detected": 0.5119,
+    "human_fp": 0.2333,
+    "balanced": 0.6393
+   },
+   "calls": {
+    "ai->ai": 26,
+    "ai->human": 1,
+    "ai->uncertain": 3,
+    "ai_warned": 28,
+    "human->ai": 1,
+    "human->human": 17,
+    "human->uncertain": 2,
+    "human_warned": 2
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.8129,
+   "human_fp": 0.0051,
+   "balanced": 0.9039
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 max(original, denoised)",
+  "auc": 0.9539,
+  "eer": 0.1162,
+  "det_at_2pct_fp": 0.5755,
+  "det_at_5pct_fp": 0.7806,
+  "det_at_10pct_fp": 0.8849,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.5755,
+    "human_fp": 0.0714,
+    "balanced": 0.7521
+   },
+   "window_no_noise": {
+    "ai_detected": 0.7526,
+    "human_fp": 0.0662,
+    "balanced": 0.8432
+   },
+   "window_noise": {
+    "ai_detected": 0.1667,
+    "human_fp": 0.0833,
+    "balanced": 0.5417
+   },
+   "calls": {
+    "ai->ai": 25,
+    "ai->human": 2,
+    "ai->uncertain": 3,
+    "ai_warned": 26,
+    "human->human": 19,
+    "human->uncertain": 1,
+    "human_warned": 1
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.8813,
+   "human_fp": 0.0867,
+   "balanced": 0.8973
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 avg(original, 8 kHz, denoised)",
+  "auc": 0.984,
+  "eer": 0.0822,
+  "det_at_2pct_fp": 0.8777,
+  "det_at_5pct_fp": 0.8993,
+  "det_at_10pct_fp": 0.9281,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.8777,
+    "human_fp": 0.1122,
+    "balanced": 0.8827
+   },
+   "window_no_noise": {
+    "ai_detected": 1.0,
+    "human_fp": 0.0588,
+    "balanced": 0.9706
+   },
+   "window_noise": {
+    "ai_detected": 0.5952,
+    "human_fp": 0.2333,
+    "balanced": 0.681
+   },
+   "calls": {
+    "ai->ai": 27,
+    "ai->uncertain": 3,
+    "ai_warned": 29,
+    "human->ai": 1,
+    "human->human": 18,
+    "human->uncertain": 1,
+    "human_warned": 2
+   }
+  },
+  "at_v3_supplied_threshold": {
+   "ai_detected": 0.7734,
+   "human_fp": 0.0,
+   "balanced": 0.8867
+  },
+  "nonspeech_flagged_at_2pct_threshold": "0/55",
+  "nonspeech_flagged_at_v3_threshold": "0/55"
+ },
+ {
+  "method": "V3 + 0.3*V2 fusion",
+  "auc": 0.9911,
+  "eer": 0.0507,
+  "det_at_2pct_fp": 0.9029,
+  "det_at_5pct_fp": 0.9496,
+  "det_at_10pct_fp": 0.9748,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.9029,
+    "human_fp": 0.1327,
+    "balanced": 0.8851
+   },
+   "window_no_noise": {
+    "ai_detected": 0.9948,
+    "human_fp": 0.0515,
+    "balanced": 0.9717
+   },
+   "window_noise": {
+    "ai_detected": 0.6905,
+    "human_fp": 0.3167,
+    "balanced": 0.6869
+   },
+   "calls": {
+    "ai->ai": 28,
+    "ai->uncertain": 2,
+    "ai_warned": 30,
+    "human->ai": 1,
+    "human->human": 17,
+    "human->uncertain": 2,
+    "human_warned": 2
+   }
+  },
+  "nonspeech_flagged_at_2pct_threshold": "35/55"
+ },
+ {
+  "method": "V3 + 0.5*V2 fusion",
+  "auc": 0.9909,
+  "eer": 0.0507,
+  "det_at_2pct_fp": 0.9209,
+  "det_at_5pct_fp": 0.9424,
+  "det_at_10pct_fp": 0.964,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.9209,
+    "human_fp": 0.1071,
+    "balanced": 0.9069
+   },
+   "window_no_noise": {
+    "ai_detected": 0.9948,
+    "human_fp": 0.0515,
+    "balanced": 0.9717
+   },
+   "window_noise": {
+    "ai_detected": 0.75,
+    "human_fp": 0.2333,
+    "balanced": 0.7583
+   },
+   "calls": {
+    "ai->ai": 28,
+    "ai->human": 1,
+    "ai->uncertain": 1,
+    "ai_warned": 29,
+    "human->human": 17,
+    "human->uncertain": 3,
+    "human_warned": 2
+   }
+  },
+  "nonspeech_flagged_at_2pct_threshold": "35/55"
+ },
+ {
+  "method": "V3 + 1.0*V2 fusion",
+  "auc": 0.9878,
+  "eer": 0.0568,
+  "det_at_2pct_fp": 0.9281,
+  "det_at_5pct_fp": 0.9424,
+  "det_at_10pct_fp": 0.946,
+  "loro": {
+   "window_all": {
+    "ai_detected": 0.9281,
+    "human_fp": 0.0357,
+    "balanced": 0.9462
+   },
+   "window_no_noise": {
+    "ai_detected": 1.0,
+    "human_fp": 0.0,
+    "balanced": 1.0
+   },
+   "window_noise": {
+    "ai_detected": 0.7619,
+    "human_fp": 0.1167,
+    "balanced": 0.8226
+   },
+   "calls": {
+    "ai->ai": 26,
+    "ai->human": 1,
+    "ai->uncertain": 3,
+    "ai_warned": 29,
+    "human->human": 19,
+    "human->uncertain": 1
+   }
+  },
+  "nonspeech_flagged_at_2pct_threshold": "35/55"
+ }
+]

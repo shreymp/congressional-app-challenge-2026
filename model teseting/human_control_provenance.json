@@ -1,0 +1,150 @@
+{
+  "label": "human",
+  "corpus": "LibriSpeech test-clean",
+  "archive_url": "https://www.openslr.org/resources/12/test-clean.tar.gz",
+  "provenance_urls": [
+    "https://www.openslr.org/12/",
+    "https://www.openslr.org/resources/12/about.html"
+  ],
+  "license": "CC BY 4.0",
+  "human_provenance": "Official OpenSLR corpus documentation identifies these as read English speech derived from LibriVox audiobooks; corpus published in 2015, archive last modified 2017.",
+  "selection": "First two speakers encountered in official tar stream; first archive-order utterances until >=40 s per speaker, concatenated then cropped at exactly 40 s. Archive order is not chronological utterance order. No detector score selection.",
+  "limitations": "Read audiobook speech, with utterance joins in archive order. Two male speakers are a small convenience control, not a representative phone-call false-positive benchmark. Possible training-set overlap with detector is unknown.",
+  "fetched_utc": "2026-10-23T01:35:05Z",
+  "speakers": [
+    {
+      "speaker_id": "6930",
+      "label": "human",
+      "path": "audio/human_controls/librispeech_test_clean_6930_40s.wav",
+      "sha256": "abea4c792d779286082be773dc8a2eb87277d995f4ce9efa134ee3feb6523597",
+      "sample_rate": 16000,
+      "channels": 1,
+      "frames": 640000,
+      "duration_seconds": 40.0,
+      "source_duration_seconds": 41.919999999999995,
+      "source_files": [
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0000.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0000.flac",
+          "sha256": "9ce35224156f071ab58eb7feb8a5ceae600f6f9f353da2a6cbf797b6b1ac8a23",
+          "sample_rate": 16000,
+          "samples": 56080,
+          "duration_seconds": 3.505
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0007.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0007.flac",
+          "sha256": "059969de8f6b780e1a4982805e977c3e73e40d3759c8fa8cb0cb8fabd9eb5b27",
+          "sample_rate": 16000,
+          "samples": 53040,
+          "duration_seconds": 3.315
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0006.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0006.flac",
+          "sha256": "4bed112ebfdba58ec061abd3fe013f89946863e9c51e8a83b50a5eb7afb9ce65",
+          "sample_rate": 16000,
+          "samples": 93600,
+          "duration_seconds": 5.85
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0005.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0005.flac",
+          "sha256": "ccc0da025ef4f4596a4e70fbde291527d140364166d19d9bb516a48407b3491e",
+          "sample_rate": 16000,
+          "samples": 210560,
+          "duration_seconds": 13.16
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0004.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0004.flac",
+          "sha256": "e1c4755c2febfc6b77fde418821c57e2e980d84d4c79a73ff60c6e6dfc794eac",
+          "sample_rate": 16000,
+          "samples": 177040,
+          "duration_seconds": 11.065
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/6930/75918/6930-75918-0002.flac",
+          "path": "audio/human_controls/source_flac/6930-75918-0002.flac",
+          "sha256": "74ecfd628f49dca71995972c075fcc9904df804d49a4eb5b11fb712b3584f789",
+          "sample_rate": 16000,
+          "samples": 80400,
+          "duration_seconds": 5.025
+        }
+      ],
+      "official_speaker_metadata": "6930 | M | test-clean       | 8.00  | Nolan Fout"
+    },
+    {
+      "speaker_id": "1320",
+      "label": "human",
+      "path": "audio/human_controls/librispeech_test_clean_1320_40s.wav",
+      "sha256": "970fbce110bee879d4d2a1cffad28d5152333842121b999e97276d476f6308b5",
+      "sample_rate": 16000,
+      "channels": 1,
+      "frames": 640000,
+      "duration_seconds": 40.0,
+      "source_duration_seconds": 42.900000000000006,
+      "source_files": [
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0003.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0003.flac",
+          "sha256": "bbe9ef85bbe228c73a414f064c9bd992c94135d73f9900b33104ad93c07d0594",
+          "sample_rate": 16000,
+          "samples": 100560,
+          "duration_seconds": 6.285
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0012.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0012.flac",
+          "sha256": "6b5cd2c31ee61665ea0d81f2c76a1f2c32cb4f46e5ec5861bd9157e262785252",
+          "sample_rate": 16000,
+          "samples": 121440,
+          "duration_seconds": 7.59
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0026.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0026.flac",
+          "sha256": "8e46137d386c181c23a97932fb560a1fffa0b8e635bfe38c81c6f0791dbbe9ed",
+          "sample_rate": 16000,
+          "samples": 83600,
+          "duration_seconds": 5.225
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0022.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0022.flac",
+          "sha256": "9c4d285c536c8562a3b9add558d159b84c5b3d8c27922669906ae8da831fc25c",
+          "sample_rate": 16000,
+          "samples": 61680,
+          "duration_seconds": 3.855
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0002.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0002.flac",
+          "sha256": "c567f708d614c54f20e4727cdcb3cf81aaf434277bb180e878edc2118f5e4abc",
+          "sample_rate": 16000,
+          "samples": 217360,
+          "duration_seconds": 13.585
+        },
+        {
+          "archive_member": "LibriSpeech/test-clean/1320/122617/1320-122617-0025.flac",
+          "path": "audio/human_controls/source_flac/1320-122617-0025.flac",
+          "sha256": "f4ced0ed4c93b6419b189fa02344e85c629f697581f62bde20c89b74b6cb6391",
+          "sample_rate": 16000,
+          "samples": 101760,
+          "duration_seconds": 6.36
+        }
+      ],
+      "official_speaker_metadata": "1320 | M | test-clean       | 8.02  | number6"
+    }
+  ],
+  "archive_headers": {
+    "Date": "Fri, 23 Oct 2026 01:35:07 GMT",
+    "Server": "Apache/2.4.68 (Debian)",
+    "Last-Modified": "Tue, 03 Oct 2017 21:33:01 GMT",
+    "ETag": "\"14a9ac30-55aab3c5175dc\"",
+    "Accept-Ranges": "bytes",
+    "Content-Length": "346663984",
+    "Connection": "close",
+    "Content-Type": "application/x-gzip"
+  }
+}

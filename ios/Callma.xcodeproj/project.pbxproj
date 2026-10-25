@@ -14,6 +14,7 @@
 		1B625D737EF3E14B14B5089E /* Callma/Production/PhoneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2C7F4EECD1479AF39255E7 /* Callma/Production/PhoneModels.swift */; };
 		2645CFCFB86572A35577E04B /* Callma/Views/CallmaRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B0A77A65637B37FAD6A41C /* Callma/Views/CallmaRootView.swift */; };
 		2A97FABB8F84839FEFF65217 /* CallmaTests/Fixtures/deepfake-wire.json in Resources */ = {isa = PBXBuildFile; fileRef = 74850DDDF8A1380B945BDAF3 /* CallmaTests/Fixtures/deepfake-wire.json */; };
+		4E6B8A91808079E0B35C0DF5 /* CallmaTests/Fixtures/deepfake-presentation.json in Resources */ = {isa = PBXBuildFile; fileRef = B8809A35196B7ED8E9086EDA /* CallmaTests/Fixtures/deepfake-presentation.json */; };
 		31158E233A601E63B4F1716C /* Callma/Production/ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E105B01AAFF0C5FD69E3F828 /* Callma/Production/ContactsService.swift */; };
 		3D1C538F2EE16E60DAD3FAA8 /* LiveKit in Frameworks */ = {isa = PBXBuildFile; productRef = F8BC5AC7305F31AB9EB70F86 /* LiveKit */; };
 		44FE32C9012AEF8EE1A943B7 /* Callma/Core/CallmaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3C1731A42A9A687D8568 /* Callma/Core/CallmaStore.swift */; };
@@ -83,6 +84,7 @@
 		61B5FBADFBFB4B1B0FEB25C2 /* Callma/Production/SystemPhoneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callma/Production/SystemPhoneService.swift; sourceTree = "<group>"; };
 		6FD24143DBC8CCA78DDB1998 /* Callma/Production/ProductionVoicemailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callma/Production/ProductionVoicemailView.swift; sourceTree = "<group>"; };
 		74850DDDF8A1380B945BDAF3 /* CallmaTests/Fixtures/deepfake-wire.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "CallmaTests/Fixtures/deepfake-wire.json"; sourceTree = "<group>"; };
+		B8809A35196B7ED8E9086EDA /* CallmaTests/Fixtures/deepfake-presentation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "CallmaTests/Fixtures/deepfake-presentation.json"; sourceTree = "<group>"; };
 		76627E728F88206A5D92EC3B /* CallmaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CallmaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BDC78C96B48495F53F0A95B /* CallmaTests/ProductionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallmaTests/ProductionTests.swift; sourceTree = "<group>"; };
 		885287000E8B08B10E284F5C /* Callma/Production/ProductionPhoneScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callma/Production/ProductionPhoneScreens.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				8A9DEFF925404398597B7BBA /* CallmaTests/DeepfakeIntegrationTests.swift */,
 				7BDC78C96B48495F53F0A95B /* CallmaTests/ProductionTests.swift */,
 				74850DDDF8A1380B945BDAF3 /* CallmaTests/Fixtures/deepfake-wire.json */,
+				B8809A35196B7ED8E9086EDA /* CallmaTests/Fixtures/deepfake-presentation.json */,
 				3D1B770EC62ABF3389B759AF /* CallmaUITests/CallmaUITests.swift */,
 				0E10008932BD795FAC5386AF /* CallmaUITests/ProductionUITests.swift */,
 				2A5BD22AA56627C49FC16F42 /* Configuration/VoIP.entitlements */,
@@ -307,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A97FABB8F84839FEFF65217 /* CallmaTests/Fixtures/deepfake-wire.json in Resources */,
+				4E6B8A91808079E0B35C0DF5 /* CallmaTests/Fixtures/deepfake-presentation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

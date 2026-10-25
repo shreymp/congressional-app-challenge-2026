@@ -1,0 +1,320 @@
+[
+  {
+    "v": "baseline",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/README.md",
+    "sha": "dbec2cc449d0897a9659e5ef755d8be6463ea171",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/README.md"
+  },
+  {
+    "v": "baseline",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py",
+    "sha": "2c5cc8eeb1e4fee2dbdeb531822e23be3cf84fee",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/senior_ring.py"
+  },
+  {
+    "v": "baseline",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_integration.py",
+    "sha": "0b83cd7c4305860fdbba17b24224934d2ad12b10",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/test_integration.py"
+  },
+  {
+    "v": "baseline",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/tools/mint_lobby_token.py",
+    "sha": "19ec8ad305f404bdbda5e9cd01f97300fc263207",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/tools/mint_lobby_token.py"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/BackendContracts.swift",
+    "sha": "4b92f442d3347e487d6e6f51c23deb163366d48a",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/BackendContracts.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ContactsService.swift",
+    "sha": "3b666c4679efa1a3d96d2a71629d7846a24e1458",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ContactsService.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/DeepfakeAssessment.swift",
+    "sha": "3b3da89dd201efb2f585d545b3e00c250efcde09",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/DeepfakeAssessment.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/LiveKitCallingBackend.swift",
+    "sha": "d80eca02316ac17ae87477d787d6c4291ce472aa",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/LiveKitCallingBackend.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/PhoneCallCoordinator.swift",
+    "sha": "72780dc37c1eb8cf9800806b6830f5c8b0ce5ba5",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/PhoneCallCoordinator.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/PhoneModels.swift",
+    "sha": "b9c8592853929360d8104c033f5e0042a7910f98",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/PhoneModels.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/PhoneRepository.swift",
+    "sha": "a7ee248af2db358ac8d6c1f066d65f0279dfe7f7",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/PhoneRepository.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/PhoneSessionState.swift",
+    "sha": "34566d1b5c452c91be99735b428b19f369512736",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/PhoneSessionState.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ProductionCallView.swift",
+    "sha": "028ef9d530393a6abe113c558da41ce359ca176f",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ProductionCallView.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ProductionPhoneScreens.swift",
+    "sha": "f712203520b130dfe30cb8d69fc955c606002e85",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ProductionPhoneScreens.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ProductionRootView.swift",
+    "sha": "41dac4e487e3981cdf34a6ce7d7c9ee64dff2113",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ProductionRootView.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ProductionStore.swift",
+    "sha": "153bd2e117437eb0c97515b01a7dc549632949d4",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ProductionStore.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/ProductionVoicemailView.swift",
+    "sha": "a5624361f959d7f659c4fbbe169e265c5c194278",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/ProductionVoicemailView.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/Callshield/Production/SystemPhoneService.swift",
+    "sha": "58305b0c91180759e291b2a66523add654a2caff",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/Callshield/Production/SystemPhoneService.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/CallshieldTests/DeepfakeIntegrationTests.swift",
+    "sha": "8ea28779c39d6d8b15598c448f8e7376447d29e8",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/CallshieldTests/DeepfakeIntegrationTests.swift"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/CallshieldTests/Fixtures/deepfake-wire.json",
+    "sha": "763b47d8d95c22cbda3ea18b38b88cc5c3e26611",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/CallshieldTests/Fixtures/deepfake-wire.json"
+  },
+  {
+    "v": "baseline",
+    "path": "ios/DEEPFAKE_VALIDATION.md",
+    "sha": "8ee51ae110223db5228af8c9e1f8fa64319c8012",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/baseline/ios/DEEPFAKE_VALIDATION.md"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/README.md",
+    "sha": "4c3224f960eaa9b25b47714599e54c6906429ad7",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/README.md"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/agent.py",
+    "sha": "ff5f288907838942106cd939161b4ed538d80b0e",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/agent.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/audio_window.py",
+    "sha": "b3a3924f67847ffc40ab4d5d65a5a829e442b77d",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/audio_window.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/recording_notice.py",
+    "sha": "fa881aba3707945601ebee76cd77df2b054915bb",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/recording_notice.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/risk.py",
+    "sha": "bbca096f8a552f8d8b3c15e5f2498a2ce31fe24f",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/risk.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/scoring.py",
+    "sha": "7dc728d34ea967109b1728d76de45407f435f061",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/scoring.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/senior_ring.py",
+    "sha": "bfdb5fadcfb9edddf1a526ae173992e37aa6fb06",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/senior_ring.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_agent_integration.py",
+    "sha": "5a153f5328b1b785f7869b232c80b354711d302c",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_agent_integration.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_cumulative.py",
+    "sha": "81b043f7d5728a5684888497ee6d85d84b23432e",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_cumulative.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_integration.py",
+    "sha": "f0c448561dd18ba09852b9b6bf71244b76a377f7",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_integration.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_offline.py",
+    "sha": "62ba313df665682d8fa5cc68c1760b0464fc3684",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_offline.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/test_recording_notice.py",
+    "sha": "128a744bfae00aed969fff3c5f417d34d7c440b2",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/test_recording_notice.py"
+  },
+  {
+    "v": "current",
+    "path": "backend/AI Deepfake Pipeline/LiveKit Setup/tools/mint_lobby_token.py",
+    "sha": "19ec8ad305f404bdbda5e9cd01f97300fc263207",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/tools/mint_lobby_token.py"
+  },
+  {
+    "v": "current",
+    "path": "docs/CUMULATIVE_VOICE_ANALYSIS.md",
+    "sha": "3c27615be877c3eb78a63df4afac85c7fe4254b1",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/docs/CUMULATIVE_VOICE_ANALYSIS.md"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/BackendContracts.swift",
+    "sha": "4b92f442d3347e487d6e6f51c23deb163366d48a",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/BackendContracts.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ContactsService.swift",
+    "sha": "3b666c4679efa1a3d96d2a71629d7846a24e1458",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ContactsService.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/DeepfakeAssessment.swift",
+    "sha": "2a977a54bb9254b6f49dfc33a8993d97816a5406",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/DeepfakeAssessment.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/LiveKitCallingBackend.swift",
+    "sha": "8c807ef2615bc64ede1cb67e1f0ef0529d95ba34",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/LiveKitCallingBackend.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/PhoneCallCoordinator.swift",
+    "sha": "00ce255e35cbbc5cd6bfc6e3891d40a8b4f8e06c",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/PhoneCallCoordinator.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/PhoneModels.swift",
+    "sha": "b9c8592853929360d8104c033f5e0042a7910f98",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/PhoneModels.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/PhoneRepository.swift",
+    "sha": "a7ee248af2db358ac8d6c1f066d65f0279dfe7f7",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/PhoneRepository.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/PhoneSessionState.swift",
+    "sha": "6521a74b951f82a42866bdbc879a5abd86005f74",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/PhoneSessionState.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ProductionCallView.swift",
+    "sha": "0ef0b0f338e61360a56266439a7e099aebead128",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ProductionCallView.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ProductionPhoneScreens.swift",
+    "sha": "f712203520b130dfe30cb8d69fc955c606002e85",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ProductionPhoneScreens.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ProductionRootView.swift",
+    "sha": "41dac4e487e3981cdf34a6ce7d7c9ee64dff2113",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ProductionRootView.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ProductionStore.swift",
+    "sha": "868b17d1bc79f603b9aa1784fe7daf5dd7ae427b",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ProductionStore.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/ProductionVoicemailView.swift",
+    "sha": "a5624361f959d7f659c4fbbe169e265c5c194278",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/ProductionVoicemailView.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/Callshield/Production/SystemPhoneService.swift",
+    "sha": "58305b0c91180759e291b2a66523add654a2caff",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/Callshield/Production/SystemPhoneService.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/CallshieldTests/DeepfakeIntegrationTests.swift",
+    "sha": "c05ad58cc340867be8c9bb6f90c412109e90b7dd",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/CallshieldTests/DeepfakeIntegrationTests.swift"
+  },
+  {
+    "v": "current",
+    "path": "ios/CallshieldTests/Fixtures/deepfake-wire.json",
+    "sha": "5312737482713a5a00589010b3861788b89372ae",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/CallshieldTests/Fixtures/deepfake-wire.json"
+  },
+  {
+    "v": "current",
+    "path": "ios/DEEPFAKE_VALIDATION.md",
+    "sha": "fc228037d88f63046c7ac6756f2e18e7413e400a",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/DEEPFAKE_VALIDATION.md"
+  },
+  {
+    "v": "current",
+    "path": "ios/scripts/check_deepfake_contract.swift",
+    "sha": "cccf60d06523b6696f49a893b3a20fa6e101f5e7",
+    "dest": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/scripts/check_deepfake_contract.swift"
+  }
+]

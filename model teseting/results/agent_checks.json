@@ -1,0 +1,23 @@
+[
+  {
+    "version": "baseline",
+    "module": "test_agent_integration",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_cancellation_stops_inflight_inference_from_publishing (test_agent_integration.AgentIntegrationTests.test_cancellation_stops_inflight_inference_from_publishing) ... ok\ntest_failed_inference_does_not_fail_call_or_leak_stream (test_agent_integration.AgentIntegrationTests.test_failed_inference_does_not_fail_call_or_leak_stream) ... ok\ntest_failed_model_load_reports_unavailable_and_can_be_cancelled (test_agent_integration.AgentIntegrationTests.test_failed_model_load_reports_unavailable_and_can_be_cancelled) ... ok\ntest_scores_and_publishes_versioned_caller_evidence_then_closes (test_agent_integration.AgentIntegrationTests.test_scores_and_publishes_versioned_caller_evidence_then_closes) ... ok\ntest_transcript_is_fused_into_versioned_risk_updates (test_agent_integration.AgentIntegrationTests.test_transcript_is_fused_into_versioned_risk_updates) ... ok\ntest_transcription_continues_when_voice_model_is_missing (test_agent_integration.AgentIntegrationTests.test_transcription_continues_when_voice_model_is_missing) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.430s\n\nOK\n"
+  },
+  {
+    "version": "current",
+    "module": "test_agent_integration",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_backend_probe_skips_notice (test_agent_integration.AgentIntegrationTests.test_backend_probe_skips_notice) ... ok\ntest_cancellation_stops_inflight_inference_from_publishing (test_agent_integration.AgentIntegrationTests.test_cancellation_stops_inflight_inference_from_publishing) ... ok\ntest_failed_inference_does_not_fail_call_or_leak_stream (test_agent_integration.AgentIntegrationTests.test_failed_inference_does_not_fail_call_or_leak_stream) ... ok\ntest_failed_model_load_reports_unavailable_and_can_be_cancelled (test_agent_integration.AgentIntegrationTests.test_failed_model_load_reports_unavailable_and_can_be_cancelled) ... ok\ntest_failed_or_timed_out_notice_never_opens_processing_stream (test_agent_integration.AgentIntegrationTests.test_failed_or_timed_out_notice_never_opens_processing_stream) ... ok\ntest_notice_blocks_transcription_audio_and_recording_until_playback_finishes (test_agent_integration.AgentIntegrationTests.test_notice_blocks_transcription_audio_and_recording_until_playback_finishes) ... ok\ntest_notice_timeout_cancels_playback_and_preserves_ring_supervisor (test_agent_integration.AgentIntegrationTests.test_notice_timeout_cancels_playback_and_preserves_ring_supervisor) ... ok\ntest_scores_and_publishes_versioned_caller_evidence_then_closes (test_agent_integration.AgentIntegrationTests.test_scores_and_publishes_versioned_caller_evidence_then_closes) ... ok\ntest_transcript_is_fused_into_versioned_risk_updates (test_agent_integration.AgentIntegrationTests.test_transcript_is_fused_into_versioned_risk_updates) ... ok\ntest_transcription_continues_when_voice_model_is_missing (test_agent_integration.AgentIntegrationTests.test_transcription_continues_when_voice_model_is_missing) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.567s\n\nOK\n"
+  },
+  {
+    "version": "current",
+    "module": "test_recording_notice",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_missing_asset_fails (test_recording_notice.NoticeAssetTests.test_missing_asset_fails) ... ok\ntest_reads_expected_pcm (test_recording_notice.NoticeAssetTests.test_reads_expected_pcm) ... ok\ntest_rejects_silence_empty_wrong_format_and_truncated_files (test_recording_notice.NoticeAssetTests.test_rejects_silence_empty_wrong_format_and_truncated_files) ... ok\ntest_cancellation_while_waiting_for_receiver_cleans_up (test_recording_notice.PlaybackTests.test_cancellation_while_waiting_for_receiver_cleans_up) ... ok\ntest_subscribes_before_speech_and_drains_before_cleanup (test_recording_notice.PlaybackTests.test_subscribes_before_speech_and_drains_before_cleanup) ... ok\ntest_transport_failure_cleans_up_and_propagates (test_recording_notice.PlaybackTests.test_transport_failure_cleans_up_and_propagates) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.007s\n\nOK\n"
+  }
+]

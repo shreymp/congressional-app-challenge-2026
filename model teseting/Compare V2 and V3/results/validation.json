@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "input_windows_checked": 677,
+  "unique_hashes_checked": 467,
+  "metric_rows_checked": 44,
+  "independent_auc": "All pairwise AI/human comparisons with half-credit for ties",
+  "cpu_gpu_logit_tolerance": 0.01,
+  "numeric_checks": [
+    {
+      "version": "v2",
+      "case": "original",
+      "cpu_logit": 22.109642028808594,
+      "gpu_logit": 22.109651565551758,
+      "abs_error": 9.5367431640625e-06,
+      "passed": true
+    },
+    {
+      "version": "v2",
+      "case": "librispeech_test_clean_1320_40s",
+      "cpu_logit": 17.315317153930664,
+      "gpu_logit": 17.315309524536133,
+      "abs_error": 7.62939453125e-06,
+      "passed": true
+    },
+    {
+      "version": "v2",
+      "case": "librispeech_test_clean_6930_40s",
+      "cpu_logit": 15.704096794128418,
+      "gpu_logit": 15.704158782958984,
+      "abs_error": 6.198883056640625e-05,
+      "passed": true
+    },
+    {
+      "version": "v2",
+      "case": "white_noise_10dB_SNR",
+      "cpu_logit": 14.815146446228027,
+      "gpu_logit": 14.815129280090332,
+      "abs_error": 1.71661376953125e-05,
+      "passed": true
+    },
+    {
+      "version": "v2",
+      "case": "control_dtmf_rms0.03",
+      "cpu_logit": 52.18058395385742,
+      "gpu_logit": 52.18055725097656,
+      "abs_error": 2.6702880859375e-05,
+      "passed": true
+    },
+    {
+      "version": "v2",
+      "case": "control_silence",
+      "cpu_logit": 27.84779167175293,
+      "gpu_logit": 27.84773063659668,
+      "abs_error": 6.103515625e-05,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "original",
+      "cpu_logit": 1.3068110942840576,
+      "gpu_logit": 1.3068032264709473,
+      "abs_error": 7.867813110351562e-06,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "librispeech_test_clean_1320_40s",
+      "cpu_logit": -1.5041344165802002,
+      "gpu_logit": -1.5041385889053345,
+      "abs_error": 4.172325134277344e-06,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "librispeech_test_clean_6930_40s",
+      "cpu_logit": -6.2272725105285645,
+      "gpu_logit": -6.227257251739502,
+      "abs_error": 1.52587890625e-05,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "white_noise_10dB_SNR",
+      "cpu_logit": 0.7193673849105835,
+      "gpu_logit": 0.7193472981452942,
+      "abs_error": 2.008676528930664e-05,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "control_dtmf_rms0.03",
+      "cpu_logit": -2.8935253620147705,
+      "gpu_logit": -2.8935298919677734,
+      "abs_error": 4.5299530029296875e-06,
+      "passed": true
+    },
+    {
+      "version": "v3",
+      "case": "control_silence",
+      "cpu_logit": 0.6602286696434021,
+      "gpu_logit": 0.6602309942245483,
+      "abs_error": 2.3245811462402344e-06,
+      "passed": true
+    }
+  ],
+  "frozen_previous_baseline_unchanged": true
+}

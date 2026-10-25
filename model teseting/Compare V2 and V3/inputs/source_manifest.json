@@ -1,0 +1,63 @@
+{
+  "sources": {
+    "ai_source": {
+      "path": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/inputs/audio/ElevenLabs_2026-10-23T01_11_44_shrey_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "86e4df799bad88b6c3df61bdf459b7bd698345ee78c4989d4a0ac13bf3893198",
+      "decoded_sample_rate": 44100,
+      "decoded_frames": 1691136,
+      "channels": 1,
+      "decoded_duration_sec": 38.347755102040814
+    },
+    "supplemental_ai_ElevenLabs_2026-10-23T02_47_03_keshav_ivc_sp100_s50_sb75_v4": {
+      "path": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/inputs/audio/ElevenLabs_2026-10-23T02_47_03_keshav_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "47447595751ef238aed6419eab38b602cdece73e94ca9ceb3e2b9462c478c0b1",
+      "decoded_sample_rate": 44100,
+      "decoded_frames": 1875456,
+      "channels": 1,
+      "decoded_duration_sec": 42.52734693877551,
+      "provenance_status": "user-supplied ElevenLabs filename; identity, consent and training overlap unverified",
+      "synthetic_system": "ElevenLabs; same system as original; not held-out"
+    },
+    "supplemental_ai_ElevenLabs_2026-10-23T02_47_47_azim_ivc_sp100_s50_sb75_v4": {
+      "path": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/inputs/audio/ElevenLabs_2026-10-23T02_47_47_azim_ivc_sp100_s50_sb75_v4.mp3",
+      "sha256": "b3c3785615cdeaa01a9409068fbc87e751ef91c9ad27d165efdc812ee6d74fac",
+      "decoded_sample_rate": 44100,
+      "decoded_frames": 1607040,
+      "channels": 1,
+      "decoded_duration_sec": 36.440816326530616,
+      "provenance_status": "user-supplied ElevenLabs filename; identity, consent and training overlap unverified",
+      "synthetic_system": "ElevenLabs; same system as original; not held-out"
+    },
+    "librispeech_test_clean_1320_40s": {
+      "path": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/inputs/audio/librispeech_test_clean_1320_40s.wav",
+      "sha256": "970fbce110bee879d4d2a1cffad28d5152333842121b999e97276d476f6308b5",
+      "decoded_sample_rate": 16000,
+      "decoded_frames": 640000,
+      "channels": 1,
+      "decoded_duration_sec": 40.0
+    },
+    "librispeech_test_clean_6930_40s": {
+      "path": "/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/Compare V2 and V3/inputs/audio/librispeech_test_clean_6930_40s.wav",
+      "sha256": "abea4c792d779286082be773dc8a2eb87277d995f4ce9efa134ee3feb6523597",
+      "decoded_sample_rate": 16000,
+      "decoded_frames": 640000,
+      "channels": 1,
+      "decoded_duration_sec": 40.0
+    }
+  },
+  "missing": [
+    "librispeech_test_clean_1320_40s: ffmpeg unavailable; matched MP3 control missing",
+    "librispeech_test_clean_6930_40s: ffmpeg unavailable; matched MP3 control missing",
+    "Real TV/background chatter and consented actual hold music were not supplied; synthetic music is a stress control only."
+  ],
+  "configuration": {
+    "seed": 20261022,
+    "sample_rate": 16000,
+    "extended_controls": true,
+    "non_speech_duration_sec": 20,
+    "non_speech_rms_levels": [
+      0.003,
+      0.03
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+.venv*/
+cache/
+audio/
+weights/
+*.pt
+__pycache__/
