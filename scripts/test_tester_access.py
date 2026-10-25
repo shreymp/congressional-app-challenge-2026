@@ -37,7 +37,7 @@ class AccessTests(unittest.TestCase):
             with patch.object(access,'CONFIG',target): access.install(source)
             text=target.read_text()
             self.assertIn('DEVELOPMENT_TEAM = PERSONAL',text)
-            self.assertIn('CALLSHIELD_DEMO = false',text)
+            self.assertIn('CALLMA_DEMO = false',text)
             self.assertNotIn('API_SECRET',text)
             self.assertEqual(stat.S_IMODE(target.stat().st_mode),0o600)
 
