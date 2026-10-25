@@ -32,7 +32,8 @@ def read_notice(path: Path = NOTICE_PATH) -> bytes:
 async def play_recording_notice(room, *, rtc_module=None) -> None:
     """Publish once to the answered call, drain playback, then remove the track.
 
-    The caller must already be active before this is called. Publishing earlier would
+    The senior's app must have published its microphone before this is called; an
+    active SIP caller alone does not prove pickup. Publishing earlier would
     answer the telephone while the senior's app was still ringing. An exception must
     prevent the caller stream, transcription and optional recording from starting.
     rtc_module allows offline transport tests without a LiveKit connection.
