@@ -1,0 +1,37 @@
+[
+  {
+    "version": "baseline",
+    "check": "test_integration",
+    "exit_code": 0,
+    "elapsed_sec": 0.10564154099847656,
+    "log": "logs/fallback_baseline_test_integration.txt"
+  },
+  {
+    "version": "baseline",
+    "check": "test_offline_stub",
+    "exit_code": 0,
+    "elapsed_sec": 1.39162349999242,
+    "log": "logs/fallback_baseline_test_offline_stub.txt"
+  },
+  {
+    "version": "current",
+    "check": "test_cumulative",
+    "exit_code": 0,
+    "elapsed_sec": 0.07204612500208896,
+    "log": "logs/fallback_current_test_cumulative.txt"
+  },
+  {
+    "version": "current",
+    "check": "test_integration",
+    "exit_code": 0,
+    "elapsed_sec": 0.09971683299227152,
+    "log": "logs/fallback_current_test_integration.txt"
+  },
+  {
+    "version": "current",
+    "check": "test_offline_stub",
+    "exit_code": 0,
+    "elapsed_sec": 0.7623321249993751,
+    "log": "logs/fallback_current_test_offline_stub.txt"
+  }
+]

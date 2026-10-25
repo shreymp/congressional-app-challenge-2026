@@ -1,0 +1,11 @@
+test_missing_asset_fails (test_recording_notice.NoticeAssetTests.test_missing_asset_fails) ... ok
+test_reads_expected_pcm (test_recording_notice.NoticeAssetTests.test_reads_expected_pcm) ... ok
+test_rejects_silence_empty_wrong_format_and_truncated_files (test_recording_notice.NoticeAssetTests.test_rejects_silence_empty_wrong_format_and_truncated_files) ... ok
+test_cancellation_while_waiting_for_receiver_cleans_up (test_recording_notice.PlaybackTests.test_cancellation_while_waiting_for_receiver_cleans_up) ... ok
+test_subscribes_before_speech_and_drains_before_cleanup (test_recording_notice.PlaybackTests.test_subscribes_before_speech_and_drains_before_cleanup) ... ok
+test_transport_failure_cleans_up_and_propagates (test_recording_notice.PlaybackTests.test_transport_failure_cleans_up_and_propagates) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+OK

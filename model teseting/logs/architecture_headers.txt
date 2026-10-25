@@ -1,0 +1,60 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0   260    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0  1568    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/2 307 
+content-type: text/plain; charset=utf-8
+content-length: 260
+date: Fri, 23 Oct 2026 01:36:15 GMT
+location: /api/resolve-cache/models/facebook/wav2vec2-xls-r-300m/1a640f32ac3e39899438a2931f9924c02f080a54/config.json?%2Ffacebook%2Fwav2vec2-xls-r-300m%2Fresolve%2Fmain%2Fconfig.json=&etag=%222e7517d6705d22aef2fa4fd0bcc83b47f4757bd3%22
+x-powered-by: huggingface-moon
+x-request-id: Root=1-6adaba0f-2afaced8765cda1937a69b88
+ratelimit: "resolvers";r=2999;t=29
+ratelimit-policy: "fixed window";"resolvers";q=3000;w=300
+cross-origin-opener-policy: same-origin
+referrer-policy: strict-origin-when-cross-origin
+access-control-max-age: 86400
+access-control-allow-origin: https://huggingface.co
+vary: Origin, Accept
+access-control-expose-headers: X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash
+x-repo-commit: 1a640f32ac3e39899438a2931f9924c02f080a54
+accept-ranges: bytes
+x-hf-warning: unauthenticated; Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+x-hub-cache: MISS
+content-disposition: inline; filename*=UTF-8''config.json; filename="config.json";
+content-security-policy: default-src 'none'; sandbox
+x-linked-etag: "2e7517d6705d22aef2fa4fd0bcc83b47f4757bd3"
+x-cache: Miss from cloudfront
+via: 1.1 30c6d7b3beb0a918037485bea6e0158c.cloudfront.net (CloudFront)
+x-amz-cf-pop: ORD58-P13
+alt-svc: h3=":443"; ma=86400
+x-amz-cf-id: uiYsDvkhFJdQH6ku2wixfaOnauUHvcbdL5a6XzMy4vXC6CLjKRdHhw==
+strict-transport-security: max-age=31536000
+
+HTTP/2 200 
+content-type: text/plain; charset=utf-8
+content-length: 1568
+date: Tue, 01 Sep 2026 11:57:21 GMT
+etag: "2e7517d6705d22aef2fa4fd0bcc83b47f4757bd3"
+x-powered-by: huggingface-moon
+x-request-id: Root=1-6a96bda1-72131ef60068ff147d52da6a
+ratelimit: "resolvers";r=2976;t=139
+ratelimit-policy: "fixed window";"resolvers";q=3000;w=300
+cross-origin-opener-policy: same-origin
+referrer-policy: strict-origin-when-cross-origin
+access-control-max-age: 86400
+access-control-allow-origin: https://huggingface.co
+access-control-expose-headers: X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash
+x-repo-commit: 1a640f32ac3e39899438a2931f9924c02f080a54
+accept-ranges: bytes
+content-disposition: inline; filename*=UTF-8''config.json; filename="config.json";
+content-security-policy: default-src 'none'; sandbox
+vary: Origin
+x-cache: Hit from cloudfront
+via: 1.1 30c6d7b3beb0a918037485bea6e0158c.cloudfront.net (CloudFront)
+x-amz-cf-pop: ORD58-P13
+alt-svc: h3=":443"; ma=86400
+x-amz-cf-id: xcSeiDLsPikI3OfHuP_Prh8X2aHy-zxBGQSvin10dxWeu4zxhvE14g==
+age: 4455534
+strict-transport-security: max-age=31536000
+

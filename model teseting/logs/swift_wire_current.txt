@@ -1,0 +1,5 @@
+Command: ['/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/cache/wire_current', '/Users/spatel7/Documents/congressional-app-challenge-2026-main/model teseting/snapshots/current/ios/CallshieldTests/Fixtures/deepfake-wire.json']
+
+Passed 11 Python/Swift wire fixtures plus malformed/oversize rejection
+
+Exit code: 0

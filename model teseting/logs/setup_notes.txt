@@ -1,0 +1,5 @@
+Initial checkout: improved-ui at 0fe9400e702abb62a2e7e9df5bd6dfd5a3cdef51, clean, no remotes configured.
+Existing .venv: Python3.14.8, initially pip26.0.1 only. Installed torch transformers numpy scipy soundfile, then matplotlib. Compatible cp314 ARM wheels succeeded; pip freeze saved in dependencies.txt. pip check passed.
+First sandbox package/config/git requests failed DNS resolution; authorized elevated installs/downloads succeeded. Plain git clone then failed authentication (could not read Username); connected GitHub plugin acquired exact selected files and blob-verified them. No checkout switch/reset.
+Sandbox torch reports MPS built=True available=False. Outside sandbox, MPS available=True and a GPU tensor allocation succeeds. Full strict-loaded model probe and benchmark succeed on MPS, with CPU comparison. No fallback environment was created.
+Architecture config only downloaded from official Facebook Wav2Vec2 HF model. Corpus controls downloaded from official OpenSLR. Supplied MP3 and checkpoint remained local.

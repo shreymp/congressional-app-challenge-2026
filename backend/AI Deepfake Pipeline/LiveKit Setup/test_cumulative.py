@@ -74,13 +74,34 @@ class CumulativeTests(unittest.TestCase):
                 engine.update(p, z, weight)
 
     def test_audio_preserves_pauses_and_rejects_clipping(self):
+        # A natural pause carries a noise floor; it stays in the window unchanged.
+        pause = np.random.default_rng(3).integers(-40, 41, 200).astype(np.int16)
         window = VoicedWindow(sample_rate=100, window_sec=4)
         window.push_int16(np.full(200, 5000, dtype=np.int16).tobytes())
-        window.push_int16(bytes(400))
+        window.push_int16(pause.tobytes())
         self.assertTrue(window.ready())
         self.assertEqual(window.weight, .5)
-        self.assertTrue(np.all(window.snapshot()[-200:] == 0))
+        np.testing.assert_array_equal(window.snapshot()[-200:], pause.astype(np.float32) / 32768)
         window.push_int16(np.full(400, 32767, dtype=np.int16).tobytes())
+        self.assertFalse(window.ready())
+
+    def test_digital_silence_gap_is_not_submitted_unless_guard_disabled(self):
+        # Benchmark 2026-10-22: 2 s digital silence + 2 s human speech scored logit 31-34.
+        for limit, ready in ((.2, False), (None, True)):
+            window = VoicedWindow(sample_rate=100, window_sec=4, digital_silence_max_sec=limit)
+            window.push_int16(np.full(200, 5000, dtype=np.int16).tobytes())
+            window.push_int16(bytes(400))
+            self.assertEqual(window.ready(), ready)
+            self.assertEqual(window.diagnostics()["digital_silence_max_run_sec"], 2.0)
+            if not ready:
+                self.assertEqual(window.rejection_reason, "insufficient_speech")
+                self.assertEqual(window.quality_detail, "digital_silence_gap")
+        # A gap at the limit is allowed; one sample longer is not.
+        window = VoicedWindow(sample_rate=100, window_sec=4, digital_silence_max_sec=.2)
+        window.push_int16(np.full(380, 5000, dtype=np.int16).tobytes())
+        window.push_int16(bytes(40))
+        self.assertTrue(window.ready())
+        window.push_int16(bytes(2))
         self.assertFalse(window.ready())
 
     def test_duplicate_and_retired_inference_cannot_count_twice(self):

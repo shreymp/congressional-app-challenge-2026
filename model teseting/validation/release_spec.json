@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "created_local_date": "2026-10-22",
+  "status": "preregistered_engineering_targets_not_validated_operating_points",
+  "confidence": 0.95,
+  "max_failure_upper_bound": {
+    "human_false_warning": 0.01,
+    "ai_missed": 0.05,
+    "ai_deadline_missed": 0.10,
+    "analysis_uncovered": 0.10
+  },
+  "deadline_connection_sec": 15,
+  "max_switch_detection_p95_sec": 16,
+  "max_human_recovery_p95_sec": 20,
+  "max_human_with_fresh_warning_sec": 0,
+  "coverage_milestone": {"human_speakers": 30, "synthetic_voices": 10, "synthetic_systems": 3},
+  "required_checks": [
+    "python_unit_integration", "swift_contract", "ios_xctest_simulator",
+    "physical_iphone_display_voiceover", "consented_live_phone_path",
+    "deployed_device_concurrency", "legacy_v1_rollback"
+  ]
+}

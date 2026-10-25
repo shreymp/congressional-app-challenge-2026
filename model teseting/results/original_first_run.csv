@@ -1,0 +1,5 @@
+case,mode,version,first_ai,first_human,first_recent_ai,at15,final,score,incorrect_human_sec,false_ai_sec,windows,median_infer_ms
+original,production,baseline,8.020091,,,ai,ai,,0,0,33,19.471499996143393
+original,production,current,8.019773,,12.019561,ai,ai,96.6,0,0,9,20.00995799608063
+original,matched,baseline,12.019561082997825,,,ai,ai,,0,0,9,20.00995799608063
+original,matched,current,8.019773374995566,,12.019561082997825,ai,ai,96.6,0,0,9,20.00995799608063

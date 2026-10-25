@@ -109,11 +109,21 @@ class CallEvidenceEngine:
     HUMAN_SCORE = 35.0
     AI_SCORE = 65.0
 
-    def __init__(self, elevated_threshold, high_threshold):
+    def __init__(self, elevated_threshold, high_threshold, calibration=None):
         RiskEngine(elevated_threshold, high_threshold)
         low, high = logit(elevated_threshold), logit(high_threshold)
         self.center = (low + high) / 2
         self.scale = max((high - low) / (2 * logit(.65)), .25)
+        self.calibrated = False
+        if calibration is not None:
+            # Platt scaling: calibrated log-odds = a * z + b, so (z - center) / scale with
+            # center = -b / a and scale = 1 / a. A window's bounded value is then its
+            # calibrated log-odds (clamped to +/-4), and 65/35 mean P(AI) 0.65/0.35 per
+            # window before speech-weighted averaging.
+            a, b = float(calibration["a"]), float(calibration["b"])
+            if not (math.isfinite(a) and math.isfinite(b) and a > 0):
+                raise ValueError("Calibration needs finite a > 0 and finite b")
+            self.center, self.scale, self.calibrated = -b / a, 1 / a, True
         self.weighted = self.weight = 0.0
         self.n_updates = self.human_steps = 0
         self.state = "analyzing"

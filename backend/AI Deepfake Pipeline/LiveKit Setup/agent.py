@@ -13,15 +13,10 @@ What it does per call
      Also handles no answer (a stub for now) and hangs up the caller after she hangs up.
   1. Finds the SIP participant (the phone caller) and logs its attributes, including the
      caller number LiveKit saw. That answers "does forwarding keep the real caller ID?".
-  2. Streams the caller's audio at 16 kHz, retaining contiguous four-second windows.
-  3. Checks about once per second for a distinct eligible window and scores it in a worker
-     thread (never blocking the audio loop), accumulates evidence, and publishes to the room on
-  2. Plays "This call is being recorded." to the answered room before starting any caller
-     stream, transcription or recording. If playback fails, all of those stay disabled.
-     Then streams the caller's audio at 16 kHz, keeping the last ~4 s of speech.
-  3. About once per second, scores that window with the deepfake detector in a worker thread
-     (never blocking the audio loop), smooths it, and publishes a JSON update to the room on
-     topic "scam-guard.risk". Grandma's app (and tools/watch_risk.py) listen on that topic.
+  2. Plays "This call is being recorded." to the answered room before caller audio,
+     transcription or recording. If playback fails, all of those stay disabled.
+  3. Retains contiguous four-second windows. Checks once per second for a distinct
+     eligible window, scores one at a time in a worker, and publishes heuristic evidence.
   4. Optionally saves the caller's audio for building phone-domain training data
      (RECORD_CALLER_AUDIO=1). Only for calls where everyone has agreed to be recorded.
 
@@ -49,6 +44,7 @@ import drive_upload
 import transcript_pipeline
 from risk import combine
 from scoring import AudioScoringSession
+from pipeline_config import ScoringConfig
 from risk_protocol import RISK_TOPIC, RiskPublisher
 import senior_ring
 from recording_notice import NOTICE_TIMEOUT_SEC, play_recording_notice
@@ -68,7 +64,11 @@ def prewarm(proc: JobProcess) -> None:
     """Runs once per worker process, before any call, so the 650 MB model is already loaded."""
     try:
         proc.userdata["detector"] = detector_adapter.load()
-        log.info("detector loaded on %s", proc.userdata["detector"].device)
+        # Validate scoring settings (and load the Silero VAD if SPEECH_GATE=silero) before any
+        # call, so a bad setting shows up here instead of failing inside a live call.
+        config = ScoringConfig.from_env()
+        log.info("detector loaded on %s; speech gate %s; calibration %s", proc.userdata["detector"].device,
+                 config.gate, "on" if getattr(proc.userdata["detector"], "calibration", None) else "off")
     except Exception as e:
         proc.userdata["detector_error"] = f"{type(e).__name__}: {e}"[:300]
         # Ringing and media remain usable even when the model cannot initialize.
@@ -98,6 +98,7 @@ server = AgentServer(
 @server.rtc_session(agent_name=AGENT_NAME)
 async def scam_guard(ctx: JobContext) -> None:
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
+    connected_at = time.monotonic()
     # 0. Ring grandma's app for the phone caller. Starts its own task and returns at once; it
     #    must not wait for step 1, because nothing answers the call until she has been rung.
     job_metadata = getattr(getattr(ctx, "job", None), "metadata", "") or ""
@@ -110,7 +111,7 @@ async def scam_guard(ctx: JobContext) -> None:
     # would not be deleted, leaving the phone caller connected to nobody. Returning normally keeps
     # the job alive until the room disconnects, so the ring keeps supervising the call.
     try:
-        await _score_call(ctx, probe=probe)
+        await _score_call(ctx, probe=probe, connection_monotonic=connected_at)
     except Exception as e:
         if isinstance(e, RuntimeError) and not ctx.room.isconnected():
             # wait_for_participant raises this when the room closes first, e.g. the caller gave up
@@ -120,34 +121,57 @@ async def scam_guard(ctx: JobContext) -> None:
             log.exception("scoring stopped; the senior ring keeps running")
 
 
-async def _score_call(ctx: JobContext, probe: bool = False) -> None:
+async def _score_call(ctx: JobContext, probe: bool = False, connection_monotonic=None) -> None:
+    t_start = time.monotonic() if connection_monotonic is None else connection_monotonic
     room = ctx.room
     det = ctx.proc.userdata.get("detector")
-    session = AudioScoringSession(det, detector_adapter.thresholds(det)) if det is not None else None
+    session = AudioScoringSession(det, detector_adapter.thresholds(det), config=ScoringConfig.from_env(),
+                                  clock_origin=t_start) if det is not None else None
     caller = (await ctx.wait_for_participant(identity="backend-probe-caller") if probe else
               await ctx.wait_for_participant(kind=rtc.ParticipantKind.PARTICIPANT_KIND_SIP))
+    publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
+    timeline = {"agent_connection_sec": 0.0}
     if not probe:
         # SIP active does not prove Callma pickup. The app joins silently while ringing;
         # only Accept publishes its microphone. Publishing the notice earlier answers SIP.
         if not await senior_ring.wait_for_answer(room, caller.identity):
             log.info("call ended before app pickup; no notice or caller processing")
             return
+        timeline["app_answer_sec"] = round(time.monotonic() - t_start, 3)
+        timeline["notice_start_sec"] = round(time.monotonic() - t_start, 3)
+
+        async def notice_status(reason: str, state: str) -> None:
+            await room.local_participant.publish_data(json.dumps(publisher.message({
+                "type": "status", "state": state, "reason": reason,
+                "transcript": {"state": "disabled", "probability": None},
+                "timing": dict(timeline), "t": round(time.monotonic() - t_start, 2),
+            })), reliable=True, topic=RISK_TOPIC)
+
+        async def notice_heartbeat() -> None:
+            while room.isconnected():
+                try:
+                    await notice_status("recording_notice_pending", "analyzing")
+                except Exception:
+                    log.warning("notice pending status could not be sent", exc_info=True)
+                await asyncio.sleep(2)
+
+        pending_notice = asyncio.create_task(notice_heartbeat())
         try:
             await asyncio.wait_for(play_recording_notice(room), timeout=NOTICE_TIMEOUT_SEC)
+            timeline["notice_end_sec"] = round(time.monotonic() - t_start, 3)
         except Exception:
             log.exception("recording notice failed; analysis and recording disabled for this call")
-            publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
             try:
-                await room.local_participant.publish_data(json.dumps(publisher.message({
-                    "type": "status", "state": "unavailable", "reason": "recording_notice_failed",
-                    "transcript": {"state": "disabled", "probability": None},
-                })), reliable=True, topic=RISK_TOPIC)
+                await notice_status("recording_notice_failed", "unavailable")
             except Exception:
                 log.warning("notice failure status could not be sent", exc_info=True)
             return
+        finally:
+            pending_notice.cancel()
+            await asyncio.gather(pending_notice, return_exceptions=True)
     caller_number = caller.attributes.get("sip.phoneNumber", "unknown")
-    publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
-    t_start = time.monotonic()
+    if session is not None:
+        session.timing.update(timeline)
 
     transcript = None
     transcript_state = ctx.proc.userdata.get("transcript_state", "disabled")
@@ -169,6 +193,10 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
             payload = {**payload, "diag": await asyncio.to_thread(_probe_diag, ctx.proc.userdata, frames[0])}
         text_state = transcript.snapshot() if transcript else {"state": transcript_state, "probability": None}
         payload = {**payload, "transcript": text_state}
+        if session is not None:
+            session.published(time.monotonic())
+            payload["timing"] = dict(session.timing)
+            payload["counters"] = dict(session.counters)
         if payload.get("type") == "risk":
             payload["level"] = combine(payload["deepfake"]["level"], text_state["probability"])
         msg = publisher.message({**payload, "t": round(time.monotonic() - t_start, 2)})
@@ -195,16 +223,19 @@ async def _score_call(ctx: JobContext, probe: bool = False) -> None:
         try:
             result = await asyncio.to_thread(det.score_window, audio)
             session.refresh(time.monotonic())
-            session.complete(result, generation)
-            await publish(session.payload(time.monotonic()))
+            accepted = session.complete(result, generation, now=time.monotonic())
+            if accepted or session.failure_reason:
+                await publish(session.payload(time.monotonic()))
         except asyncio.CancelledError:
             raise
         except Exception:
-            session.failed()
+            session.failed(generation=generation)
             await publish(session.payload(time.monotonic()))
             log.exception("voice scoring failed; call continues")
 
     async def stop_scoring() -> None:
+        if session is not None:
+            session.close()
         heartbeat_task.cancel()
         if score_task is not None:
             score_task.cancel()
@@ -273,7 +304,8 @@ def _probe_diag(userdata: dict, frames: int) -> dict:
     """Transcript-free health facts for the CI backend probe (probe rooms only)."""
     import urllib.request
     out = {"detector_error": userdata.get("detector_error"), "stt_error": userdata.get("stt_error"),
-           "frames": frames, "cpus": os.cpu_count(), "pid": os.getpid()}
+           "frames": frames, "cpus": os.cpu_count(), "pid": os.getpid(),
+           "detector_health": getattr(userdata.get("detector"), "diagnostics", None)}
     for port in (8000, 3000):
         try:
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/health", timeout=2) as response:

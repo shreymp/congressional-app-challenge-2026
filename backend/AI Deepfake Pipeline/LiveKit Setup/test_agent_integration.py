@@ -54,6 +54,12 @@ class FakeStream:
         self.closed = True
 
 
+def after_notice(ctx):
+    """Packets after the recording-notice stage. Pending-notice heartbeats carry no transcript
+    excerpt and may arrive before or after a fast failure depending on scheduling."""
+    return [(m, o) for m, o in ctx.room.messages if m.get("reason") != "recording_notice_pending"]
+
+
 class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.notice_patch = patch.object(agent, "play_recording_notice", new_callable=AsyncMock)
@@ -160,6 +166,12 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 stt.assert_not_called()
                 audio.assert_not_called()
                 save.assert_not_called()
+                pending = [packet for packet, _ in ctx.room.messages
+                           if packet.get("reason") == "recording_notice_pending"]
+                self.assertTrue(pending)
+                self.assertEqual(pending[-1]["timing"]["agent_connection_sec"], 0)
+                self.assertIn("notice_start_sec", pending[-1]["timing"])
+                self.assertNotIn("notice_end_sec", pending[-1]["timing"])
                 release.set()
                 with self.assertLogs("scam-guard", level="ERROR"):
                     await asyncio.wait_for(task, 3)
@@ -167,6 +179,35 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 audio.assert_called_once()
                 save.assert_called_once()
                 self.notice.assert_awaited_once_with(ctx.room)
+            finally:
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
+
+    async def test_cancellation_during_notice_stops_playback_and_pending_heartbeat(self):
+        ctx = self.context(FakeDetector())
+        started, cancelled = asyncio.Event(), asyncio.Event()
+
+        async def stalled(room):
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+
+        self.notice.side_effect = stalled
+        with patch.object(agent.rtc.AudioStream, "from_participant") as audio:
+            task = asyncio.create_task(agent._score_call(ctx))
+            try:
+                await asyncio.wait_for(started.wait(), 1)
+                heartbeats = [t for t in asyncio.all_tasks()
+                              if t.get_coro().__name__ == "notice_heartbeat"]
+                self.assertEqual(len(heartbeats), 1)
+                task.cancel()
+                with self.assertRaises(asyncio.CancelledError):
+                    await task
+                self.assertTrue(cancelled.is_set())
+                self.assertTrue(heartbeats[0].cancelled())
+                audio.assert_not_called()
             finally:
                 task.cancel()
                 await asyncio.gather(task, return_exceptions=True)
@@ -184,7 +225,7 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
                 stt.assert_not_called()
                 audio.assert_not_called()
                 save.assert_not_called()
-                self.assertEqual(ctx.room.messages[0][0]["reason"], "recording_notice_failed")
+                self.assertEqual(after_notice(ctx)[0][0]["reason"], "recording_notice_failed")
 
     async def test_backend_probe_skips_notice(self):
         ctx, stream = self.context(FakeDetector()), FakeStream()
@@ -225,6 +266,11 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(risks[0]["callerIdentity"], "sip-test")
         self.assertEqual(risks[0]["model"], "real")
         self.assertEqual(risks[0]["schema"], 1)
+        self.assertIn("notice_end_sec", risks[0]["timing"])
+        self.assertIn("first_caller_audio_sec", risks[0]["timing"])
+        self.assertIn("submission_sec", risks[0]["timing"])
+        self.assertIn("completion_sec", risks[0]["timing"])
+        self.assertIn("publication_sec", risks[0]["timing"])
         sequences = [m["sequence"] for m, _ in ctx.room.messages]
         self.assertEqual(sequences, sorted(set(sequences)))
         self.assertTrue(all(k["topic"] == "scam-guard.risk" and k["reliable"] for _, k in ctx.room.messages))
@@ -263,7 +309,8 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         with patch.object(agent.transcript_pipeline, "for_call", return_value=TextPipeline()), patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream):
             await asyncio.wait_for(agent._score_call(ctx), 3)
         self.assertTrue(ctx.room.messages)
-        for message, options in ctx.room.messages:
+        self.assertTrue(after_notice(ctx))
+        for message, options in after_notice(ctx):
             self.assertEqual(message["transcript"]["saved_excerpt"], "read me the code")
             self.assertEqual(options["destination_identities"], [agent.senior_ring.SENIOR_IDENTITY])
 
@@ -281,14 +328,14 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
             await asyncio.wait_for(agent._score_call(ctx), 3)
         self.assertEqual(text.frames, 210)
         self.assertTrue(stream.closed)
-        self.assertEqual(ctx.room.messages[0][0]["state"], "unavailable")
-        self.assertEqual(ctx.room.messages[0][0]["transcript"]["probability"], .5)
+        self.assertEqual(after_notice(ctx)[0][0]["state"], "unavailable")
+        self.assertEqual(after_notice(ctx)[0][0]["transcript"]["probability"], .5)
 
     async def test_failed_model_load_reports_unavailable_and_can_be_cancelled(self):
         ctx = self.context(None)
         task = asyncio.create_task(agent._score_call(ctx))
         await asyncio.sleep(.02)
-        self.assertEqual(ctx.room.messages[0][0]["state"], "unavailable")
+        self.assertEqual(after_notice(ctx)[0][0]["state"], "unavailable")
         task.cancel()
         with self.assertRaises(asyncio.CancelledError):
             await task
