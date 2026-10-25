@@ -24,6 +24,7 @@ class FakeRoom:
         self.messages = []
         self.connected = True
         self.local_participant = self
+        self.remote_participants = {}
 
     def isconnected(self):
         return self.connected
@@ -65,13 +66,88 @@ class AgentIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.notice = self.notice_patch.start()
         self.addCleanup(self.notice_patch.stop)
 
-    def context(self, detector):
+    def context(self, detector, *, answered=True):
         room = FakeRoom()
+        sip = types.SimpleNamespace(identity="sip-test", attributes={"sip.callStatus": "active"},
+                                    track_publications={"caller-mic": types.SimpleNamespace(
+                                        source=agent.rtc.TrackSource.SOURCE_MICROPHONE)})
+        senior = types.SimpleNamespace(identity=agent.senior_ring.SENIOR_IDENTITY,
+                                       track_publications={})
+        if answered:
+            senior.track_publications["app-mic"] = types.SimpleNamespace(
+                source=agent.rtc.TrackSource.SOURCE_MICROPHONE)
+        room.remote_participants = {sip.identity: sip, senior.identity: senior}
         async def caller(**kwargs):
             self.assertEqual(kwargs["kind"], agent.rtc.ParticipantKind.PARTICIPANT_KIND_SIP)
-            return types.SimpleNamespace(identity="sip-test", attributes={})
+            return sip
         return types.SimpleNamespace(room=room, proc=types.SimpleNamespace(userdata={"detector": detector}),
                                      wait_for_participant=caller, add_shutdown_callback=lambda callback: None)
+
+    async def test_active_caller_and_ringing_app_do_not_start_notice_before_pickup(self):
+        ctx, stream = self.context(FakeDetector(), answered=False), FakeStream()
+        ctx.proc.userdata["stt_model"] = object()
+        senior = ctx.room.remote_participants[agent.senior_ring.SENIOR_IDENTITY]
+        # Other participants' microphones and the app's non-microphone tracks aren't pickup.
+        senior.track_publications["camera"] = types.SimpleNamespace(source=agent.rtc.TrackSource.SOURCE_CAMERA)
+        text = types.SimpleNamespace(start=lambda: None, push=lambda data: None,
+                                     snapshot=lambda: {"state": "listening", "probability": None},
+                                     aclose=AsyncMock())
+        with patch.object(agent.transcript_pipeline, "for_call", return_value=text) as stt, \
+             patch.object(agent.rtc.AudioStream, "from_participant", return_value=stream) as audio, \
+             patch.object(agent, "_save_wav") as save, patch.object(agent, "RECORD", True), \
+             patch.object(agent, "NOTICE_TIMEOUT_SEC", .05):
+            task = asyncio.create_task(agent._score_call(ctx))
+            try:
+                # A long ring must not consume the playback timeout or open processing.
+                await asyncio.sleep(.1)
+                self.notice.assert_not_awaited()
+                stt.assert_not_called()
+                audio.assert_not_called()
+                save.assert_not_called()
+                self.assertFalse(ctx.room.messages)
+                senior.track_publications["app-mic"] = types.SimpleNamespace(
+                    source=agent.rtc.TrackSource.SOURCE_MICROPHONE)
+                await asyncio.wait_for(task, 3)
+                self.notice.assert_awaited_once_with(ctx.room)
+                audio.assert_called_once()
+                save.assert_called_once()
+            finally:
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
+
+    async def test_unanswered_calls_never_play_notice_or_open_processing(self):
+        for ending in ("caller_hangup", "decline", "room_closed", "shutdown"):
+            with self.subTest(ending=ending):
+                ctx = self.context(FakeDetector(), answered=False)
+                ctx.proc.userdata["stt_model"] = object()
+                self.notice.reset_mock()
+                with patch.object(agent.transcript_pipeline, "for_call") as stt, \
+                     patch.object(agent.rtc.AudioStream, "from_participant") as audio, \
+                     patch.object(agent, "_save_wav") as save:
+                    task = asyncio.create_task(agent._score_call(ctx))
+                    try:
+                        await asyncio.sleep(.02)
+                        if ending == "caller_hangup":
+                            ctx.room.remote_participants.pop("sip-test")
+                        elif ending == "decline":
+                            ctx.room.remote_participants.pop(agent.senior_ring.SENIOR_IDENTITY)
+                            await asyncio.sleep(.02)
+                            ctx.room.remote_participants.pop("sip-test")
+                        elif ending == "room_closed":
+                            ctx.room.connected = False
+                        else:
+                            task.cancel()
+                        await asyncio.gather(asyncio.wait_for(task, 1), return_exceptions=True)
+                        if ending != "shutdown":
+                            self.assertFalse(task.cancelled())
+                            self.assertIsNone(task.exception())
+                        self.notice.assert_not_awaited()
+                        stt.assert_not_called()
+                        audio.assert_not_called()
+                        save.assert_not_called()
+                    finally:
+                        task.cancel()
+                        await asyncio.gather(task, return_exceptions=True)
 
     async def test_notice_blocks_transcription_audio_and_recording_until_playback_finishes(self):
         ctx, stream = self.context(FakeDetector()), FakeStream()

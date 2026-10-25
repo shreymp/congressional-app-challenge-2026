@@ -40,6 +40,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(HERE, ".env.local"))
 
 import detector_adapter
+import drive_upload
 import transcript_pipeline
 from risk import combine
 from scoring import AudioScoringSession
@@ -51,8 +52,10 @@ from recording_notice import NOTICE_TIMEOUT_SEC, play_recording_notice
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 SAMPLE_RATE = 16000
 SCORE_EVERY_SEC = float(os.environ.get("SCORE_EVERY_SEC", "1.0"))
-RECORD = os.environ.get("RECORD_CALLER_AUDIO", "0") == "1"
-RECORD_DIR = os.path.join(HERE, "recordings")
+# TESTING: caller-audio recording is ON by default (set RECORD_CALLER_AUDIO=0 to turn it off).
+RECORD = os.environ.get("RECORD_CALLER_AUDIO", "1") == "1"
+# The cloud image runs as a non-root user that cannot write under /app, so it sets RECORD_DIR.
+RECORD_DIR = os.environ.get("RECORD_DIR") or os.path.join(HERE, "recordings")
 
 log = logging.getLogger("scam-guard")
 
@@ -129,22 +132,11 @@ async def _score_call(ctx: JobContext, probe: bool = False, connection_monotonic
     publisher = RiskPublisher(room.name, caller.identity, getattr(det, "mode", "real"))
     timeline = {"agent_connection_sec": 0.0}
     if not probe:
-        timeline["notice_start_sec"] = round(time.monotonic() - t_start, 3)
-        async def notice_status(reason, state):
-            await room.local_participant.publish_data(json.dumps(publisher.message({
-                "type": "status", "state": state, "reason": reason,
-                "t": round(time.monotonic() - t_start, 3), "timing": dict(timeline),
-                "transcript": {"state": "disabled", "probability": None},
-            })), reliable=True, topic=RISK_TOPIC)
-        async def notice_heartbeat():
-            # Repeats until playback ends; the terminal failed/ready status always follows it.
-            while room.isconnected():
-                try:
-                    await notice_status("recording_notice_pending", "analyzing")
-                except Exception:
-                    log.warning("notice status could not be sent")
-                await asyncio.sleep(2)
-        pending_notice = asyncio.create_task(notice_heartbeat())
+        # SIP active does not prove Callma pickup. The app joins silently while ringing;
+        # only Accept publishes its microphone. Publishing the notice earlier answers SIP.
+        if not await senior_ring.wait_for_answer(room, caller.identity):
+            log.info("call ended before app pickup; no notice or caller processing")
+            return
         try:
             await asyncio.wait_for(play_recording_notice(room), timeout=NOTICE_TIMEOUT_SEC)
             timeline["notice_end_sec"] = round(time.monotonic() - t_start, 3)
@@ -264,16 +256,29 @@ async def _score_call(ctx: JobContext, probe: bool = False, connection_monotonic
         if stream is not None:
             await stream.aclose()
         if RECORD and recorded:
-            await asyncio.to_thread(_save_wav, np.concatenate(recorded), caller_number)
+            await asyncio.to_thread(_save_and_upload, np.concatenate(recorded), caller_number)
 
 
-def _save_wav(pcm: np.ndarray, caller_number: str) -> None:
+def _save_and_upload(pcm: np.ndarray, caller_number: str) -> None:
+    """Save the caller audio, then (if GDRIVE_* is configured) copy it to Google Drive.
+
+    Runs in a worker thread at the end of the call. A failure here must never affect the call.
+    """
+    try:
+        path = _save_wav(pcm, caller_number)
+        drive_upload.upload_with_retry(path)
+    except Exception:
+        log.exception("saving/uploading caller audio failed")
+
+
+def _save_wav(pcm: np.ndarray, caller_number: str) -> str:
     import soundfile as sf
     os.makedirs(RECORD_DIR, exist_ok=True)
     safe = "".join(c for c in caller_number if c.isalnum()) or "unknown"
     path = os.path.join(RECORD_DIR, f"{datetime.now():%Y%m%d-%H%M%S}_{safe}.wav")
     sf.write(path, pcm, SAMPLE_RATE, subtype="PCM_16")
-    log.info("saved explicitly enabled caller audio recording")
+    log.info("saved caller audio to %s", path)
+    return path
 
 
 def _probe_diag(userdata: dict, frames: int) -> dict:
