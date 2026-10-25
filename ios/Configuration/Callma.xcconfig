@@ -1,0 +1,44 @@
+// Callma app target: checked-in defaults (Debug and Release).
+//
+// Do not put a team, a personal bundle identifier or a token in this file.
+// Copy Local.xcconfig.example to Local.xcconfig (gitignored) and override there.
+// A value set in Xcode's Build Settings or Signing editor is stored in
+// project.pbxproj; it overrides both files and is lost when the project is
+// regenerated.
+//
+// "//" starts a comment anywhere on a line, so a value can never contain it.
+// That is why the LiveKit setting is a host, not a wss:// URL.
+
+PRODUCT_BUNDLE_IDENTIFIER = org.callma.Callma
+
+// Compatibility defaults for existing Local.xcconfig files using the former name.
+CALLSHIELD_DEMO = false
+CALLSHIELD_DEFAULT_DIALER = false
+CALLSHIELD_ENTITLEMENTS_FILE =
+CALLSHIELD_LIVEKIT_HOST =
+CALLSHIELD_LOBBY_TOKEN =
+CALLSHIELD_SAFETY_BASE_URL =
+CALLSHIELD_SAFETY_TOKEN =
+
+// true = TSX demo, false = production phone interface.
+CALLMA_DEMO = $(CALLSHIELD_DEMO)
+CALLMA_DEFAULT_DIALER = $(CALLSHIELD_DEFAULT_DIALER)
+
+// Empty = sign without an entitlements file. Keep it empty unless your
+// provisioning grants the capability: a free Apple "Personal Team" cannot sign
+// aps-environment.
+CALLMA_ENTITLEMENTS_FILE = $(CALLSHIELD_ENTITLEMENTS_FILE)
+// Matches the existing main project; Local.xcconfig may override for development.
+APS_ENVIRONMENT = production
+
+// LiveKit calling (foreground-only ring). Both are needed; empty = not configured.
+CALLMA_LIVEKIT_HOST = $(CALLSHIELD_LIVEKIT_HOST)
+CALLMA_LOBBY_TOKEN = $(CALLSHIELD_LOBBY_TOKEN)
+
+// Optional authenticated blocking/reporting research service. Empty = offline local blocks.
+// Per-user credentials only; never put an admin token here.
+CALLMA_SAFETY_BASE_URL = $(CALLSHIELD_SAFETY_BASE_URL)
+CALLMA_SAFETY_TOKEN = $(CALLSHIELD_SAFETY_TOKEN)
+
+// Optional and untracked. Keep this the last line so its values win.
+#include? "Local.xcconfig"

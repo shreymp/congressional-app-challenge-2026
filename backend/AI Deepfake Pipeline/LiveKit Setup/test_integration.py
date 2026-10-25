@@ -14,7 +14,7 @@ from risk_protocol import RiskPublisher
 from scoring import AudioScoringSession
 from pipeline_config import ScoringConfig
 
-FIXTURE = Path(__file__).resolve().parents[3] / "ios/CallshieldTests/Fixtures/deepfake-wire.json"
+FIXTURE = Path(__file__).resolve().parents[3] / "ios/CallmaTests/Fixtures/deepfake-wire.json"
 THRESHOLDS = (0.9999904632568359, 0.9999998807907104)
 
 
