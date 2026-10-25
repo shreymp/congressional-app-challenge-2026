@@ -2,7 +2,7 @@
 
 **call with more peace of mind.**
 
-Logos and app icons are temporary placeholders. The installed app displays `callma.`; existing Xcode scheme, bundle identifiers, service keys, and internal `Callshield` paths remain stable for compatibility.
+Logos and app icons are temporary placeholders. The installed app displays `callma.`; the Xcode project, scheme, targets, and source folders use `Callma`. Deployed service topics, tester artifact names, and existing saved-data paths remain stable for compatibility.
 
 ## Shrey: 15-second voice verdict and cumulative AI score
 
@@ -30,7 +30,7 @@ rollout requirements. Both the updated iOS app and worker are needed for scores.
 
 For the full MacBook simulator phone-call test, follow
 [MACBOOK_TESTING.md](MACBOOK_TESTING.md). Pull **main**, install the limited tester
-settings with `python3 scripts/tester_access.py install`, then run **Callshield**
+settings with `python3 scripts/tester_access.py install`, then run **Callma**
 in Xcode 26 and call **+1 267-509-1164** from a separate phone.
 
 **No LiveKit account, API key or API secret is needed by the tester.** GitHub's
