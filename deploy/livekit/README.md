@@ -1,11 +1,16 @@
 # CAC hosted inference deployment
 
 This deploys the existing `CA_KKXaPczWhqpE` worker as `scam-guard`. It runs
-the released real deepfake model, local Vosk, caller-only JEV V2 and the Node
+the released real deepfake model, local Vosk, caller-only JEV V10 and the Node
 connector inside the cloud container. The Mac and app are not required to run
 these services. Native phone answering still requires an audio participant.
 
-The Docker build downloads exact checksum-verified releases. `prepare.py` uses
+The Docker build downloads exact checksum-verified releases. JEV is pinned to
+`jev-call-v10` and its published archive hash. Only its ONNX model, tokenizer and
+calibration metadata are extracted, each with an independent file checksum.
+The cloud model service selects V10 explicitly; image checks and the deployed
+audio probe require its exact model hash, so an older worker cannot pass the probe.
+V10 remains experimental and is not field-calibrated. `prepare.py` uses
 the repository's read token to obtain short-lived model download redirects.
 Only those expiring URLs go to LiveKit's build service, never the GitHub token.
 They are present only in the intermediate model build stage, which is not copied

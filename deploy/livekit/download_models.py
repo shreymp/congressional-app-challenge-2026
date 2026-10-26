@@ -26,7 +26,26 @@ def download(sources, destination):
             if digest != item["sha256"]:
                 raise ValueError("Model checksum mismatch: " + item["path"])
             partial.replace(target)
-            if item.get("extract"):
+            if item.get("files"):
+                # Extract only the pinned inference files from the verified V10 archive.
+                with zipfile.ZipFile(target) as archive:
+                    for relative, info in item["files"].items():
+                        output = destination / relative
+                        if not output.resolve().is_relative_to(destination.resolve()):
+                            raise ValueError("Unsafe model archive destination")
+                        if archive.namelist().count(info["member"]) != 1:
+                            raise ValueError("Missing or duplicate model archive member")
+                        if archive.getinfo(info["member"]).file_size != info["bytes"]:
+                            raise ValueError("Model archive member size mismatch")
+                        output.parent.mkdir(parents=True, exist_ok=True)
+                        with archive.open(info["member"]) as source, output.open("wb") as sink:
+                            shutil.copyfileobj(source, sink)
+                        with output.open("rb") as source:
+                            actual = hashlib.file_digest(source, "sha256").hexdigest()
+                        if actual != info["sha256"]:
+                            raise ValueError("Model archive member checksum mismatch")
+                target.unlink()
+            elif item.get("extract"):
                 with zipfile.ZipFile(target) as archive:
                     for member in archive.infolist():
                         if not (destination / member.filename).resolve().is_relative_to(destination.resolve()):
