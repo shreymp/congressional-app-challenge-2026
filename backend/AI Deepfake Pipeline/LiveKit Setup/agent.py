@@ -310,6 +310,10 @@ def _probe_diag(userdata: dict, frames: int) -> dict:
         try:
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/health", timeout=2) as response:
                 out[f"svc{port}"] = response.status
+                if port == 8000:
+                    model_health = json.load(response)
+                    out["jevVersion"] = model_health.get("jevVersion")
+                    out["jevSha256"] = model_health.get("jevSha256")
         except Exception as e:
             out[f"svc{port}"] = f"{type(e).__name__}: {e}"[:160]
     for name in ("memory.max", "memory.current", "memory.peak", "memory.events", "cpu.max"):

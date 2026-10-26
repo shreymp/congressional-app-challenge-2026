@@ -7,8 +7,9 @@ def finite(value, low=0, high=1):
 
 
 class ProbeEvidence:
-    def __init__(self, room, caller, min_seconds=35):
+    def __init__(self, room, caller, min_seconds=35, expected_jev=None):
         self.room, self.caller, self.min_seconds = room, caller, min_seconds
+        self.expected_jev = expected_jev
         self.stream = None
         self.sequence = 0
         self.since = None
@@ -39,7 +40,10 @@ class ProbeEvidence:
             self.windows.clear()
             return False
         revision, windows = text.get("scored_revision"), voice.get("updates")
-        valid = (message.get("type") == "risk" and finite(voice.get("p_last"))
+        diag = message.get("diag") or {}
+        matching_jev = (self.expected_jev is None or
+                        (diag.get("jevVersion"), diag.get("jevSha256")) == self.expected_jev)
+        valid = (matching_jev and message.get("type") == "risk" and finite(voice.get("p_last"))
                  and finite(message.get("infer_ms"), 0, 10000)
                  and text.get("state") == "monitoring" and finite(text.get("probability"))
                  and finite(text.get("age_sec"), 0, 15)
@@ -58,5 +62,7 @@ class ProbeEvidence:
                             transcript_revision=revision, distinct_revisions=len(self.revisions),
                             distinct_windows=len(self.windows), sustained_sec=round(now-self.since, 1),
                             infer_ms=message["infer_ms"])
+        if self.expected_jev:
+            self.summary.update(jev_version=diag["jevVersion"], jev_sha256=diag["jevSha256"])
         return (now-self.since >= self.min_seconds and len(self.revisions) >= 3
                 and len(self.windows) >= 3)

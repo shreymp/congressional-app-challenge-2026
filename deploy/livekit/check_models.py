@@ -17,6 +17,10 @@ def main():
     services = entry.Services()
     try:
         services.start()
+        model_health = entry.health("http://127.0.0.1:8000/health")
+        assert model_health["jevVersion"] == "V10", model_health
+        assert model_health["jevSha256"] == "ee8101e4edfb76c80d11dcd0c37710454e576ba8395cccdc18740d0632a66cdc"
+        print("Verified cloud JEV V10 checkpoint", flush=True)
         import numpy as np
         import soundfile as sf
         from scipy.signal import resample_poly
