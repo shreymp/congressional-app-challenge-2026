@@ -20,6 +20,8 @@ class Voice:
 
 
 class Text:
+    version = "V10"
+    bundle_sha256 = "test-checkpoint-hash"
     def score(self, transcript):
         return .9
 
@@ -45,6 +47,8 @@ class CloudTests(unittest.TestCase):
         health = self.request("/health")
         self.assertTrue(health["deepfakeLoaded"])
         self.assertEqual(health["mode"], "real")
+        self.assertEqual(health["jevVersion"], "V10")
+        self.assertEqual(health["jevSha256"], "test-checkpoint-hash")
         self.assertEqual(self.request("/predict", b'{"transcript":"Caller: a test"}')["probability"], .9)
         self.assertEqual(self.request("/deepfake", struct.pack("<4f", .1, -.1, .2, -.2))["p_fake"], .75)
 

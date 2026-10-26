@@ -33,6 +33,8 @@ def make_server(deepfake, jev, port=8000):
             if self.path == "/health":
                 return self.reply(200, {"ok": True, "modelLoaded": True, "deepfakeLoaded": True,
                                         "device": deepfake.device, "mode": "real", "meta": deepfake.meta,
+                                        "jevVersion": getattr(jev, "version", None),
+                                        "jevSha256": getattr(jev, "bundle_sha256", None),
                                         # Checkpoint hashes only; lets the agent bind calibration.json.
                                         "integrity": getattr(deepfake, "diagnostics", {}).get("integrity")})
             self.reply(404, {"error": "Not found"})
@@ -90,11 +92,11 @@ def main():
     spec = importlib.util.spec_from_file_location("jev_model", ROOT / "backend/Transcript-Based Detector/model_service.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    jev = module.CallModel(Path(os.environ["JEV_MODEL_DIR"]))
+    jev = module.CallModel(Path(os.environ["JEV_MODEL_DIR"]), os.environ["JEV_MODEL_VERSION"])
     probability = jev.score("Caller: Read me the code your bank sent you.")
     if not math.isfinite(probability) or not 0 <= probability <= 1:
         raise RuntimeError("JEV startup inference failed")
-    print("Real deepfake warm-up and JEV inference passed", flush=True)
+    print(f"Real deepfake warm-up and JEV {jev.version} inference passed; sha256={jev.bundle_sha256}", flush=True)
     server = make_server(deepfake, jev)
     try:
         server.serve_forever()

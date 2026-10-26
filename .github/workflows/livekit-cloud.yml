@@ -58,7 +58,7 @@ jobs:
           tar -xzf /tmp/lk.tgz -C /tmp
           # One --secrets flag per KEY=value: a comma list is stored as a single DETECTOR value.
           /tmp/lk agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production --attribute git_commit="$GITHUB_SHA" --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 --secrets GDRIVE_UPLOAD_URL="$GDRIVE_UPLOAD_URL" --secrets GDRIVE_UPLOAD_TOKEN="$GDRIVE_UPLOAD_TOKEN"
-      - name: Backend audio probe
+      - name: Backend audio probe (verified JEV V10)
         if: github.event_name == 'workflow_dispatch' && (inputs.deploy || inputs.probe_only)
         env:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
@@ -68,4 +68,4 @@ jobs:
           test -n "$LIVEKIT_URL" && test -n "$LIVEKIT_API_KEY" && test -n "$LIVEKIT_API_SECRET"
           python3 -m pip install -r scripts/requirements-calltest.txt scipy soundfile
           # Fresh room per attempt: the previous version can keep serving jobs briefly after a deploy.
-          python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav --attempts 6 --timeout 90
+          EXPECTED_JEV_VERSION=V10 EXPECTED_JEV_SHA256=ee8101e4edfb76c80d11dcd0c37710454e576ba8395cccdc18740d0632a66cdc python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav --attempts 6 --timeout 90

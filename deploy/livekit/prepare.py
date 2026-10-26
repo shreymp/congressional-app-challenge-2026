@@ -60,7 +60,14 @@ def prepare(output):
                         ignore=shutil.ignore_patterns("best.pt", "*.wav", "logs", "models", "recordings", "node_modules", ".env*", "__pycache__", "test*", ".venv*"))
     manifest_path = Path("backend/jev-posttrain/model_downloads.json")
     (output / manifest_path).parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(ROOT / manifest_path, output / manifest_path)
+    manifest = json.loads((ROOT / manifest_path).read_text())
+    release = json.loads((ROOT / "backend/jev-posttrain/v10_release.json").read_text())
+    # Only the inference files belong in the cloud image; keep training weights out.
+    bundle = {**release["bundle"], "files": {
+        name: release["bundle"]["files"][name]
+        for name in ("model.onnx", "tokenizer.json", "calibration.json")}}
+    manifest.append(bundle)
+    (output / manifest_path).write_text(json.dumps(manifest))
     shutil.copytree(ROOT / "deploy/livekit", output / "deploy/livekit", ignore=shutil.ignore_patterns("__pycache__", "test*"))
     shutil.copy2(ROOT / "deploy/livekit/Dockerfile", output / "Dockerfile")
     shutil.copy2(ROOT / "deploy/livekit/livekit.toml", output / "livekit.toml")
@@ -69,9 +76,10 @@ def prepare(output):
     shutil.copy2(ROOT / "deploy/livekit/requirements.txt", output / "requirements.txt")
     sources = [{"path": "deepfake/detector_state.pt", "sha256": "cc6a75eae2948aeae5f491dffbc0e05af274bb4d8f6740451ad762b72f9703d5",
                 "url": asset_url(release_asset_api_url(DETECTOR_RELEASE_TAG, DETECTOR_ASSET_NAME, token), token)}]
-    bundle = next(b for b in json.loads((ROOT / manifest_path).read_text()) if b["version"] == "V2")
-    for name, item in bundle["files"].items():
-        sources.append({"path": "JevCallV2/" + name, "sha256": item["sha256"], "url": asset_url(item["api_url"], token)})
+    sources.append({"path": "jev-call-v10.zip", "sha256": release["sha256"],
+                    "url": asset_url(release_asset_api_url(release["tag"], release["asset"], token), token),
+                    "files": {"JevCallV10/" + name: {"member": name, **item}
+                              for name, item in bundle["files"].items()}})
     sources.append({"path": "vosk.zip", "extract": True,
                     "url": "https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip",
                     "sha256": "30f26242c4eb449f948e42cb302dd7a686cb29a3423a8367f99ff41780942498"})
