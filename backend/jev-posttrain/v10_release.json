@@ -1,0 +1,40 @@
+{
+  "repository": "shreymp/congressional-app-challenge-2026",
+  "tag": "jev-call-v10",
+  "asset": "jev-call-v10.zip",
+  "sha256": "db5318fab6d89536e5526ce03cec396b8925ab5593d65ba5187c0fcc8f9763ac",
+  "bytes": 1128899205,
+  "bundle": {
+    "version": "V10",
+    "run": "call-v10-open-yap-conservative",
+    "files": {
+      "model.safetensors": {
+        "sha256": "1d633c3ded8c067498d35ad4eaaf114c3470db447bd7f313215653e6d012f73c",
+        "bytes": 605529340
+      },
+      "tokenizer_config.json": {
+        "sha256": "68acf857b869285d8c3ac2757ddd26e6f8030fb275d6800131521eb736084608",
+        "bytes": 378
+      },
+      "calibration.json": {
+        "sha256": "fba28797d98221edeb79e651f74ed6555701a7b6a4b751dded7f4f1180c40d27",
+        "bytes": 160
+      },
+      "config.json": {
+        "sha256": "303f8eef1009cfdcb0cfba3e653247e625f16a4501e2351bad1a633f1f644695",
+        "bytes": 3836
+      },
+      "tokenizer.json": {
+        "sha256": "8bb449eb0c037aae44115b65905bb339b8f3f74eb37067c19127feb3c0755723",
+        "bytes": 3583596
+      },
+      "model.onnx": {
+        "sha256": "ee8101e4edfb76c80d11dcd0c37710454e576ba8395cccdc18740d0632a66cdc",
+        "bytes": 606323152
+      }
+    },
+    "onnx_opset": 17,
+    "synthetic_export_parity_max_logit_error": 1.9073486328125e-05,
+    "status": "Experimental research checkpoint; not field-validated or calibrated on real calls. No training data included."
+  }
+}
