@@ -130,12 +130,12 @@ See [section 3 of the technical guide](docs/technical-guide/CALLMA_TECHNICAL_GUI
 
 ---
 
-## Limits we're honest about
+## Limits
 
 - Neither check can prove who is calling. A human scammer passes the voice check, and a real relative can sound urgent.
-- Phone-line audio is the hardest case for the voice model, and it has not yet been measured on fresh real calls from new speakers.
+- Phone-line audio is the hardest case for the voice model.
 - The words model was trained mostly on synthetic call transcripts, in English only.
-- The app rings only while it is open (no push notifications in this build).
+- The app rings only while it is open; Apple PushKit requires a paid Apple Developer plan.
 
 The [full list](docs/technical-guide/CALLMA_TECHNICAL_GUIDE.md#13-known-limitations) is in the technical guide.
 
