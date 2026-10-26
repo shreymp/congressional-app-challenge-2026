@@ -10,7 +10,7 @@
 ![PyTorch](https://img.shields.io/badge/Voice_model-XLS--R_300M-ee4c2c?logo=pytorch&logoColor=white)
 ![ONNX](https://img.shields.io/badge/Text_model-ModernBERT_151M-005ced?logo=onnx&logoColor=white)
 
-Scammers can now clone a family member's voice from a short recording and call asking for money. callma. listens to every incoming call while it happens and asks two questions:
+Scammers can now clone a family member's voice from a short recording and call asking for money. "callma." listens to every incoming call while it happens and asks two questions:
 
 - 🎙️ **Is this voice real, or AI-generated?** A fine-tuned speech model scores the caller's voice every 4 seconds.
 - 💬 **Is the caller talking like a scammer?** The call is transcribed live and a fine-tuned language model looks for scam patterns such as requests for codes, gift cards, secrecy and urgency.
@@ -25,8 +25,8 @@ The answers appear on one simple card on the call screen, in plain words. If som
 
 ![How callma. works](docs/readme/overview.png)
 
-1. **Keep your number.** The senior turns on carrier call forwarding once (the app shows the exact code to dial), so every call to their normal number goes to the callma. line.
-2. **The call is handled in the cloud.** LiveKit puts the call in its own room and our `scam-guard` agent rings the callma. app.
+1. **Keep your number.** The senior turns on carrier call forwarding once (the app shows the exact code to dial), so every call to their normal number goes to the "callma." line.
+2. **The call is handled in the cloud.** LiveKit puts the call in its own room and our `scam-guard` agent rings the "callma." app.
 3. **The senior answers in callma.** A short notice says the call is being recorded, then the caller's audio, and only the caller's, goes to both checks at the same time.
 4. **Results arrive within seconds.** The first voice verdict needs two 4-second windows of speech (about 10 seconds after pickup) and keeps updating for the whole call.
 
@@ -79,7 +79,7 @@ Every voice-model release had to pass a **release gate written before training**
 ## Safety features
 
 - 🛡️ **Trusted guardians.** Save family members; on a high warning, *Alert Guardian* drafts a check-in message that the senior reviews and sends.
-- ⏸️ **Pause Before Sharing.** Leave a very-high-risk call and come back, and callma. reminds you not to share codes, passwords or money.
+- ⏸️ **Pause Before Sharing.** Leave a very-high-risk call and come back, and "callma." reminds you not to share codes, passwords or money.
 - 🚫 **Block and report.** Block a number for yourself or report it for review. Blocked callers don't ring through.
 - 🔤 **Built for older eyes.** Large type that scales, a call screen that never needs scrolling, plain-language advice, VoiceOver labels and Reduce Motion support.
 - 🔒 **Honest by design.** Scores are labeled as experimental checks, never as proof of who is calling. No detector score blocks a call or sends a message on its own.
