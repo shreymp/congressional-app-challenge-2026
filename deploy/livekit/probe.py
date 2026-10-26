@@ -45,7 +45,10 @@ async def attempt(wav, timeout, min_seconds=35, ring_app=False):
              .with_grants(api.VideoGrants(room_join=True, room=name)).to_jwt())
     room = rtc.Room()
     passed = asyncio.Event()
-    evidence = ProbeEvidence(name, identity, min_seconds)
+    expected = None
+    if os.environ.get("EXPECTED_JEV_VERSION"):
+        expected = (os.environ["EXPECTED_JEV_VERSION"], os.environ["EXPECTED_JEV_SHA256"])
+    evidence = ProbeEvidence(name, identity, min_seconds, expected_jev=expected)
     ring = None
     microphone = {"heard": False}
     tasks = []

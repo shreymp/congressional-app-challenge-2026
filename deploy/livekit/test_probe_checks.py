@@ -20,6 +20,20 @@ class ProbeTests(unittest.TestCase):
         self.assertFalse(check.observe(update(2), is_agent=True, now=20))
         self.assertTrue(check.observe(update(3), is_agent=True, now=36))
 
+    def test_requires_exact_deployed_jev_version_and_hash_when_requested(self):
+        expected = ("V10", "released-hash")
+        for diag in ({}, {"jevVersion": "V2", "jevSha256": "released-hash"},
+                     {"jevVersion": "V10", "jevSha256": "wrong-hash"}):
+            check = ProbeEvidence("room", "caller", 0, expected_jev=expected)
+            for n in range(1, 5):
+                self.assertFalse(check.observe(update(n, diag=diag), is_agent=True, now=n))
+        check = ProbeEvidence("room", "caller", 0, expected_jev=expected)
+        for n in range(1, 4):
+            passed = check.observe(update(n, diag={"jevVersion": "V10", "jevSha256": "released-hash"}),
+                                   is_agent=True, now=n)
+        self.assertTrue(passed)
+        self.assertEqual(check.summary["jev_version"], "V10")
+
     def test_old_single_transcript_score_never_passes(self):
         check = ProbeEvidence("room", "caller", 35)
         for n in range(1, 60):
