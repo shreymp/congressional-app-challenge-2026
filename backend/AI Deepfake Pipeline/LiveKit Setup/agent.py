@@ -13,7 +13,7 @@ What it does per call
      Also handles no answer (a stub for now) and hangs up the caller after she hangs up.
   1. Finds the SIP participant (the phone caller) and logs its attributes, including the
      caller number LiveKit saw. That answers "does forwarding keep the real caller ID?".
-  2. Plays "This call is being recorded." to the answered room before caller audio,
+  2. Plays the caller intro (assets/recording_notice.wav) to the answered room before caller audio,
      transcription or recording. If playback fails, all of those stay disabled.
   3. Retains contiguous four-second windows. Checks once per second for a distinct
      eligible window, scores one at a time in a worker, and publishes heuristic evidence.
@@ -52,7 +52,7 @@ from recording_notice import NOTICE_TIMEOUT_SEC, play_recording_notice
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 SAMPLE_RATE = 16000
 SCORE_EVERY_SEC = float(os.environ.get("SCORE_EVERY_SEC", "1.0"))
-# TESTING: caller-audio recording is ON by default (set RECORD_CALLER_AUDIO=0 to turn it off).
+# Caller-audio recording is ON by default (each call is uploaded to Google Drive); set RECORD_CALLER_AUDIO=0 to turn it off.
 RECORD = os.environ.get("RECORD_CALLER_AUDIO", "1") == "1"
 # The cloud image runs as a non-root user that cannot write under /app, so it sets RECORD_DIR.
 RECORD_DIR = os.environ.get("RECORD_DIR") or os.path.join(HERE, "recordings")

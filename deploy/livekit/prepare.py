@@ -10,8 +10,8 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[2]
 REPO = "shreymp/congressional-app-challenge-2026"
 # V8b checkpoint; the previous V2 best.pt was release asset 628783673.
-DETECTOR_RELEASE_TAG = "deepfake-weights-v8"
-DETECTOR_ASSET_NAME = "detector_state_v8b.pt"
+DETECTOR_RELEASE_TAG = "deepfake-weights-v9"
+DETECTOR_ASSET_NAME = "detector_state_v9.pt"
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -70,11 +70,15 @@ def prepare(output):
     (output / manifest_path).write_text(json.dumps(manifest))
     shutil.copytree(ROOT / "deploy/livekit", output / "deploy/livekit", ignore=shutil.ignore_patterns("__pycache__", "test*"))
     shutil.copy2(ROOT / "deploy/livekit/Dockerfile", output / "Dockerfile")
+    # The caller intro is a committed WAV; the folder copy above skips *.wav, so add it explicitly.
+    notice = Path("backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav")
+    (output / notice).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / notice, output / notice)
     shutil.copy2(ROOT / "deploy/livekit/livekit.toml", output / "livekit.toml")
     # `lk agent deploy` detects the project type from a requirements.txt at the context root.
     # The Dockerfile still installs from deploy/livekit/requirements.txt; this copy is for detection.
     shutil.copy2(ROOT / "deploy/livekit/requirements.txt", output / "requirements.txt")
-    sources = [{"path": "deepfake/detector_state.pt", "sha256": "cc6a75eae2948aeae5f491dffbc0e05af274bb4d8f6740451ad762b72f9703d5",
+    sources = [{"path": "deepfake/detector_state.pt", "sha256": "c919d45043f904c56cccaec9579313da55a0f9e55695bea1e5f653d1a8c92b18",
                 "url": asset_url(release_asset_api_url(DETECTOR_RELEASE_TAG, DETECTOR_ASSET_NAME, token), token)}]
     sources.append({"path": "jev-call-v10.zip", "sha256": release["sha256"],
                     "url": asset_url(release_asset_api_url(release["tag"], release["asset"], token), token),

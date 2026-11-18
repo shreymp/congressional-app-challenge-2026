@@ -6,12 +6,9 @@ COPY model-sources.json ./
 RUN python download_models.py model-sources.json /models
 
 FROM python:3.11-slim-bookworm AS announcement
-RUN apt-get update && apt-get install -y --no-install-recommends espeak-ng sox \
-    && rm -rf /var/lib/apt/lists/*
-COPY deploy/livekit/generate_recording_notice.py /generate_recording_notice.py
 COPY ["backend/AI Deepfake Pipeline/LiveKit Setup/recording_notice.py", "/recording_notice.py"]
-RUN python /generate_recording_notice.py --output /recording_notice.wav \
-    && python -c "from pathlib import Path; from recording_notice import read_notice; read_notice(Path('/recording_notice.wav'))"
+COPY ["backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav", "/recording_notice.wav"]
+RUN python -c "from pathlib import Path; from recording_notice import read_notice; read_notice(Path('/recording_notice.wav'))"
 
 FROM python:3.11-slim-bookworm
 ENV PYTHONUNBUFFERED=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
@@ -21,7 +18,8 @@ ENV PYTHONUNBUFFERED=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
     TRANSCRIPT_SCORE_TIMEOUT_SEC=25 TRANSCRIPT_MAX_AGE_SEC=35 TRANSCRIPT_SCORE_EVERY_SEC=5 \
     JEV_MODEL_URL=http://127.0.0.1:8000/predict JEV_TIMEOUT_MS=20000 \
     JEV_MODEL_VERSION=V10 JEV_MODEL_DIR=/app/models/JevCallV10 DETECTOR_WEIGHTS_DIR=/app/models/deepfake \
-    HOST=127.0.0.1 PORT=3000 RECORD_CALLER_AUDIO=1 RECORD_DIR=/tmp/cac-recordings OMP_NUM_THREADS=2 MKL_NUM_THREADS=2
+    HOST=127.0.0.1 PORT=3000 RECORD_CALLER_AUDIO=1 RECORD_DIR=/tmp/cac-recordings OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 \
+    THRESHOLD_ELEVATED_LOGIT=1.5 THRESHOLD_HIGH_LOGIT=3.0
 WORKDIR /app
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 RUN apt-get update && apt-get install -y --no-install-recommends libsndfile1 libgomp1 libstdc++6 libatomic1 ca-certificates \
