@@ -7,7 +7,7 @@ Congressional App Challenge 2026 · IL-11
 |---|---|
 | Document date | October 25, 2026 |
 | Code described | `shreymp/congressional-app-challenge-2026`, `main` at `8efcee2` (merge of PR #28, Oct 25, 12:43 CT), plus uncommitted work in the local checkout where marked **[local, uncommitted]** |
-| Deployed voice model | Deepfake detector **V8b** (`detector_state_v8b.pt`, SHA-256 `cc6a75ea…72f9703d5`) |
+| Deployed voice model | Deepfake detector **V9** (`detector_state_v9.pt`, SHA-256 `c919d450…a8c92b18`; call thresholds 1.5 / 3.0). This guide's later sections describe V8b. |
 | Deployed transcript model | JEV call model **V2 (caller-only)** (`jev-call-v2-model.onnx`, SHA-256 `8f7bbb21…541c8a`) |
 
 ---

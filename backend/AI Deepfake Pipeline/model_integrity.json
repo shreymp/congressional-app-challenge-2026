@@ -3,7 +3,7 @@
   "architecture_revision": "1a640f32ac3e39899438a2931f9924c02f080a54",
   "sha256": {
     "architecture": "0bffa0d0e98153e883b828d86491f3c6062cb563dc9d7a9cfd1790da30c286ac",
-    "detector_config": "43036171fca5295ecc5483b038673075a98323d70ddbe1e5e11e9753820db421",
-    "checkpoint": "cc6a75eae2948aeae5f491dffbc0e05af274bb4d8f6740451ad762b72f9703d5"
+    "detector_config": "70d167946fc959506596e90036e982772d5ca2be3f8da5e67ff627624c5a12eb",
+    "checkpoint": "c919d45043f904c56cccaec9579313da55a0f9e55695bea1e5f653d1a8c92b18"
   }
 }

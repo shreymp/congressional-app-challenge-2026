@@ -3,54 +3,54 @@
   "keep_layers": 12,
   "sample_rate": 16000,
   "window_sec": 4.0,
-  "threshold_eer": 0.8824278664544911,
-  "threshold_1pct_fpr": 0.9986749775827868,
-  "logit_threshold_eer": 2.015625,
-  "logit_threshold_1pct_fpr": 6.625000000000001,
-  "logit_threshold_2pct_fpr": 5.718750000000001,
+  "threshold_eer": 0.9324533088603709,
+  "threshold_1pct_fpr": 0.9997694932780068,
+  "logit_threshold_eer": 2.625,
+  "logit_threshold_1pct_fpr": 8.375000000000002,
+  "logit_threshold_2pct_fpr": 7.187500000000001,
   "threshold_selection": "validation windows pooled over all robustness conditions (incl. simulated calls), raw float64 logits",
-  "val_eer": 0.12628970865719907,
+  "val_eer": 0.11946182112314335,
   "val_eer_by_condition": {
-    "call": 0.20358717061635448,
-    "call_noisy": 0.26403975328159446,
-    "clean": 0.023463454529096688,
-    "gap2s": 0.0443398284099318,
-    "music10": 0.11290709317075777,
-    "noise10": 0.1163771724721539,
-    "noise20": 0.05604240319051423,
-    "phone": 0.0636287302315035,
-    "phone_noise10": 0.1614821861516198
+    "call": 0.1984713142877631,
+    "call_noisy": 0.2619822311356662,
+    "clean": 0.020346815378501755,
+    "gap2s": 0.040988765939872746,
+    "music10": 0.10314663404797655,
+    "noise10": 0.11026170755456431,
+    "noise20": 0.051160970181386975,
+    "phone": 0.06039427769730817,
+    "phone_noise10": 0.15577726290502655
   },
   "test": {
     "pooled": {
-      "eer": 0.1304182772652952
+      "eer": 0.11946663315730932
     },
     "call": {
-      "eer": 0.19712500575864045
+      "eer": 0.18463540408427132
     },
     "call_noisy": {
-      "eer": 0.25321781594148995
+      "eer": 0.24884462008141878
     },
     "clean": {
-      "eer": 0.05140691546240853
+      "eer": 0.04728204341659112
     },
     "gap2s": {
-      "eer": 0.07126795150831434
+      "eer": 0.06570833525288017
     },
     "music10": {
-      "eer": 0.11648985299454921
+      "eer": 0.10830907213413529
     },
     "noise10": {
-      "eer": 0.11661401490167615
+      "eer": 0.10599601820442031
     },
     "noise20": {
-      "eer": 0.07426619001977977
+      "eer": 0.0675201533689826
     },
     "phone": {
-      "eer": 0.08263550783343651
+      "eer": 0.074017866205526
     },
     "phone_noise10": {
-      "eer": 0.14415918417948828
+      "eer": 0.13148104555187623
     }
   },
   "unseen_test_systems": [
@@ -77,93 +77,119 @@
     "tts_models_multilingual_multi-dataset_xtts_v1.1"
   ],
   "score_meaning": "sigmoid(logit) = probability the audio is AI-generated (uncalibrated)",
-  "trained": "2026-10-25",
+  "trained": "2026-11-18",
   "recommended_call_engine_env": {
-    "THRESHOLD_ELEVATED_LOGIT": -0.28906250000000044,
-    "THRESHOLD_HIGH_LOGIT": 4.3203125,
-    "why": "Centres the app's call verdict on the validated EER threshold with the same spread (see Compare V2 and V3/experiments)."
+    "THRESHOLD_ELEVATED_LOGIT": 1.5,
+    "THRESHOLD_HIGH_LOGIT": 3.0,
+    "source": "dev real-path calls (5 human, 10 AI; v9_fit_thresholds rule, margin 1)",
+    "why": "Set these two as LiveKit secrets. Fitted on dev real-path calls: no dev human call reaches 'Likely AI' even with logits +1."
   },
   "posttrain": {
-    "version": "v8b",
-    "init_checkpoint_sha256": "c634c95b2bb0fb5f5505d4d0364ad96980aa00de83d93bcc04a34ec4585e96a8",
+    "version": "v9",
+    "init_checkpoint_sha256": "cc6a75eae2948aeae5f491dffbc0e05af274bb4d8f6740451ad762b72f9703d5",
+    "init_model": "V8b",
     "kept_check": 1,
     "kept_state": {
-      "candidate": "best check 14",
+      "candidate": "soup of 13 checks",
       "alpha": 1.0,
       "fine_tuned": true
     },
-    "release_gate_passed": true,
+    "release_gate_passed": false,
     "interpolation": [
       {
-        "candidate": "best check 14",
+        "candidate": "best check 6",
         "alpha": 0.6,
         "passes": true,
-        "objective": 0.5627906976744186,
-        "el_det_eer": 0.6790697674418604,
-        "el_det": 0.44651162790697674,
+        "objective": 0.8134332925336597,
+        "el_det_eer": 0.7953488372093023,
+        "el_det": 0.6162790697674418,
         "ls_all_fpr": 0.015831332533013207,
-        "real_fpr_eer": 0.10324227132996926,
-        "pooled_eer": 0.10334139018382013,
+        "real_fpr_eer": 0.08508787193318253,
+        "pooled_eer": 0.08505759101473584,
+        "el_objective": 0.7058139534883721,
+        "rp_auc": 0.9210526315789473,
+        "rp_human_high": 0.10526315789473684,
+        "rp_human_ever_ai": 0,
         "fails": ""
       },
       {
-        "candidate": "best check 14",
+        "candidate": "best check 6",
         "alpha": 0.8,
         "passes": true,
-        "objective": 0.6081395348837209,
-        "el_det_eer": 0.7069767441860465,
-        "el_det": 0.5093023255813953,
-        "ls_all_fpr": 0.015831332533013207,
-        "real_fpr_eer": 0.09755814627921815,
-        "pooled_eer": 0.09731784221444437,
+        "objective": 0.8315177478580171,
+        "el_det_eer": 0.813953488372093,
+        "el_det": 0.641860465116279,
+        "ls_all_fpr": 0.016281512605042018,
+        "real_fpr_eer": 0.08340583492836842,
+        "pooled_eer": 0.08334377562061192,
+        "el_objective": 0.727906976744186,
+        "rp_auc": 0.9351285189718483,
+        "rp_human_high": 0.05263157894736842,
+        "rp_human_ever_ai": 0,
         "fails": ""
       },
       {
-        "candidate": "best check 14",
+        "candidate": "best check 6",
         "alpha": 1.0,
         "passes": true,
-        "objective": 0.6465116279069767,
-        "el_det_eer": 0.7325581395348837,
-        "el_det": 0.5604651162790698,
-        "ls_all_fpr": 0.015606242496998799,
-        "real_fpr_eer": 0.09141001102024245,
-        "pooled_eer": 0.09140014600226606,
+        "objective": 0.8439412484700123,
+        "el_det_eer": 0.8232558139534883,
+        "el_det": 0.6651162790697674,
+        "ls_all_fpr": 0.016431572629051622,
+        "real_fpr_eer": 0.08212980685575083,
+        "pooled_eer": 0.08197373838479868,
+        "el_objective": 0.7441860465116279,
+        "rp_auc": 0.9436964504283967,
+        "rp_human_high": 0.05263157894736842,
+        "rp_human_ever_ai": 0,
         "fails": ""
       },
       {
-        "candidate": "soup of 16 checks",
+        "candidate": "soup of 13 checks",
         "alpha": 0.6,
-        "passes": true,
-        "objective": 0.5430232558139535,
-        "el_det_eer": 0.6674418604651163,
-        "el_det": 0.4186046511627907,
-        "ls_all_fpr": 0.015606242496998799,
-        "real_fpr_eer": 0.10701235427179398,
-        "pooled_eer": 0.10694387069972376,
-        "fails": ""
+        "passes": false,
+        "objective": 0.8077723378212974,
+        "el_det_eer": 0.786046511627907,
+        "el_det": 0.6139534883720931,
+        "ls_all_fpr": 0.015681272509003603,
+        "real_fpr_eer": 0.08630589872977205,
+        "pooled_eer": 0.0862860086587652,
+        "el_objective": 0.7,
+        "rp_auc": 0.9155446756425949,
+        "rp_human_high": 0.10526315789473684,
+        "rp_human_ever_ai": 0,
+        "fails": "el_det_eer"
       },
       {
-        "candidate": "soup of 16 checks",
+        "candidate": "soup of 13 checks",
         "alpha": 0.8,
         "passes": true,
-        "objective": 0.5697674418604651,
-        "el_det_eer": 0.6906976744186046,
-        "el_det": 0.44883720930232557,
-        "ls_all_fpr": 0.015756302521008403,
-        "real_fpr_eer": 0.10144423177309901,
-        "pooled_eer": 0.10159772825211066,
+        "objective": 0.8220930232558139,
+        "el_det_eer": 0.7976744186046512,
+        "el_det": 0.6302325581395349,
+        "ls_all_fpr": 0.015831332533013207,
+        "real_fpr_eer": 0.0853778783133229,
+        "pooled_eer": 0.08534336789701846,
+        "el_objective": 0.713953488372093,
+        "rp_auc": 0.9302325581395349,
+        "rp_human_high": 0.05263157894736842,
+        "rp_human_ever_ai": 0,
         "fails": ""
       },
       {
-        "candidate": "soup of 16 checks",
+        "candidate": "soup of 13 checks",
         "alpha": 1.0,
         "passes": true,
-        "objective": 0.6011627906976744,
-        "el_det_eer": 0.7093023255813954,
-        "el_det": 0.4930232558139535,
-        "ls_all_fpr": 0.015531212484993997,
-        "real_fpr_eer": 0.0963981207586567,
-        "pooled_eer": 0.09642812733129634,
+        "objective": 0.8358323133414933,
+        "el_det_eer": 0.8093023255813954,
+        "el_det": 0.6441860465116279,
+        "ls_all_fpr": 0.016131452581032414,
+        "real_fpr_eer": 0.08456586044892987,
+        "pooled_eer": 0.08454319262662724,
+        "el_objective": 0.7267441860465116,
+        "rp_auc": 0.944920440636475,
+        "rp_human_high": 0.05263157894736842,
+        "rp_human_ever_ai": 0,
         "fails": ""
       }
     ],
@@ -180,10 +206,7 @@
       10,
       11,
       12,
-      13,
-      14,
-      15,
-      16
+      13
     ],
     "librispeech100": {
       "test": 63,
@@ -230,50 +253,251 @@
         "voices": 1
       },
       {
-        "corpus": "RealCalls",
-        "origin": "call_real",
+        "corpus": "OwnReal",
+        "origin": "own_real_calls",
         "split": "train",
-        "segments": 26,
-        "voices": 8
+        "segments": 197,
+        "voices": 3
       }
     ],
     "mendeley_used": false,
     "call_simulation": {
       "p": 0.5,
       "codecs": {
-        "g711u": 0.39,
-        "g711a": 0.122,
-        "gsm": 0.098,
-        "opus_nb": 0.122,
-        "opus_wb": 0.146,
-        "g722": 0.122
-      }
+        "g711u": 0.296,
+        "g711a": 0.093,
+        "amrnb": 0.167,
+        "amrwb": 0.074,
+        "gsm": 0.074,
+        "opus_nb": 0.093,
+        "opus_wb": 0.111,
+        "g722": 0.093
+      },
+      "unavailable": [
+        "opus_nb_dtx"
+      ],
+      "amr_install": "installed",
+      "amr_nb_rates": [
+        "4.75k",
+        "7.4k",
+        "10.2k",
+        "12.2k"
+      ],
+      "amr_wb_rates": [
+        "8.85k",
+        "12.65k",
+        "15.85k",
+        "23.85k"
+      ],
+      "opus_dtx": false,
+      "dtln": "on (p 0.15 inside call_sim)"
+    },
+    "realpath": {
+      "splits_file": "/content/drive/MyDrive/CAC_deepfake_detector/v9_realpath_splits.json",
+      "forced_train": [
+        "12243720372"
+      ],
+      "allow_small": true,
+      "missing": [],
+      "per_split": {
+        "train": {
+          "human_calls": 32,
+          "human_groups": 3,
+          "ai_calls": 35,
+          "ai_groups": 33,
+          "minutes": 30.5,
+          "groups": "12243720372, 12248580858, 16672176857, el:adam_stone, el:bella, el:bill, el:brian, el:bunty, el:callum, el:charlie, el:chris, el:daniel, el:eric, el:george, el:harper_2_0, el:harry, el:jax, el:jessica, el:jon, el:kai, el:killian, el:kyle, el:lara, el:laura, el:liam, el:lily, el:marie, el:matilda, el:monika_sogam, el:morgan, el:patrick, el:river, el:roger, el:sarah, el:will"
+        },
+        "dev": {
+          "human_calls": 5,
+          "human_groups": 1,
+          "ai_calls": 10,
+          "ai_groups": 3,
+          "minutes": 6.2,
+          "groups": "18152009844, el:jerry_b, el:lulu"
+        },
+        "test": {
+          "human_calls": 4,
+          "human_groups": 2,
+          "ai_calls": 5,
+          "ai_groups": 4,
+          "minutes": 3.7,
+          "groups": "12248280050, 18478774373, el:adam, el:clara, el:dahlia, el:joseff_novak"
+        }
+      },
+      "groups": {
+        "12243720372": "train",
+        "12248280050": "test",
+        "12248580858": "train",
+        "16672176857": "train",
+        "18152009844": "dev",
+        "18478774373": "test",
+        "el:adam": "test",
+        "el:adam_stone": "train",
+        "el:bella": "train",
+        "el:bill": "train",
+        "el:brian": "train",
+        "el:bunty": "train",
+        "el:callum": "train",
+        "el:charlie": "train",
+        "el:chris": "train",
+        "el:clara": "test",
+        "el:dahlia": "test",
+        "el:daniel": "train",
+        "el:eric": "train",
+        "el:george": "train",
+        "el:harper_2_0": "train",
+        "el:harry": "train",
+        "el:jax": "train",
+        "el:jerry_b": "dev",
+        "el:jessica": "train",
+        "el:jon": "train",
+        "el:joseff_novak": "test",
+        "el:kai": "train",
+        "el:killian": "train",
+        "el:kyle": "train",
+        "el:lara": "train",
+        "el:laura": "train",
+        "el:liam": "train",
+        "el:lily": "train",
+        "el:lulu": "dev",
+        "el:marie": "train",
+        "el:matilda": "train",
+        "el:monika_sogam": "train",
+        "el:morgan": "train",
+        "el:patrick": "train",
+        "el:river": "train",
+        "el:roger": "train",
+        "el:sarah": "train",
+        "el:will": "train"
+      },
+      "train_calls_with_crops": 61,
+      "live_windows": true,
+      "live_commit": "67abd258e39ae9baf973d4b17a6533c7725e6c17",
+      "augmentation": "light",
+      "objective": "0.5 x ElevenLabs objective + 0.5 x dev real-path window AUC"
+    },
+    "sampler_shares": {
+      "ElevenLabs (AI)": 0.0937,
+      "LibriSpeech (real)": 0.1125,
+      "LibriSpeech100 (real)": 0.1125,
+      "M-AILABS (real)": 0.1125,
+      "MLAAD (AI)": 0.2812,
+      "OwnReal (real)": 0.0375,
+      "RealPath (real)": 0.125,
+      "RealPath (AI)": 0.125
+    },
+    "realpath_share": {
+      "real": 0.25,
+      "AI": 0.25
+    },
+    "margins": {
+      "weight": 0.5,
+      "human": -0.3,
+      "ai": 4.3
+    },
+    "kd_real_corpora": [
+      "M-AILABS",
+      "LibriSpeech",
+      "LibriSpeech100"
+    ],
+    "lpft": {
+      "enabled": true,
+      "steps": 300,
+      "check": 1,
+      "passes": false,
+      "objective": 0.7748
+    },
+    "call_thresholds": {
+      "THRESHOLD_ELEVATED_LOGIT": 1.5,
+      "THRESHOLD_HIGH_LOGIT": 3.0,
+      "source": "dev real-path calls (5 human, 10 AI; v9_fit_thresholds rule, margin 1)",
+      "fitted": true,
+      "margin": 1.0,
+      "dev_calls": {
+        "human": 5,
+        "ai": 10,
+        "human_groups": 1
+      },
+      "dev_result": {
+        "human_end_human": 0.8,
+        "ai_end_ai": 0.9,
+        "ai_end_human": 0.0,
+        "human_no_verdict": 1
+      },
+      "dev_table": [
+        {
+          "model": "V9 @ V9 call thresholds",
+          "low": 1.5,
+          "high": 3.0,
+          "human_end_human": 0.8,
+          "ai_end_ai": 0.9,
+          "ai_end_human": 0.0,
+          "human_ever_ai": 0,
+          "human_no_verdict": 1
+        },
+        {
+          "model": "V9 @ re-centred (V8b method)",
+          "low": -0.2500000000000009,
+          "high": 5.500000000000001,
+          "human_end_human": 0.6,
+          "ai_end_ai": 0.7,
+          "ai_end_human": 0.0,
+          "human_ever_ai": 0,
+          "human_no_verdict": 1
+        },
+        {
+          "model": "V8b @ recommended",
+          "low": -0.28906250000000044,
+          "high": 4.3203125,
+          "human_end_human": 0.2,
+          "ai_end_ai": 0.7,
+          "ai_end_human": 0.1,
+          "human_ever_ai": 0,
+          "human_no_verdict": 1
+        },
+        {
+          "model": "V8b @ fallback",
+          "low": 2.015625,
+          "high": 6.625,
+          "human_end_human": 0.6,
+          "ai_end_ai": 0.5,
+          "ai_end_human": 0.1,
+          "human_ever_ai": 0,
+          "human_no_verdict": 1
+        }
+      ],
+      "fallback_pair": [
+        -0.2500000000000009,
+        5.500000000000001
+      ],
+      "rule": "no dev human call ever 'Likely AI' with logits +margin; maximise hh + aa - ah with human logits +margin and AI logits -margin; ties -> highest AI edge, then middle Human edge"
     },
     "self_improvement": [
       {
         "round": 1,
         "improved": true,
         "best_check": 3,
-        "best_objective": 0.5523,
+        "best_objective": 0.8317,
         "lr_scale": 1.0,
         "train_loss_by_condition": {
-          "call": 0.5814,
-          "clean": 0.0994,
-          "gap2s": 0.1378,
-          "music10": 0.3063,
-          "noise10": 0.2402
+          "call": 0.4419,
+          "clean": 0.0384,
+          "gap2s": 0.0821,
+          "music10": 0.2141,
+          "noise10": 0.2044
         },
         "train_eer_by_condition": {
-          "call": 0.1527,
-          "clean": 0.0231,
-          "gap2s": 0.0413,
-          "music10": 0.0761,
-          "noise10": 0.0825
+          "call": 0.1326,
+          "clean": 0.0107,
+          "gap2s": 0.0239,
+          "music10": 0.054,
+          "noise10": 0.0624
         },
         "hard_weight_max": 1.799,
         "augmentation_change": {
           "worst": "call",
-          "excess": 0.4819,
+          "excess": 0.4035,
           "knob": "CALL_SIM_P",
           "old": 0.5,
           "new": 0.55,
@@ -285,26 +509,26 @@
         "round": 2,
         "improved": true,
         "best_check": 6,
-        "best_objective": 0.6035,
+        "best_objective": 0.8439,
         "lr_scale": 1.0,
         "train_loss_by_condition": {
-          "call": 0.5434,
-          "clean": 0.085,
-          "gap2s": 0.125,
-          "music10": 0.2703,
-          "noise10": 0.2315
+          "call": 0.4288,
+          "clean": 0.0337,
+          "gap2s": 0.0792,
+          "music10": 0.1658,
+          "noise10": 0.2086
         },
         "train_eer_by_condition": {
-          "call": 0.1481,
-          "clean": 0.0211,
-          "gap2s": 0.0373,
-          "music10": 0.071,
-          "noise10": 0.0781
+          "call": 0.1247,
+          "clean": 0.01,
+          "gap2s": 0.022,
+          "music10": 0.0466,
+          "noise10": 0.0566
         },
         "hard_weight_max": 1.799,
         "augmentation_change": {
           "worst": "call",
-          "excess": 0.4584,
+          "excess": 0.3951,
           "knob": "CALL_SIM_P",
           "old": 0.55,
           "new": 0.6,
@@ -314,41 +538,41 @@
       },
       {
         "round": 3,
-        "improved": true,
-        "best_check": 10,
-        "best_objective": 0.6151,
+        "improved": false,
+        "best_check": 6,
+        "best_objective": 0.8439,
         "lr_scale": 1.0,
         "train_loss_by_condition": {
-          "call": 0.4989,
-          "clean": 0.0744,
-          "gap2s": 0.1184,
-          "music10": 0.3049,
-          "noise10": 0.1955
+          "call": 0.4257,
+          "clean": 0.0337,
+          "gap2s": 0.0792,
+          "music10": 0.1658,
+          "noise10": 0.2103
         },
         "train_eer_by_condition": {
-          "call": 0.1481,
-          "clean": 0.0174,
-          "gap2s": 0.0331,
-          "music10": 0.0678,
-          "noise10": 0.0639
+          "call": 0.1294,
+          "clean": 0.01,
+          "gap2s": 0.022,
+          "music10": 0.0466,
+          "noise10": 0.0583
         },
         "hard_weight_max": 1.799,
         "augmentation_change": {
           "worst": "call",
-          "excess": 0.4245,
+          "excess": 0.392,
           "knob": "CALL_SIM_P",
           "old": 0.6,
           "new": 0.65,
           "changed": true
         },
-        "next_lr_scale": 1.0
+        "next_lr_scale": 0.5
       },
       {
         "round": 4,
-        "improved": true,
-        "best_check": 14,
-        "best_objective": 0.6465,
-        "lr_scale": 1.0
+        "improved": false,
+        "best_check": 6,
+        "best_objective": 0.8439,
+        "lr_scale": 0.5
       }
     ],
     "final_knobs": {
@@ -385,22 +609,21 @@
       "vanishree"
     ],
     "held_out_elevenlabs_gain_95ci": [
-      0.10410820066641986,
-      0.3127906976744186
+      -0.008750000000000036,
+      0.09868421052631582
     ],
     "real_corpora": [
       "LibriSpeech",
       "LibriSpeech100",
       "M-AILABS",
-      "OwnReal",
-      "RealCalls"
+      "OwnReal"
     ],
     "excluded_speakers": [
       "1320",
       "6930"
     ],
-    "losses": "BCE + noisy-twin consistency + one-sided V3 distillation; per-step anchor to V3 weights; fixed weights",
-    "selection_rule": "validation only, compared with V3, tolerances fixed before the run; rounds restart from the best accepted state",
-    "caveat": "Selection used validation only; test and benchmark were scored once after training. Few ElevenLabs voices (library voices, 2 clips each); calls are simulated, not recorded; real speech is read audiobook speech; confirm with consented live calls."
+    "losses": "BCE + noisy-twin consistency + one-sided V8b distillation (read speech + MLAAD) + margins on real-path windows; per-step anchor to V8b weights; fixed weights; LP-FT head stage first",
+    "selection_rule": "validation only, compared with V8b, tolerances fixed before the run; objective 0.5 ElevenLabs + 0.5 dev real-path AUC; rounds restart from the best accepted state",
+    "caveat": "Selection and thresholds used validation/dev only; test, benchmark and test real-path calls were scored once after training. Real-path test callers are few (see the zero-failure bound in the report); real-path AI calls come from few voices and phones; confirm with consented live calls."
   }
 }

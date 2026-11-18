@@ -52,8 +52,8 @@ from recording_notice import NOTICE_TIMEOUT_SEC, play_recording_notice
 AGENT_NAME = "scam-guard"          # must match the dispatch rule in LiveKit Cloud
 SAMPLE_RATE = 16000
 SCORE_EVERY_SEC = float(os.environ.get("SCORE_EVERY_SEC", "1.0"))
-# TESTING: caller-audio recording is ON by default (set RECORD_CALLER_AUDIO=0 to turn it off).
-RECORD = os.environ.get("RECORD_CALLER_AUDIO", "1") == "1"
+# Caller-audio recording is OFF by default; set RECORD_CALLER_AUDIO=1 only for consented data collection.
+RECORD = os.environ.get("RECORD_CALLER_AUDIO", "0") == "1"
 # The cloud image runs as a non-root user that cannot write under /app, so it sets RECORD_DIR.
 RECORD_DIR = os.environ.get("RECORD_DIR") or os.path.join(HERE, "recordings")
 
