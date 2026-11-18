@@ -21,12 +21,12 @@ The model server binds only to loopback. Jobs use its real deepfake endpoint,
 so the large weights are shared across calls instead of duplicated for each job.
 Startup checks require deepfake warm-up, real JEV inference through the connector,
 and a successful Vosk load before the worker starts registering. A crashed model
-service terminates the worker so LiveKit can restart it. Caller-audio recording is OFF (`RECORD_CALLER_AUDIO=0`). For consented data collection, deploy with `RECORD_CALLER_AUDIO=1` plus the Drive upload secrets; each call's WAV then goes to the "CAC call recordings" folder (see Recording below).
+service terminates the worker so LiveKit can restart it. Caller-audio recording is ON (`RECORD_CALLER_AUDIO=1`); each call's WAV is uploaded to the "CAC call recordings" folder in the configured Google Drive (see Recording below).
 
 The voice model is **V9** (release `deepfake-weights-v9`, `detector_state_v9.pt`, SHA-256 `c919d450…a8c92b18`) with call thresholds `THRESHOLD_ELEVATED_LOGIT=1.5` and `THRESHOLD_HIGH_LOGIT=3.0`, set in the image and as deploy secrets. V9 did not pass one row of its release gate (held-out ElevenLabs gain +3.9 points, required +5) and was deployed by the team's decision. To roll back to V8b, revert this change: release `deepfake-weights-v8`, its pins, and thresholds `-0.28906250000000044` / `4.3203125`.
 
-The image also bundles a mono 16 kHz PCM announcement, generated at build time with
-eSpeak NG and SoX: **"This call is being recorded."** Startup and image checks reject
+The image also bundles a mono 16 kHz PCM announcement: the team's caller intro
+(`Caller_Intro.mp3`, committed as `LiveKit Setup/assets/recording_notice.wav`). Startup and image checks reject
 a missing, silent or invalid clip. Immediately after the senior answers, the worker
 publishes that clip into the call room and waits for playback to finish before it
 opens the caller's analysis/recording stream. If playback fails, analysis and recording
@@ -64,7 +64,8 @@ Manual equivalent from a configured checkout:
 ```sh
 python3 deploy/livekit/prepare.py --output .cloud-context
 lk --project CAC agent deploy .cloud-context --id CA_KKXaPczWhqpE --deployment production \
-  --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=0 \
+  --secrets DETECTOR=remote --secrets TRANSCRIPT_ENABLED=1 --secrets RECORD_CALLER_AUDIO=1 \
+  --secrets GDRIVE_UPLOAD_URL=... --secrets GDRIVE_UPLOAD_TOKEN=... \
   --secrets THRESHOLD_ELEVATED_LOGIT=1.5 --secrets THRESHOLD_HIGH_LOGIT=3.0
 python3 deploy/livekit/probe.py ios/ScamTranscriptTests/Fixtures/bank.wav
 ```

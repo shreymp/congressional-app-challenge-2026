@@ -70,6 +70,10 @@ def prepare(output):
     (output / manifest_path).write_text(json.dumps(manifest))
     shutil.copytree(ROOT / "deploy/livekit", output / "deploy/livekit", ignore=shutil.ignore_patterns("__pycache__", "test*"))
     shutil.copy2(ROOT / "deploy/livekit/Dockerfile", output / "Dockerfile")
+    # The caller intro is a committed WAV; the folder copy above skips *.wav, so add it explicitly.
+    notice = Path("backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav")
+    (output / notice).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / notice, output / notice)
     shutil.copy2(ROOT / "deploy/livekit/livekit.toml", output / "livekit.toml")
     # `lk agent deploy` detects the project type from a requirements.txt at the context root.
     # The Dockerfile still installs from deploy/livekit/requirements.txt; this copy is for detection.

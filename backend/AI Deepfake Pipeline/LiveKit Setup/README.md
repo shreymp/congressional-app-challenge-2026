@@ -29,17 +29,12 @@ If the asset is missing, invalid, or playback fails/times out, transcription, de
 analysis and optional caller recording stay off for that call; the ring/hang-up
 supervisor continues and the app receives an unavailable status.
 
-The cloud image generates and bundles the fixed clip at build time using eSpeak NG
-and SoX. There is no per-call TTS request or API key. For a local worker, install
-`espeak-ng` and `sox` (on macOS: `brew install espeak-ng sox`), then run from the repo root:
-
-```sh
-python3 deploy/livekit/generate_recording_notice.py \
-  --output 'backend/AI Deepfake Pipeline/LiveKit Setup/assets/recording_notice.wav'
-```
+The announcement is the team's caller intro, committed at
+`assets/recording_notice.wav` (16 kHz mono 16-bit PCM, converted from `Caller_Intro.mp3`).
+The cloud image copies it in and validates it at build time; there is no per-call TTS.
 
 This announcement is a disclosure, not a consent check. It does not enable audio
-storage: `RECORD_CALLER_AUDIO` still defaults to `0`. Obtain the required permission
+storage: `RECORD_CALLER_AUDIO` now defaults to `1` (recordings upload to Google Drive). Obtain the required permission
 before enabling storage. Diagnostic backend probes skip the announcement and ringing.
 
 | File | What it does |

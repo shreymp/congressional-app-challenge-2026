@@ -7,7 +7,7 @@ from pathlib import Path
 import struct
 import wave
 
-NOTICE_TEXT = "This call is being recorded."
+NOTICE_TEXT = "Custom caller intro (Caller_Intro.mp3)"
 NOTICE_PATH = Path(__file__).with_name("assets") / "recording_notice.wav"
 SAMPLE_RATE = 16000
 FRAME_SAMPLES = 320
