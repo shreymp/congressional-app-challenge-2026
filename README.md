@@ -152,4 +152,4 @@ Built for the **2026 Congressional App Challenge (IL-11)**. Thanks to the open m
 ---
 Made by Shrey Patel<sup>1</sup>, Keshav Parikh<sup>2</sup>, and Azim Salomov<sup>3</sup>.
 
-Contact spatel7@imsa.edu for any questions.
+Contact spatel7@imsa.edu or kparikh@imsa.edu for any questions.
